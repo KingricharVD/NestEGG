@@ -903,7 +903,7 @@
                          <string>
                            &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;
                            A masternode is a computer running a full node NestEgg core wallet with a
-                           requirement of 200,000 EGG secured collateral to provide extra services
+                           requirement of 25,000 EGG secured collateral to provide extra services
                            to the network and in return, receive a portion of the block reward
                            regularly.  These services include:
                            &lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;
