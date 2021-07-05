@@ -142,7 +142,7 @@ public:
 
         // spork keys
 		//TODO: Create a new spork key pair for security.
-        consensus.strSporkPubKey = "043969b1b0e6f327de37f297a015d37e2235eaaeeb3933deecd8162c075cee0207b13537618bde640879606001a8136091c62ec272dd0133424a178704e6e75bb7";
+        consensus.strSporkPubKey = "04370c26adc31f2f0019560c413f4bbf94702e002f8289ee65686be1d25525af8a8beac897f6e4653de13387820e0834ad4e9a899d1f51d81c3691af0106bdb0f8";
         consensus.strSporkPubKeyOld = "043969b1b0e6f327de37f297a015d37e2235eaaeeb3933deecd8162c075cee0207b13537618bde640879606001a8136091c62ec272dd0133424a178704e6e75bb7";
         consensus.nTime_EnforceNewSporkKey = 1556165178;    //!> August 26, 2019 11:00:00 PM GMT
         consensus.nTime_RejectOldSporkKey = 1556165178;     //!> September 26, 2019 11:00:00 PM GMT
@@ -218,7 +218,7 @@ public:
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 34);
 		//TODO: There is no STAKING_ADDRESS part in the old code. Keeping the EGG value for now. Find a proper value and set it for EGG!
         base58Prefixes[STAKING_ADDRESS] = std::vector<unsigned char>(1, 63);     // starting with 'C'
-        base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 161);
+        base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 53);
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x02)(0x2D)(0x25)(0x33).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x02)(0x21)(0x31)(0x2B).convert_to_container<std::vector<unsigned char> >();
         // 	BIP44 coin type is from https://github.com/satoshilabs/slips/blob/master/slip-0044.md
