@@ -230,7 +230,7 @@ CONFIG_CLEAN_VPATH_FILES =
 AM_V_AR = $(am__v_AR_$(V))
 am__v_AR_ = $(am__v_AR_$(AM_DEFAULT_VERBOSITY))
 am__v_AR_0 = @echo "  AR      " $@;
-am__v_AR_1 = 
+am__v_AR_1 =
 crc32c_libcrc32c_a_AR = $(AR) $(ARFLAGS)
 crc32c_libcrc32c_a_LIBADD =
 am__crc32c_libcrc32c_a_SOURCES_DIST = crc32c/include/crc32c/crc32c.h \
@@ -1271,7 +1271,7 @@ libbitcoinconsensus_la_OBJECTS = $(am_libbitcoinconsensus_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
-am__v_lt_1 = 
+am__v_lt_1 =
 libbitcoinconsensus_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(libbitcoinconsensus_la_CXXFLAGS) $(CXXFLAGS) \
@@ -1578,11 +1578,11 @@ am__v_P_1 = :
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN     " $@;
-am__v_GEN_1 = 
+am__v_GEN_1 =
 AM_V_at = $(am__v_at_$(V))
 am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
 am__v_at_0 = @
-am__v_at_1 = 
+am__v_at_1 =
 DEFAULT_INCLUDES = -I. -I$(top_builddir)/src/config
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__depfiles_maybe = depfiles
@@ -1596,7 +1596,7 @@ LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 AM_V_CC = $(am__v_CC_$(V))
 am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
 am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
+am__v_CC_1 =
 CCLD = $(CC)
 LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -1604,7 +1604,7 @@ LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
+am__v_CCLD_1 =
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 LTCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
@@ -1614,7 +1614,7 @@ LTCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 AM_V_CXX = $(am__v_CXX_$(V))
 am__v_CXX_ = $(am__v_CXX_$(AM_DEFAULT_VERBOSITY))
 am__v_CXX_0 = @echo "  CXX     " $@;
-am__v_CXX_1 = 
+am__v_CXX_1 =
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -1622,7 +1622,7 @@ CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 AM_V_CXXLD = $(am__v_CXXLD_$(V))
 am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
-am__v_CXXLD_1 = 
+am__v_CXXLD_1 =
 OBJCXXCOMPILE = $(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS)
 LTOBJCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) $(AM_LIBTOOLFLAGS) \
@@ -1632,7 +1632,7 @@ LTOBJCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) $(AM_LIBTOOLFLAGS) \
 AM_V_OBJCXX = $(am__v_OBJCXX_$(V))
 am__v_OBJCXX_ = $(am__v_OBJCXX_$(AM_DEFAULT_VERBOSITY))
 am__v_OBJCXX_0 = @echo "  OBJCXX  " $@;
-am__v_OBJCXX_1 = 
+am__v_OBJCXX_1 =
 OBJCXXLD = $(OBJCXX)
 OBJCXXLINK = $(LIBTOOL) $(AM_V_lt) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(OBJCXXLD) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) \
@@ -1640,7 +1640,7 @@ OBJCXXLINK = $(LIBTOOL) $(AM_V_lt) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 AM_V_OBJCXXLD = $(am__v_OBJCXXLD_$(V))
 am__v_OBJCXXLD_ = $(am__v_OBJCXXLD_$(AM_DEFAULT_VERBOSITY))
 am__v_OBJCXXLD_0 = @echo "  OBJCXXLD" $@;
-am__v_OBJCXXLD_1 = 
+am__v_OBJCXXLD_1 =
 SOURCES = $(crc32c_libcrc32c_a_SOURCES) \
 	$(crc32c_libcrc32c_arm_crc_a_SOURCES) \
 	$(crc32c_libcrc32c_sse42_a_SOURCES) \
@@ -1938,14 +1938,14 @@ AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 0
 AR = /usr/bin/x86_64-w64-mingw32-ar
 ARFLAGS = cr
-ARM_CRC_CXXFLAGS = 
+ARM_CRC_CXXFLAGS =
 AUTOCONF = ${SHELL} /home/dad/Downloads/NestEGG/build-aux/missing autoconf
 AUTOHEADER = ${SHELL} /home/dad/Downloads/NestEGG/build-aux/missing autoheader
 AUTOMAKE = ${SHELL} /home/dad/Downloads/NestEGG/build-aux/missing automake-1.15
 AVX2_CXXFLAGS = -mavx -mavx2
 AWK = gawk
-BDB_CFLAGS = 
-BDB_CPPFLAGS = 
+BDB_CFLAGS =
+BDB_CPPFLAGS =
 BDB_LIBS = -ldb_cxx-4.8
 BITCOIN_CLI_NAME = nestegg-cli
 BITCOIN_DAEMON_NAME = nesteggd
@@ -1959,58 +1959,58 @@ BOOST_LIBS = -L/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../l
 BOOST_PROGRAM_OPTIONS_LIB = -lboost_program_options-mt-s
 BOOST_SYSTEM_LIB = -lboost_system-mt-s
 BOOST_THREAD_LIB = -lboost_thread_win32-mt-s
-BOOST_UNIT_TEST_FRAMEWORK_LIB = 
-BREW = 
+BOOST_UNIT_TEST_FRAMEWORK_LIB =
+BREW =
 CARGO = /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../native/bin/cargo
 CC = x86_64-w64-mingw32-gcc
-CCACHE = 
+CCACHE =
 CCDEPMODE = depmode=gcc3
 CFLAGS = -pipe -O2 -O3
-CHARTS_CFLAGS = 
+CHARTS_CFLAGS =
 CHARTS_LIBS = -lQt5Charts
-CLIENT_VERSION_BUILD = 3
+CLIENT_VERSION_BUILD = 0
 CLIENT_VERSION_IS_RELEASE = true
 CLIENT_VERSION_MAJOR = 1
-CLIENT_VERSION_MINOR = 4
-CLIENT_VERSION_REVISION = 1
-COMPAT_LDFLAGS = 
-COPYRIGHT_YEAR = 2020
+CLIENT_VERSION_MINOR = 5
+CLIENT_VERSION_REVISION = 0
+COMPAT_LDFLAGS =
+COPYRIGHT_YEAR = 2021
 CPP = x86_64-w64-mingw32-gcc -E
 CPPFILT = /usr/bin/x86_64-w64-mingw32-c++filt
 CPPFLAGS = -I/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../include/  -DHAVE_BUILD_INFO -D__STDC_FORMAT_MACROS -D_MT -DWIN32 -D_WINDOWS -DBOOST_THREAD_USE_LIB -D_FILE_OFFSET_BITS=64
-CRYPTO_CFLAGS = 
+CRYPTO_CFLAGS =
 CRYPTO_LIBS = -lcrypto
 CXX = x86_64-w64-mingw32-g++ -std=c++11
 CXXCPP = x86_64-w64-mingw32-g++ -std=c++11 -E
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS = -pipe -O2 -O3 -fno-strict-aliasing -Wno-builtin-declaration-mismatch
 CYGPATH_W = echo
-DEBUG_CPPFLAGS = 
-DEBUG_CXXFLAGS = 
+DEBUG_CPPFLAGS =
+DEBUG_CXXFLAGS =
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
 DLLTOOL = x86_64-w64-mingw32-dlltool
-DOXYGEN = 
-DSYMUTIL = 
-DUMPBIN = 
-ECHO_C = 
+DOXYGEN =
+DSYMUTIL =
+DUMPBIN =
+ECHO_C =
 ECHO_N = -n
-ECHO_T = 
+ECHO_T =
 EGREP = /bin/grep -E
-ERROR_CXXFLAGS = 
-EVENT_CFLAGS = 
+ERROR_CXXFLAGS =
+EVENT_CFLAGS =
 EVENT_LIBS = -levent
-EVENT_PTHREADS_CFLAGS = 
-EVENT_PTHREADS_LIBS = 
+EVENT_PTHREADS_CFLAGS =
+EVENT_PTHREADS_LIBS =
 EXEEXT = .exe
-EXTENDED_FUNCTIONAL_TESTS = 
+EXTENDED_FUNCTIONAL_TESTS =
 FGREP = /bin/grep -F
 GCOV = /usr/bin/x86_64-w64-mingw32-gcov
-GENHTML = 
-GENISOIMAGE = 
+GENHTML =
+GENISOIMAGE =
 GIT = /usr/bin/git
-GPROF_CXXFLAGS = 
-GPROF_LDFLAGS = 
+GPROF_CXXFLAGS =
+GPROF_LDFLAGS =
 GREP = /bin/grep
 HARDENED_CPPFLAGS =  -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2
 HARDENED_CXXFLAGS =  -Wstack-protector -fstack-protector-all
@@ -2024,33 +2024,33 @@ HAVE_O_CLOEXEC = 0
 HAVE_STRONG_GETAUXVAL = 0
 HAVE_WEAK_GETAUXVAL = 1
 HEXDUMP = /usr/bin/hexdump
-IMAGEMAGICK_CONVERT = 
+IMAGEMAGICK_CONVERT =
 INSTALL = /usr/bin/install -c
-INSTALLNAMETOOL = 
+INSTALLNAMETOOL =
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LCOV = 
-LCOV_OPTS = 
+LCOV =
+LCOV_OPTS =
 LD = /usr/bin/x86_64-w64-mingw32-ld
-LDFLAGS = -L/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../lib 
+LDFLAGS = -L/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../lib
 LEVELDB_CPPFLAGS =  $(am__append_28)
 LIBEGGLING_LIBS = -lgmp -lboost_system-mt -lcrypto -lsodium
 LIBLEVELDB =  $(am__append_26)
 LIBMEMENV =  $(am__append_27)
-LIBOBJS = 
+LIBOBJS =
 LIBS = -lQt5AccessibilitySupport -lQt5DeviceDiscoverySupport -lQt5FbSupport -lQt5ThemeSupport -lQt5EventDispatcherSupport -lQt5FontDatabaseSupport -lssp -lcrypt32 -liphlpapi -lshlwapi -lmswsock -lws2_32 -ladvapi32 -lrpcrt4 -luuid -loleaut32 -lole32 -lcomctl32 -lshell32 -lwinmm -lwinspool -lcomdlg32 -lgdi32 -luser32 -lkernel32 -lmingwthrd  -lgmp
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIBTOOL_APP_LDFLAGS =  -all-static
 LIBZCASH_LIBS = -lboost_system-mt-s -lcrypto -lsodium  -luserenv
-LIPO = 
+LIPO =
 LN_S = ln -s
 LRELEASE = /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../native/bin/lrelease
-LTLIBOBJS = 
-LT_SYS_LIBRARY_PATH = 
+LTLIBOBJS =
+LT_SYS_LIBRARY_PATH =
 LUPDATE = /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../native/bin/lupdate
-MAINT = 
+MAINT =
 MAKEINFO = ${SHELL} /home/dad/Downloads/NestEGG/build-aux/missing makeinfo
 MAKENSIS = /usr/bin/makensis
 MANIFEST_TOOL = :
@@ -2060,117 +2060,117 @@ MKDIR_P = /bin/mkdir -p
 MOC = /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../native/bin/moc
 MOC_DEFS = -DHAVE_CONFIG_H -I$(srcdir)
 NM = x86_64-w64-mingw32-nm
-NMEDIT = 
-NOWARN_CXXFLAGS = 
+NMEDIT =
+NOWARN_CXXFLAGS =
 OBJCOPY = /usr/bin/x86_64-w64-mingw32-objcopy
 OBJCXX = x86_64-w64-mingw32-g++ -std=c++11
 OBJCXXDEPMODE = depmode=gcc3
-OBJCXXFLAGS = 
+OBJCXXFLAGS =
 OBJDUMP = x86_64-w64-mingw32-objdump
 OBJEXT = o
-OTOOL = 
-OTOOL64 = 
+OTOOL =
+OTOOL64 =
 PACKAGE = nestegg
 PACKAGE_BUGREPORT = https://github.com/eggcoin-com/EGG/issues
 PACKAGE_NAME = NestEgg Core
-PACKAGE_STRING = NestEgg Core 1.4.1.3
+PACKAGE_STRING = NestEgg Core 1.5
 PACKAGE_TARNAME = nestegg
 PACKAGE_URL = https://nesteggcoin.com/
-PACKAGE_VERSION = 1.4.1.3
+PACKAGE_VERSION = 1.5
 PATH_SEPARATOR = :
-PIC_FLAGS = 
+PIC_FLAGS =
 PIE_FLAGS = -fPIE
 PKG_CONFIG = /usr/bin/pkg-config --static
-PKG_CONFIG_LIBDIR = 
+PKG_CONFIG_LIBDIR =
 PKG_CONFIG_PATH = /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../share/pkgconfig:/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../lib/pkgconfig
-PORT = 
-PROTOBUF_CFLAGS = 
+PORT =
+PROTOBUF_CFLAGS =
 PROTOBUF_LIBS = -lprotobuf
 PROTOC = /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../native/bin/protoc
 PTHREAD_CC = x86_64-w64-mingw32-gcc
 PTHREAD_CFLAGS = -pthread
-PTHREAD_LIBS = 
+PTHREAD_LIBS =
 PYTHON = /usr/bin/python3.6
 PYTHONPATH = /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../native/lib/python3/dist-packages:
-QR_CFLAGS = 
+QR_CFLAGS =
 QR_LIBS = -lqrencode
-QT5_CFLAGS = 
-QT5_LIBS = 
-QTACCESSIBILITY_CFLAGS = 
-QTACCESSIBILITY_LIBS = 
-QTCGL_CFLAGS = 
-QTCGL_LIBS = 
-QTCLIPBOARD_CFLAGS = 
-QTCLIPBOARD_LIBS = 
-QTDEVICEDISCOVERY_CFLAGS = 
-QTDEVICEDISCOVERY_LIBS = 
-QTEVENTDISPATCHER_CFLAGS = 
-QTEVENTDISPATCHER_LIBS = 
-QTFB_CFLAGS = 
-QTFB_LIBS = 
-QTFONTDATABASE_CFLAGS = 
-QTFONTDATABASE_LIBS = 
-QTGRAPHICS_CFLAGS = 
-QTGRAPHICS_LIBS = 
-QTPLATFORM_CFLAGS = 
-QTPLATFORM_LIBS = 
-QTTHEME_CFLAGS = 
-QTTHEME_LIBS = 
-QTXCBQPA_CFLAGS = 
-QTXCBQPA_LIBS = 
-QT_CONCURRENT_CFLAGS = 
-QT_CONCURRENT_LIBS = 
-QT_DBUS_CFLAGS = 
-QT_DBUS_INCLUDES = 
+QT5_CFLAGS =
+QT5_LIBS =
+QTACCESSIBILITY_CFLAGS =
+QTACCESSIBILITY_LIBS =
+QTCGL_CFLAGS =
+QTCGL_LIBS =
+QTCLIPBOARD_CFLAGS =
+QTCLIPBOARD_LIBS =
+QTDEVICEDISCOVERY_CFLAGS =
+QTDEVICEDISCOVERY_LIBS =
+QTEVENTDISPATCHER_CFLAGS =
+QTEVENTDISPATCHER_LIBS =
+QTFB_CFLAGS =
+QTFB_LIBS =
+QTFONTDATABASE_CFLAGS =
+QTFONTDATABASE_LIBS =
+QTGRAPHICS_CFLAGS =
+QTGRAPHICS_LIBS =
+QTPLATFORM_CFLAGS =
+QTPLATFORM_LIBS =
+QTTHEME_CFLAGS =
+QTTHEME_LIBS =
+QTXCBQPA_CFLAGS =
+QTXCBQPA_LIBS =
+QT_CONCURRENT_CFLAGS =
+QT_CONCURRENT_LIBS =
+QT_DBUS_CFLAGS =
+QT_DBUS_INCLUDES =
 QT_DBUS_LIBS = -lQt5DBus -L/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../lib
 QT_INCLUDES = -I/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../include -I/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../include/QtCore -I/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../include/QtGui -I/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../include/QtWidgets -I/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../include/QtNetwork -I/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../include/QtTest -I/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../include/QtDBus -I/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../include/QtConcurrent -I/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../include/QtSvg -I/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../include/QtCharts
 QT_LDFLAGS =  -mwindows
 QT_LIBS = -lqwindows -lqsvgicon -lqgif -lqsvg -lqminimal -lQt5Concurrent -lQt5Widgets -lQt5Network -lQt5Gui     -lQt5Core    -lqtharfbuzz -lqtpcre2 -lqtlibpng -lz  -limm32  -L/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../lib -lQt5Svg -L/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../lib -L/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../plugins/platforms -L/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../plugins/imageformats -L/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../plugins/iconengines -lversion -ldwmapi -luxtheme
 QT_PIE_FLAGS = -fPIE
 QT_SELECT = qt5
-QT_SVG_CFLAGS = 
-QT_SVG_INCLUDES = 
+QT_SVG_CFLAGS =
+QT_SVG_INCLUDES =
 QT_SVG_LIBS = -lQt5Svg -L/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../lib
-QT_TEST_CFLAGS = 
-QT_TEST_INCLUDES = 
+QT_TEST_CFLAGS =
+QT_TEST_INCLUDES =
 QT_TEST_LIBS = -lQt5Test -L/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../lib
 QT_TRANSLATION_DIR = /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../translations
 RANLIB = /usr/bin/x86_64-w64-mingw32-ranlib
 RCC = /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../native/bin/rcc
 READELF = /usr/bin/x86_64-w64-mingw32-readelf
-RELDFLAGS = 
-RSVG_CONVERT = 
+RELDFLAGS =
+RSVG_CONVERT =
 RUSTC = /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../native/bin/rustc
 RUST_TARGET = x86_64-pc-windows-gnu
 RUST_VENDORED_SOURCES = /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources
-SANITIZER_CXXFLAGS = 
-SANITIZER_LDFLAGS = 
+SANITIZER_CXXFLAGS =
+SANITIZER_LDFLAGS =
 SED = /bin/sed
-SET_MAKE = 
+SET_MAKE =
 SHANI_CXXFLAGS = -msse4 -msha
 SHELL = /bin/bash
-SODIUM_CFLAGS = 
+SODIUM_CFLAGS =
 SODIUM_LIBS = -lsodium
 SSE41_CXXFLAGS = -msse4.1
 SSE42_CXXFLAGS = -msse4.2
-SSL_CFLAGS = 
+SSL_CFLAGS =
 SSL_LIBS = -lssl
 STRIP = /usr/bin/x86_64-w64-mingw32-strip
-TESTDEFS = 
-TIFFCP = 
+TESTDEFS =
+TIFFCP =
 UIC = /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../native/bin/uic
 UNIVALUE_CFLAGS = -I$(srcdir)/univalue/include
 UNIVALUE_LIBS = univalue/libunivalue.la
-USE_NUM_GMP = 
-USE_NUM_OPENSSL = 
-USE_QTCHARTS = 
-USE_UPNP = 
-VERSION = 1.4.1.3
-WARN_CXXFLAGS = 
+USE_NUM_GMP =
+USE_NUM_OPENSSL =
+USE_QTCHARTS =
+USE_UPNP =
+VERSION = 1.5
+WARN_CXXFLAGS =
 WINDOWS_BITS = 64
 WINDRES = /usr/bin/x86_64-w64-mingw32-windres
-X11XCB_CFLAGS = 
-X11XCB_LIBS = 
+X11XCB_CFLAGS =
+X11XCB_LIBS =
 XGETTEXT = /usr/bin/xgettext
 ZMQ_CFLAGS =  -DZMQ_STATIC
 ZMQ_LIBS = -lzmq
@@ -2178,20 +2178,20 @@ abs_builddir = /home/dad/Downloads/NestEGG/src
 abs_srcdir = /home/dad/Downloads/NestEGG/src
 abs_top_builddir = /home/dad/Downloads/NestEGG
 abs_top_srcdir = /home/dad/Downloads/NestEGG
-ac_ct_AR = 
-ac_ct_CC = 
-ac_ct_CXX = 
-ac_ct_DUMPBIN = 
-ac_ct_OBJCXX = 
+ac_ct_AR =
+ac_ct_CC =
+ac_ct_CXX =
+ac_ct_DUMPBIN =
+ac_ct_OBJCXX =
 am__include = include
 am__leading_dot = .
-am__quote = 
+am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
-ax_pthread_config = 
+ax_pthread_config =
 bindir = ${exec_prefix}/bin
 build = x86_64-pc-linux-gnu
-build_alias = 
+build_alias =
 build_cpu = x86_64
 build_os = linux-gnu
 build_vendor = pc
@@ -2227,7 +2227,7 @@ sharedstatedir = ${prefix}/com
 srcdir = .
 subdirs =  src/univalue src/secp256k1
 sysconfdir = ${prefix}/etc
-target_alias = 
+target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
@@ -2275,7 +2275,7 @@ CARGO_CONFIGURED = $(top_srcdir)/.cargo/.configured-for-offline
 #CARGO_CONFIGURED = $(top_srcdir)/.cargo/.configured-for-online
 LIBRUSTZCASH_WIN = $(top_builddir)/target/$(RUST_TARGET)/release/rustzcash.lib
 lib_LTLIBRARIES = $(LIBBITCOINCONSENSUS)
-BENCHMARKS = 
+BENCHMARKS =
 LIBEGGLING_H = \
   sapling/sapling.h \
   bech32.h \
@@ -2894,7 +2894,7 @@ leveldb_libmemenv_a_SOURCES =  \
 #  test/data/sighash.json \
 #  test/data/sapling_key_components.json
 
-#RAW_TEST_FILES = 
+#RAW_TEST_FILES =
 #GENERATED_TEST_FILES = $(JSON_TEST_FILES:.json=.json.h) $(RAW_TEST_FILES:.raw=.raw.h)
 #BITCOIN_TEST_SUITE = test/test_pivx.h \
 #	test/test_pivx.cpp $(am__append_36)
@@ -3965,7 +3965,7 @@ rpc/$(DEPDIR)/$(am__dirstamp):
 rpc/libbitcoin_cli_a-client.$(OBJEXT): rpc/$(am__dirstamp) \
 	rpc/$(DEPDIR)/$(am__dirstamp)
 
-libbitcoin_cli.a: $(libbitcoin_cli_a_OBJECTS) $(libbitcoin_cli_a_DEPENDENCIES) $(EXTRA_libbitcoin_cli_a_DEPENDENCIES) 
+libbitcoin_cli.a: $(libbitcoin_cli_a_OBJECTS) $(libbitcoin_cli_a_DEPENDENCIES) $(EXTRA_libbitcoin_cli_a_DEPENDENCIES)
 	$(AM_V_at)-rm -f libbitcoin_cli.a
 	$(AM_V_AR)$(libbitcoin_cli_a_AR) libbitcoin_cli.a $(libbitcoin_cli_a_OBJECTS) $(libbitcoin_cli_a_LIBADD)
 	$(AM_V_at)$(RANLIB) libbitcoin_cli.a
@@ -4018,7 +4018,7 @@ script/libbitcoin_common_a-standard.$(OBJEXT): script/$(am__dirstamp) \
 script/libbitcoin_common_a-script_error.$(OBJEXT):  \
 	script/$(am__dirstamp) script/$(DEPDIR)/$(am__dirstamp)
 
-libbitcoin_common.a: $(libbitcoin_common_a_OBJECTS) $(libbitcoin_common_a_DEPENDENCIES) $(EXTRA_libbitcoin_common_a_DEPENDENCIES) 
+libbitcoin_common.a: $(libbitcoin_common_a_OBJECTS) $(libbitcoin_common_a_DEPENDENCIES) $(EXTRA_libbitcoin_common_a_DEPENDENCIES)
 	$(AM_V_at)-rm -f libbitcoin_common.a
 	$(AM_V_AR)$(libbitcoin_common_a_AR) libbitcoin_common.a $(libbitcoin_common_a_OBJECTS) $(libbitcoin_common_a_LIBADD)
 	$(AM_V_at)$(RANLIB) libbitcoin_common.a
@@ -4067,7 +4067,7 @@ script/libbitcoin_server_a-sigcache.$(OBJEXT): script/$(am__dirstamp) \
 script/libbitcoin_server_a-ismine.$(OBJEXT): script/$(am__dirstamp) \
 	script/$(DEPDIR)/$(am__dirstamp)
 
-libbitcoin_server.a: $(libbitcoin_server_a_OBJECTS) $(libbitcoin_server_a_DEPENDENCIES) $(EXTRA_libbitcoin_server_a_DEPENDENCIES) 
+libbitcoin_server.a: $(libbitcoin_server_a_OBJECTS) $(libbitcoin_server_a_DEPENDENCIES) $(EXTRA_libbitcoin_server_a_DEPENDENCIES)
 	$(AM_V_at)-rm -f libbitcoin_server.a
 	$(AM_V_AR)$(libbitcoin_server_a_AR) libbitcoin_server.a $(libbitcoin_server_a_OBJECTS) $(libbitcoin_server_a_LIBADD)
 	$(AM_V_at)$(RANLIB) libbitcoin_server.a
@@ -4104,7 +4104,7 @@ util/libbitcoin_util_a-threadnames.$(OBJEXT): util/$(am__dirstamp) \
 compat/libbitcoin_util_a-glibc_compat.$(OBJEXT):  \
 	compat/$(am__dirstamp) compat/$(DEPDIR)/$(am__dirstamp)
 
-libbitcoin_util.a: $(libbitcoin_util_a_OBJECTS) $(libbitcoin_util_a_DEPENDENCIES) $(EXTRA_libbitcoin_util_a_DEPENDENCIES) 
+libbitcoin_util.a: $(libbitcoin_util_a_OBJECTS) $(libbitcoin_util_a_DEPENDENCIES) $(EXTRA_libbitcoin_util_a_DEPENDENCIES)
 	$(AM_V_at)-rm -f libbitcoin_util.a
 	$(AM_V_AR)$(libbitcoin_util_a_AR) libbitcoin_util.a $(libbitcoin_util_a_OBJECTS) $(libbitcoin_util_a_LIBADD)
 	$(AM_V_at)$(RANLIB) libbitcoin_util.a
@@ -4155,7 +4155,7 @@ zpiv/libbitcoin_wallet_a-zpivmodule.$(OBJEXT): zpiv/$(am__dirstamp) \
 zpiv/libbitcoin_wallet_a-zpos.$(OBJEXT): zpiv/$(am__dirstamp) \
 	zpiv/$(DEPDIR)/$(am__dirstamp)
 
-libbitcoin_wallet.a: $(libbitcoin_wallet_a_OBJECTS) $(libbitcoin_wallet_a_DEPENDENCIES) $(EXTRA_libbitcoin_wallet_a_DEPENDENCIES) 
+libbitcoin_wallet.a: $(libbitcoin_wallet_a_OBJECTS) $(libbitcoin_wallet_a_DEPENDENCIES) $(EXTRA_libbitcoin_wallet_a_DEPENDENCIES)
 	$(AM_V_at)-rm -f libbitcoin_wallet.a
 	$(AM_V_AR)$(libbitcoin_wallet_a_AR) libbitcoin_wallet.a $(libbitcoin_wallet_a_OBJECTS) $(libbitcoin_wallet_a_LIBADD)
 	$(AM_V_at)$(RANLIB) libbitcoin_wallet.a
@@ -4172,7 +4172,7 @@ zmq/libbitcoin_zmq_a-zmqnotificationinterface.$(OBJEXT):  \
 zmq/libbitcoin_zmq_a-zmqpublishnotifier.$(OBJEXT):  \
 	zmq/$(am__dirstamp) zmq/$(DEPDIR)/$(am__dirstamp)
 
-libbitcoin_zmq.a: $(libbitcoin_zmq_a_OBJECTS) $(libbitcoin_zmq_a_DEPENDENCIES) $(EXTRA_libbitcoin_zmq_a_DEPENDENCIES) 
+libbitcoin_zmq.a: $(libbitcoin_zmq_a_OBJECTS) $(libbitcoin_zmq_a_DEPENDENCIES) $(EXTRA_libbitcoin_zmq_a_DEPENDENCIES)
 	$(AM_V_at)-rm -f libbitcoin_zmq.a
 	$(AM_V_AR)$(libbitcoin_zmq_a_AR) libbitcoin_zmq.a $(libbitcoin_zmq_a_OBJECTS) $(libbitcoin_zmq_a_LIBADD)
 	$(AM_V_at)$(RANLIB) libbitcoin_zmq.a
@@ -4203,7 +4203,7 @@ sapling/libsapling_a-saplingscriptpubkeyman.$(OBJEXT):  \
 compat/libsapling_a-glibc_compat.$(OBJEXT): compat/$(am__dirstamp) \
 	compat/$(DEPDIR)/$(am__dirstamp)
 
-libsapling.a: $(libsapling_a_OBJECTS) $(libsapling_a_DEPENDENCIES) $(EXTRA_libsapling_a_DEPENDENCIES) 
+libsapling.a: $(libsapling_a_OBJECTS) $(libsapling_a_DEPENDENCIES) $(EXTRA_libsapling_a_DEPENDENCIES)
 	$(AM_V_at)-rm -f libsapling.a
 	$(AM_V_AR)$(libsapling_a_AR) libsapling.a $(libsapling_a_OBJECTS) $(libsapling_a_LIBADD)
 	$(AM_V_at)$(RANLIB) libsapling.a
@@ -4720,7 +4720,7 @@ script/libbitcoinconsensus_la-bitcoinconsensus.lo:  \
 compat/libbitcoinconsensus_la-glibc_compat.lo: compat/$(am__dirstamp) \
 	compat/$(DEPDIR)/$(am__dirstamp)
 
-libbitcoinconsensus.la: $(libbitcoinconsensus_la_OBJECTS) $(libbitcoinconsensus_la_DEPENDENCIES) $(EXTRA_libbitcoinconsensus_la_DEPENDENCIES) 
+libbitcoinconsensus.la: $(libbitcoinconsensus_la_OBJECTS) $(libbitcoinconsensus_la_DEPENDENCIES) $(EXTRA_libbitcoinconsensus_la_DEPENDENCIES)
 	$(AM_V_CXXLD)$(libbitcoinconsensus_la_LINK) $(am_libbitcoinconsensus_la_rpath) $(libbitcoinconsensus_la_OBJECTS) $(libbitcoinconsensus_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
@@ -4807,15 +4807,15 @@ bench/bench_pivx$(EXEEXT): $(bench_bench_pivx_OBJECTS) $(bench_bench_pivx_DEPEND
 	@rm -f bench/bench_pivx$(EXEEXT)
 	$(AM_V_CXXLD)$(bench_bench_pivx_LINK) $(bench_bench_pivx_OBJECTS) $(bench_bench_pivx_LDADD) $(LIBS)
 
-nestegg-cli$(EXEEXT): $(nestegg_cli_OBJECTS) $(nestegg_cli_DEPENDENCIES) $(EXTRA_nestegg_cli_DEPENDENCIES) 
+nestegg-cli$(EXEEXT): $(nestegg_cli_OBJECTS) $(nestegg_cli_DEPENDENCIES) $(EXTRA_nestegg_cli_DEPENDENCIES)
 	@rm -f nestegg-cli$(EXEEXT)
 	$(AM_V_CXXLD)$(nestegg_cli_LINK) $(nestegg_cli_OBJECTS) $(nestegg_cli_LDADD) $(LIBS)
 
-nestegg-tx$(EXEEXT): $(nestegg_tx_OBJECTS) $(nestegg_tx_DEPENDENCIES) $(EXTRA_nestegg_tx_DEPENDENCIES) 
+nestegg-tx$(EXEEXT): $(nestegg_tx_OBJECTS) $(nestegg_tx_DEPENDENCIES) $(EXTRA_nestegg_tx_DEPENDENCIES)
 	@rm -f nestegg-tx$(EXEEXT)
 	$(AM_V_CXXLD)$(nestegg_tx_LINK) $(nestegg_tx_OBJECTS) $(nestegg_tx_LDADD) $(LIBS)
 
-nesteggd$(EXEEXT): $(nesteggd_OBJECTS) $(nesteggd_DEPENDENCIES) $(EXTRA_nesteggd_DEPENDENCIES) 
+nesteggd$(EXEEXT): $(nesteggd_OBJECTS) $(nesteggd_DEPENDENCIES) $(EXTRA_nesteggd_DEPENDENCIES)
 	@rm -f nesteggd$(EXEEXT)
 	$(AM_V_CXXLD)$(nesteggd_LINK) $(nesteggd_OBJECTS) $(nesteggd_LDADD) $(LIBS)
 qt/qt_nestegg_qt-pivx.$(OBJEXT): qt/$(am__dirstamp) \
@@ -12603,7 +12603,7 @@ check-TESTS:
 	log_list=`echo $$log_list`; trs_list=`echo $$trs_list`; \
 	$(MAKE) $(AM_MAKEFLAGS) $(TEST_SUITE_LOG) TEST_LOGS="$$log_list"; \
 	exit $$?;
-recheck: all 
+recheck: all
 	@test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
 	@set +e; $(am__set_TESTS_bases); \
 	bases=`for i in $$bases; do echo $$i; done \

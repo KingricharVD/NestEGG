@@ -9,7 +9,7 @@
 /* #undef AC_APPLE_UNIVERSAL_BUILD */
 
 /* Version Build */
-#define CLIENT_VERSION_BUILD 3
+#define CLIENT_VERSION_BUILD 0
 
 /* Version is release */
 #define CLIENT_VERSION_IS_RELEASE true
@@ -18,13 +18,13 @@
 #define CLIENT_VERSION_MAJOR 1
 
 /* Minor version */
-#define CLIENT_VERSION_MINOR 4
+#define CLIENT_VERSION_MINOR 5
 
 /* Build revision */
-#define CLIENT_VERSION_REVISION 1
+#define CLIENT_VERSION_REVISION 0
 
 /* Version is release */
-#define COPYRIGHT_YEAR 2020
+#define COPYRIGHT_YEAR 2021
 
 /* Define this symbol to build code that uses AVX2 intrinsics */
 #define ENABLE_AVX2 1
@@ -340,7 +340,7 @@
 #define PACKAGE_NAME "NestEgg Core"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "NestEgg Core 1.4.1.3"
+#define PACKAGE_STRING "NestEgg Core 1.5"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "nestegg"
@@ -349,7 +349,7 @@
 #define PACKAGE_URL "https://nesteggcoin.com/"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.4.1.3"
+#define PACKAGE_VERSION "1.5"
 
 /* Path to the zk params dir during unit tests on windows */
 #define PARAMS_DIR ""
