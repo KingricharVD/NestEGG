@@ -1,0 +1,2 @@
+cargo:rerun-if-env-changed=WINAPI_NO_BUNDLED_LIBRARIES
+cargo:rustc-link-search=native=/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/winapi-x86_64-pc-windows-gnu/lib

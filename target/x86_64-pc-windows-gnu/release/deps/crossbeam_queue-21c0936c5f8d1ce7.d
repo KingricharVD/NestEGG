@@ -1,0 +1,10 @@
+/home/dad/Downloads/NestEGG/target/x86_64-pc-windows-gnu/release/deps/crossbeam_queue-21c0936c5f8d1ce7.rmeta: /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/lib.rs /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/array_queue.rs /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/err.rs /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/seg_queue.rs
+
+/home/dad/Downloads/NestEGG/target/x86_64-pc-windows-gnu/release/deps/libcrossbeam_queue-21c0936c5f8d1ce7.rlib: /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/lib.rs /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/array_queue.rs /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/err.rs /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/seg_queue.rs
+
+/home/dad/Downloads/NestEGG/target/x86_64-pc-windows-gnu/release/deps/crossbeam_queue-21c0936c5f8d1ce7.d: /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/lib.rs /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/array_queue.rs /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/err.rs /home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/seg_queue.rs
+
+/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/lib.rs:
+/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/array_queue.rs:
+/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/err.rs:
+/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/crossbeam-queue/src/seg_queue.rs:

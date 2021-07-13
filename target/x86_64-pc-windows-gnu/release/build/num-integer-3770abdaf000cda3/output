@@ -1,0 +1,2 @@
+cargo:rustc-cfg=has_i128
+cargo:rerun-if-changed=/home/dad/Downloads/NestEGG/depends/x86_64-w64-mingw32/share/../vendored-sources/num-integer/build.rs
