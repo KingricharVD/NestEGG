@@ -30,8 +30,8 @@ std::vector<CSporkDef> sporkDefs = {
     MAKE_SPORK_DEF(SPORK_101_SERVICES_ENFORCEMENT,          4070908800ULL), // OFF
     MAKE_SPORK_DEF(SPORK_102_FORCE_ENABLED_MASTERNODE,      4070908800ULL), // OFF
     MAKE_SPORK_DEF(SPORK_103_PING_MESSAGE_SALT,             4070908800ULL), // OFF
-    MAKE_SPORK_DEF(SPORK_104_MAX_BLOCK_TIME,                4070908800ULL), // OFF        
-    MAKE_SPORK_DEF(SPORK_105_MAX_BLOCK_SIZE,                4070908800ULL), // OFF   
+    MAKE_SPORK_DEF(SPORK_104_MAX_BLOCK_TIME,                4070908800ULL), // OFF
+    MAKE_SPORK_DEF(SPORK_105_MAX_BLOCK_SIZE,                4070908800ULL), // OFF
 
 	// Unused dummy sporks.
 	//TODO: Needed to be removed in the future when the old nodes cut from the network.
@@ -106,7 +106,8 @@ void CSporkManager::ProcessSpork(CNode* pfrom, std::string& strCommand, CDataStr
         }
 
         // reject old signature version
-        if (spork.nMessVersion != MessageVersion::MESS_VER_HASH) {
+        if (Params().GetConsensus().NetworkUpgradeActive(chainActive.Tip()->nHeight, Consensus::UPGRADE_TIME_PROTOCOL_V2) &&
+            spork.nMessVersion != MessageVersion::MESS_VER_HASH) {
             LogPrintf("%s : nMessVersion=%d not accepted anymore\n", __func__, spork.nMessVersion);
             return;
         }
@@ -301,4 +302,3 @@ void CSporkMessage::Relay()
     CInv inv(MSG_SPORK, GetHash());
     g_connman->RelayInv(inv);
 }
-

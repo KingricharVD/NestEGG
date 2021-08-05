@@ -32,14 +32,14 @@ enum UpgradeIndex : uint32_t {
     UPGRADE_ZC_V2,
     UPGRADE_BIP65,
     UPGRADE_ZC_PUBLIC,
-    UPGRADE_V3_4,
-    UPGRADE_V4_0,
-    UPGRADE_V5_DUMMY,
-    UPGRADE_STAKE_MIN_DEPTH_V2,
-    UPGRADE_CHECK_WORK_V2,
-    UPGRADE_TESTDUMMY,
-    // NOTE: Also add new upgrades to NetworkUpgradeInfo in upgrades.cpp
-    MAX_NETWORK_UPGRADES
+    UPGRADE_STAKE_MODIFIER_V2,
+   UPGRADE_TIME_PROTOCOL_V2,
+   UPGRADE_P2PKH_BLOCK_SIGNATURES,
+   UPGRADE_STAKE_MIN_DEPTH_V2,
+   UPGRADE_MASTERNODE_RANK_V2,
+   // NOTE: Also add new upgrades to NetworkUpgradeInfo in upgrades.cpp
+   UPGRADE_TESTDUMMY,
+   MAX_NETWORK_UPGRADES,
 };
 
 struct NetworkUpgrade {
@@ -134,7 +134,7 @@ struct Params {
     int64_t TargetTimespan(const bool fV2 = true) const { return fV2 ? nTargetTimespanV2 : nTargetTimespan; }
     uint256 ProofOfStakeLimit(const bool fV2) const { return fV2 ? posLimitV2 : posLimitV1; }
     bool MoneyRange(const CAmount& nValue) const { return (nValue >= 0 && nValue <= nMaxMoneyOut); }
-    bool IsTimeProtocolV2(const int nHeight) const { return NetworkUpgradeActive(nHeight, UPGRADE_V4_0); }
+    bool IsTimeProtocolV2(const int nHeight) const { return NetworkUpgradeActive(nHeight, UPGRADE_TIME_PROTOCOL_V2); }
 
     int FutureBlockTimeDrift(const int nHeight) const
     {
@@ -156,13 +156,13 @@ struct Params {
             const int utxoFromBlockHeight, const uint32_t utxoFromBlockTime) const
     {
         // before stake modifier V2, we require the utxo to be nStakeMinAge old
-        if (!NetworkUpgradeActive(contextHeight, Consensus::UPGRADE_V3_4))
+        if (!NetworkUpgradeActive(contextHeight, Consensus::UPGRADE_STAKE_MODIFIER_V2))
             return (utxoFromBlockTime + nStakeMinAge <= contextTime);
         // with stake modifier V2+, we require the utxo to be nStakeMinDepth deep in the chain
         return (
-            contextHeight - utxoFromBlockHeight 
-                >= 
-            NetworkUpgradeActive(contextHeight, Consensus::UPGRADE_STAKE_MIN_DEPTH_V2) ? 
+            contextHeight - utxoFromBlockHeight
+                >=
+            NetworkUpgradeActive(contextHeight, Consensus::UPGRADE_STAKE_MIN_DEPTH_V2) ?
                 nStakeMinDepthV2 : nStakeMinDepth
         );
     }
