@@ -11,27 +11,27 @@ fi
 	sudo apt install git zip unzip build-essential libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libqt5svg5-dev -y
 
 # Clone EGG code from EGG official Github repository
-	git clone https://github.com/SirElven8/NestEGG
+	git clone https://github.com/KingricharVD/NestEGG
 
 # Entering EGG directory
-	cd EGG
+	cd NestEGG
 
 # Compile dependencies
 	cd depends
 	chmod +x config.sub
 	chmod +x config.guess
-	make -j$(echo $CPU_CORES) HOST=x86_64-pc-linux-gnu 
+	make -j$(echo $CPU_CORES) HOST=x86_64-pc-linux-gnu
 	cd ..
 
 # Compile EGG
 	chmod +x share/genbuild.sh
 	chmod +x autogen.sh
 	./autogen.sh
-	./configure --enable-glibc-back-compat --prefix=$(pwd)/depends/x86_64-pc-linux-gnu LDFLAGS="-static-libstdc++" --enable-cxx --enable-static --disable-shared --disable-debug --disable-tests --disable-bench --with-pic CPPFLAGS="-fPIC -O3 --param ggc-min-expand=1 --param ggc-min-heapsize=32768" CXXFLAGS="-fPIC -O3 --param ggc-min-expand=1 --param ggc-min-heapsize=32768"
+	./configure --enable-glibc-back-compat --prefix=$(pwd)/depends/x86_64-pc-linux-gnu LDFLAGS="-static-libstdc++" --enable-hardening --enable-cxx --enable-static --disable-shared --disable-debug --disable-tests --disable-bench --with-pic CPPFLAGS="-fPIC -O3 --param ggc-min-expand=1 --param ggc-min-heapsize=32768" CXXFLAGS="-fPIC -O3 --param ggc-min-expand=1 --param ggc-min-heapsize=32768"
 	make -j$(echo $CPU_CORES) HOST=x86_64-pc-linux-gnu
 	cd ..
 
 # Create zip file of binaries
-	cp EGG/src/nesteggd EGG/src/nestegg-cli EGG/src/nestegg-tx EGG/src/qt/nestegg-qt .
-	zip EGG-Linux.zip nesteggd nestegg-cli nestegg-tx nestegg-qt
+	cp NestEGG/src/nesteggd NestEGG/src/nestegg-cli NestEGG/src/nestegg-tx NestEGG/src/qt/nestegg-qt .
+	zip NestEGG-Linux.zip nesteggd nestegg-cli nestegg-tx nestegg-qt
 	rm -f nesteggd nestegg-cli nestegg-tx nestegg-qt

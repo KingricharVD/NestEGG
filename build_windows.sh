@@ -12,27 +12,27 @@ fi
 	echo "1" | sudo update-alternatives --config x86_64-w64-mingw32-g++
 
 # Clone EGG code from EGG official Github repository
-	git clone https://github.com/SirElven8/NestEGG
+	git clone https://github.com/KingricharVD/NestEGG
 
 # Entering EGG directory
-	cd EGG
+	cd NestEGG
 
 # Compile dependencies
 	cd depends
 	chmod +x config.sub
 	chmod +x config.guess
-	make -j$(echo $CPU_CORES) HOST=x86_64-w64-mingw32 
+	make -j$(echo $CPU_CORES) HOST=x86_64-w64-mingw32
 	cd ..
 
 # Compile EGG
 	chmod +x share/genbuild.sh
 	chmod +x autogen.sh
 	./autogen.sh
-	./configure --prefix=$(pwd)/depends/x86_64-w64-mingw32 --disable-debug --disable-tests --disable-bench --disable-online-rust CFLAGS="-O3" CXXFLAGS="-O3"
+	./configure --prefix=$(pwd)/depends/x86_64-w64-mingw32 --disable-debug --disable-tests --disable-bench --enable-hardening --disable-online-rust CFLAGS="-O3" CXXFLAGS="-O3"
 	make -j$(echo $CPU_CORES) HOST=x86_64-w64-mingw32
 	cd ..
 
 # Create zip file of binaries
-	cp EGG/src/nesteggd.exe EGG/src/nestegg-cli.exe EGG/src/nestegg-tx.exe EGG/src/qt/nestegg-qt.exe .
-	zip EGG-Windows.zip nesteggd.exe nestegg-cli.exe nestegg-tx.exe nestegg-qt.exe
+	cp NestEGG/src/nesteggd.exe NestEGG/src/nestegg-cli.exe NestEGG/src/nestegg-tx.exe NestEGG/src/qt/nestegg-qt.exe .
+	zip NestEGG-Windows.zip nesteggd.exe nestegg-cli.exe nestegg-tx.exe nestegg-qt.exe
 	rm -f nesteggd.exe nestegg-cli.exe nestegg-tx.exe nestegg-qt.exe

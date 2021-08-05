@@ -7,24 +7,24 @@ then
 fi
 
 # Clone EGG code from EGG official Github repository
-	git clone https://github.com/SirElven8/NestEGG
+	git clone https://github.com/KingricharVD/NestEGG
 
 # Entering EGG directory
-	cd EGG
+	cd NestEGG
 
 # Compile dependencies
 	cd depends
-	make -j$(echo $CPU_CORES) HOST=x86_64-apple-darwin17 
+	make -j$(echo $CPU_CORES) HOST=x86_64-apple-darwin17
 	cd ..
 
 # Compile EGG
 	./autogen.sh
-	./configure --prefix=$(pwd)/depends/x86_64-apple-darwin17 --enable-cxx --enable-static --disable-shared --disable-debug --disable-tests --disable-bench
+	./configure --prefix=$(pwd)/depends/x86_64-apple-darwin17 --enable-cxx --enable-static --disable-shared --enable-hardening --disable-debug --disable-tests --disable-bench
 	make -j$(echo $CPU_CORES) HOST=x86_64-apple-darwin17
 	make deploy
 	cd ..
 
 # Create zip file of binaries
-	cp EGG/src/nesteggd EGG/src/nestegg-cli EGG/src/nestegg-tx EGG/src/qt/nestegg-qt EGG/EGG.dmg .
-	zip EGG-MacOS.zip nesteggd nestegg-cli nestegg-tx nestegg-qt EGG.dmg
+	cp NestEGG/src/nesteggd NestEGG/src/nestegg-cli NestEGG/src/nestegg-tx NestEGG/src/qt/nestegg-qt NestEGG/EGG.dmg .
+	zip NestEGG-MacOS.zip nesteggd nestegg-cli nestegg-tx nestegg-qt EGG.dmg
 	rm -f nesteggd nestegg-cli nestegg-tx nestegg-qt EGG.dmg
