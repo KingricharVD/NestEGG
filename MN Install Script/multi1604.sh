@@ -44,13 +44,13 @@ sudo apt-get -y install libqrencode-dev bsdmainutils unzip
 #sudo apt install git
 cd ~
 cd /usr/local/bin/
-wget https://github.com/SirElven8/NestEGG/releases/1.5.0.0/nestegglin1.5.0.0.tar.gz
+wget https://github.com/KingricharVD/NestEGG/releases/download/v1.5.0.0/nestegglin1.5.0.0.tar.gz
 tar -xzf nestegglin1.5.0.0.tar.gz
 rm -rf nestegglin1.5.0.0.tar.gz
 cd ~
 sudo mkdir /root/nestegg
 cd /root/nestegg
-wget https://github.com/SirElven8/NestEGG/releases/1.5.0.0/nestegglin1.5.0.0.tar.gz
+wget https://github.com/KingricharVD/NestEGG/releases/download/v1.5.0.0/nestegglin1.5.0.0.tar.gz
 tar -xzvf nestegglin1.5.0.0.tar.gz
 sudo mv /root/nestegg/nesteggd /root/nestegg/nestegg-cli /root/nestegg/nestegg-tx /usr/local/bin
 sudo chmod 755 -R  /usr/local/bin/nestegg*
