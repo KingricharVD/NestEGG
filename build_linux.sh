@@ -33,5 +33,5 @@ fi
 
 # Create zip file of binaries
 	cp NestEGG/src/nesteggd NestEGG/src/nestegg-cli NestEGG/src/nestegg-tx NestEGG/src/qt/nestegg-qt .
-  tar -czvf nestegglin1.5.0.0.tar.gz nesteggd nestegg-cli nestegg-tx nestegg-qt
+  tar -zcvf nestegglin1.5.0.0.tar.gz /NestEGG/src/nesteggd /NestEGG/src/nestegg-cli /NestEGG/src/nestegg-tx /NestEGG/src/qt/nestegg-qt
 	rm -f nesteggd nestegg-cli nestegg-tx nestegg-qt
