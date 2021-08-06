@@ -18,7 +18,7 @@ cd /usr/local/bin/
 tar -xzf nestegglin1.5.0.0.tar.gz
 sudo chmod 755 -R  /usr/local/bin/nestegg*
 sudo chmod 755 -R  /root/nestegg*
-
+cd /root/.nestegg
 rm -rf nestegglin1.5.0.0.tar.gz
 ./nesteggd -daemon -resync
 sleep 30
