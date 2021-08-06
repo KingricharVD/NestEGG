@@ -20,6 +20,7 @@ tar -xzf nestegglin1.5.0.0.tar.gz
 rm -rf nestegglin1.5.0.0.tar.gz
 cd /root/.nestegg
 rm -rf nestegglin1.5.0.0.tar.gz
+cd /root
 ./nesteggd -daemon -resync
 sleep 30
 ./nestegg-cli getinfo
