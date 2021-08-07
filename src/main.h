@@ -78,7 +78,7 @@ static const unsigned int DEFAULT_DESCENDANT_SIZE_LIMIT = 101;
 static const unsigned int DEFAULT_MEMPOOL_EXPIRY = 72;
 /** Default for -txindex */
 static const bool DEFAULT_TXINDEX = false;
-static const bool DEFAULT_CHECKPOINTS_ENABLED = true;
+static const bool DEFAULT_CHECKPOINTS_ENABLED = false;
 /** Default for -testsafemode */
 static const bool DEFAULT_TESTSAFEMODE = false;
 /** Default for -relaypriority */
