@@ -97,7 +97,7 @@ std::atomic<bool> fImporting{false};
 std::atomic<bool> fReindex{false};
 bool fTxIndex = true;
 bool fCheckBlockIndex = false;
-bool fVerifyingBlocks = false;
+bool fVerifyingBlocks = true;
 size_t nCoinCacheUsage = 5000 * 300;
 
 // banned addresses
