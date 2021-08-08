@@ -69,7 +69,7 @@ static const unsigned int DEFAULT_ANCESTOR_LIMIT = 25;
 /** Default for -limitancestorsize, maximum kilobytes of tx + all in-mempool ancestors */
 static const unsigned int DEFAULT_ANCESTOR_SIZE_LIMIT = 101;
 /** Default for -banscore */
-static const int DEFAULT_BANSCORE_THRESHOLD = 100;
+static const int DEFAULT_BANSCORE_THRESHOLD = 300;
 /** Default for -limitdescendantcount, max number of in-mempool descendants */
 static const unsigned int DEFAULT_DESCENDANT_LIMIT = 25;
 /** Default for -limitdescendantsize, maximum kilobytes of in-mempool descendants */
@@ -77,8 +77,8 @@ static const unsigned int DEFAULT_DESCENDANT_SIZE_LIMIT = 101;
 /** Default for -mempoolexpiry, expiration time for mempool transactions in hours */
 static const unsigned int DEFAULT_MEMPOOL_EXPIRY = 72;
 /** Default for -txindex */
-static const bool DEFAULT_TXINDEX = false;
-static const bool DEFAULT_CHECKPOINTS_ENABLED = false;
+static const bool DEFAULT_TXINDEX = true;
+static const bool DEFAULT_CHECKPOINTS_ENABLED = true;
 /** Default for -testsafemode */
 static const bool DEFAULT_TESTSAFEMODE = false;
 /** Default for -relaypriority */

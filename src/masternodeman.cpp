@@ -524,7 +524,7 @@ CMasternode* CMasternodeMan::GetNextMasternodeInQueueForPayment(int nBlockHeight
 		if (sporkManager.IsSporkActive(SPORK_20_UPGRADE_CYCLE_FACTOR))
         {
           if (Params().GetConsensus().NetworkUpgradeActive(chainActive.Tip()->nHeight, Consensus::UPGRADE_STAKE_MODIFIER_V2)) {
-            if (fFilterSigTime && mn.sigTime + (nMnCount * 1.0 * 60) > GetAdjustedTime()) continue;
+            if (fFilterSigTime && mn.sigTime + (nMnCount * 60) > GetAdjustedTime()) continue;
         }
         else
         {
@@ -604,8 +604,7 @@ int CMasternodeMan::GetMasternodeRank(const CTxIn& vin, int64_t nBlockHeight, in
 
     //make sure we know about this block
     uint256 hash;
-    if (!GetBlockHash(hash, nBlockHeight)) return -1;
-if (!GetBlockHash(hash, nBlockHeight)) return defaultValue;
+  if (!GetBlockHash(hash, nBlockHeight)) return defaultValue;
     // scan for winner
     for (CMasternode& mn : vMasternodes) {
         if (mn.protocolVersion < minProtocol) {
