@@ -141,7 +141,7 @@ public:
 		//TODO: Create a new spork key pair for security.
         consensus.strSporkPubKey = "0461ccb471a2c9027c06a6e9b06e593949b8a5a71ec86e0c4a4acc86c045b17a28fe3a063076075244f950660ae8b12b6ac82f10a653365b26333f2b3e84ea2cb8";
         consensus.strSporkPubKeyOld = "043969b1b0e6f327de37f297a015d37e2235eaaeeb3933deecd8162c075cee0207b13537618bde640879606001a8136091c62ec272dd0133424a178704e6e75bb7";
-        consensus.nTime_EnforceNewSporkKey = 1629216000;    //!> Date and time (GMT): Tuesday 17, 2021 4:00:00 PM
+        consensus.nTime_EnforceNewSporkKey = 1630512000;    //!> Date and time (GMT): Tuesday 17, 2021 4:00:00 PM
         consensus.nTime_RejectOldSporkKey = 1556165178;     //!> September 26, 2019 11:00:00 PM GMT
 
         // height-based activations
@@ -280,7 +280,7 @@ public:
 		//TODO: Create a new spork key pair for security.
         consensus.strSporkPubKey = "04859410102e3c97aedb88803d50f31a6a06c300531a9a6f9ccea78a7b33dbc9593c9639ad56792290d318fdc6c168c4354d404e450cbb264b7c8c1645ca94dddd";
         consensus.strSporkPubKeyOld = "04d45416e4a64b1b051e2a2ebd80ced5efe148cf5fbcb70e56860957675a2da1a21fd522c42c1ed18a1ec42641589a09cf3f58678d213825dc21798183a005a984";
-        consensus.nTime_EnforceNewSporkKey = 1629216000;    //!> Date and time (GMT): Tuesday 17, 2021 4:00:00 PM
+        consensus.nTime_EnforceNewSporkKey = 1630512000;    //!> Date and time (GMT): Tuesday 17, 2021 4:00:00 PM
         consensus.nTime_RejectOldSporkKey = 1556165178;     //!> September 26, 2019 11:00:00 PM GMT
 
         // height based activations
