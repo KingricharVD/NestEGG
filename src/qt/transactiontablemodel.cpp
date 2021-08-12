@@ -326,7 +326,6 @@ public:
     int size()
     {
         LOCK(cs_cachedWallet);
-        return cachedWallet.size();
     }
 
     bool containsZcTxes()
@@ -406,7 +405,7 @@ void TransactionTableModel::updateTransaction(const QString& hash, int status, b
     priv->updateWallet(updated, status, showTransaction, rec);
 
     if (!rec.isNull())
-        Q_EMIT txArrived(hash, rec.isCoinStake());
+        Q_EMIT txArrived(hash, rec.isCoinStake(), rec.isAnyColdStakingType());
 }
 
 void TransactionTableModel::updateConfirmations()
