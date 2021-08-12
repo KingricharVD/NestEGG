@@ -3474,7 +3474,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
     }
 
     // Cold Staking enforcement (true during sync - reject P2CS outputs when false)
-    bool fColdStakingActive = true;
+    bool fColdStakingActive = false;
 
     // Zerocoin activation
     bool fZerocoinActive = block.GetBlockTime() > Params().GetConsensus().ZC_TimeStart;
