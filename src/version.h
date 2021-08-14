@@ -25,7 +25,7 @@ static const int MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT = 70926;
 static const int MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT = 70930;
 
 //! masternodes older than this proto version use old strMessage format for mnannounce
-static const int MIN_PEER_MNANNOUNCE = 70913;
+static const int MIN_PEER_MNANNOUNCE = 70929;
 
 //! nTime field added to CAddress, starting with this version;
 //! if possible, avoid requesting addresses nodes older than this

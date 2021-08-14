@@ -97,7 +97,7 @@ std::atomic<bool> fImporting{false};
 std::atomic<bool> fReindex{false};
 bool fTxIndex = true;
 bool fCheckBlockIndex = false;
-bool fVerifyingBlocks = false;
+bool fVerifyingBlocks = true;
 size_t nCoinCacheUsage = 5000 * 300;
 
 // banned addresses
@@ -3474,7 +3474,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
     }
 
     // Cold Staking enforcement (true during sync - reject P2CS outputs when false)
-    bool fColdStakingActive = false;
+    bool fColdStakingActive = true;
 
     // Zerocoin activation
     bool fZerocoinActive = block.GetBlockTime() > Params().GetConsensus().ZC_TimeStart;
