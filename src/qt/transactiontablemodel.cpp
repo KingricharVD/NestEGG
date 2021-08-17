@@ -407,7 +407,7 @@ void TransactionTableModel::updateTransaction(const QString& hash, int status, b
         Q_EMIT txArrived(hash, rec.isCoinStake());
 }
 
-void TransactionTableModel::updateConfirmations()
+void TransactionTableModel::updateConfirmations(), rec.isAnyColdStakingType());
 {
     // Blocks came in since last poll.
     // Invalidate status (number of confirmations) and (possibly) description
