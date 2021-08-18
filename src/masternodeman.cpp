@@ -186,46 +186,45 @@ void DumpMasternodes()
     CMasternodeDB::ReadResult readResult = mndb.Read(tempMnodeman, true);
     // there was an error and it was not an error on file opening => do not proceed
     if (readResult == CMasternodeDB::FileError)
-          LogPrint(BCLog::MASTERNODE,"Missing masternode cache file - mncache.dat, will try to recreate\n");
-      else if (readResult != CMasternodeDB::Ok) {
-          LogPrint(BCLog::MASTERNODE,"Error reading mncache.dat: ");
-          if (readResult == CMasternodeDB::IncorrectFormat)
-              LogPrint(BCLog::MASTERNODE,"magic is ok but data has invalid format, will try to recreate\n");
-          else {
-              LogPrint(BCLog::MASTERNODE,"file format is unknown or invalid, please fix it manually\n");
-              return;
-          }
-      }
-      LogPrint(BCLog::MASTERNODE,"Writting info to mncache.dat...\n");
-      mndb.Write(mnodeman);
+        LogPrint(BCLog::MASTERNODE,"Missing masternode cache file - mncache.dat, will try to recreate\n");
+    else if (readResult != CMasternodeDB::Ok) {
+        LogPrint(BCLog::MASTERNODE,"Error reading mncache.dat: ");
+        if (readResult == CMasternodeDB::IncorrectFormat)
+            LogPrint(BCLog::MASTERNODE,"magic is ok but data has invalid format, will try to recreate\n");
+        else {
+            LogPrint(BCLog::MASTERNODE,"file format is unknown or invalid, please fix it manually\n");
+            return;
+        }
+    }
+    LogPrint(BCLog::MASTERNODE,"Writting info to mncache.dat...\n");
+    mndb.Write(mnodeman);
 
-      LogPrint(BCLog::MASTERNODE,"Masternode dump finished  %dms\n", GetTimeMillis() - nStart);
-  }
+    LogPrint(BCLog::MASTERNODE,"Masternode dump finished  %dms\n", GetTimeMillis() - nStart);
+}
 
-  CMasternodeMan::CMasternodeMan()
-  {
-      nDsqCount = 0;
-  }
+CMasternodeMan::CMasternodeMan()
+{
+    nDsqCount = 0;
+}
 
-  bool CMasternodeMan::Add(CMasternode& mn)
-  {
-      LOCK(cs);
+bool CMasternodeMan::Add(CMasternode& mn)
+{
+    LOCK(cs);
 
-      if (!mn.IsEnabled())
-          return false;
+    if (!mn.IsEnabled())
+        return false;
 
-      CMasternode* pmn = Find(mn.vin);
-      CMasternode* pmnByAddr = Find(mn.addr);
-      bool masternodeRankV2 = Params().GetConsensus().NetworkUpgradeActive(chainActive.Height(), Consensus::UPGRADE_MASTERNODE_RANK_V2);
-      if (pmn == NULL && (!masternodeRankV2 || pmnByAddr == NULL)) {
-          LogPrint(BCLog::MASTERNODE, "CMasternodeMan: Adding new Masternode %s - count %i now\n", mn.vin.prevout.ToStringShort(), size() + 1);
-          vMasternodes.push_back(mn);
-          return true;
-      }
+    CMasternode* pmn = Find(mn.vin);
+    CMasternode* pmnByAddr = Find(mn.addr);
+     bool masternodeRankV2 = Params().GetConsensus().NetworkUpgradeActive(chainActive.Height(), Consensus::UPGRADE_MASTERNODE_RANK_V2);
+     if (pmn == NULL && (!masternodeRankV2 || pmnByAddr == NULL)) {
+        LogPrint(BCLog::MASTERNODE, "CMasternodeMan: Adding new Masternode %s - %i now\n", mn.vin.prevout.hash.ToString(), size() + 1);
+        vMasternodes.push_back(mn);
+        return true;
+    }
 
-      return false;
-  }
-
+    return false;
+}
 
 void CMasternodeMan::AskForMN(CNode* pnode, const CTxIn& vin)
 {
@@ -478,17 +477,6 @@ CMasternode* CMasternodeMan::Find(const CPubKey& pubKeyMasternode)
 
     for (CMasternode& mn : vMasternodes) {
         if (mn.pubKeyMasternode == pubKeyMasternode)
-            return &mn;
-    }
-    return NULL;
-}
-
-CMasternode* CMasternodeMan::Find(const CService &addr)
-{
-    LOCK(cs);
-
-    for (CMasternode& mn : vMasternodes) {
-        if (mn.addr.ToStringIP() == addr.ToStringIP())
             return &mn;
     }
     return NULL;
