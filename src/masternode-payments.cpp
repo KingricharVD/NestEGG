@@ -16,7 +16,7 @@
 #include "sync.h"
 #include "util.h"
 #include "utilmoneystr.h"
-#include "core_io.h"
+
 
 /** Object for who's going to get paid on which blocks */
 CMasternodePayments masternodePayments;
