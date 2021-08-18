@@ -482,7 +482,7 @@ public:
                 Consensus::NetworkUpgrade::ALWAYS_ACTIVE;
         consensus.vUpgrades[Consensus::UPGRADE_P2PKH_BLOCK_SIGNATURES].nActivationHeight       = 300;
         consensus.vUpgrades[Consensus::UPGRADE_STAKE_MIN_DEPTH_V2].nActivationHeight    = 1001;
-        consensus.vUpgrades[Consensus::UPGRADE_ZC_V2].nActivationHeight = Consensus::NetworkUpgrade::ALWAYS_ACTIVE;
+        consensus.vUpgrades[Consensus::UPGRADE_CHECK_WORK_V2].nActivationHeight = Consensus::NetworkUpgrade::ALWAYS_ACTIVE;
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
