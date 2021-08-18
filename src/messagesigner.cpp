@@ -80,7 +80,7 @@ bool CHashSigner::VerifyHash(const uint256& hash, const CKeyID& keyID, const std
 bool CSignedMessage::Sign(const CKey& key, const CPubKey& pubKey)
 {
     std::string strError = "";
-if (Params().GetConsensus().NetworkUpgradeActive(chainActive.Height(), Consensus::UPGRADE_STAKE_MODIFIER_V2)) {
+
     nMessVersion = MessageVersion::MESS_VER_HASH;
     uint256 hash = GetSignatureHash();
 
@@ -157,3 +157,4 @@ void CSignedMessage::swap(CSignedMessage& first, CSignedMessage& second) // noth
     swap(first.vchSig, second.vchSig);
     swap(first.nMessVersion, second.nMessVersion);
 }
+

@@ -207,16 +207,8 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
     // Make sure to create the correct block version
     const Consensus::Params& consensus = Params().GetConsensus();
 
-    if (consensus.NetworkUpgradeActive(nHeight, Consensus::UPGRADE_TIME_PROTOCOL_V2))
-        pblock->nVersion = 7;
-    else if (consensus.NetworkUpgradeActive(nHeight, Consensus::UPGRADE_STAKE_MODIFIER_V2))
-        pblock->nVersion = 6;
-    else if (consensus.NetworkUpgradeActive(nHeight, Consensus::UPGRADE_BIP65))
-        pblock->nVersion = 5;
-    else if (consensus.NetworkUpgradeActive(nHeight, Consensus::UPGRADE_ZC))
-        pblock->nVersion = 4;
-    else
-        pblock->nVersion = 3;
+    //!> Block v7: Removes accumulator checkpoints
+    pblock->nVersion = CBlockHeader::CURRENT_VERSION;
     // -regtest only: allow overriding block.nVersion with
     // -blockversion=N to test forking scenarios
     if (Params().IsRegTestNet()) {
@@ -239,11 +231,11 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
     unsigned int nBlockMaxSizeSpork = (unsigned int)sporkManager.GetSporkValue(SPORK_105_MAX_BLOCK_SIZE);
 
     nBlockMaxSize = std::max(
-        (unsigned int)1000,
+        (unsigned int)1000, 
         std::min(
             std::min(
-                nBlockMaxSizeSpork,
-                nBlockMaxSizeNetwork),
+                nBlockMaxSizeSpork, 
+                nBlockMaxSizeNetwork), 
             nBlockMaxSize
         )
     );
