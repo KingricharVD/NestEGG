@@ -129,24 +129,28 @@ UniValue importprivkey(const JSONRPCRequest& request)
 
         // Don't throw error in case a key is already there
         if (pwalletMain->HaveKey(vchAddress))
-              return NullUniValue;
+            return NullUniValue;
 
-          pwalletMain->mapKeyMetadata[vchAddress].nCreateTime = 1;
+        pwalletMain->mapKeyMetadata[vchAddress].nCreateTime = 1;
 
-          if (!pwalletMain->AddKeyPubKey(key, pubkey))
-              throw JSONRPCError(RPC_WALLET_ERROR, "Error adding key to wallet");
+        if (!pwalletMain->AddKeyPubKey(key, pubkey))
+            throw JSONRPCError(RPC_WALLET_ERROR, "Error adding key to wallet");
 
-          // whenever a key is imported, we need to scan the whole chain
-          pwalletMain->nTimeFirstKey = 1; // 0 would be considered 'no value'
+        // whenever a key is imported, we need to scan the whole chain
+        pwalletMain->nTimeFirstKey = 1; // 0 would be considered 'no value'
 
-          if (fRescan) {
-              CBlockIndex *pindex = chainActive.Genesis();
-              pwalletMain->ScanForWalletTransactions(pindex, true);
-          }
-      }
+        if (fRescan) {
+            CBlockIndex *pindex = chainActive.Genesis();
+            if (fStakingAddress && !Params().IsRegTestNet()) {
+                // cold staking was activated after nBlockTimeProtocolV2 (PIVX v4.0). No need to scan the whole chain
+                pindex = chainActive[Params().GetConsensus().vUpgrades[Consensus::UPGRADE_V4_0].nActivationHeight];
+            }
+            pwalletMain->ScanForWalletTransactions(pindex, true);
+        }
+    }
 
-      return NullUniValue;
-  }
+    return NullUniValue;
+}
 
 void ImportAddress(const CTxDestination& dest, const std::string& strLabel, const std::string& strPurpose);
 
