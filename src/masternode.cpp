@@ -351,7 +351,7 @@ CAmount CMasternode::GetBlockValue(int nHeight)
     }
 
     int64_t nSubsidy = 0;
-
+    
     if (nHeight == 0) {
      nSubsidy = 250000 * COIN;
     }
@@ -361,9 +361,9 @@ CAmount CMasternode::GetBlockValue(int nHeight)
     else if (nHeight > 56600 && nHeight <= 57000) {
      nSubsidy = 10 * COIN;
     } else if (nHeight > 57000) {
-     nSubsidy = 100 * COIN;
-    }
-
+     nSubsidy = 100 * COIN;    
+    } 
+    
     return nSubsidy;
 }
 
@@ -473,43 +473,21 @@ bool CMasternodeBroadcast::Create(CTxIn txin, CService service, CKey keyCollater
 
 bool CMasternodeBroadcast::Sign(const CKey& key, const CPubKey& pubKey)
 {
-
-    sigTime = GetAdjustedTime();
-
     std::string strError = "";
-    std::string strMessage;
+    nMessVersion = MessageVersion::MESS_VER_HASH;
+    const std::string strMessage = GetSignatureHash().GetHex();
 
-    if(Params().GetConsensus().NetworkUpgradeActive(chainActive.Height(), Consensus::UPGRADE_STAKE_MODIFIER_V2)) {
-        nMessVersion = MessageVersion::MESS_VER_HASH;
-        strMessage = GetSignatureHash().GetHex();
-
-        if (!CMessageSigner::SignMessage(strMessage, vchSig, key)) {
-            return error("%s : SignMessage() (nMessVersion=%d) failed", __func__, nMessVersion);
-        }
-
-        if (!CMessageSigner::VerifyMessage(pubKey, vchSig, strMessage, strError)) {
-            return error("%s : VerifyMessage() (nMessVersion=%d) failed, error: %s\n",
-                    __func__, nMessVersion, strError);
-        }
-
-        return true;
-    } else {
-        nMessVersion = MessageVersion::MESS_VER_STRMESS;
-        strMessage = GetOldStrMessage();
-
-        CHashWriter ss(SER_GETHASH, 0);
-        ss << strMessageMagic;
-        ss << strMessage;
-
-        if (!key.SignCompact(ss.GetHash(), vchSig)) {
-            return error("%s : VerifyMessage() (nMessVersion=%d) failed, error: Signing failed.\n",
-                    __func__, nMessVersion);
-        }
-
-        return true;
+    if (!CMessageSigner::SignMessage(strMessage, vchSig, key)) {
+        return error("%s : SignMessage() (nMessVersion=%d) failed", __func__, nMessVersion);
     }
-}
 
+    if (!CMessageSigner::VerifyMessage(pubKey, vchSig, strMessage, strError)) {
+        return error("%s : VerifyMessage() (nMessVersion=%d) failed, error: %s\n",
+                __func__, nMessVersion, strError);
+    }
+
+    return true;
+}
 
 bool CMasternodeBroadcast::Sign(const std::string strSignKey)
 {
@@ -557,10 +535,10 @@ bool CMasternodeBroadcast::CheckDefaultPort(CService service, std::string& strEr
 bool CMasternodeBroadcast::CheckAndUpdate(int& nDos)
 {
     // make sure signature isn't in the future (past is OK)
-    if(masternodeRankV2 && sigTime < GetAdjustedTime() - (masternodeRankV2 ? 5 * 60 : 60 * 60)) {
-          LogPrint(BCLog::MASTERNODE, "mnb - Signature rejected, too far into the past %s\n", vin.prevout.ToStringShort());
-          nDos = 1;
-          return false;
+    if (sigTime > GetAdjustedTime() + 60 * 60) {
+        LogPrint(BCLog::MASTERNODE, "mnb - Signature rejected, too far into the future %s\n", vin.prevout.hash.ToString());
+        nDos = 1;
+        return false;
     }
 
     // incorrect ping or its sigTime
@@ -788,15 +766,13 @@ std::string CMasternodePing::GetStrMessage() const
 
 bool CMasternodePing::CheckAndUpdate(int& nDos, bool fRequireEnabled, bool fCheckSigTimeOnly)
 {
-  bool masternodeRankV2 = Params().GetConsensus().NetworkUpgradeActive(chainActive.Height(), Consensus::UPGRADE_MASTERNODE_RANK_V2);
-
-  if (sigTime > GetAdjustedTime() + (masternodeRankV2 ? 5 * 60 : 60 * 60)) {
+    if (sigTime > GetAdjustedTime() + 60 * 60) {
         LogPrint(BCLog::MNPING, "%s: Signature rejected, too far into the future %s\n", __func__, vin.prevout.hash.ToString());
         nDos = 1;
         return false;
     }
 
-    if (sigTime <= GetAdjustedTime() - (masternodeRankV2 ? 5 * 60 : 60 * 60)) {
+    if (sigTime <= GetAdjustedTime() - 60 * 60) {
         LogPrint(BCLog::MNPING, "%s: Signature rejected, too far into the past %s - %d %d \n", __func__, vin.prevout.hash.ToString(), sigTime, GetAdjustedTime());
         nDos = 1;
         return false;
