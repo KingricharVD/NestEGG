@@ -146,25 +146,25 @@ CMasternodePaymentDB::ReadResult CMasternodePaymentDB::Read(CMasternodePayments&
     }
 
     return Ok;
-  }
+}
 
-  uint256 CMasternodePaymentWinner::GetHash() const
-  {
-      CHashWriter ss(SER_GETHASH, PROTOCOL_VERSION);
-      ss << std::vector<unsigned char>(payee.begin(), payee.end());
-      ss << nBlockHeight;
-      ss << vinMasternode.prevout;
-      return ss.GetHash();
-  }
+uint256 CMasternodePaymentWinner::GetHash() const
+{
+    CHashWriter ss(SER_GETHASH, PROTOCOL_VERSION);
+    ss << std::vector<unsigned char>(payee.begin(), payee.end());
+    ss << nBlockHeight;
+    ss << vinMasternode.prevout;
+    return ss.GetHash();
+}
 
-  std::string CMasternodePaymentWinner::GetStrMessage() const
-  {
-      if (Params().GetConsensus().NetworkUpgradeActive(chainActive.Tip()->nHeight, Consensus::UPGRADE_TIME_PROTOCOL_V2)) {
-          return vinMasternode.prevout.ToStringShort() + std::to_string(nBlockHeight) + HexStr(payee);
-      } else {
-          return vinMasternode.prevout.ToStringShort() + std::to_string(nBlockHeight) + ScriptToAsmStr(payee);
-      }
-  }
+std::string CMasternodePaymentWinner::GetStrMessage() const
+{
+    if (Params().GetConsensus().NetworkUpgradeActive(chainActive.Tip()->nHeight, Consensus::UPGRADE_TIME_PROTOCOL_V2)) {
+        return vinMasternode.prevout.ToStringShort() + std::to_string(nBlockHeight) + HexStr(payee);
+    } else {
+        return vinMasternode.prevout.ToStringShort() + std::to_string(nBlockHeight) + ScriptToAsmStr(payee);
+    }
+}
 
 bool CMasternodePaymentWinner::IsValid(CNode* pnode, std::string& strError)
 {
