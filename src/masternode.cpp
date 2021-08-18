@@ -473,6 +473,7 @@ bool CMasternodeBroadcast::Create(CTxIn txin, CService service, CKey keyCollater
 
 bool CMasternodeBroadcast::Sign(const CKey& key, const CPubKey& pubKey)
 {
+
     sigTime = GetAdjustedTime();
 
     std::string strError = "";
@@ -555,48 +556,47 @@ bool CMasternodeBroadcast::CheckDefaultPort(CService service, std::string& strEr
 
 bool CMasternodeBroadcast::CheckAndUpdate(int& nDos)
 {
-  // make sure signature isn't in the future (past is OK)
-  if (sigTime > GetAdjustedTime() + 60 * 60) {
-      LogPrint(BCLog::MASTERNODE, "mnb - Signature rejected, too far into the future %s\n", vin.prevout.ToStringShort());
-      nDos = 1;
-      return false;
-  }
+    // make sure signature isn't in the future (past is OK)
+    if(masternodeRankV2 && sigTime < GetAdjustedTime() - (masternodeRankV2 ? 5 * 60 : 60 * 60)) {
+          LogPrint(BCLog::MASTERNODE, "mnb - Signature rejected, too far into the past %s\n", vin.prevout.ToStringShort());
+          nDos = 1;
+          return false;
+    }
 
-  // incorrect ping or its sigTime
-  if(lastPing.IsNull() || !lastPing.CheckAndUpdate(nDos, false, true))
-  return false;
+    // incorrect ping or its sigTime
+    if (lastPing.IsNull() || !lastPing.CheckAndUpdate(nDos, false, true))
+        return false;
 
-  if (protocolVersion < ActiveProtocol()) {
-      LogPrint(BCLog::MASTERNODE, "mnb - ignoring outdated Masternode %s protocol version %d\n", vin.prevout.ToStringShort(), protocolVersion);
-      return false;
-  }
+    if (protocolVersion < ActiveProtocol()) {
+        LogPrint(BCLog::MASTERNODE, "mnb - ignoring outdated Masternode %s protocol version %d\n", vin.prevout.hash.ToString(), protocolVersion);
+        return false;
+    }
 
-  CScript pubkeyScript;
-  pubkeyScript = GetScriptForDestination(pubKeyCollateralAddress.GetID());
+    CScript pubkeyScript;
+    pubkeyScript = GetScriptForDestination(pubKeyCollateralAddress.GetID());
 
-  if (pubkeyScript.size() != 25) {
-      LogPrint(BCLog::MASTERNODE,"mnb - pubkey the wrong size\n");
-      nDos = 100;
-      return false;
-  }
+    if (pubkeyScript.size() != 25) {
+        LogPrint(BCLog::MASTERNODE, "mnb - pubkey the wrong size\n");
+        nDos = 100;
+        return false;
+    }
 
-  CScript pubkeyScript2;
-  pubkeyScript2 = GetScriptForDestination(pubKeyMasternode.GetID());
+    CScript pubkeyScript2;
+    pubkeyScript2 = GetScriptForDestination(pubKeyMasternode.GetID());
 
-  if (pubkeyScript2.size() != 25) {
-      LogPrint(BCLog::MASTERNODE,"mnb - pubkey2 the wrong size\n");
-      nDos = 100;
-      return false;
-  }
+    if (pubkeyScript2.size() != 25) {
+        LogPrint(BCLog::MASTERNODE, "mnb - pubkey2 the wrong size\n");
+        nDos = 100;
+        return false;
+    }
 
-  if (!vin.scriptSig.empty()) {
-      LogPrint(BCLog::MASTERNODE, "mnb - Ignore Not Empty ScriptSig %s\n", vin.prevout.ToStringShort());
-      return false;
-  }
+    if (!vin.scriptSig.empty()) {
+        LogPrint(BCLog::MASTERNODE, "mnb - Ignore Not Empty ScriptSig %s\n", vin.prevout.hash.ToString());
+        return false;
+    }
 
-  std::string strError = "";
-  if (!CheckSignature())
-  {
+    std::string strError = "";
+    if (!CheckSignature()) {
         // masternodes older than this proto version use old strMessage format for mnannounce
         nDos = protocolVersion < MIN_PEER_MNANNOUNCE ? 0 : 100;
         return error("%s : Got bad Masternode address signature", __func__);
@@ -788,13 +788,15 @@ std::string CMasternodePing::GetStrMessage() const
 
 bool CMasternodePing::CheckAndUpdate(int& nDos, bool fRequireEnabled, bool fCheckSigTimeOnly)
 {
-    if (sigTime > GetAdjustedTime() + 60 * 60) {
+  bool masternodeRankV2 = Params().GetConsensus().NetworkUpgradeActive(chainActive.Height(), Consensus::UPGRADE_MASTERNODE_RANK_V2);
+
+  if (sigTime > GetAdjustedTime() + (masternodeRankV2 ? 5 * 60 : 60 * 60)) {
         LogPrint(BCLog::MNPING, "%s: Signature rejected, too far into the future %s\n", __func__, vin.prevout.hash.ToString());
         nDos = 1;
         return false;
     }
 
-    if (sigTime <= GetAdjustedTime() - 60 * 60) {
+    if (sigTime <= GetAdjustedTime() - (masternodeRankV2 ? 5 * 60 : 60 * 60)) {
         LogPrint(BCLog::MNPING, "%s: Signature rejected, too far into the past %s - %d %d \n", __func__, vin.prevout.hash.ToString(), sigTime, GetAdjustedTime());
         nDos = 1;
         return false;
