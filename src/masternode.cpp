@@ -149,7 +149,7 @@ bool CMasternode::UpdateFromNewBroadcast(CMasternodeBroadcast& mnb)
         int nDoS = 0;
         if (mnb.lastPing.IsNull() || (!mnb.lastPing.IsNull() && mnb.lastPing.CheckAndUpdate(nDoS, false))) {
             lastPing = mnb.lastPing;
-            mnodeman.mapSeenMasternodePing.insert(std::make_pair(lastPing.GetHash(), lastPing));
+            CConnman.mapSeenMasternodePing.insert(std::make_pair(lastPing.GetHash(), lastPing));
         }
         return true;
     }
@@ -276,7 +276,7 @@ int64_t CMasternode::GetLastPaid()
     // use a deterministic offset to break a tie -- 2.5 minutes
     int64_t nOffset = hash.GetCompact(false) % 150;
 
-    int nMnCount = mnodeman.CountEnabled() * 1.25;
+    int nMnCount = CConnman.CountEnabled() * 1.25;
     int n = 0;
     for (unsigned int i = 1; BlockReading && BlockReading->nHeight > 0; i++) {
         if (n >= nMnCount) {
@@ -828,7 +828,7 @@ bool CMasternodeBroadcast::CheckAndUpdate(int& nDos)
     }
 
     //search existing Masternode list, this is where we update existing Masternodes with new mnb broadcasts
-    CMasternode* pmn = mnodeman.Find(vin);
+    CMasternode* pmn = CConnman.Find(vin);
 
     // no such masternode, nothing to update
     if (pmn == NULL) return true;
@@ -875,14 +875,14 @@ bool CMasternodeBroadcast::CheckInputsAndAdd(int& nDoS)
     if (lastPing.IsNull() || !lastPing.CheckAndUpdate(nDoS, false, true)) return false;
 
     // search existing Masternode list
-    CMasternode* pmn = mnodeman.Find(vin);
+    CMasternode* pmn = CConnman.Find(vin);
 
     if (pmn != NULL) {
         // nothing to do here if we already know about this masternode and it's enabled
         if (pmn->IsEnabled()) return true;
         // if it's not enabled, remove old MN first and continue
         else
-            mnodeman.Remove(pmn->vin);
+            CConnman.Remove(pmn->vin);
     }
 
     CValidationState state;
@@ -902,7 +902,7 @@ bool CMasternodeBroadcast::CheckInputsAndAdd(int& nDoS)
         TRY_LOCK(cs_main, lockMain);
         if (!lockMain) {
             // not mnb fault, let it to be checked again later
-            mnodeman.mapSeenMasternodeBroadcast.erase(GetHash());
+            CConnman.mapSeenMasternodeBroadcast.erase(GetHash());
             masternodeSync.mapSeenSyncMNB.erase(GetHash());
             return false;
         }
@@ -921,7 +921,7 @@ bool CMasternodeBroadcast::CheckInputsAndAdd(int& nDoS)
     if (pcoinsTip->GetCoinDepthAtHeight(vin.prevout, nChainHeight) < MASTERNODE_MIN_CONFIRMATIONS) {
         LogPrint(BCLog::MASTERNODE, "mnb - Input must have at least %d confirmations\n", MASTERNODE_MIN_CONFIRMATIONS);
         // maybe we miss few blocks, let this mnb to be checked again later
-        mnodeman.mapSeenMasternodeBroadcast.erase(GetHash());
+        CConnman.mapSeenMasternodeBroadcast.erase(GetHash());
         masternodeSync.mapSeenSyncMNB.erase(GetHash());
         return false;
     }
@@ -956,7 +956,7 @@ bool CMasternodeBroadcast::CheckInputsAndAdd(int& nDoS)
     LogPrint(BCLog::MASTERNODE, "mnb - Got NEW Masternode entry - %s - %lli \n", vin.prevout.ToStringShort(), sigTime);
 >>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
     CMasternode mn(*this);
-    mnodeman.Add(mn);
+    CConnman.Add(mn);
 
     // if it matches our Masternode privkey, then we've been remotely activated
     if (pubKeyMasternode == activeMasternode.pubKeyMasternode && protocolVersion == PROTOCOL_VERSION) {
@@ -1056,7 +1056,7 @@ bool CMasternodePing::CheckAndUpdate(int& nDos, bool fRequireEnabled, bool fChec
     }
 
     // see if we have this Masternode
-    CMasternode* pmn = mnodeman.Find(vin);
+    CMasternode* pmn = CConnman.Find(vin);
     const bool isMasternodeFound = (pmn != nullptr);
     const bool isSignatureValid = (isMasternodeFound && CheckSignature(pmn->pubKeyMasternode));
 
@@ -1106,11 +1106,11 @@ bool CMasternodePing::CheckAndUpdate(int& nDos, bool fRequireEnabled, bool fChec
 
             pmn->lastPing = *this;
 
-            //mnodeman.mapSeenMasternodeBroadcast.lastPing is probably outdated, so we'll update it
+            //CConnman.mapSeenMasternodeBroadcast.lastPing is probably outdated, so we'll update it
             CMasternodeBroadcast mnb(*pmn);
             uint256 hash = mnb.GetHash();
-            if (mnodeman.mapSeenMasternodeBroadcast.count(hash)) {
-                mnodeman.mapSeenMasternodeBroadcast[hash].lastPing = *this;
+            if (CConnman.mapSeenMasternodeBroadcast.count(hash)) {
+                CConnman.mapSeenMasternodeBroadcast[hash].lastPing = *this;
             }
 
             pmn->Check(true);

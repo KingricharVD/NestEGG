@@ -167,12 +167,12 @@ if (Params().GetConsensus().NetworkUpgradeActive(chainActive.Tip()->nHeight, Con
 
 bool CMasternodePaymentWinner::IsValid(CNode* pnode, std::string& strError)
 {
-    CMasternode* pmn = mnodeman.Find(vinMasternode);
+    CMasternode* pmn = CConnman.Find(vinMasternode);
 
     if (!pmn) {
         strError = strprintf("Unknown Masternode %s", vinMasternode.prevout.hash.ToString());
         LogPrint(BCLog::MASTERNODE, "CMasternodePaymentWinner::IsValid - %s\n", strError);
-        mnodeman.AskForMN(pnode, vinMasternode);
+        CConnman.AskForMN(pnode, vinMasternode);
         return false;
     }
 
@@ -190,7 +190,7 @@ bool CMasternodePaymentWinner::IsValid(CNode* pnode, std::string& strError)
         }
     }
 
-    int n = mnodeman.GetMasternodeRank(vinMasternode, nBlockHeight - 100, ActiveProtocol());
+    int n = CConnman.GetMasternodeRank(vinMasternode, nBlockHeight - 100, ActiveProtocol());
 
     int signaturesTotal =
         Params().GetConsensus().NetworkUpgradeActive(chainActive.Height(), Consensus::UPGRADE_POS_V2) ?
@@ -343,7 +343,7 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, const CBloc
     //spork
     if (!masternodePayments.GetBlockPayee(pindexPrev->nHeight + 1, payee)) {
         //no masternode detected
-        CMasternode* winningNode = mnodeman.GetCurrentMasterNode(1);
+        CMasternode* winningNode = CConnman.GetCurrentMasterNode(1);
         if (winningNode) {
             payee = GetScriptForDestination(winningNode->pubKeyCollateralAddress.GetID());
         } else {
@@ -441,7 +441,7 @@ void CMasternodePayments::ProcessMessageMasternodePayments(CNode* pfrom, std::st
             return;
         }
 
-        int nFirstBlock = nHeight - (mnodeman.CountEnabled() * 1.25);
+        int nFirstBlock = nHeight - (CConnman.CountEnabled() * 1.25);
         if (winner.nBlockHeight < nFirstBlock || winner.nBlockHeight > nHeight + 20) {
             LogPrint(BCLog::MASTERNODE, "mnw - winner out of range - FirstBlock %d Height %d bestHeight %d\n", nFirstBlock, winner.nBlockHeight, nHeight);
             return;
@@ -472,7 +472,7 @@ if (Params().GetConsensus().NetworkUpgradeActive(chainActive.Tip()->nHeight, Con
                 Misbehaving(pfrom->GetId(), 20);
             }
             // it could just be a non-synced masternode
-            mnodeman.AskForMN(pfrom, winner.vinMasternode);
+            CConnman.AskForMN(pfrom, winner.vinMasternode);
             return;
         }
 
@@ -653,7 +653,7 @@ void CMasternodePayments::CleanPaymentList()
     }
 
     //keep up to five cycles for historical sake
-    int nLimit = std::max(int(mnodeman.size() * 1.25), 1000);
+    int nLimit = std::max(int(CConnman.size() * 1.25), 1000);
 
     std::map<uint256, CMasternodePaymentWinner>::iterator it = mapMasternodePayeeVotes.begin();
     while (it != mapMasternodePayeeVotes.end()) {
@@ -679,7 +679,7 @@ bool CMasternodePayments::ProcessBlock(int nBlockHeight)
 
     //reference node - hybrid mode
 
-    int n = mnodeman.GetMasternodeRank(*(activeMasternode.vin), nBlockHeight - 100, ActiveProtocol());
+    int n = CConnman.GetMasternodeRank(*(activeMasternode.vin), nBlockHeight - 100, ActiveProtocol());
 
     if (n == -1) {
         LogPrint(BCLog::MASTERNODE, "CMasternodePayments::ProcessBlock - Unknown Masternode\n");
@@ -707,7 +707,7 @@ bool CMasternodePayments::ProcessBlock(int nBlockHeight)
 
         // pay to the oldest MN that still had no payment but its input is old enough and it was active long enough
         int nCount = 0;
-        CMasternode* pmn = mnodeman.GetNextMasternodeInQueueForPayment(nBlockHeight, true, nCount);
+        CMasternode* pmn = CConnman.GetNextMasternodeInQueueForPayment(nBlockHeight, true, nCount);
 
         if (pmn != NULL) {
             LogPrint(BCLog::MASTERNODE, "CMasternodePayments::ProcessBlock() Found by FindOldestNotInVec \n");
@@ -761,7 +761,7 @@ void CMasternodePayments::Sync(CNode* node, int nCountNeeded)
         nHeight = chainActive.Tip()->nHeight;
     }
 
-    int nCount = (mnodeman.CountEnabled() * 1.25);
+    int nCount = (CConnman.CountEnabled() * 1.25);
     if (nCountNeeded > nCount) nCountNeeded = nCount;
 
     int nInvCount = 0;

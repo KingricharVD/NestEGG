@@ -109,7 +109,7 @@ void CMasternodeSync::Reset()
 
 void CMasternodeSync::AddedMasternodeList(const uint256& hash)
 {
-    if (mnodeman.mapSeenMasternodeBroadcast.count(hash)) {
+    if (CConnman.mapSeenMasternodeBroadcast.count(hash)) {
         if (mapSeenSyncMNB[hash] < MASTERNODE_SYNC_THRESHOLD) {
             lastMasternodeList = GetTime();
             mapSeenSyncMNB[hash]++;
@@ -264,7 +264,7 @@ void CMasternodeSync::Process()
         /*
             Resync if we lose all masternodes from sleep/wake or failure to sync originally
         */
-        if (mnodeman.CountEnabled() == 0) {
+        if (CConnman.CountEnabled() == 0) {
             Reset();
         } else
             return;
@@ -298,9 +298,9 @@ bool CMasternodeSync::SyncWithNode(CNode* pnode, bool isRegTestNet)
         if (RequestedMasternodeAttempt <= 2) {
             g_connman->PushMessage(pnode, msgMaker.Make(NetMsgType::GETSPORKS)); //get current network sporks
         } else if (RequestedMasternodeAttempt < 4) {
-            mnodeman.DsegUpdate(pnode);
+            CConnman.DsegUpdate(pnode);
         } else if (RequestedMasternodeAttempt < 6) {
-            int nMnCount = mnodeman.CountEnabled();
+            int nMnCount = CConnman.CountEnabled();
 
             g_connman->PushMessage(pnode, msgMaker.Make(NetMsgType::GETMNWINNERS, nMnCount)); //sync payees
             uint256 n;
@@ -351,7 +351,7 @@ bool CMasternodeSync::SyncWithNode(CNode* pnode, bool isRegTestNet)
 
             if (RequestedMasternodeAttempt >= MASTERNODE_SYNC_THRESHOLD * 3) return false;
 
-            mnodeman.DsegUpdate(pnode);
+            CConnman.DsegUpdate(pnode);
             RequestedMasternodeAttempt++;
             return false;
         }
@@ -382,7 +382,7 @@ bool CMasternodeSync::SyncWithNode(CNode* pnode, bool isRegTestNet)
 
             if (RequestedMasternodeAttempt >= MASTERNODE_SYNC_THRESHOLD * 3) return false;
 
-            int nMnCount = mnodeman.CountEnabled();
+            int nMnCount = CConnman.CountEnabled();
             g_connman->PushMessage(pnode, msgMaker.Make(NetMsgType::GETMNWINNERS, nMnCount)); //sync payees
             RequestedMasternodeAttempt++;
             return false;

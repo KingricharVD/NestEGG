@@ -569,7 +569,7 @@ CBudgetProposal* CBudgetManager::FindProposal(const uint256& nHash)
 bool CBudgetManager::IsBudgetPaymentBlock(int nBlockHeight)
 {
     int nHighestCount = -1;
-    int nFivePercent = mnodeman.CountEnabled(ActiveProtocol()) / 20;
+    int nFivePercent = CConnman.CountEnabled(ActiveProtocol()) / 20;
 
     std::map<uint256, CFinalizedBudget>::iterator it = mapFinalizedBudgets.begin();
     while (it != mapFinalizedBudgets.end()) {
@@ -598,7 +598,7 @@ TrxValidationStatus CBudgetManager::IsTransactionValid(const CTransaction& txNew
 
     TrxValidationStatus transactionStatus = TrxValidationStatus::InValid;
     int nHighestCount = 0;
-    int nFivePercent = mnodeman.CountEnabled(ActiveProtocol()) / 20;
+    int nFivePercent = CConnman.CountEnabled(ActiveProtocol()) / 20;
     std::vector<CFinalizedBudget*> ret;
 
     LogPrint(BCLog::MNBUDGET,"%s: checking %lli finalized budgets\n", __func__, mapFinalizedBudgets.size());
@@ -628,7 +628,7 @@ TrxValidationStatus CBudgetManager::IsTransactionValid(const CTransaction& txNew
     // check the highest finalized budgets (+/- 10% to assist in consensus)
 
     std::string strProposals = "";
-    int nCountThreshold = nHighestCount - mnodeman.CountEnabled(ActiveProtocol()) / 10;
+    int nCountThreshold = nHighestCount - CConnman.CountEnabled(ActiveProtocol()) / 10;
     bool fThreshold = false;
     it = mapFinalizedBudgets.begin();
     while (it != mapFinalizedBudgets.end()) {
@@ -712,7 +712,7 @@ std::vector<CBudgetProposal*> CBudgetManager::GetBudget()
     const int nBlocksPerCycle = Params().GetConsensus().nBudgetCycleBlocks;
     int nBlockStart = nHeight - nHeight % nBlocksPerCycle + nBlocksPerCycle;
     int nBlockEnd = nBlockStart + nBlocksPerCycle - 1;
-    int mnCount = mnodeman.CountEnabled(ActiveProtocol());
+    int mnCount = CConnman.CountEnabled(ActiveProtocol());
     CAmount nTotalBudget = GetTotalBudget(nBlockStart);
 
     for (CBudgetProposal* pbudgetProposal: vBudgetPorposalsSort) {
@@ -736,7 +736,7 @@ std::vector<CBudgetProposal*> CBudgetManager::GetBudget()
         } else {
             LogPrint(BCLog::MNBUDGET,"%s:  -   Check 1 failed: valid=%d | %ld <= %ld | %ld >= %ld | Yeas=%d Nays=%d Count=%d | established=%d\n",
                     __func__, pbudgetProposal->IsValid(), pbudgetProposal->GetBlockStart(), nBlockStart, pbudgetProposal->GetBlockEnd(),
-                    nBlockEnd, pbudgetProposal->GetYeas(), pbudgetProposal->GetNays(), mnodeman.CountEnabled(ActiveProtocol()) / 10,
+                    nBlockEnd, pbudgetProposal->GetYeas(), pbudgetProposal->GetNays(), CConnman.CountEnabled(ActiveProtocol()) / 10,
                     pbudgetProposal->IsEstablished());
         }
 
@@ -1091,10 +1091,10 @@ void CBudgetManager::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
         }
 
         const CTxIn& voteVin = vote.GetVin();
-        CMasternode* pmn = mnodeman.Find(voteVin);
+        CMasternode* pmn = CConnman.Find(voteVin);
         if (pmn == NULL) {
             LogPrint(BCLog::MNBUDGET,"mvote - unknown masternode - vin: %s\n", voteVin.ToString());
-            mnodeman.AskForMN(pfrom, voteVin);
+            CConnman.AskForMN(pfrom, voteVin);
             return;
         }
 
@@ -1107,7 +1107,7 @@ void CBudgetManager::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
                 Misbehaving(pfrom->GetId(), 20);
             }
             // it could just be a non-synced masternode
-            mnodeman.AskForMN(pfrom, voteVin);
+            CConnman.AskForMN(pfrom, voteVin);
             return;
         }
 
@@ -1170,10 +1170,10 @@ void CBudgetManager::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
         }
 
         const CTxIn& voteVin = vote.GetVin();
-        CMasternode* pmn = mnodeman.Find(voteVin);
+        CMasternode* pmn = CConnman.Find(voteVin);
         if (pmn == NULL) {
             LogPrint(BCLog::MNBUDGET, "fbvote - unknown masternode - vin: %s\n", voteVin.prevout.hash.ToString());
-            mnodeman.AskForMN(pfrom, voteVin);
+            CConnman.AskForMN(pfrom, voteVin);
             return;
         }
 
@@ -1185,7 +1185,7 @@ void CBudgetManager::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
                 Misbehaving(pfrom->GetId(), 20);
             }
             // it could just be a non-synced masternode
-            mnodeman.AskForMN(pfrom, voteVin);
+            CConnman.AskForMN(pfrom, voteVin);
             return;
         }
 
@@ -1373,7 +1373,7 @@ void CBudgetProposal::SyncVotes(CNode* pfrom, bool fPartial, int& nInvCount) con
 bool CBudgetProposal::UpdateValid(int nCurrentHeight, bool fCheckCollateral)
 {
     fValid = false;
-    if (GetNays() - GetYeas() > mnodeman.CountEnabled(ActiveProtocol()) / 10) {
+    if (GetNays() - GetYeas() > CConnman.CountEnabled(ActiveProtocol()) / 10) {
         strInvalid = "Proposal " + strProposalName + ": Active removal";
         return false;
     }
@@ -1419,7 +1419,7 @@ bool CBudgetProposal::UpdateValid(int nCurrentHeight, bool fCheckCollateral)
     // nTime not being saved correctly
     // -- TODO: We should keep track of the last time the proposal was valid, if it's invalid for 2 weeks, erase it
     // if(nTime + (60*60*24*2) < GetAdjustedTime()) {
-    //     if(GetYeas()-GetNays() < (mnodeman.CountEnabled(ActiveProtocol())/10)) {
+    //     if(GetYeas()-GetNays() < (CConnman.CountEnabled(ActiveProtocol())/10)) {
     //         strError = "Not enough support";
     //         return false;
     //     }
@@ -1539,7 +1539,7 @@ void CBudgetProposal::CleanAndRemove()
     std::map<uint256, CBudgetVote>::iterator it = mapVotes.begin();
 
     while (it != mapVotes.end()) {
-        CMasternode* pmn = mnodeman.Find((*it).second.GetVin());
+        CMasternode* pmn = CConnman.Find((*it).second.GetVin());
         (*it).second.SetValid(pmn != nullptr);
         ++it;
     }
@@ -1889,7 +1889,7 @@ void CFinalizedBudget::CleanAndRemove()
     std::map<uint256, CFinalizedBudgetVote>::iterator it = mapVotes.begin();
 
     while (it != mapVotes.end()) {
-        CMasternode* pmn = mnodeman.Find((*it).second.GetVin());
+        CMasternode* pmn = CConnman.Find((*it).second.GetVin());
         (*it).second.SetValid(pmn != nullptr);
         ++it;
     }
