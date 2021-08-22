@@ -6,11 +6,6 @@ then
 	CPU_CORES=1
 fi
 
-# Clone EGG code from EGG official Github repository
-	git clone https://github.com/KingricharVD/NestEGG
-
-# Entering EGG directory
-	cd NestEGG
 
 # Compile dependencies
 	cd depends
