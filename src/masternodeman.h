@@ -1,6 +1,10 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+<<<<<<< HEAD
+// Copyright (c) 2020-2021 The Sprouts-Origins Core Developers
+=======
+// Copyright (c) 2021 The DECENOMY Core Developers
+>>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -124,6 +128,7 @@ public:
     CMasternode* Find(const CScript& payee);
     CMasternode* Find(const CTxIn& vin);
     CMasternode* Find(const CPubKey& pubKeyMasternode);
+    CMasternode* Find(const CService &addr);
 
     /// Find an entry in the masternode list that is next to be paid
     CMasternode* GetNextMasternodeInQueueForPayment(int nBlockHeight, bool fFilterSigTime, int& nCount);
@@ -138,7 +143,7 @@ public:
     }
 
     std::vector<std::pair<int, CMasternode> > GetMasternodeRanks(int64_t nBlockHeight, int minProtocol = 0);
-    int GetMasternodeRank(const CTxIn& vin, int64_t nBlockHeight, int minProtocol = 0, bool fOnlyActive = true);
+    int GetMasternodeRank(const CTxIn& vin, int64_t nBlockHeight, int minProtocol = 0);
 
     void ProcessMessage(CNode* pfrom, std::string& strCommand, CDataStream& vRecv);
 
