@@ -261,16 +261,10 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
     nBlockMaxSize = std::max(
         (unsigned int)1000,
 
-        std::min(
-            std::min(
+                std::min(
                 nBlockMaxSizeSpork,
                 nBlockMaxSizeNetwork),
             nBlockMaxSize
-
-        std::min(
-            nBlockMaxSizeSpork,
-            nBlockMaxSize
-
         )
     );
 
@@ -710,8 +704,6 @@ void BitcoinMiner(CWallet* pwallet, bool fProofOfStake)
 
 
         LogPrintf("Running NestEGGMiner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
-
-        LogPrintf("Running Miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
 
             ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
