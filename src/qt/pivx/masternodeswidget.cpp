@@ -251,7 +251,7 @@ bool MasterNodesWidget::startMN(CMasternodeConfig::CMasternodeEntry mne, std::st
     if (!CMasternodeBroadcast::Create(mne.getIp(), mne.getPrivKey(), mne.getTxHash(), mne.getOutputIndex(), strError, mnb))
         return false;
 
-    CConnman.UpdateMasternodeList(mnb);
+    mnodeman.UpdateMasternodeList(mnb);
     mnb.Relay();
     return true;
 }
