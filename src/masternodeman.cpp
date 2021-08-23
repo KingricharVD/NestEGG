@@ -19,6 +19,7 @@
 #include "netbase.h"
 #include "netmessagemaker.h"
 #include "spork.h"
+#include "swifttx.h"
 #include "util.h"
 
 #include <boost/thread/thread.hpp>
