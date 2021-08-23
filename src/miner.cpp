@@ -2,11 +2,8 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2011-2013 The PPCoin developers
-// Copyright (c) 2013-2014 The NovaCoin Developers
-// Copyright (c) 2014-2018 The BlackCoin Developers
+// Copyright (c) 2013-2014 The NestEGG Core Developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The Sprouts-Origins Core Developers
-// Copyright (c) 2021 The DECENOMY Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -106,8 +103,7 @@ void UpdateTime(CBlockHeader* pblock, const CBlockIndex* pindexPrev)
 bool CheckForDuplicatedSerials(const CTransaction& tx, const Consensus::Params& consensus,
                                std::vector<CBigNum>& vBlockSerials)
 {
-    // double check that there are no double spent zSprouts spends in this block or tx
-    // double check that there are no double spent zNestEgg spends in this block or tx
+      // double check that there are no double spent zNestEgg spends in this block or tx
     if (tx.HasZerocoinSpendInputs()) {
         int nHeightTx = 0;
         if (IsTransactionInChain(tx.GetHash(), nHeightTx)) {
@@ -143,8 +139,6 @@ bool CheckForDuplicatedSerials(const CTransaction& tx, const Consensus::Params& 
             }
         }
 
-        //This zSprouts serial has already been included in the block, do not add this tx.
-
         //This zNestEgg serial has already been included in the block, do not add this tx.
 
         if (fDoubleSerial) {
@@ -169,8 +163,6 @@ bool CreateCoinbaseTx(CBlock* pblock, const CScript& scriptPubKeyIn, CBlockIndex
     txNew.vin[0].scriptSig = CScript() << pindexPrev->nHeight + 1 << OP_0;
     // If no payee was detected, then the whole block value goes to the first output.
     if (txNew.vout.size() == 1) {
-
-        txNew.vout[0].nValue = CMasternode::GetBlockValue(pindexPrev->nHeight);
 
         txNew.vout[0].nValue = CMasternode::GetBlockValue(pindexPrev->nHeight + 1);
     }
@@ -245,22 +237,15 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
     // Largest block you're willing to create:
     unsigned int nBlockMaxSize = std::min((unsigned int)GetArg("-blockmaxsize", DEFAULT_BLOCK_MAX_SIZE), MAX_BLOCK_SIZE_CURRENT);
     // Limit to betweeen 1K and MAX_BLOCK_SIZE-1K for sanity:
-
-    unsigned int nBlockMaxSizeNetwork = MAX_BLOCK_SIZE_CURRENT;
     unsigned int nBlockMaxSizeSpork = (unsigned int)sporkManager.GetSporkValue(SPORK_105_MAX_BLOCK_SIZE);
 
     nBlockMaxSize = std::max(
-        (unsigned int)1000, 
+        (unsigned int)1000,
 
         std::min(
-            std::min(
-                nBlockMaxSizeSpork, 
-                nBlockMaxSizeNetwork), 
-            nBlockMaxSize
+                nBlockMaxSizeSpork,
+                nBlockMaxSize
 
-        std::min( 
-            nBlockMaxSizeSpork, 
-            nBlockMaxSize 
         )
     );
 
@@ -295,7 +280,7 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
             if (tx.IsCoinBase() || tx.IsCoinStake() || !IsFinalTx(tx, nHeight)){
                 continue;
             }
-            if(tx.ContainsZerocoins()){
+            if(sporkManager.IsSporkActive(SPORK_16_ZEROCOIN_MAINTENANCE_MODE) && tx.ContainsZerocoins()){
                 continue;
             }
 
@@ -341,8 +326,6 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
 
                 int nConf = nHeight - coin.nHeight;
 
-
-                // zSprouts spends can have very large priority, use non-overflowing safe functions
 
                 // zNestEgg spends can have very large priority, use non-overflowing safe functions
                 dPriority = double_safe_addition(dPriority, ((double)nValueIn * nConf));
@@ -564,9 +547,6 @@ bool ProcessBlockFound(CBlock* pblock, CWallet& wallet, Optional<CReserveKey>& r
     {
         WAIT_LOCK(g_best_block_mutex, lock);
         if (pblock->hashPrevBlock != g_best_block)
-
-            return error("Sprouts-OriginsMiner : generated block is stale");
-
             return error("Miner : generated block is stale");
     }
 
@@ -580,8 +560,6 @@ bool ProcessBlockFound(CBlock* pblock, CWallet& wallet, Optional<CReserveKey>& r
     // Process this block the same as if we had received it from another node
     CValidationState state;
     if (!ProcessNewBlock(state, nullptr, pblock, nullptr, g_connman.get())) {
-
-        return error("Sprouts-OriginsMiner : ProcessNewBlock, block not accepted");
         return error("Miner : ProcessNewBlock, block not accepted");
 
     }
@@ -612,12 +590,9 @@ void CheckForCoins(CWallet* pwallet, const int minutes, std::vector<COutput>* av
 
 void BitcoinMiner(CWallet* pwallet, bool fProofOfStake)
 {
-
-    LogPrintf("Sprouts-OriginsMiner started\n");
-
     LogPrintf("Miner started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
-    util::ThreadRename("Sprouts-Origins-miner");
+    util::ThreadRename("NestEGG-miner");
     const Consensus::Params& consensus = Params().GetConsensus();
     const int64_t nSpacingMillis = consensus.nTargetSpacing * 1000;
 
@@ -692,9 +667,6 @@ void BitcoinMiner(CWallet* pwallet, bool fProofOfStake)
 
         // POW - miner main
         IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
-
-
-        LogPrintf("Running Sprouts-OriginsMiner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
 
         LogPrintf("Running Miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
             ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
@@ -780,13 +752,6 @@ void static ThreadBitcoinMiner(void* parg)
         BitcoinMiner(pwallet, false);
         boost::this_thread::interruption_point();
     } catch (const std::exception& e) {
-
-        LogPrintf("Sprouts-OriginsMiner exception");
-    } catch (...) {
-        LogPrintf("Sprouts-OriginsMiner exception");
-    }
-
-    LogPrintf("Sprouts-OriginsMiner exiting\n");
 
         LogPrintf("Miner exception");
     } catch (...) {
