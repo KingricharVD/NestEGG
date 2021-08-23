@@ -4922,13 +4922,13 @@ bool static AlreadyHave(const CInv& inv) EXCLUSIVE_LOCKS_REQUIRED(cs_main)
         }
         return false;
     case MSG_MASTERNODE_ANNOUNCE:
-        if (CConnman.mapSeenMasternodeBroadcast.count(inv.hash)) {
+        if (mnodeman.mapSeenMasternodeBroadcast.count(inv.hash)) {
             masternodeSync.AddedMasternodeList(inv.hash);
             return true;
         }
         return false;
     case MSG_MASTERNODE_PING:
-        return CConnman.mapSeenMasternodePing.count(inv.hash);
+        return mnodeman.mapSeenMasternodePing.count(inv.hash);
     }
     // Don't know what it is, just say we already got one
     return true;
@@ -5140,20 +5140,20 @@ void static ProcessGetData(CNode* pfrom, CConnman& connman, std::atomic<bool>& i
                 }
 
                 if (!pushed && inv.type == MSG_MASTERNODE_ANNOUNCE) {
-                    if (CConnman.mapSeenMasternodeBroadcast.count(inv.hash)) {
+                    if (mnodeman.mapSeenMasternodeBroadcast.count(inv.hash)) {
                         CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
                         ss.reserve(1000);
-                        ss << CConnman.mapSeenMasternodeBroadcast[inv.hash];
+                        ss << mnodeman.mapSeenMasternodeBroadcast[inv.hash];
                         connman.PushMessage(pfrom, msgMaker.Make(NetMsgType::MNBROADCAST, ss));
                         pushed = true;
                     }
                 }
 
                 if (!pushed && inv.type == MSG_MASTERNODE_PING) {
-                    if (CConnman.mapSeenMasternodePing.count(inv.hash)) {
+                    if (mnodeman.mapSeenMasternodePing.count(inv.hash)) {
                         CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
                         ss.reserve(1000);
-                        ss << CConnman.mapSeenMasternodePing[inv.hash];
+                        ss << mnodeman.mapSeenMasternodePing[inv.hash];
                         connman.PushMessage(pfrom, msgMaker.Make(NetMsgType::MNPING, ss));
                         pushed = true;
                     }
@@ -6006,7 +6006,7 @@ bool static ProcessMessage(CNode* pfrom, std::string strCommand, CDataStream& vR
 
         if (found) {
             //probably one the extensions
-            CConnman.ProcessMessage(pfrom, strCommand, vRecv);
+            mnodeman.ProcessMessage(pfrom, strCommand, vRecv);
             budget.ProcessMessage(pfrom, strCommand, vRecv);
             masternodePayments.ProcessMessageMasternodePayments(pfrom, strCommand, vRecv);
             ProcessMessageSwiftTX(pfrom, strCommand, vRecv);

@@ -269,7 +269,7 @@ void DoConsensusVote(CTransaction& tx, int64_t nBlockHeight)
         LogPrint(BCLog::MASTERNODE, "%s: Active Masternode not initialized.", __func__);
         return;
 
-    int n = CConnman.GetMasternodeRank(*(activeMasternode.vin), nBlockHeight, MIN_SWIFTTX_PROTO_VERSION);
+    int n = mnodeman.GetMasternodeRank(*(activeMasternode.vin), nBlockHeight, MIN_SWIFTTX_PROTO_VERSION);
 
     if (n == -1) {
         LogPrint(BCLog::MASTERNODE, "%s : Unknown Masternode\n", __func__);
@@ -309,16 +309,16 @@ void DoConsensusVote(CTransaction& tx, int64_t nBlockHeight)
 //received a consensus vote
 bool ProcessConsensusVote(CNode* pnode, CConsensusVote& ctx)
 {
-    int n = CConnman.GetMasternodeRank(ctx.vinMasternode, ctx.nBlockHeight, MIN_SWIFTTX_PROTO_VERSION);
+    int n = mnodeman.GetMasternodeRank(ctx.vinMasternode, ctx.nBlockHeight, MIN_SWIFTTX_PROTO_VERSION);
 
-    CMasternode* pmn = CConnman.Find(ctx.vinMasternode);
+    CMasternode* pmn = mnodeman.Find(ctx.vinMasternode);
     if (pmn != NULL)
         LogPrint(BCLog::MASTERNODE, "%s : Masternode ADDR %s %d\n", __func__, pmn->addr.ToString().c_str(), n);
 
     if (n == -1) {
         //can be caused by past versions trying to vote with an invalid protocol
         LogPrint(BCLog::MASTERNODE, "%s : Unknown Masternode\n", __func__);
-        CConnman.AskForMN(pnode, ctx.vinMasternode);
+        mnodeman.AskForMN(pnode, ctx.vinMasternode);
         return false;
     }
 
@@ -330,7 +330,7 @@ bool ProcessConsensusVote(CNode* pnode, CConsensusVote& ctx)
 
     if (!ctx.CheckSignature()) {
         // don't ban, it could just be a non-synced masternode
-        CConnman.AskForMN(pnode, ctx.vinMasternode);
+        mnodeman.AskForMN(pnode, ctx.vinMasternode);
         return error("%s : Signature invalid\n", __func__);
     }
 
@@ -504,7 +504,7 @@ std::string CConsensusVote::GetStrMessage() const
 bool CTransactionLock::SignaturesValid()
 {
     for (CConsensusVote vote : vecConsensusVotes) {
-        int n = CConnman.GetMasternodeRank(vote.vinMasternode, vote.nBlockHeight, MIN_SWIFTTX_PROTO_VERSION);
+        int n = mnodeman.GetMasternodeRank(vote.vinMasternode, vote.nBlockHeight, MIN_SWIFTTX_PROTO_VERSION);
 
         if (n == -1) {
             return error("%s : Unknown Masternode", __func__);

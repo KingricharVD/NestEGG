@@ -37,7 +37,7 @@ void CActiveMasternode::ManageStatus()
 
     if (status == ACTIVE_MASTERNODE_INITIAL) {
         CMasternode* pmn;
-        pmn = CConnman.Find(pubKeyMasternode);
+        pmn = mnodeman.Find(pubKeyMasternode);
         if (pmn != nullptr) {
             pmn->Check();
             if (pmn->IsEnabled() && pmn->protocolVersion == PROTOCOL_VERSION)
@@ -146,7 +146,7 @@ bool CActiveMasternode::SendMasternodePing(std::string& errorMessage)
     }
 
     // Update lastPing for our masternode in Masternode list
-    CMasternode* pmn = CConnman.Find(*vin);
+    CMasternode* pmn = mnodeman.Find(*vin);
     if (pmn != NULL) {
         if (pmn->IsPingedWithin(MASTERNODE_PING_SECONDS, mnp.sigTime)) {
             errorMessage = "Too early to send Masternode Ping";
@@ -154,12 +154,12 @@ bool CActiveMasternode::SendMasternodePing(std::string& errorMessage)
         }
 
         pmn->lastPing = mnp;
-        CConnman.mapSeenMasternodePing.insert(std::make_pair(mnp.GetHash(), mnp));
+        mnodeman.mapSeenMasternodePing.insert(std::make_pair(mnp.GetHash(), mnp));
 
-        //CConnman.mapSeenMasternodeBroadcast.lastPing is probably outdated, so we'll update it
+        //mnodeman.mapSeenMasternodeBroadcast.lastPing is probably outdated, so we'll update it
         CMasternodeBroadcast mnb(*pmn);
         uint256 hash = mnb.GetHash();
-        if (CConnman.mapSeenMasternodeBroadcast.count(hash)) CConnman.mapSeenMasternodeBroadcast[hash].lastPing = mnp;
+        if (mnodeman.mapSeenMasternodeBroadcast.count(hash)) mnodeman.mapSeenMasternodeBroadcast[hash].lastPing = mnp;
 
         mnp.Relay();
         return true;

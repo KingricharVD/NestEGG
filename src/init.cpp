@@ -1739,7 +1739,7 @@ bool AppInit2()
     uiInterface.InitMessage(_("Loading masternode cache..."));
 
     CMasternodeDB mndb;
-    CMasternodeDB::ReadResult readResult = mndb.Read(CConnman);
+    CMasternodeDB::ReadResult readResult = mndb.Read(mnodeman);
     if (readResult == CMasternodeDB::FileError)
         LogPrintf("Missing masternode cache file - mncache.dat, will try to recreate\n");
     else if (readResult != CMasternodeDB::Ok) {
