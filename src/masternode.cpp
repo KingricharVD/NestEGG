@@ -750,11 +750,10 @@ bool CMasternodeBroadcast::CheckAndUpdate(int& nDos)
 {
     // make sure signature isn't in the future (past is OK)
     if (sigTime > GetAdjustedTime() + 60 * 60) {
-<<<<<<< HEAD
-        LogPrint(BCLog::MASTERNODE, "mnb - Signature rejected, too far into the future %s\n", vin.prevout.hash.ToString());
-=======
+
+        LogPrint(BCLog::MASTERNODE, "mnb - Signature rejected, too far into the future %s\n", vin.prevout.hash.ToString())
         LogPrint(BCLog::MASTERNODE, "mnb - Signature rejected, too far into the future %s\n", vin.prevout.ToStringShort());
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
         nDos = 1;
         return false;
     }
@@ -764,11 +763,11 @@ bool CMasternodeBroadcast::CheckAndUpdate(int& nDos)
         return false;
 
     if (protocolVersion < ActiveProtocol()) {
-<<<<<<< HEAD
+
         LogPrint(BCLog::MASTERNODE, "mnb - ignoring outdated Masternode %s protocol version %d\n", vin.prevout.hash.ToString(), protocolVersion);
-=======
+
         LogPrint(BCLog::MASTERNODE, "mnb - ignoring outdated Masternode %s protocol version %d\n", vin.prevout.ToStringShort(), protocolVersion);
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
         return false;
     }
 
@@ -791,16 +790,16 @@ bool CMasternodeBroadcast::CheckAndUpdate(int& nDos)
     }
 
     if (!vin.scriptSig.empty()) {
-<<<<<<< HEAD
+
         LogPrint(BCLog::MASTERNODE, "mnb - Ignore Not Empty ScriptSig %s\n", vin.prevout.hash.ToString());
-=======
+
         LogPrint(BCLog::MASTERNODE, "mnb - Ignore Not Empty ScriptSig %s\n", vin.prevout.ToStringShort());
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
         return false;
     }
 
     std::string strError = "";
-<<<<<<< HEAD
+
     if (!CheckSignature()) {
         // masternodes older than this proto version use old strMessage format for mnannounce
         nDos = protocolVersion < MIN_PEER_MNANNOUNCE ? 0 : 100;
@@ -811,7 +810,7 @@ bool CMasternodeBroadcast::CheckAndUpdate(int& nDos)
         return error(
             "%s : Invalid port %u for masternode %s, only %d is supported on %s-net.",
             __func__, addr.GetPort(), addr.ToString(), Params().GetDefaultPort(),
-=======
+
     if (!CheckSignature())
     {
         // masternodes older than this proto version use old strMessage format for mnannounce
@@ -823,7 +822,7 @@ bool CMasternodeBroadcast::CheckAndUpdate(int& nDos)
         return error(
             "%s : Invalid port %u for masternode %s, only %d is supported on %s-net.",
             __func__, addr.GetPort(), addr.ToString(), Params().GetDefaultPort(),
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
             Params().NetworkIDString());
     }
 
@@ -848,11 +847,11 @@ bool CMasternodeBroadcast::CheckAndUpdate(int& nDos)
     //   after that they just need to match
     if (pmn->pubKeyCollateralAddress == pubKeyCollateralAddress && !pmn->IsBroadcastedWithin(MASTERNODE_MIN_MNB_SECONDS)) {
         //take the newest entry
-<<<<<<< HEAD
+
         LogPrint(BCLog::MASTERNODE, "mnb - Got updated entry for %s\n", vin.prevout.hash.ToString());
-=======
+
         LogPrint(BCLog::MASTERNODE, "mnb - Got updated entry for %s\n", vin.prevout.ToStringShort());
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
         if (pmn->UpdateFromNewBroadcast((*this))) {
             pmn->Check();
             if (pmn->IsEnabled()) Relay();
@@ -889,11 +888,11 @@ bool CMasternodeBroadcast::CheckInputsAndAdd(int& nDoS)
     CMutableTransaction tx = CMutableTransaction();
     CScript dummyScript;
     dummyScript << ToByteVector(pubKeyCollateralAddress) << OP_CHECKSIG;
-<<<<<<< HEAD
+
     CTxOut vout = CTxOut(GetMasternodeCollateral(chainActive.Height()) - (COIN / 100), dummyScript);
-=======
+
     CTxOut vout = CTxOut((CMasternode::GetMasternodeNodeCollateral(chainActive.Height()) - 0.01 * COIN), dummyScript);
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
     tx.vin.push_back(vin);
     tx.vout.push_back(vout);
 
@@ -927,21 +926,21 @@ bool CMasternodeBroadcast::CheckInputsAndAdd(int& nDoS)
     }
 
     // verify that sig time is legit in past
-<<<<<<< HEAD
+
     // should be at least not earlier than block when 1000 Sprouts tx got MASTERNODE_MIN_CONFIRMATIONS
-=======
+
     // should be at least not earlier than block when 1000 NestEgg tx got MASTERNODE_MIN_CONFIRMATIONS
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
     uint256 hashBlock = UINT256_ZERO;
     CTransaction tx2;
     GetTransaction(vin.prevout.hash, tx2, hashBlock, true);
     BlockMap::iterator mi = mapBlockIndex.find(hashBlock);
     if (mi != mapBlockIndex.end() && (*mi).second) {
-<<<<<<< HEAD
+
         CBlockIndex* pMNIndex = (*mi).second;                                                        // block for 1000 Sprouts tx -> 1 confirmation
-=======
+
         CBlockIndex* pMNIndex = (*mi).second;                                                        // block for 1000 NestEgg tx -> 1 confirmation
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
         CBlockIndex* pConfIndex = chainActive[pMNIndex->nHeight + MASTERNODE_MIN_CONFIRMATIONS - 1]; // block where tx got MASTERNODE_MIN_CONFIRMATIONS
         if (pConfIndex->GetBlockTime() > sigTime) {
             LogPrint(BCLog::MASTERNODE, "mnb - Bad sigTime %d for Masternode %s (%i conf block is at %d)\n",
@@ -950,11 +949,11 @@ bool CMasternodeBroadcast::CheckInputsAndAdd(int& nDoS)
         }
     }
 
-<<<<<<< HEAD
+
     LogPrint(BCLog::MASTERNODE, "mnb - Got NEW Masternode entry - %s - %lli \n", vin.prevout.hash.ToString(), sigTime);
-=======
+
     LogPrint(BCLog::MASTERNODE, "mnb - Got NEW Masternode entry - %s - %lli \n", vin.prevout.ToStringShort(), sigTime);
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
     CMasternode mn(*this);
     mnodeman.Add(mn);
 
@@ -1019,38 +1018,38 @@ std::string CMasternodePing::GetStrMessage() const
 {
     int64_t salt = sporkManager.GetSporkValue(SPORK_103_PING_MESSAGE_SALT);
 
-<<<<<<< HEAD
+
     if (salt == 0) {
         return vin.ToString() + blockHash.ToString() + std::to_string(sigTime) + std::to_string(salt);
     } else {
         return vin.ToString() + blockHash.ToString() + std::to_string(sigTime);
-=======
+
     if(salt == 0) {
         return vin.ToString() + blockHash.ToString() + std::to_string(sigTime);
     } else {
         return vin.ToString() + blockHash.ToString() + std::to_string(sigTime) + std::to_string(salt);
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
     }
 }
 
 bool CMasternodePing::CheckAndUpdate(int& nDos, bool fRequireEnabled, bool fCheckSigTimeOnly)
 {
     if (sigTime > GetAdjustedTime() + 60 * 60) {
-<<<<<<< HEAD
+
         LogPrint(BCLog::MNPING, "%s: Signature rejected, too far into the future %s\n", __func__, vin.prevout.hash.ToString());
-=======
+
         LogPrint(BCLog::MNPING, "%s: Signature rejected, too far into the future %s\n", __func__, vin.prevout.ToStringShort());
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
         nDos = 1;
         return false;
     }
 
     if (sigTime <= GetAdjustedTime() - 60 * 60) {
-<<<<<<< HEAD
+
         LogPrint(BCLog::MNPING, "%s: Signature rejected, too far into the past %s - %d %d \n", __func__, vin.prevout.hash.ToString(), sigTime, GetAdjustedTime());
-=======
+
         LogPrint(BCLog::MNPING, "%s: Signature rejected, too far into the past %s - %d %d \n", __func__, vin.prevout.ToStringShort(), sigTime, GetAdjustedTime());
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
         nDos = 1;
         return false;
     }
@@ -1084,11 +1083,11 @@ bool CMasternodePing::CheckAndUpdate(int& nDos, bool fRequireEnabled, bool fChec
             // Check if the ping block hash exists in disk
             BlockMap::iterator mi = mapBlockIndex.find(blockHash);
             if (mi == mapBlockIndex.end() || !(*mi).second) {
-<<<<<<< HEAD
+
                 LogPrint(BCLog::MNPING, "%s: ping block not in disk. Masternode %s block hash %s\n", __func__, vin.prevout.hash.ToString(), blockHash.ToString());
-=======
+
                 LogPrint(BCLog::MNPING, "%s: ping block not in disk. Masternode %s block hash %s\n", __func__, vin.prevout.ToStringShort(), blockHash.ToString());
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
                 return false;
             }
 
