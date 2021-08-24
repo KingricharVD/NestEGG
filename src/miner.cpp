@@ -261,16 +261,10 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
     nBlockMaxSize = std::max(
         (unsigned int)1000,
 
-        std::min(
-            std::min(
+              std::min(
                 nBlockMaxSizeSpork,
                 nBlockMaxSizeNetwork),
             nBlockMaxSize
-
-        std::min(
-            nBlockMaxSizeSpork,
-            nBlockMaxSize
-
         )
     );
 
@@ -578,9 +572,6 @@ bool ProcessBlockFound(CBlock* pblock, CWallet& wallet, Optional<CReserveKey>& r
         if (pblock->hashPrevBlock != g_best_block)
 
             return error("NestEGGMiner : generated block is stale");
-
-            return error("Miner : generated block is stale");
-
     }
 
     // Remove key from key pool
@@ -595,9 +586,6 @@ bool ProcessBlockFound(CBlock* pblock, CWallet& wallet, Optional<CReserveKey>& r
     if (!ProcessNewBlock(state, nullptr, pblock, nullptr, g_connman.get())) {
 
         return error("NestEGGMiner : ProcessNewBlock, block not accepted");
-
-        return error("Miner : ProcessNewBlock, block not accepted");
-
     }
 
     g_connman->ForEachNode([&pblock](CNode* node)
@@ -628,9 +616,6 @@ void BitcoinMiner(CWallet* pwallet, bool fProofOfStake)
 {
 
     LogPrintf("NestEGGMiner started\n");
-
-    LogPrintf("Miner started\n");
-
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
     util::ThreadRename("NestEGG-miner");
     const Consensus::Params& consensus = Params().GetConsensus();
@@ -710,9 +695,6 @@ void BitcoinMiner(CWallet* pwallet, bool fProofOfStake)
 
 
         LogPrintf("Running NestEGGMiner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
-
-        LogPrintf("Running Miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
-
             ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
         //
@@ -803,14 +785,6 @@ void static ThreadBitcoinMiner(void* parg)
     }
 
     LogPrintf("NestEGGMiner exiting\n");
-
-        LogPrintf("Miner exception");
-    } catch (...) {
-        LogPrintf("Miner exception");
-    }
-
-    LogPrintf("Miner exiting\n");
-
 }
 
 void GenerateBitcoins(bool fGenerate, CWallet* pwallet, int nThreads)
