@@ -1,6 +1,10 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+<<<<<<< HEAD
+// Copyright (c) 2020-2021 The Sprouts-Origins Core Developers
+=======
+// Copyright (c) 2021 The DECENOMY Core Developers
+>>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -24,14 +28,12 @@
 #define MASTERNODE_REMOVAL_SECONDS (130 * 60)
 #define MASTERNODE_CHECK_SECONDS 5
 
-
 class CMasternode;
 class CMasternodeBroadcast;
 class CMasternodePing;
 extern std::map<int64_t, uint256> mapCacheBlockHashes;
 
 bool GetBlockHash(uint256& hash, int nBlockHeight);
-
 
 //
 // The Masternode Ping Class : Contains a different serialize method for sending pings from masternodes throughout the network
@@ -105,7 +107,11 @@ public:
 };
 
 //
-// The Masternode Class. It contains the input of the 25000 EGG, signature to prove
+<<<<<<< HEAD
+// The Masternode Class. It contains the input of the 200000 Sprouts, signature to prove
+=======
+// The Masternode Class. It contains the input of the collateral, signature to prove
+>>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
 // it's the one who own that ip address and code for calculating the payment election.
 //
 class CMasternode : public CSignedMessage
@@ -262,15 +268,24 @@ public:
     int64_t GetLastPaid();
     bool IsValidNetAddr();
 
-    /// Is the input associated with collateral public key? (and there is 25000 EGG - checking if valid masternode)
+<<<<<<< HEAD
+    /// Is the input associated with collateral public key? (and there is 200000 Sprouts - checking if valid masternode)
     bool IsInputAssociatedWithPubkey() const;
 
     // Masternode collateral and reward schedules
     static CAmount GetMasternodeCollateral(int nHeight);
     static CAmount GetBlockValue(int nHeight);
     static CAmount GetMasternodePayment();
-static void InitMasternodeCollateralList();
+=======
+    /// Is the input associated with collateral public key? (and there is collateral - checking if valid masternode)
+    bool IsInputAssociatedWithPubkey() const;
+
+    static CAmount GetMasternodeNodeCollateral(int nHeight);
+    static CAmount GetBlockValue(int nHeight);
+    static CAmount GetMasternodePayment(int nHeight);
+    static void InitMasternodeCollateralList();
     static std::pair<int, CAmount> GetNextMasternodeCollateral(int nHeight);
+>>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
 };
 
 //
@@ -292,6 +307,10 @@ public:
     void Relay();
 
     std::string GetOldStrMessage() const;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
     // special sign/verify
     bool Sign(const CKey& key, const CPubKey& pubKey);
     bool Sign(const std::string strSignKey);

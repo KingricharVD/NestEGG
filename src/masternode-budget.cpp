@@ -1,6 +1,10 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+<<<<<<< HEAD
+// Copyright (c) 2020-2021 The Sprouts-Origins Core Developers
+=======
+// Copyright (c) 2021 The DECENOMY Core Developers
+>>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -52,8 +56,8 @@ bool IsBudgetCollateralValid(const uint256& nTxCollateralHash, const uint256& nE
         }
         if (fBudgetFinalization) {
             // Collateral for budget finalization
-            // Note: there are still old valid budgets out there, but the check for the new 5 PIV finalization collateral
-            //       will also cover the old 50 PIV finalization collateral.
+            // Note: there are still old valid budgets out there, but the check for the new 5 NestEgg finalization collateral
+            //       will also cover the old 50 NestEgg finalization collateral.
             LogPrint(BCLog::MNBUDGET, "Final Budget: o.scriptPubKey(%s) == findScript(%s) ?\n", HexStr(o.scriptPubKey), HexStr(findScript));
             if (o.scriptPubKey == findScript) {
                 LogPrint(BCLog::MNBUDGET, "Final Budget: o.nValue(%ld) >= BUDGET_FEE_TX(%ld) ?\n", o.nValue, BUDGET_FEE_TX);
@@ -85,7 +89,7 @@ bool IsBudgetCollateralValid(const uint256& nTxCollateralHash, const uint256& nE
         - nTime is never validated via the hashing mechanism and comes from a full-validated source (the blockchain)
     */
 
-    int conf = GetIXConfirmations(nTxCollateralHash);
+    int conf = 0;
     if (!nBlockHash.IsNull()) {
         BlockMap::iterator mi = mapBlockIndex.find(nBlockHash);
         if (mi != mapBlockIndex.end() && (*mi).second) {
@@ -99,7 +103,6 @@ bool IsBudgetCollateralValid(const uint256& nTxCollateralHash, const uint256& nE
 
     nConf = conf;
 
-    //if we're syncing we won't have swiftTX information, so accept 1 confirmation
     const int nRequiredConfs = Params().GetConsensus().nBudgetFeeConfirmations;
     if (conf >= nRequiredConfs) {
         return true;
@@ -207,8 +210,8 @@ void CBudgetManager::SubmitFinalBudget()
             return;
         }
 
-        // Send the tx to the network. Do NOT use SwiftTx, locking might need too much time to propagate, especially for testnet
-        const CWallet::CommitResult& res = pwalletMain->CommitTransaction(wtx, keyChange, g_connman.get(), "NO-ix");
+        // Send the tx to the network.
+        const CWallet::CommitResult& res = pwalletMain->CommitTransaction(wtx, keyChange, g_connman.get());
         if (res.status != CWallet::CommitStatus::OK)
             return;
         tx = (CTransaction)wtx;
@@ -497,7 +500,11 @@ void CBudgetManager::FillBlockPayee(CMutableTransaction& txNew, bool fProofOfSta
         ++it;
     }
 
+<<<<<<< HEAD
     CAmount blockValue = CMasternode::GetBlockValue(chainHeight);
+=======
+    CAmount blockValue = CMasternode::GetBlockValue(chainHeight + 1);
+>>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
 
     if (fProofOfStake) {
         if (nHighestCount > 0) {
@@ -1030,8 +1037,6 @@ void CBudgetManager::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
             if (nProp.IsNull()) {
                 if (pfrom->HasFulfilledRequest("budgetvotesync")) {
                     LogPrint(BCLog::MNBUDGET,"mnvs - peer already asked me for the list\n");
-                    LOCK(cs_main);
-                    Misbehaving(pfrom->GetId(), 20);
                     return;
                 }
                 pfrom->FulfilledRequest("budgetvotesync");
@@ -1172,7 +1177,7 @@ void CBudgetManager::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
         const CTxIn& voteVin = vote.GetVin();
         CMasternode* pmn = mnodeman.Find(voteVin);
         if (pmn == NULL) {
-            LogPrint(BCLog::MNBUDGET, "fbvote - unknown masternode - vin: %s\n", voteVin.prevout.hash.ToString());
+            LogPrint(BCLog::MNBUDGET, "fbvote - unknown masternode - vin: %s\n", voteVin.prevout.ToStringShort());
             mnodeman.AskForMN(pfrom, voteVin);
             return;
         }
