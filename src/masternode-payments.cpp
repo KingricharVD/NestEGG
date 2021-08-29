@@ -1,10 +1,10 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-<<<<<<< HEAD
+
 // Copyright (c) 2020-2021 The Sprouts-Origins Core Developers
-=======
+
 // Copyright (c) 2021 The DECENOMY Core Developers
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -176,13 +176,13 @@ bool CMasternodePaymentWinner::IsValid(CNode* pnode, std::string& strError)
     CMasternode* pmn = mnodeman.Find(vinMasternode);
 
     if (!pmn) {
-<<<<<<< HEAD
+
         strError = strprintf("Unknown Masternode %s", vinMasternode.prevout.hash.ToString());
         LogPrint(BCLog::MASTERNODE, "CMasternodePaymentWinner::IsValid - %s\n", strError);
-=======
+
         strError = strprintf("Unknown Masternode %s", vinMasternode.prevout.ToStringShort());
         LogPrint(BCLog::MASTERNODE,"CMasternodePaymentWinner::IsValid - %s\n", strError);
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
         mnodeman.AskForMN(pnode, vinMasternode);
         return false;
     }
@@ -297,7 +297,7 @@ bool IsBlockPayeeValid(const CBlock& block, int nBlockHeight)
     //             return true;
     //         }
 
-<<<<<<< HEAD
+
             if (transactionStatus == TrxValidationStatus::InValid) {
                 LogPrint(BCLog::MASTERNODE, "Invalid budget payment detected %s\n", txNew.ToString().c_str());
                 if (sporkManager.IsSporkActive(SPORK_9_MASTERNODE_BUDGET_ENFORCEMENT))
@@ -307,7 +307,7 @@ bool IsBlockPayeeValid(const CBlock& block, int nBlockHeight)
             }
         }
     }
-=======
+
     //         if (transactionStatus == TrxValidationStatus::InValid) {
     //             LogPrint(BCLog::MASTERNODE,"Invalid budget payment detected %s\n", txNew.ToString().c_str());
     //             if (sporkManager.IsSporkActive(SPORK_9_MASTERNODE_BUDGET_ENFORCEMENT))
@@ -317,7 +317,7 @@ bool IsBlockPayeeValid(const CBlock& block, int nBlockHeight)
     //         }
     //     }
     // }
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
 
     // If we end here the transaction was either TrxValidationStatus::InValid and Budget enforcement is disabled, or
     // a double budget payment (status = TrxValidationStatus::DoublePayment) was detected, or no/not enough masternode
@@ -376,11 +376,11 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, const CBloc
     }
 
     if (hasPayment) {
-<<<<<<< HEAD
+
         CAmount masternodePayment = CMasternode::GetMasternodePayment();
-=======
+
         CAmount masternodePayment = CMasternode::GetMasternodePayment(pindexPrev->nHeight + 1);
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
         if (fProofOfStake) {
             /**For Proof Of Stake vout[0] must be null
              * Stake reward can be split into many different outputs, so we must
@@ -413,11 +413,11 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, const CBloc
             txNew.vout.resize(2);
             txNew.vout[1].scriptPubKey = payee;
             txNew.vout[1].nValue = masternodePayment;
-<<<<<<< HEAD
+
             txNew.vout[0].nValue = CMasternode::GetBlockValue(pindexPrev->nHeight) - masternodePayment;
-=======
+
             txNew.vout[0].nValue = CMasternode::GetBlockValue(pindexPrev->nHeight + 1) - masternodePayment;
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
         }
 
         CTxDestination address1;
@@ -598,11 +598,11 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransaction& txNew, int n
     if (nMaxSignatures < MNPAYMENTS_SIGNATURES_REQUIRED) return true;
 
     std::string strPayeesPossible = "";
-<<<<<<< HEAD
+
     CAmount requiredMasternodePayment = CMasternode::GetMasternodePayment();
-=======
+
     CAmount requiredMasternodePayment = CMasternode::GetMasternodePayment(nBlockHeight);
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
 
     for (CMasternodePayee& payee : vecPayments) {
         bool found = false;
@@ -675,12 +675,12 @@ bool CMasternodePayments::IsTransactionValid(const CTransaction& txNew, int nBlo
 
 void CMasternodePayments::CleanPaymentList()
 {
-<<<<<<< HEAD
+
     LOCK(cs_main);
     LOCK2(cs_mapMasternodePayeeVotes, cs_mapMasternodeBlocks);
 
-=======
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
+
     int nHeight;
     {
         TRY_LOCK(cs_main, locked);
@@ -741,11 +741,11 @@ bool CMasternodePayments::ProcessBlock(int nBlockHeight)
     if (budget.IsBudgetPaymentBlock(nBlockHeight)) {
         //is budget payment block -- handled by the budgeting software
     } else {
-<<<<<<< HEAD
+
         LogPrint(BCLog::MASTERNODE, "CMasternodePayments::ProcessBlock() Start nHeight %d - vin %s. \n", nBlockHeight, activeMasternode.vin->prevout.hash.ToString());
-=======
+
         LogPrint(BCLog::MASTERNODE, "CMasternodePayments::ProcessBlock() Start nHeight %d - vin %s. \n", nBlockHeight, activeMasternode.vin->prevout.ToStringShort());
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
 
         // pay to the oldest MN that still had no payment but its input is old enough and it was active long enough
         int nCount = 0;
@@ -793,12 +793,12 @@ bool CMasternodePayments::ProcessBlock(int nBlockHeight)
 
 void CMasternodePayments::Sync(CNode* node, int nCountNeeded)
 {
-<<<<<<< HEAD
+
     LOCK(cs_main);
     LOCK(cs_mapMasternodePayeeVotes);
 
-=======
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
+
     int nHeight;
     {
         TRY_LOCK(cs_main, locked);

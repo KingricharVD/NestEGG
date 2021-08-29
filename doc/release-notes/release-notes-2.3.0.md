@@ -10,7 +10,7 @@ Please report bugs using the issue tracker at github:
   <https://github.com/pivx-project/pivx/issues>
 
 Mandatory Update
-==============
+
 
 PIVX Core v2.3.0 is a mandatory update for all users. This release contains validation and security improvements that are not backwards compatible with older versions. Users will have a grace period of no less than two weeks to update their clients before enforcement of this update is enabled.
 
@@ -21,7 +21,7 @@ If you are running an older version, shut it down. Wait until it has completely 
 
 
 Compatibility
-==============
+
 
 PIVX Core is extensively tested on multiple operating systems using the Linux kernel, macOS 10.8+, and Windows Vista and later.
 
@@ -30,7 +30,7 @@ Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsof
 PIVX Core should also work on most other Unix-like systems but is not frequently tested on them.
 
 Notable Changes
-===============
+=
 
 RPC changes
 --------------
@@ -135,7 +135,7 @@ SPV Client Support
 PIVX Core now enables bloom filters by default to support SPV clients like mobile wallets. This feature can be disabled by using the `-peerbloomfilters` option on startup.
 
 2.3.0 Change log
-=================
+===
 
 Detailed release notes follow. This overview includes changes that affect
 behavior, not code moves, refactors and string updates. For convenience in locating
@@ -183,7 +183,7 @@ git merge commit are mentioned.
 - #213 `ddd8994` [Trivial] Reduce debug.log spam for masternode messages (Fuzzbawls)
 
 Credits
-=======
+
 
 Thanks to everyone who directly contributed to this release:
 - Aaron Miller

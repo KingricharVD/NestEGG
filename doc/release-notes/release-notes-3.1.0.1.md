@@ -5,13 +5,13 @@ This is a new bugfix release, specifically addressing a bug with windows OS mast
 Please report bugs using the issue tracker at github: <https://github.com/pivx-project/pivx/issues>
 
 How to Upgrade
-==============
+
 
 If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/PIVX-Qt (on Mac) or pivxd/pivx-qt (on Linux).
 
 
 Compatibility
-==============
+
 
 PIVX Core is extensively tested on multiple operating systems using the Linux kernel, macOS 10.8+, and Windows 7 and later.
 
@@ -25,7 +25,7 @@ PIVX Core should also work on most other Unix-like systems but is not frequently
 
  
 Notable Changes
-==============
+
 
 Windows masternode.conf bug
 --------------
@@ -38,7 +38,7 @@ Windows file icons
 The Windows program icons and installer images were of less than ideal quality, often appearing grainy or distorted. These icons/images have now been recreated to meet higher standards.
 
 *3.1.0.1* Change log
-==============
+
 
 Detailed release notes follow. This overview includes changes that affect behavior, not code moves, refactors and string updates. For convenience in locating the code changes and accompanying discussion, both the pull request and git merge commit are mentioned.
 

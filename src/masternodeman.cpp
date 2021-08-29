@@ -1,10 +1,10 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-<<<<<<< HEAD
+
 // Copyright (c) 2020-2021 The Sprouts-Origins Core Developers
-=======
+
 // Copyright (c) 2021 The DECENOMY Core Developers
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -247,12 +247,12 @@ void CMasternodeMan::AskForMN(CNode* pnode, const CTxIn& vin)
 
 void CMasternodeMan::Check()
 {
-<<<<<<< HEAD
+
     LOCK(cs_main);
     LOCK(cs);
-=======
+
     LOCK2(cs_main, cs);
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
 
     for (CMasternode& mn : vMasternodes) {
         mn.Check();
@@ -505,12 +505,12 @@ CMasternode* CMasternodeMan::Find(const CService &addr)
 //
 CMasternode* CMasternodeMan::GetNextMasternodeInQueueForPayment(int nBlockHeight, bool fFilterSigTime, int& nCount)
 {
-<<<<<<< HEAD
+
     LOCK(cs_main);
     LOCK(cs);
-=======
+
     LOCK2(cs_main, cs);
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
 
     CMasternode* pBestMasternode = NULL;
     std::vector<std::pair<int64_t, CTxIn> > vecMasternodeLastPaid;
@@ -531,18 +531,18 @@ CMasternode* CMasternodeMan::GetNextMasternodeInQueueForPayment(int nBlockHeight
         if (masternodePayments.IsScheduled(mn, nBlockHeight)) continue;
 
         //it's too new, wait for a cycle
-<<<<<<< HEAD
+
 		if (sporkManager.IsSporkActive(SPORK_20_UPGRADE_CYCLE_FACTOR))
         {
             if (fFilterSigTime && mn.sigTime + (nMnCount * 1.0 * 60) > GetAdjustedTime()) continue;
         }
         else
         {
-=======
+
         if (Params().GetConsensus().NetworkUpgradeActive(chainActive.Tip()->nHeight, Consensus::UPGRADE_STAKE_MODIFIER_V2)) {
             if (fFilterSigTime && mn.sigTime + (nMnCount * 60) > GetAdjustedTime()) continue;
         } else {
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
             if (fFilterSigTime && mn.sigTime + (nMnCount * 2.6 * 60) > GetAdjustedTime()) continue;
         }
 
@@ -612,7 +612,7 @@ int CMasternodeMan::GetMasternodeRank(const CTxIn& vin, int64_t nBlockHeight, in
     int64_t nMasternode_Min_Age = MN_WINNER_MINIMUM_AGE;
     int64_t nMasternode_Age = 0;
     bool masternodeRankV2 = Params().GetConsensus().NetworkUpgradeActive(chainActive.Height(), Consensus::UPGRADE_MASTERNODE_RANK_V2);
-    int defaultValue = 
+    int defaultValue =
         masternodeRankV2 ?
         INT_MAX :
         -1;
@@ -635,7 +635,7 @@ int CMasternodeMan::GetMasternodeRank(const CTxIn& vin, int64_t nBlockHeight, in
                 continue;                                                   // Skip masternodes younger than (default) 1 hour
             }
         }
-        
+
         mn.Check();
         if (!mn.IsEnabled()) continue;
 

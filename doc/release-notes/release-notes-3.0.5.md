@@ -11,7 +11,7 @@ Please report bugs using the issue tracker at github:
 
 
 Mandatory Update
-==============
+
 
 PIVX Core v3.0.5 is a mandatory update for all users. This release contains various updates/fixes pertaining to the zPIV protocol, supply tracking, block transmission and relaying, as well as usability and quality-of-life updates to the GUI. Users are required to update before block `908000` which is when the accumulators will be refactored. Shortly after that block, zPIV transactions will be enabled. **When zPIV is enabled, autominting will also be enabled.** If you would like to disable automatic conversion of 10% of your PIV balance to zPIV, then you will need to add `enablezeromint=0` to your `pivx.conf` file. For information about where to find your pivx.conf you can visit this link from [PIVX Support](https://pivx.freshdesk.com/support/solutions/articles/30000004664-where-are-my-wallet-dat-blockchain-and-configuration-conf-files-located-).
 
@@ -19,13 +19,13 @@ Users will have a grace period to update their clients before versions prior to 
 
 
 How to Upgrade
-==============
+
 
 If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/PIVX-Qt (on Mac) or pivxd/pivx-qt (on Linux).
 
 
 Compatibility
-==============
+
 
 PIVX Core is extensively tested on multiple operating systems using
 the Linux kernel, macOS 10.8+, and Windows Vista and later.
@@ -44,7 +44,7 @@ frequently tested on them.
 
 
 Notable Changes
-===============
+=
 
 Accumulator Code Refactor
 ---------------------
@@ -72,7 +72,7 @@ Provides functionality which is currently only available through raw transaction
 
 
 3.0.5 Change log
-=================
+===
 
 Detailed release notes follow. This overview includes changes that affect
 behavior, not code moves, refactors and string updates. For convenience in locating
@@ -99,7 +99,7 @@ git merge commit are mentioned.
 - #332 `0c2cd61` [Docs] Add missing archived release notes (Fuzzbawls)
 
 Credits
-=======
+
 
 Thanks to everyone who directly contributed to this release:
 - Fuzzbawls

@@ -1,15 +1,15 @@
 Contents
-========
+=
 This directory contains tools for developers working on this repository.
 
 check-doc.py
-============
+=====
 
 Check if all command line args are documented. The return value indicates the
 number of undocumented args.
 
 clang-format-diff.py
-===================
+=====
 
 A script to format unified git diffs according to [.clang-format](../../src/.clang-format).
 
@@ -23,7 +23,7 @@ git diff -U0 HEAD~1.. | ./contrib/devtools/clang-format-diff.py -p1 -i -v
 ```
 
 copyright\_header.py
-====================
+======
 
 Provides utilities for managing copyright headers of `NestEgg Core
 developers` in repository source files. It has three subcommands:
@@ -82,7 +82,7 @@ If the file already has a copyright for `NestEgg Core developers`, the
 script will exit.
 
 gen-manpages.sh
-===============
+=
 
 A small script to automatically create manpages in ../../doc/man by running the release binaries with the -help option.
 This requires help2man which can be found at: https://www.gnu.org/software/help2man/
@@ -96,7 +96,7 @@ BUILDDIR=$PWD/build contrib/devtools/gen-manpages.sh
 ```
 
 github-merge.py
-===============
+=
 
 A small script to automate merging pull-requests securely and sign them with GPG.
 
@@ -156,18 +156,18 @@ client via `pip3 install opentimestamps-client`. Then, dowload the gpg wrapper
 for further details.
 
 optimize-pngs.py
-================
+==
 
 A script to optimize png files in the NestEgg
 repository (requires pngcrush).
 
 security-check.py and test-security-check.py
-============================================
+==
 
 Perform basic ELF security checks on a series of executables.
 
 symbol-check.py
-===============
+=
 
 A script to check that the (Linux) executables produced by gitian only contain
 allowed gcc, glibc and libstdc++ version symbols. This makes sure they are
@@ -187,7 +187,7 @@ If there are 'unsupported' symbols, the return value will be 1 a list like this 
     .../64/test_nestegg: symbol _ZNSt8__detail15_List_nod from unsupported version GLIBCXX_3.4.15
 
 update-translations.py
-======================
+=
 
 Run this script from the root of the repository to update all translations from transifex.
 It will do the following automatically:
@@ -199,7 +199,7 @@ It will do the following automatically:
 See doc/translation-process.md for more information.
 
 circular-dependencies.py
-========================
+===
 
 Run this script from the root of the source tree (`src/`) to find circular dependencies in the source code.
 This looks only at which files include other files, treating the `.cpp` and `.h` file as one unit.

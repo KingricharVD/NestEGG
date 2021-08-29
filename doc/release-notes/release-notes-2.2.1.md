@@ -10,7 +10,7 @@ Please report bugs using the issue tracker at github:
   <https://github.com/pivx-project/pivx/issues>
 
 Compatibility
-==============
+
 
 PIVX Core is extensively tested on multiple operating systems using
 the Linux kernel, macOS 10.8+, and Windows Vista and later.
@@ -24,7 +24,7 @@ PIVX Core should also work on most other Unix-like systems but is not
 frequently tested on them.
 
 Notable Changes
-===============
+=
 
 Block Data Corruption
 ---------------------
@@ -68,7 +68,7 @@ current implementation. A revised multi-exchange trading window may be implement
 at a later date.
 
 2.2.1 Change log
-=================
+===
 
 Detailed release notes follow. This overview includes changes that affect
 behavior, not code moves, refactors and string updates. For convenience in locating
@@ -108,7 +108,7 @@ git merge commit are mentioned.
 - #167 `a6becee` [Utils] makeseeds script update
 
 Credits
-=======
+
 
 Thanks to everyone who directly contributed to this release:
 

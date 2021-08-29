@@ -6,7 +6,7 @@
  * the "-3" suffix), thus "SHAvite-224" is "SHAvite-3 with a 224-bit
  * output".
  *
- * ==========================(LICENSE BEGIN)============================
+ * =====(LICENSE BEGIN)
  *
  * Copyright (c) 2007-2010  Projet RNRT EGGHIR
  * 
@@ -29,7 +29,7 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * ===========================(LICENSE END)=============================
+ * ======(LICENSE END)=
  *
  * @file     sph_shavite.h
  * @author   Thomas Pornin <thomas.pornin@cryptolog.com>

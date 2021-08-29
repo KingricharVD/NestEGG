@@ -1,10 +1,10 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-<<<<<<< HEAD
+
 // Copyright (c) 2020-2021 The Sprouts-Origins Core Developers
-=======
+
 // Copyright (c) 2021 The DECENOMY Core Developers
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -500,11 +500,11 @@ void CBudgetManager::FillBlockPayee(CMutableTransaction& txNew, bool fProofOfSta
         ++it;
     }
 
-<<<<<<< HEAD
+
     CAmount blockValue = CMasternode::GetBlockValue(chainHeight);
-=======
+
     CAmount blockValue = CMasternode::GetBlockValue(chainHeight + 1);
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
 
     if (fProofOfStake) {
         if (nHighestCount > 0) {

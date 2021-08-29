@@ -6,20 +6,20 @@ Please report bugs using the issue tracker at github: <https://github.com/pivx-p
 
 
 Mandatory Update
-==============
+
 
 PIVX Core v3.3.0 is a mandatory update for all users. This release contains new consensus rules and improvements that are not backwards compatible with older versions. Users will have a grace period of approximately one week to update their clients before enforcement of this update goes into effect.
 
 Masternodes will need to be restarted once both the masternode daemon and the controller wallet have been upgraded.
 
 How to Upgrade
-==============
+
 
 If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/PIVX-Qt (on Mac) or pivxd/pivx-qt (on Linux).
 
 
 Compatibility
-==============
+
 
 PIVX Core is extensively tested on multiple operating systems using the Linux kernel, macOS 10.10+, and Windows 7 and later.
 
@@ -31,7 +31,7 @@ PIVX Core should also work on most other Unix-like systems but is not frequently
 
 
 Notable Changes
-==============
+
 
 ## zPIV Public Spends
 
@@ -133,7 +133,7 @@ This is intended to be used in conjunction with IDEs like CLion (which relies he
 Note that it is still required to have relevant dependencies installed on the system for this to function properly.
 
 *3.3.0* Change log
-==============
+
 
 Detailed release notes follow. This overview includes changes that affect behavior, not code moves, refactors and string updates. For convenience in locating the code changes and accompanying discussion, both the pull request and git merge commit are mentioned.
 

@@ -1,5 +1,5 @@
 Setting up Gitian on Windows WSL
-=================================
+=====
 
 Now that [Docker for Windows](./docker-setup-windows.md) and [WSL's Ubuntu 18.04 LTS](./wsl-setup-windows.md) have been installed and configured properly, you're ready to do the initial setup of the Gitian build system.
 

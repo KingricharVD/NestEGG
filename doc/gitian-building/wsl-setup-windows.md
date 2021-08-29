@@ -1,5 +1,5 @@
 Setting Up WSL
-=====================
+
 
 Windows 10 introduced a new feature called Windows Subsystem for Linux (WSL), which allows the installation of various linux distributions directly in Windows. This feature has mostly removed the need to use virtual machine setups.
 

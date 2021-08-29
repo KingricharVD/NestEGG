@@ -6,7 +6,7 @@ Please report bugs using the issue tracker at github: <https://github.com/pivx-p
 
 
 Mandatory Update
-==============
+
 
 PIVX Core v3.4.0 is a mandatory update for all users. This release contains new consensus rules and improvements that are not backwards compatible with older versions. Users will need to update their clients before enforcement of this update goes into effect.
 
@@ -18,13 +18,13 @@ Update enforcement goes into effect at the following times:
 Masternodes will need to be restarted once both the masternode daemon and the controller wallet have been upgraded.
 
 How to Upgrade
-==============
+
 
 If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/PIVX-Qt (on Mac) or pivxd/pivx-qt (on Linux).
 
 
 Compatibility
-==============
+
 
 PIVX Core is extensively tested on multiple operating systems using the Linux kernel, macOS 10.10+, and Windows 7 and later.
 
@@ -36,7 +36,7 @@ PIVX Core should also work on most other Unix-like systems but is not frequently
 
 
 Notable Changes
-==============
+
 
 ## Internal (Core) Changes
 
@@ -91,7 +91,7 @@ Several changes have been introduced to the travis script in order to make the o
 When the configure step fails because of an unsupported OpenSSL (or other library), it now displays more information on using an override flag to compile anyways. The long term plan is to ensure that the consensus code doesn't depend on OpenSSL in any way and then remove this configure step and related override flag.
 
 *3.4.0* Change log
-==============
+
 
 Detailed release notes follow. This overview includes changes that affect behavior, not code moves, refactors and string updates. For convenience in locating the code changes and accompanying discussion, both the pull request and git merge commit are mentioned.
 

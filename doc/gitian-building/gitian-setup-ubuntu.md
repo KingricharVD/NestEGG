@@ -1,5 +1,5 @@
 Setting Up Gitian on Ubuntu and Debian
-============================
+
 
 Ubuntu 18.04 is the preferred distribution, however anything 16.04 or newer should work. Debian only started including the Docker packages starting with Debian 10 (Buster).
 

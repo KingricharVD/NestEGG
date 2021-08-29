@@ -11,7 +11,7 @@ Please report bugs using the issue tracker at github:
 
 
 Mandatory Update
-==============
+
 
 PIVX Core v3.0.4 is a mandatory update for all users. This release contains various updates/fixes pertaining to the zPIV protocol, supply tracking, block transmission and relaying, as well as usability and quality-of-life updates to the GUI.
 
@@ -19,13 +19,13 @@ Users will have a grace period to update their clients before versions prior to 
 
 
 How to Upgrade
-==============
+
 
 If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/PIVX-Qt (on Mac) or pivxd/pivx-qt (on Linux).
 
 
 Compatibility
-==============
+
 
 PIVX Core is extensively tested on multiple operating systems using
 the Linux kernel, macOS 10.8+, and Windows Vista and later.
@@ -44,7 +44,7 @@ frequently tested on them.
 
 
 Notable Changes
-===============
+=
 
 Refactoring of zPiv Spend Validation Code
 ---------------------
@@ -69,7 +69,7 @@ More Extensive Display of zPiv Confirmation/Maturity Status
 Within the Privacy Dialog of the QT wallet, the _Zerocoin Stats_ section now displays both the confirmation and maturity status of minted zPiv's. Previously this was only able to be viewed within the zPiv Control dialog. The main Overview tab of the QT wallet now splits zPiv balance into subcategories: _Unconfirmed_, _Immature_, and _Mature_.
 
 3.0.4 Change log
-=================
+===
 
 Detailed release notes follow. This overview includes changes that affect
 behavior, not code moves, refactors and string updates. For convenience in locating
@@ -109,7 +109,7 @@ git merge commit are mentioned.
 
 
 Credits
-=======
+
 
 Thanks to everyone who directly contributed to this release:
 - Fuzzbawls

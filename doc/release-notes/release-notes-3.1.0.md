@@ -6,20 +6,20 @@ Please report bugs using the issue tracker at github: <https://github.com/pivx-p
 
 
 Mandatory Update
-==============
+
 
 PIVX Core v3.1.0 is a mandatory update for all users. This release contains new consensus rules and improvements that are not backwards compatible with older versions. Users will have a grace period of one week to update their clients before enforcement of this update is enabled.
 
 Users updating from a previous version after Tuesday, May 8, 2018 12:00:00 AM GMT will require a full resync of their local blockchain from either the P2P network or by way of the bootstrap.
 
 How to Upgrade
-==============
+
 
 If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/PIVX-Qt (on Mac) or pivxd/pivx-qt (on Linux).
 
 
 Compatibility
-==============
+
 
 PIVX Core is extensively tested on multiple operating systems using
 the Linux kernel, macOS 10.8+, and Windows Vista and later.
@@ -38,7 +38,7 @@ frequently tested on them.
 
  
 Notable Changes
-==============
+
 
 zPIV Updates
 --------------
@@ -261,7 +261,7 @@ Minor Enhancements
 -	Updated documentation
 
 Further Reading: Version 2 Zerocoins
-==============
+
 
 Several critical security flaws in the zerocoin protocol and PIVX's zerocoin implementation have been patched. Enough has changed that new zerocoins are distinct from old zerocoins, and have been labelled as *version 2*. When using the zPIV Control dialog in the QT wallet, a user is able to see zPIV marked as version 1 or 2.
 

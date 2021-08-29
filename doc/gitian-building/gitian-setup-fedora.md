@@ -1,5 +1,5 @@
 Setting Up Gitian on Fedora and CentOS
-============================
+
 
 Fedora and CentOS support is still experimental. Testing has been done on Fedora 29+ and CentOS 7
 

@@ -10,19 +10,19 @@ Please report bugs using the issue tracker at github:
   <https://github.com/pivx-project/pivx/issues>
 
 Recommended Update
-==============
+
 
 PIVX Core v3.0.2 is a recommended, semi-mandatory update for all users. This release contains transaction creation bug fixes for zPIV spends, automint calculation adjustments, and other various updates/fixes.
 
 zPIV spending requires this update.
 
 How to Upgrade
-==============
+
 
 If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/PIVX-Qt (on Mac) or pivxd/pivx-qt (on Linux).
 
 Compatibility
-==============
+
 
 PIVX Core is extensively tested on multiple operating systems using
 the Linux kernel, macOS 10.8+, and Windows Vista and later.
@@ -41,7 +41,7 @@ frequently tested on them.
 
 
 Notable Changes
-===============
+=
 
 Auto Wallet Backup
 ---------------------
@@ -78,7 +78,7 @@ Bip38 Compatibility With 3rd Party Tools
 The in-wallet bip38 encryption method was leaving the final 4 bytes of the encrypted key blank. This caused an incompatibility issue with 3rd party tools like the paper wallet generators that could decrypt bip38 encrypted keys. Cross-tool compatibility has now been restored.
 
 3.0.2 Change log
-=================
+===
 
 Detailed release notes follow. This overview includes changes that affect
 behavior, not code moves, refactors and string updates. For convenience in locating
@@ -114,7 +114,7 @@ git merge commit are mentioned.
 - #288 `2522aa1` Bad CBlockHeader copy. (furszy)
 
 Credits
-=======
+
 
 Thanks to everyone who directly contributed to this release:
 - Fuzzbawls

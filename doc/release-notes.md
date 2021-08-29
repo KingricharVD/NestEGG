@@ -6,12 +6,12 @@ Please report bugs using the issue tracker at github: <https://github.com/eggcoi
 
 
 Recommended Update
-==============
+
 
 This version is an optional, but recommended, update for all users and services.
 
 How to Upgrade
-==============
+
 
 If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/NestEgg-Qt (on Mac) or nesteggd/nestegg-qt (on Linux).
 
@@ -22,7 +22,7 @@ The chainstate database for this release is not compatible with previous release
 
 
 Compatibility
-==============
+
 
 NestEgg Core is extensively tested on multiple operating systems using the Linux kernel, macOS 10.10+, and Windows 7 and later.
 
@@ -34,7 +34,7 @@ NestEgg Core should also work on most other Unix-like systems but is not frequen
 
 
 Notable Changes
-==============
+
 
 Performance Improvements
 ------------------------
@@ -93,7 +93,7 @@ The following commands have been removed from the interface:
 - `estimatepriority`
 
 *4.3.0* Change log
-==============
+
 
 Detailed release notes follow. This overview includes changes that affect behavior, not code moves, refactors and string updates. For convenience in locating the code changes and accompanying discussion, both the pull request and git merge commit are mentioned.
 

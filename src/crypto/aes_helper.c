@@ -15,7 +15,7 @@
  * possible to have both simultaneously, by including this file twice
  * (with and without the AES_BIG_ENDIAN macro).
  *
- * ==========================(LICENSE BEGIN)============================
+ * =====(LICENSE BEGIN)
  *
  * Copyright (c) 2007-2010  Projet RNRT EGGHIR
  * 
@@ -38,7 +38,7 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * ===========================(LICENSE END)=============================
+ * ======(LICENSE END)=
  *
  * @author   Thomas Pornin <thomas.pornin@cryptolog.com>
  */

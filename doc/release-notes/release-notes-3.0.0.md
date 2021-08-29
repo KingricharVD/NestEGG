@@ -10,19 +10,19 @@ Please report bugs using the issue tracker at github:
   <https://github.com/pivx-project/pivx/issues>
 
 Mandatory Update
-==============
+
 
 PIVX Core v3.0.0 is a mandatory update for all users. This release contains new consensus rules and improvements that are not backwards compatible with older versions. Users will have a grace period of one week to update their clients before enforcement of this update is enabled.
 
 Users updating from a previous version after the 13th of October will require a full resync of their local blockchain from either the P2P network or by way of the bootstrap.
 
 How to Upgrade
-==============
+
 
 If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/PIVX-Qt (on Mac) or pivxd/pivx-qt (on Linux).
 
 Compatibility
-==============
+
 
 PIVX Core is extensively tested on multiple operating systems using
 the Linux kernel, macOS 10.8+, and Windows Vista and later.
@@ -41,7 +41,7 @@ frequently tested on them.
 
 
 Notable Changes
-===============
+=
 
 Zerocoin (zPIV) Protocol
 ---------------------
@@ -102,7 +102,7 @@ This means that if Tor is running (and proper authorization is available), PIVX 
 This new feature is enabled by default if PIVX Core is listening, and a connection to Tor can be made. It can be configured with the `-listenonion`, `-torcontrol` and `-torpassword` settings. To show verbose debugging information, pass `-debug=tor`.
 
 3.0.0 Change log
-=================
+===
 
 Detailed release notes follow. This overview includes changes that affect
 behavior, not code moves, refactors and string updates. For convenience in locating
@@ -122,7 +122,7 @@ git merge commit are mentioned.
 - #258 `c950765` [Depends] Update Depends with newer versions (Fuzzbawls)
 
 Credits
-=======
+
 
 Thanks to everyone who directly contributed to this release:
 - Fuzzbawls

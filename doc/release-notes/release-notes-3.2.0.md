@@ -6,21 +6,21 @@ Please report bugs using the issue tracker at github: <https://github.com/pivx-p
 
 
 Mandatory Update
-==============
+
 
 PIVX Core v3.2.0 is a **mandatory update** for all block creators, masternodes, and integrated services (exchanges). Old version 4 blocks will be rejected once 95% of a rolling 7 days worth of blocks have signaled the new version 5.
 
 Masternodes will need to be restarted once both the masternode daemon and the controller wallet have been upgraded.
 
 How to Upgrade
-==============
+
 
 If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/PIVX-Qt (on Mac) or pivxd/pivx-qt (on Linux).
 
 Wallets for existing users upgrading from an earlier version will undergo a supply recalculation the first time v3.2.0 is started. An initial light weight (partial) recalculation will be attempted first, but if that fails then the wallet will do a full recalculation the next time it is started. This recalculation is a one-time event.
 
 Compatibility
-==============
+
 
 PIVX Core is extensively tested on multiple operating systems using the Linux kernel, macOS 10.10+, and Windows 7 and later.
 
@@ -32,7 +32,7 @@ PIVX Core should also work on most other Unix-like systems but is not frequently
 
  
 Notable Changes
-==============
+
 
 Minimum Supported MacOS Version
 ------
@@ -190,7 +190,7 @@ Support for the new RISC-V 64bit processors has been added, though still experim
 The previous `gitian-build.sh` shell script has been replaced with a more feature rich python version; `gitian-build.py`. This script now supports the use of a docker container in addition to LXC or KVM virtualization, as well as the ability to build against a pull request by number.
 
 *3.2.0* Change log
-==============
+
 
 Detailed release notes follow. This overview includes changes that affect behavior, not code moves, refactors and string updates. For convenience in locating the code changes and accompanying discussion, both the pull request and git merge commit are mentioned.
 

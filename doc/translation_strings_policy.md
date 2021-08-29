@@ -1,5 +1,5 @@
 Translation Strings Policy
-===========================
+======
 
 This document provides guidelines for internationalization of the PIVX Core software.
 

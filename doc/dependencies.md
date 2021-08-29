@@ -1,5 +1,5 @@
 Dependencies
-============
+=====
 
 These are the dependencies currently used by Eggkire Core. You can find instructions for installing them in the `build-*.md` file for your platform.
 

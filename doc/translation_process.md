@@ -1,5 +1,5 @@
 Translations
-============
+=====
 
 The PIVX Core project has been designed to support multiple localisations. This makes adding new phrases, and completely new languages easily achievable. For managing all application translations, PIVX Core makes use of the Transifex online translation management tool.
 

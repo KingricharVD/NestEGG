@@ -1,5 +1,5 @@
 Gitian building
-================
+==
 
 *Setup instructions for a gitian build of NestEgg Core using a VM or physical system.*
 

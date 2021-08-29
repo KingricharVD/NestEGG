@@ -1,6 +1,6 @@
 
 Debian
-====================
+======
 This directory contains files used to package nesteggd/nestegg-qt
 for Debian-based Linux systems. If you compile nesteggd/nestegg-qt yourself, there are some useful files here.
 

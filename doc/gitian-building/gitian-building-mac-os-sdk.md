@@ -1,5 +1,5 @@
 Gitian building macOS SDK
-==========================
+=====
 
 On the host machine, register for a free Apple [developer account](https://developer.apple.com/register/), then download the SDK [here](https://developer.apple.com/devcenter/download.action?path=/Developer_Tools/Xcode_7.3.1/Xcode_7.3.1.dmg).
 

@@ -1,10 +1,10 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-<<<<<<< HEAD
+
 // Copyright (c) 2020-2021 The Sprouts-Origins Core Developers
-=======
+
 // Copyright (c) 2021 The DECENOMY Core Developers
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -107,11 +107,11 @@ public:
 };
 
 //
-<<<<<<< HEAD
+
 // The Masternode Class. It contains the input of the 200000 Sprouts, signature to prove
-=======
+
 // The Masternode Class. It contains the input of the collateral, signature to prove
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
 // it's the one who own that ip address and code for calculating the payment election.
 //
 class CMasternode : public CSignedMessage
@@ -268,7 +268,7 @@ public:
     int64_t GetLastPaid();
     bool IsValidNetAddr();
 
-<<<<<<< HEAD
+
     /// Is the input associated with collateral public key? (and there is 200000 Sprouts - checking if valid masternode)
     bool IsInputAssociatedWithPubkey() const;
 
@@ -276,7 +276,7 @@ public:
     static CAmount GetMasternodeCollateral(int nHeight);
     static CAmount GetBlockValue(int nHeight);
     static CAmount GetMasternodePayment();
-=======
+
     /// Is the input associated with collateral public key? (and there is collateral - checking if valid masternode)
     bool IsInputAssociatedWithPubkey() const;
 
@@ -285,7 +285,7 @@ public:
     static CAmount GetMasternodePayment(int nHeight);
     static void InitMasternodeCollateralList();
     static std::pair<int, CAmount> GetNextMasternodeCollateral(int nHeight);
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
 };
 
 //
@@ -307,10 +307,10 @@ public:
     void Relay();
 
     std::string GetOldStrMessage() const;
-<<<<<<< HEAD
-=======
 
->>>>>>> 720aa7267654adc6f803589b695aa9f059e0dc48
+
+
+
     // special sign/verify
     bool Sign(const CKey& key, const CPubKey& pubKey);
     bool Sign(const std::string strSignKey);

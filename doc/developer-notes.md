@@ -1,5 +1,5 @@
 Developer Notes
-===============
+=
 
 <!-- markdown-toc start -->
 **Table of Contents**
@@ -342,7 +342,7 @@ example, lcov) it is perfectly acceptable to add its files to `.gitignore`
 and commit them.
 
 Development guidelines
-============================
+
 
 A few non-style-related recommendations for developers, as well as points to
 pay attention to for reviewers of NestEgg Core code.

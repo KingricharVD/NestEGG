@@ -1,5 +1,5 @@
 Setting Up Gitian on macOS
-===========================
+======
 
 Now that [Docker for Mac](./docker-setup-mac.md) has been installed and configured properly, you're ready to do the initial setup of the Gitian build system.
 
