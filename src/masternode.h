@@ -1,10 +1,6 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-
-// Copyright (c) 2020-2021 The Sprouts-Origins Core Developers
-
 // Copyright (c) 2021 The DECENOMY Core Developers
-
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -58,7 +54,8 @@ public:
         READWRITE(blockHash);
         READWRITE(sigTime);
         READWRITE(vchSig);
-        try {
+        try
+        {
             READWRITE(nMessVersion);
         } catch (...) {
             nMessVersion = MessageVersion::MESS_VER_STRMESS;
@@ -70,7 +67,7 @@ public:
     // override CSignedMessage functions
     uint256 GetSignatureHash() const override { return GetHash(); }
     std::string GetStrMessage() const override;
-    const CTxIn GetVin() const override { return vin; };
+    const CTxIn GetVin() const override  { return vin; };
     bool IsNull() { return blockHash.IsNull() || vin.prevout.IsNull(); }
 
     bool CheckAndUpdate(int& nDos, bool fRequireEnabled = true, bool fCheckSigTimeOnly = false);
@@ -107,11 +104,7 @@ public:
 };
 
 //
-
-// The Masternode Class. It contains the input of the 200000 Sprouts, signature to prove
-
 // The Masternode Class. It contains the input of the collateral, signature to prove
-
 // it's the one who own that ip address and code for calculating the payment election.
 //
 class CMasternode : public CSignedMessage
@@ -268,15 +261,6 @@ public:
     int64_t GetLastPaid();
     bool IsValidNetAddr();
 
-
-    /// Is the input associated with collateral public key? (and there is 200000 Sprouts - checking if valid masternode)
-    bool IsInputAssociatedWithPubkey() const;
-
-    // Masternode collateral and reward schedules
-    static CAmount GetMasternodeCollateral(int nHeight);
-    static CAmount GetBlockValue(int nHeight);
-    static CAmount GetMasternodePayment();
-
     /// Is the input associated with collateral public key? (and there is collateral - checking if valid masternode)
     bool IsInputAssociatedWithPubkey() const;
 
@@ -285,7 +269,6 @@ public:
     static CAmount GetMasternodePayment(int nHeight);
     static void InitMasternodeCollateralList();
     static std::pair<int, CAmount> GetNextMasternodeCollateral(int nHeight);
-
 };
 
 //
@@ -308,9 +291,6 @@ public:
 
     std::string GetOldStrMessage() const;
 
-
-
-
     // special sign/verify
     bool Sign(const CKey& key, const CPubKey& pubKey);
     bool Sign(const std::string strSignKey);
@@ -329,7 +309,7 @@ public:
         READWRITE(sigTime);
         READWRITE(protocolVersion);
         READWRITE(lastPing);
-        READWRITE(nMessVersion); // abuse nLastDsq (which will be removed) for old serialization
+        READWRITE(nMessVersion);    // abuse nLastDsq (which will be removed) for old serialization
         if (ser_action.ForRead())
             nLastDsq = 0;
     }
