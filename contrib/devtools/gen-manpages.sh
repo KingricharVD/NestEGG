@@ -7,10 +7,10 @@ BUILDDIR=${BUILDDIR:-$TOPDIR}
 BINDIR=${BINDIR:-$BUILDDIR/src}
 MANDIR=${MANDIR:-$TOPDIR/doc/man}
 
-BITCOIND=${BITCOIND:-$BINDIR/nesteggd}
-BITCOINCLI=${BITCOINCLI:-$BINDIR/nestegg-cli}
-BITCOINTX=${BITCOINTX:-$BINDIR/nestegg-tx}
-BITCOINQT=${BITCOINQT:-$BINDIR/qt/nestegg-qt}
+BITCOIND=${BITCOIND:-$BINDIR/Human_Charity_Coin_Protocold}
+BITCOINCLI=${BITCOINCLI:-$BINDIR/Human_Charity_Coin_Protocol-cli}
+BITCOINTX=${BITCOINTX:-$BINDIR/Human_Charity_Coin_Protocol-tx}
+BITCOINQT=${BITCOINQT:-$BINDIR/qt/Human_Charity_Coin_Protocol-qt}
 
 [ ! -x $BITCOIND ] && echo "$BITCOIND not found or not executable." && exit 1
 

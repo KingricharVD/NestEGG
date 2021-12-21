@@ -1,5 +1,5 @@
 Gitian building macOS SDK
-=====
+==========================
 
 On the host machine, register for a free Apple [developer account](https://developer.apple.com/register/), then download the SDK [here](https://developer.apple.com/devcenter/download.action?path=/Developer_Tools/Xcode_7.3.1/Xcode_7.3.1.dmg).
 
@@ -23,7 +23,7 @@ Non-macOS host:
 --------
 
 Alternatively, you can use 7zip and SleuthKit to extract the files one by one.
-The script [extract-osx-sdk.sh](https://github.com/SirElven8/NestEGG/blob/master/contrib/macdeploy/extract-osx-sdk.sh) automates this. First ensure
+The script [extract-osx-sdk.sh](https://github.com/pivx-project/pivx/blob/master/contrib/macdeploy/extract-osx-sdk.sh) automates this. First ensure
 the dmg file is in the current directory, and then run the script.
 
 You may wish to delete the intermediate `5.hfs` file and `MacOSX10.11.sdk` (the directory) when
@@ -32,21 +32,21 @@ you've confirmed the extraction succeeded.
 #### Ubuntu/Debian
 ```bash
 sudo apt-get install p7zip-full sleuthkit
-nestegg/contrib/macdeploy/extract-osx-sdk.sh
+pivx/contrib/macdeploy/extract-osx-sdk.sh
 rm -rf 5.hfs MacOSX10.11.sdk
 ```
 
 #### Fedora
 ```bash
 sudo dnf install p7zip p7zip-plugins sleuthkit
-nestegg/contrib/macdeploy/extract-osx-sdk.sh
+pivx/contrib/macdeploy/extract-osx-sdk.sh
 rm -rf 5.hfs MacOSX10.11.sdk
 ```
 
 #### CentOS
 ```bash
 sudo yum install p7zip p7zip-plugins sleuthkit
-nestegg/contrib/macdeploy/extract-osx-sdk.sh
+pivx/contrib/macdeploy/extract-osx-sdk.sh
 rm -rf 5.hfs MacOSX10.11.sdk
 ```
 
@@ -61,4 +61,4 @@ mv MacOSX10.11.sdk.tar.gz gitian-builder/inputs
 
 Troubleshooting
 ---------------
-See [README_osx.md](https://github.com/SirElven8/NestEGG/blob/master/doc/README_osx.md) for troubleshooting tips.
+See [README_osx.md](https://github.com/pivx-project/pivx/blob/master/doc/README_osx.md) for troubleshooting tips.

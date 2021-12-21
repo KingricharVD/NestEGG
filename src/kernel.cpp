@@ -2,7 +2,7 @@
 // Copyright (c) 2013-2014 The NovaCoin Developers
 // Copyright (c) 2014-2018 The BlackCoin Developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -128,14 +128,17 @@ bool Stake(const CBlockIndex* pindexPrev, CStakeInput* stakeInput, unsigned int 
 {
     // Double check stake input contextual checks
     const int nHeightTx = pindexPrev->nHeight + 1;
-    if (!stakeInput || !stakeInput->ContextCheck(nHeightTx, nTimeTx)) return false;
 
     // Get the new time slot (and verify it's not the same as previous block)
     const bool fRegTest = Params().IsRegTestNet();
-    nTimeTx = (fRegTest ? GetAdjustedTime() : GetCurrentTimeSlot());
+    const bool fTimeProtocolV2 = Params().GetConsensus().IsTimeProtocolV2(nHeightTx) && !fRegTest;
+    nTimeTx = (fTimeProtocolV2 ? GetCurrentTimeSlot() : GetAdjustedTime());
+
     if (nTimeTx <= pindexPrev->nTime && !fRegTest) return false;
 
-    int slotRange = Params().GetConsensus().IsTimeProtocolV2(nHeightTx) ? 1 : Params().GetConsensus().nTimeSlotLength;
+    if (!stakeInput || !stakeInput->ContextCheck(nHeightTx, nTimeTx)) return false;
+
+    int slotRange = fTimeProtocolV2 ? 1 : Params().GetConsensus().nFutureTimeDriftPoS;
 
     for(int i = 0; i < slotRange; i++) 
     {
@@ -151,6 +154,7 @@ bool Stake(const CBlockIndex* pindexPrev, CStakeInput* stakeInput, unsigned int 
     return false;
 }
 
+
 /*
  * CheckProofOfStake    Check if block has valid proof of stake
  *
@@ -162,6 +166,11 @@ bool Stake(const CBlockIndex* pindexPrev, CStakeInput* stakeInput, unsigned int 
  */
 bool CheckProofOfStake(const CBlock& block, std::string& strError, const CBlockIndex* pindexPrev)
 {
+    // if we have already a checkpoint newer than this block 
+    // then it is OK
+    if (block.nTime <= Params().Checkpoints().nTimeLastCheckpoint)
+        return true;
+
     const int nHeight = pindexPrev->nHeight + 1;
     // Initialize stake input
     std::unique_ptr<CStakeInput> stakeInput;
@@ -178,7 +187,7 @@ bool CheckProofOfStake(const CBlock& block, std::string& strError, const CBlockI
 
     // Verify Proof Of Stake
     CStakeKernel stakeKernel(pindexPrev, stakeInput.get(), block.nBits, block.nTime);
-    if (!stakeKernel.CheckKernelHash() && nHeight <= Consensus::UPGRADE_POS_V2 ) {
+    if (!stakeKernel.CheckKernelHash()) {
         strError = "kernel hash check fails";
         return false;
     }

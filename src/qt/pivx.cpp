@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -151,7 +151,7 @@ void DebugMessageHandler(QtMsgType type, const QMessageLogContext& context, cons
     }
 }
 
-/** Class encapsulating EGG Core startup and shutdown.
+/** Class encapsulating Human_Charity_Coin_Protocol Core startup and shutdown.
  * Allows running startup and shutdown in a different thread from the UI thread.
  */
 class BitcoinCore : public QObject
@@ -178,7 +178,7 @@ private:
     void handleRunawayException(const std::exception* e);
 };
 
-/** Main EGG application object */
+/** Main HCCP application object */
 class BitcoinApplication : public QApplication
 {
     Q_OBJECT
@@ -210,7 +210,7 @@ public:
     /// Get process return value
     int getReturnValue() { return returnValue; }
 
-    /// Get window identifier of QMainWindow (EGGGUI)
+    /// Get window identifier of QMainWindow (PIVXGUI)
     WId getMainWinId() const;
 
 public Q_SLOTS:
@@ -496,7 +496,7 @@ void BitcoinApplication::initializeResult(int retval)
 
 #ifdef ENABLE_WALLET
         // Now that initialization/startup is done, process any command-line
-        // EGG: URIs or payment requests:
+        // Human_Charity_Coin_Protocol: URIs or payment requests:
         //connect(paymentServer, &PaymentServer::receivedPaymentRequest, window, &PIVXGUI::handlePaymentRequest);
         connect(window, &PIVXGUI::receivedURI, paymentServer, &PaymentServer::handleURIOrFile);
         connect(paymentServer, &PaymentServer::message, [this](const QString& title, const QString& message, unsigned int style) {
@@ -517,7 +517,7 @@ void BitcoinApplication::shutdownResult(int retval)
 
 void BitcoinApplication::handleRunawayException(const QString& message)
 {
-    QMessageBox::critical(0, "Runaway exception", QObject::tr("A fatal error occurred. NestEgg can no longer continue safely and will quit.") + QString("\n\n") + message);
+    QMessageBox::critical(0, "Runaway exception", QObject::tr("A fatal error occurred. Human_Charity_Coin_Protocol can no longer continue safely and will quit.") + QString("\n\n") + message);
     ::exit(1);
 }
 
@@ -544,35 +544,19 @@ int main(int argc, char* argv[])
     Q_INIT_RESOURCE(pivx_locale);
     Q_INIT_RESOURCE(pivx);
 
+    //TODO to set this up we need to review all the UI measurements to be relative to the screen DPI
     // Generate high-dpi pixmaps
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #if QT_VERSION >= 0x050600
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    //TODO to set this up we need to review all the UI measurements to be relative to the screen DPI
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling); 
 #endif
 #ifdef Q_OS_MAC
     QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
     BitcoinApplication app(argc, argv);
 
-    // Add custom app font
-    QFontDatabase::addApplicationFont(":/font/Montserrat-Black.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-BlackItalic.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-Bold.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-BoldItalic.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-ExtraBold.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-ExtraBoldItalic.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-ExtraLight.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-ExtraLightItalic.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-Italic.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-Light.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-LightItalic.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-Medium.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-MediumItalic.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-Regular.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-SemiBold.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-SemiBoldItalic.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-Thin.ttf");
-    QFontDatabase::addApplicationFont(":/font/Montserrat-ThinItalic.ttf");
+    // Custom fonts.
     QFontDatabase::addApplicationFont(":/font/Nunito-Black.ttf");
     QFontDatabase::addApplicationFont(":/font/Nunito-BlackItalic.ttf");
     QFontDatabase::addApplicationFont(":/font/Nunito-Bold.ttf");
@@ -587,6 +571,23 @@ int main(int argc, char* argv[])
     QFontDatabase::addApplicationFont(":/font/Nunito-Regular.ttf");
     QFontDatabase::addApplicationFont(":/font/Nunito-SemiBold.ttf");
     QFontDatabase::addApplicationFont(":/font/Nunito-SemiBoldItalic.ttf");
+
+    QFontDatabase::addApplicationFont(":/font/Montserrat-Black.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-BlackItalic.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-Bold.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-BoldItalic.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-ExtraBold.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-ExtraBoldItalic.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-ExtraLight.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-ExtraLightItalic.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-Italic.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-Light.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-LightItalic.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-Regular.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-SemiBold.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-SemiBoldItalic.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-Thin.ttf");
+    QFontDatabase::addApplicationFont(":/font/Montserrat-ThinItalic.ttf");
 
     // Register meta types used for QMetaObject::invokeMethod
     qRegisterMetaType<bool*>();
@@ -621,17 +622,17 @@ int main(int argc, char* argv[])
     if (!Intro::pickDataDirectory())
         return 0;
 
-    /// 6. Determine availability of data directory and parse nestegg.conf
+    /// 6. Determine availability of data directory and parse Human_Charity_Coin_Protocol.conf
     /// - Do not call GetDataDir(true) before this step finishes
     if (!fs::is_directory(GetDataDir(false))) {
-        QMessageBox::critical(0, QObject::tr("NestEgg Core"),
+        QMessageBox::critical(0, QObject::tr("Human_Charity_Coin_Protocol"),
             QObject::tr("Error: Specified data directory \"%1\" does not exist.").arg(QString::fromStdString(mapArgs["-datadir"])));
         return 1;
     }
     try {
         ReadConfigFile(mapArgs, mapMultiArgs);
     } catch (const std::exception& e) {
-        QMessageBox::critical(0, QObject::tr("NestEgg Core"),
+        QMessageBox::critical(0, QObject::tr("Human_Charity_Coin_Protocol"),
             QObject::tr("Error: Cannot parse configuration file: %1. Only use key=value syntax.").arg(e.what()));
         return 0;
     }
@@ -644,7 +645,7 @@ int main(int argc, char* argv[])
 
     // Check for -testnet or -regtest parameter (Params() calls are only valid after this clause)
     if (!SelectParamsFromCommandLine()) {
-        QMessageBox::critical(0, QObject::tr("NestEgg Core"), QObject::tr("Error: Invalid combination of -regtest and -testnet."));
+        QMessageBox::critical(0, QObject::tr("Human_Charity_Coin_Protocol"), QObject::tr("Error: Invalid combination of -regtest and -testnet."));
         return 1;
     }
 #ifdef ENABLE_WALLET
@@ -663,7 +664,7 @@ int main(int argc, char* argv[])
     /// 7a. parse masternode.conf
     std::string strErr;
     if (!masternodeConfig.read(strErr)) {
-        QMessageBox::critical(0, QObject::tr("NestEgg Core"),
+        QMessageBox::critical(0, QObject::tr("Human_Charity_Coin_Protocol"),
             QObject::tr("Error reading masternode configuration file: %1").arg(strErr.c_str()));
         return 0;
     }
@@ -678,7 +679,7 @@ int main(int argc, char* argv[])
         exit(0);
 
     // Start up the payment server early, too, so impatient users that click on
-    // nestegg: links repeatedly have their payment requests routed to this process:
+    // Human_Charity_Coin_Protocol: links repeatedly have their payment requests routed to this process:
     app.createPaymentServer();
 #endif
 
@@ -728,7 +729,7 @@ int main(int argc, char* argv[])
         app.createWindow(networkStyle.data());
         app.requestInitialize();
 #if defined(Q_OS_WIN)
-        WinShutdownMonitor::registerShutdownBlockReason(QObject::tr("NestEgg Core didn't yet exit safely..."), (HWND)app.getMainWinId());
+        WinShutdownMonitor::registerShutdownBlockReason(QObject::tr("Human_Charity_Coin_Protocol didn't yet exit safely..."), (HWND)app.getMainWinId());
 #endif
         app.exec();
         app.requestShutdown();

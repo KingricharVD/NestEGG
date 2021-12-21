@@ -1,6 +1,6 @@
 // Copyright (c) 2012-2014 The Bitcoin Core developers
 // Copyright (c) 2019-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -381,7 +381,7 @@ void CheckBalances(const CWalletTx& tx,
 
 /**
  * Validates the correct behaviour of the CWalletTx "standard" balance methods.
- * (where "standard" is defined by direct P2PKH scripts, no P2CS contracts nor other types)
+ * (where "standard" is defined by direct P2PKH scripts, no other types)
  *
  * 1) CWalletTx::GetCredit.
  * 2) CWalletTx::GetDebit.

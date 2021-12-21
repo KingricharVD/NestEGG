@@ -1,4 +1,4 @@
-# Valgrind suppressions file for NestEgg.
+# Valgrind suppressions file for  HCCP.
 #
 # Includes known Valgrind warnings in our dependencies that cannot be fixed
 # in-tree.

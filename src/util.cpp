@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -18,8 +18,6 @@
 #include "sync.h"
 #include "utilstrencodings.h"
 #include "utiltime.h"
-
-#include <librustzcash.h>
 
 #include <stdarg.h>
 #include <thread>
@@ -86,12 +84,12 @@
 #include <openssl/crypto.h>
 #include <openssl/rand.h>
 
-const char * const PIVX_CONF_FILENAME = "nestegg.conf";
-const char * const PIVX_PID_FILENAME = "nestegg.pid";
+const char * const PIVX_CONF_FILENAME = "Human_Charity_Coin_Protocol.conf";
+const char * const PIVX_PID_FILENAME = "Human_Charity_Coin_Protocol.pid";
 const char * const PIVX_MASTERNODE_CONF_FILENAME = "masternode.conf";
 
 
-// NestEgg only features
+// Human_Charity_Coin_Protocol only features
 // Masternode
 bool fMasterNode = false;
 std::string strMasterNodePrivKey = "";
@@ -271,7 +269,7 @@ static std::string FormatException(const std::exception* pex, const char* pszThr
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "nestegg";
+    const char* pszModule = "Human_Charity_Coin_Protocol";
 #endif
     if (pex)
         return strprintf(
@@ -291,13 +289,13 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 
 fs::path GetDefaultDataDir()
 {
-// Windows < Vista: C:\Documents and Settings\Username\Application Data\NestEgg
-// Windows >= Vista: C:\Users\Username\AppData\Roaming\NestEgg
-// Mac: ~/Library/Application Support/NestEgg
-// Unix: ~/.nestegg
+// Windows < Vista: C:\Documents and Settings\Username\Application Data\Human_Charity_Coin_Protocol
+// Windows >= Vista: C:\Users\Username\AppData\Roaming\Human_Charity_Coin_Protocol
+// Mac: ~/Library/Application Support/Human_Charity_Coin_Protocol
+// Unix: ~/.Human_Charity_Coin_Protocol
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "NestEgg";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Human_Charity_Coin_Protocol";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -309,10 +307,10 @@ fs::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectory(pathRet);
-    return pathRet / "NestEgg";
+    return pathRet / "Human_Charity_Coin_Protocol";
 #else
     // Unix
-    return pathRet / ".nestegg";
+    return pathRet / ".Human_Charity_Coin_Protocol";
 #endif
 #endif
 }
@@ -325,13 +323,13 @@ static RecursiveMutex csPathCached;
 static fs::path ZC_GetBaseParamsDir()
 {
     // Copied from GetDefaultDataDir and adapter for zcash params.
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\NestEggParams
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\NestEggParams
-    // Mac: ~/Library/Application Support/NestEggParams
-    // Unix: ~/.nestegg-params
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Human_Charity_Coin_ProtocolParams
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Human_Charity_Coin_ProtocolParams
+    // Mac: ~/Library/Application Support/Human_Charity_Coin_ProtocolParams
+    // Unix: ~/.Human_Charity_Coin_Protocol-params
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "NestEggParams";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Human_Charity_Coin_ProtocolParams";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -343,10 +341,10 @@ static fs::path ZC_GetBaseParamsDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectory(pathRet);
-    return pathRet / "NestEggParams";
+    return pathRet / "Human_Charity_Coin_ProtocolParams";
 #else
     // Unix
-    return pathRet / ".nestegg-params";
+    return pathRet / ".Human_Charity_Coin_Protocol-params";
 #endif
 #endif
 }
@@ -377,44 +375,6 @@ const fs::path &ZC_GetParamsDir()
 #endif
 
     return path;
-}
-
-void initZKSNARKS()
-{
-    const fs::path& path = ZC_GetParamsDir();
-    fs::path sapling_spend = path / "sapling-spend.params";
-    fs::path sapling_output = path / "sapling-output.params";
-    fs::path sprout_groth16 = path / "sprout-groth16.params";
-
-    if (!(fs::exists(sapling_spend) &&
-          fs::exists(sapling_output) &&
-          fs::exists(sprout_groth16)
-    )) {
-        throw std::runtime_error("Sapling params don't exist");
-    }
-
-    static_assert(
-        sizeof(fs::path::value_type) == sizeof(codeunit),
-        "librustzcash not configured correctly");
-    auto sapling_spend_str = sapling_spend.native();
-    auto sapling_output_str = sapling_output.native();
-    auto sprout_groth16_str = sprout_groth16.native();
-
-    //LogPrintf("Loading Sapling (Spend) parameters from %s\n", sapling_spend.string().c_str());
-
-    librustzcash_init_zksnark_params(
-        reinterpret_cast<const codeunit*>(sapling_spend_str.c_str()),
-        sapling_spend_str.length(),
-        "8270785a1a0d0bc77196f000ee6d221c9c9894f55307bd9357c3f0105d31ca63991ab91324160d8f53e2bbd3c2633a6eb8bdf5205d822e7f3f73edac51b2b70c",
-        reinterpret_cast<const codeunit*>(sapling_output_str.c_str()),
-        sapling_output_str.length(),
-        "657e3d38dbb5cb5e7dd2970e8b03d69b4787dd907285b5a7f0790dcc8072f60bf593b32cc2d1c030e00ff5ae64bf84c5c3beb84ddc841d48264b4a171744d028",
-        reinterpret_cast<const codeunit*>(sprout_groth16_str.c_str()),
-        sprout_groth16_str.length(),
-        "e9b238411bd6c0ec4791e9d04245ec350c9c5744f5610dfcce4365d5ca49dfefd5054e371842b3f88fa1b9d7e8e075249b3ebabd167fa8b0f3161292d36c180a"
-    );
-
-    //std::cout << "### Sapling params initialized ###" << std::endl;
 }
 
 const fs::path& GetDataDir(bool fNetSpecific)
@@ -468,7 +428,7 @@ void ReadConfigFile(std::map<std::string, std::string>& mapSettingsRet,
 {
     fs::ifstream streamConfig(GetConfigFile());
     if (!streamConfig.good()) {
-        // Create empty nestegg.conf if it does not exist
+        // Create empty Human_Charity_Coin_Protocol.conf if it does not exist
         FILE* configFile = fsbridge::fopen(GetConfigFile(), "a");
         if (configFile != NULL)
             fclose(configFile);
@@ -479,7 +439,7 @@ void ReadConfigFile(std::map<std::string, std::string>& mapSettingsRet,
     setOptions.insert("*");
 
     for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it) {
-        // Don't overwrite existing settings so command line settings override nestegg.conf
+        // Don't overwrite existing settings so command line settings override Human_Charity_Coin_Protocol.conf
         std::string strKey = std::string("-") + it->string_key;
         std::string strValue = it->value[0];
         InterpretNegativeSetting(strKey, strValue);

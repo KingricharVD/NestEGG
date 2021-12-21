@@ -1,7 +1,7 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2016 The Dash developers
 // Copyright (c) 2017-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -58,9 +58,9 @@ public:
     AvailableCoinsType inputType;
     bool useSwiftTX = false;
 
-    // Cold staking.
-    bool isP2CS = false;
-    QString ownerAddress;
+      // Cold staking.
+      bool isP2CS = false;
+      QString ownerAddress;
 
     // Amount
     CAmount amount;
@@ -107,7 +107,7 @@ public:
     }
 };
 
-/** Interface to NestEgg wallet from Qt view code. */
+/** Interface to HCCP wallet from Qt view code. */
 class WalletModel : public QObject
 {
     Q_OBJECT
@@ -147,8 +147,8 @@ public:
     bool isTestNetwork() const;
     bool isRegTestNetwork() const;
     /** Whether cold staking is enabled or disabled in the network **/
-    bool isColdStakingNetworkelyEnabled() const;
-    CAmount getMinColdStakingAmount() const;
+  bool isColdStakingNetworkelyEnabled() const;
+  CAmount getMinColdStakingAmount() const;
     /* current staking status from the miner thread **/
     bool isStakingStatusActive() const;
 
@@ -158,19 +158,19 @@ public:
     interfaces::WalletBalances GetWalletBalances() { return m_cached_balances; };
 
     CAmount getBalance(const CCoinControl* coinControl = nullptr, bool fIncludeDelegated = true, bool fUnlockedOnly = false) const;
-    CAmount getUnlockedBalance(const CCoinControl* coinControl = nullptr, bool fIncludeDelegated = true) const;
-    CAmount getLockedBalance() const;
-    bool haveWatchOnly() const;
-    CAmount getDelegatedBalance() const;
+  CAmount getUnlockedBalance(const CCoinControl* coinControl = nullptr, bool fIncludeDelegated = true) const;
+  CAmount getLockedBalance() const;
+  bool haveWatchOnly() const;
+  CAmount getDelegatedBalance() const;
 
-    bool isColdStaking() const;
+  bool isColdStaking() const;
 
-    EncryptionStatus getEncryptionStatus() const;
-    bool isWalletUnlocked() const;
-    bool isWalletLocked(bool fFullUnlocked = true) const;
-    void emitBalanceChanged(); // Force update of UI-elements even when no values have changed
+  EncryptionStatus getEncryptionStatus() const;
+  bool isWalletUnlocked() const;
+  bool isWalletLocked(bool fFullUnlocked = true) const;
+  void emitBalanceChanged(); // Force update of UI-elements even when no values have changed
 
-    // Check address for validity
+  // Check address for validity
     bool validateAddress(const QString& address);
     // Check address for validity and type (whether cold staking address or not)
     bool validateAddress(const QString& address, bool fStaking);
@@ -194,7 +194,7 @@ public:
     const CWalletTx* getTx(uint256 id);
 
     // prepare transaction for getting txfee before sending coins
-    SendCoinsReturn prepareTransaction(WalletModelTransaction& transaction, const CCoinControl* coinControl = NULL, bool fIncludeDelegations = true);
+    SendCoinsReturn prepareTransaction(WalletModelTransaction& transaction, const CCoinControl* coinControl = NULL);
 
     // Send coins to a list of recipients
     SendCoinsReturn sendCoins(WalletModelTransaction& transaction);
@@ -241,38 +241,38 @@ public:
 
     UnlockContext requestUnlock();
 
-    bool getPubKey(const CKeyID& address, CPubKey& vchPubKeyOut) const;
-    int64_t getCreationTime() const;
-    int64_t getKeyCreationTime(const CPubKey& key);
-    int64_t getKeyCreationTime(const CTxDestination& address);
-    PairResult getNewAddress(Destination& ret, std::string label = "") const;
-    /**
-     * Return a new address used to receive for delegated cold stake purpose.
-     */
-    PairResult getNewStakingAddress(Destination& ret, std::string label = "") const;
+      bool getPubKey(const CKeyID& address, CPubKey& vchPubKeyOut) const;
+      int64_t getCreationTime() const;
+      int64_t getKeyCreationTime(const CPubKey& key);
+      int64_t getKeyCreationTime(const CTxDestination& address);
+      PairResult getNewAddress(Destination& ret, std::string label = "") const;
+      /**
+       * Return a new address used to receive for delegated cold stake purpose.
+       */
+      PairResult getNewStakingAddress(Destination& ret, std::string label = "") const;
 
-    bool whitelistAddressFromColdStaking(const QString &addressStr);
-    bool blacklistAddressFromColdStaking(const QString &address);
-    bool updateAddressBookPurpose(const QString &addressStr, const std::string& purpose);
-    std::string getLabelForAddress(const CTxDestination& address);
-    bool getKeyId(const CTxDestination& address, CKeyID& keyID);
+      bool whitelistAddressFromColdStaking(const QString &addressStr);
+      bool blacklistAddressFromColdStaking(const QString &address);
+      bool updateAddressBookPurpose(const QString &addressStr, const std::string& purpose);
+      std::string getLabelForAddress(const CTxDestination& address);
+      bool getKeyId(const CTxDestination& address, CKeyID& keyID);
 
-    bool isMine(const CTxDestination& address);
-    bool isMine(const QString& addressStr);
-    bool isUsed(CTxDestination address);
-    void getOutputs(const std::vector<COutPoint>& vOutpoints, std::vector<COutput>& vOutputs);
-    bool getMNCollateralCandidate(COutPoint& outPoint);
-    bool isSpent(const COutPoint& outpoint) const;
-    void listCoins(std::map<QString, std::vector<COutput> >& mapCoins) const;
+      bool isMine(const CTxDestination& address);
+      bool isMine(const QString& addressStr);
+      bool isUsed(CTxDestination address);
+      void getOutputs(const std::vector<COutPoint>& vOutpoints, std::vector<COutput>& vOutputs);
+      bool getMNCollateralCandidate(COutPoint& outPoint);
+      bool isSpent(const COutPoint& outpoint) const;
+      void listCoins(std::map<QString, std::vector<COutput> >& mapCoins) const;
 
-    bool isLockedCoin(uint256 hash, unsigned int n) const;
-    void lockCoin(COutPoint& output);
-    void unlockCoin(COutPoint& output);
-    void listLockedCoins(std::vector<COutPoint>& vOutpts);
+      bool isLockedCoin(uint256 hash, unsigned int n) const;
+      void lockCoin(COutPoint& output);
+      void unlockCoin(COutPoint& output);
+      void listLockedCoins(std::vector<COutPoint>& vOutpts);
 
-    std::string GetUniqueWalletBackupName();
-    void loadReceiveRequests(std::vector<std::string>& vReceiveRequests);
-    bool saveReceiveRequest(const std::string& sAddress, const int64_t nId, const std::string& sRequest);
+      std::string GetUniqueWalletBackupName();
+      void loadReceiveRequests(std::vector<std::string>& vReceiveRequests);
+      bool saveReceiveRequest(const std::string& sAddress, const int64_t nId, const std::string& sRequest);
 
 private:
     CWallet* wallet;

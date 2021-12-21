@@ -1,5 +1,5 @@
 Setting up Docker for Windows
-==
+==============================
 
 In this guide, we use Docker for Windows, which is required due to a compatibility issue with the Docker daemon running natively in WSL.
 

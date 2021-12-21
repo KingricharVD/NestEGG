@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -47,10 +47,10 @@ static bool AppInitRawTx(int argc, char* argv[])
 
     if (argc < 2 || mapArgs.count("-?") || mapArgs.count("-help")) {
         // First part of help message is specific to this utility
-        std::string strUsage = _("NestEgg Core nestegg-tx utility version") + " " + FormatFullVersion() + "\n\n" +
+        std::string strUsage = _("Human_Charity_Coin_Protocol Human_Charity_Coin_Protocol-tx utility version") + " " + FormatFullVersion() + "\n\n" +
                                _("Usage:") + "\n" +
-                               "  nestegg-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded nestegg transaction") + "\n" +
-                               "  nestegg-tx [options] -create [commands]   " + _("Create hex-encoded nestegg transaction") + "\n" +
+                               "  Human_Charity_Coin_Protocol-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded Human_Charity_Coin_Protocol transaction") + "\n" +
+                               "  Human_Charity_Coin_Protocol-tx [options] -create [commands]   " + _("Create hex-encoded Human_Charity_Coin_Protocol transaction") + "\n" +
                                "\n";
 
         fprintf(stdout, "%s", strUsage.c_str());
@@ -437,39 +437,39 @@ static void MutateTxSign(CMutableTransaction& tx, const std::string& flagStr)
     bool fHashSingle = ((nHashType & ~SIGHASH_ANYONECANPAY) == SIGHASH_SINGLE);
 
     // Sign what we can:
-    for (unsigned int i = 0; i < mergedTx.vin.size(); i++) {
-        CTxIn& txin = mergedTx.vin[i];
-        const Coin& coin = view.AccessCoin(txin.prevout);
-        if (coin.IsSpent()) {
-            fComplete = false;
-            continue;
-        }
+  for (unsigned int i = 0; i < mergedTx.vin.size(); i++) {
+      CTxIn& txin = mergedTx.vin[i];
+      const Coin& coin = view.AccessCoin(txin.prevout);
+      if (coin.IsSpent()) {
+          fComplete = false;
+          continue;
+      }
 
-        const CScript& prevPubKey = coin.out.scriptPubKey;
-        const CAmount& amount = coin.out.nValue;
+      const CScript& prevPubKey = coin.out.scriptPubKey;
+      const CAmount& amount = coin.out.nValue;
 
-        SignatureData sigdata;
-        // Only sign SIGHASH_SINGLE if there's a corresponding output:
-        if (!fHashSingle || (i < mergedTx.vout.size()))
-            ProduceSignature(
-                    MutableTransactionSignatureCreator(&keystore, &mergedTx, i, amount, nHashType),
-                    prevPubKey,
-                    sigdata,
-                    false // no cold stake
-            );
+      SignatureData sigdata;
+      // Only sign SIGHASH_SINGLE if there's a corresponding output:
+      if (!fHashSingle || (i < mergedTx.vout.size()))
+          ProduceSignature(
+                  MutableTransactionSignatureCreator(&keystore, &mergedTx, i, amount, nHashType),
+                  prevPubKey,
+                  sigdata,
+                  false // no cold stake
+          );
 
-        // ... and merge in other signatures:
-        for (const CTransaction& txv : txVariants) {
-            sigdata = CombineSignatures(prevPubKey, MutableTransactionSignatureChecker(&mergedTx, i, amount), sigdata, DataFromTransaction(txv, i));
-        }
-        UpdateTransaction(mergedTx, i, sigdata);
-        if (!VerifyScript(txin.scriptSig, prevPubKey, STANDARD_SCRIPT_VERIFY_FLAGS, MutableTransactionSignatureChecker(&mergedTx, i, amount)))
-            fComplete = false;
-    }
+      // ... and merge in other signatures:
+      for (const CTransaction& txv : txVariants) {
+          sigdata = CombineSignatures(prevPubKey, MutableTransactionSignatureChecker(&mergedTx, i, amount), sigdata, DataFromTransaction(txv, i));
+      }
+      UpdateTransaction(mergedTx, i, sigdata);
+      if (!VerifyScript(txin.scriptSig, prevPubKey, STANDARD_SCRIPT_VERIFY_FLAGS, MutableTransactionSignatureChecker(&mergedTx, i, amount)))
+          fComplete = false;
+  }
 
-    if (fComplete) {
-        // do nothing... for now
-        // perhaps store this for later optional JSON output
+  if (fComplete) {
+      // do nothing... for now
+      // perhaps store this for later optional JSON output
     }
 
     tx = mergedTx;
@@ -596,7 +596,7 @@ static int CommandLineRawTx(int argc, char* argv[])
             if (argc < 2)
                 throw std::runtime_error("too few parameters");
 
-            // param: hex-encoded nestegg transaction
+            // param: hex-encoded Human_Charity_Coin_Protocol transaction
             std::string strHexTx(argv[1]);
             if (strHexTx == "-") // "-" implies standard input
                 strHexTx = readStdin();

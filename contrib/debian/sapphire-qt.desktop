@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Human_Charity_Coin_Protocol 
+Comment=Human_Charity_Coin_Protocol P2P Cryptocurrency
+Comment[fr]=Human_Charity_Coin_Protocol, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Human_Charity_Coin_Protocol, eşten eşe kriptografik sanal para birimi
+Exec=Human_Charity_Coin_Protocol-qt %u
+Terminal=false
+Type=Application
+Icon=pivx128
+MimeType=x-scheme-handler/Human_Charity_Coin_Protocol;
+Categories=Office;Finance;
+StartupWMClass=Human_Charity_Coin_Protocol-qt

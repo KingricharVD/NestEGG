@@ -1,4 +1,4 @@
-Building NestEgg
+Building Human_Charity_Coin_Protocol
 
 Use the autogen script to prepare the build environment.
 
@@ -8,6 +8,6 @@ Use the autogen script to prepare the build environment.
 
 Always verify the signatures and checksums.
 
-See doc/build-*.md for instructions on building nesteggd,
+See doc/build-*.md for instructions on building Human_Charity_Coin_Protocold,
 the intended-for-services, no-graphical-interface, reference
-implementation of NestEgg.
+implementation of Human_Charity_Coin_Protocol.

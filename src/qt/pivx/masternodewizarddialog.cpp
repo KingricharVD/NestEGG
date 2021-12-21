@@ -1,5 +1,5 @@
 // Copyright (c) 2019-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -68,13 +68,7 @@ MasterNodeWizardDialog::MasterNodeWizardDialog(WalletModel *model, QWidget *pare
     initCssEditLine(ui->lineEditPort);
     ui->stackedWidget->setCurrentIndex(pos);
     ui->lineEditPort->setEnabled(false);    // use default port number
-    if (walletModel->isRegTestNetwork()) {
-        ui->lineEditPort->setText("51476");
-    } else if (walletModel->isTestNetwork()) {
-        ui->lineEditPort->setText("46328");
-    } else {
-        ui->lineEditPort->setText("20434");
-    }
+    ui->lineEditPort->setText(QString::fromStdString(std::to_string(Params().GetDefaultPort())));
 
     // Confirm icons
     ui->stackedIcon1->addWidget(icConfirm1);
@@ -213,7 +207,7 @@ bool MasterNodeWizardDialog::createMN()
         SendCoinsRecipient sendCoinsRecipient(
                 QString::fromStdString(dest.ToString()),
                 QString::fromStdString(alias),
-                CAmount(CMasternode::GetMasternodeCollateral(chainActive.Height())),
+                CAmount(CMasternode::GetMasternodeNodeCollateral(chainActive.Height())),
                 "");
 
         // Send the 10 tx to one of your address
@@ -222,8 +216,8 @@ bool MasterNodeWizardDialog::createMN()
         WalletModelTransaction currentTransaction(recipients);
         WalletModel::SendCoinsReturn prepareStatus;
 
-        // no coincontrol, no P2CS delegations
-        prepareStatus = walletModel->prepareTransaction(currentTransaction, nullptr, false);
+        // no coincontrol
+        prepareStatus = walletModel->prepareTransaction(currentTransaction, nullptr);
 
         QString returnMsg = tr("Unknown error");
         // process prepareStatus and on error generate message shown to user
@@ -263,7 +257,7 @@ bool MasterNodeWizardDialog::createMN()
         int indexOut = -1;
         for (int i=0; i < (int)walletTx->vout.size(); i++) {
             CTxOut& out = walletTx->vout[i];
-            if (out.nValue == CMasternode::GetMasternodeCollateral(chainActive.Height())) {
+            if (out.nValue == CMasternode::GetMasternodeNodeCollateral(chainActive.Height())) {
                 indexOut = i;
                 break;
             }
@@ -327,7 +321,7 @@ bool MasterNodeWizardDialog::createMN()
     if (lineCopy.size() == 0) {
         lineCopy = "# Masternode config file\n"
                    "# Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index\n"
-                   "# Example: mn1 127.0.0.2:20434 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0"
+                   "# Example: mn1 127.0.0.2:6949 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0"
                    "#";
     }
     lineCopy += "\n";

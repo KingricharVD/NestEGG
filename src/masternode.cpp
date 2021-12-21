@@ -1,9 +1,7 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
 
-// Copyright (c) 2020-2021 The Sprouts-Origins Core Developers
-
-// Copyright (c) 2021 The DECENOMY Core Developers
+// Copyright (c) 2020-2021 Human Charity Coin Protocol Core Developers
 
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.

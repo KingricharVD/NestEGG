@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2017 The Bitcoin Core developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -82,14 +82,14 @@ bool CheckTransaction(const CTransaction& tx, bool fZerocoinActive, bool fReject
         nValueOut += txout.nValue;
         if (!consensus.MoneyRange(nValueOut))
             return state.DoS(100, false, REJECT_INVALID, "bad-txns-txouttotal-toolarge");
-        // check cold staking enforcement (for delegations) and value out
-        if (txout.scriptPubKey.IsPayToColdStaking()) {
-            if (!fColdStakingActive)
-                return state.DoS(10, false, REJECT_INVALID, "cold-stake-inactive");
-            if (txout.nValue < MIN_COLDSTAKING_AMOUNT)
-                return state.DoS(100, false, REJECT_INVALID, "cold-stake-vout-toosmall");
+            // check cold staking enforcement (for delegations) and value out
+            if (txout.scriptPubKey.IsPayToColdStaking()) {
+                if (!fColdStakingActive)
+                    return state.DoS(10, false, REJECT_INVALID, "cold-stake-inactive");
+                if (txout.nValue < MIN_COLDSTAKING_AMOUNT)
+                    return state.DoS(100, false, REJECT_INVALID, "cold-stake-vout-toosmall");
+            }
         }
-    }
 
     std::set<COutPoint> vInOutPoints;
     std::set<CBigNum> vZerocoinSpendSerials;

@@ -1,5 +1,5 @@
 // Copyright (c) 2019-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -45,22 +45,6 @@ namespace Ui {
 class DashboardWidget;
 }
 
-class SortEdit : public QLineEdit{
-    Q_OBJECT
-public:
-    explicit SortEdit(QWidget* parent = nullptr) : QLineEdit(parent){}
-
-    inline void mousePressEvent(QMouseEvent *) override{
-        Q_EMIT Mouse_Pressed();
-    }
-
-    ~SortEdit() override{}
-
-Q_SIGNALS:
-    void Mouse_Pressed();
-
-};
-
 enum SortTx {
     DATE_DESC = 0,
     DATE_ASC = 1,
@@ -79,12 +63,12 @@ class ChartData {
 public:
     ChartData() {}
 
-    QMap<int, std::pair<qint64, qint64>> amountsByCache;
+	QMap<int, QMap<QString, qint64>> amountsByCache;
     qreal maxValue = 0;
     qint64 totalPiv = 0;
-    qint64 totalZpiv = 0;
+	qint64 totalMNRewards = 0;
     QList<qreal> valuesPiv;
-    QList<qreal> valueszPiv;
+	QList<qreal> valuesMNRewards;
     QStringList xLabels;
 };
 
@@ -123,7 +107,7 @@ private Q_SLOTS:
     void onSortTypeChanged(const QString& value);
     void updateDisplayUnit();
     void showList();
-    void onTxArrived(const QString& hash, const bool& isCoinStake, const bool& isCSAnyType);
+    void onTxArrived(const QString& hash, const bool& isCoinStake);
 
 #ifdef USE_QTCHARTS
     void windowResizeEvent(QResizeEvent* event);
@@ -165,7 +149,7 @@ private:
     int yearFilter = 0;
     int monthFilter = 0;
     int dayStart = 1;
-    bool hasZpivStakes = false;
+	bool hasMNRewards = false;
 
     ChartData* chartData = nullptr;
     bool hasStakes = false;
@@ -176,11 +160,11 @@ private:
     bool refreshChart();
     void tryChartRefresh();
     void updateStakeFilter();
-    const QMap<int, std::pair<qint64, qint64>> getAmountBy();
+    const QMap<int, QMap<QString, qint64>> getAmountBy();
     bool loadChartData(bool withMonthNames);
     void updateAxisX(const QStringList *arg = nullptr);
     void setChartShow(ChartShowType type);
-    std::pair<int, int> getChartRange(QMap<int, std::pair<qint64, qint64>> amountsBy);
+    std::pair<int, int> getChartRange(QMap<int, QMap<QString, qint64>> amountsBy);
 
 private Q_SLOTS:
     void onChartRefreshed();

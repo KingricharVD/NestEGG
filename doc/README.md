@@ -1,39 +1,38 @@
-NestEgg Core
-======
+Human_Charity_Coin_Protocol Core
+=============
 
 Setup
 ---------------------
-[NestEgg Core](https://nesteggcoin.com/#wallets) is the original NestEgg client and it builds the backbone of the network. However, it downloads and stores the entire history of NestEgg transactions; depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more. Thankfully you only have to do this once.
+[Human_Charity_Coin_Protocol Core](https://www.humancharitycoin.com/) is the original Human_Charity_Coin_Protocol client and it builds the backbone of the network. However, it downloads and stores the entire history of Human_Charity_Coin_Protocol transactions; depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more. Thankfully you only have to do this once.
 
 Running
 ---------------------
-The following are some helpful notes on how to run NestEgg Core on your native platform.
+The following are some helpful notes on how to run Human_Charity_Coin_Protocol Core on your native platform.
 
 ### Unix
 
 Unpack the files into a directory and run:
 
-- `bin/nestegg-qt` (GUI) or
-- `bin/nesteggd` (headless)
+- `bin/Human_Charity_Coin_Protocol-qt` (GUI) or
+- `bin/Human_Charity_Coin_Protocold` (headless)
 
 ### Windows
 
-Unpack the files into a directory, and then run nestegg-qt.exe.
+Unpack the files into a directory, and then run Human_Charity_Coin_Protocol-qt.exe.
 
 ### macOS
 
-Drag NestEgg-Qt to your applications folder, and then run NestEgg-Qt.
+Drag Human_Charity_Coin_Protocol-Qt to your applications folder, and then run Human_Charity_Coin_Protocol-Qt.
 
 ### Need Help?
 
-* See the documentation at the [NestEgg Docs](https://github.com/eggcoin-com/EGG/tree/master/doc)
+* See the documentation at the [Human_Charity_Coin_Protocol Wiki](https://github.com/Human-Charity-Coin/HCCP/doc)
 for help and more information.
-* Ask for help on [BitcoinTalk](https://bitcointalk.org/index.php?topic=5144109) or on the [NestEgg Telegram](https://t.me/nesteggcore).
-* Join our Discord server [Discord Server](https://discord.gg/zgcXB76)
+* Join our Discord server [Discord Server](https://discord.gg/hz8YagA92t)
 
 Building
 ---------------------
-The following are developer notes on how to build NestEgg Core on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
+The following are developer notes on how to build Human_Charity_Coin_Protocol Core on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
 
 - [Dependencies](dependencies.md)
 - [macOS Build Notes](build-osx.md)
@@ -43,21 +42,21 @@ The following are developer notes on how to build NestEgg Core on your native pl
 
 Development
 ---------------------
-The NestEgg repo's [root README](/README.md) contains relevant information on the development process and automated testing.
+The Human_Charity_Coin_Protocol repo's [root README](/README.md) contains relevant information on the development process and automated testing.
 
 - [Developer Notes](developer-notes.md)
 - [Multiwallet Qt Development](multiwallet-qt.md)
 - [Release Notes](release-notes.md)
 - [Release Process](release-process.md)
-- [Source Code Documentation (External Link)](https://www.fuzzbawls.pw/pivx/doxygen/)
+- [Source Code Documentation (External Link)](https://github.com/Human-Charity-Coin/HCCP/doc)
 - [Translation Process](translation_process.md)
 - [Unit Tests](unit-tests.md)
 - [Unauthenticated REST Interface](REST-interface.md)
 - [Dnsseed Policy](dnsseed-policy.md)
 
 ### Resources
-* Discuss on the [BitcoinTalk](https://bitcointalk.org/index.php?topic=5144109) or the [NestEgg Telegram](https://t.me/nesteggcore).
-* Join the [NestEgg Discord](https://discord.gg/zgcXB76).
+* Discuss on the [Human_Charity_Coin_Protocol Homepage](https://www.humancharitycoin.com/).
+* Join the [Human_Charity_Coin_Protocol Discord](https://discord.gg/hz8YagA92t).
 
 ### Miscellaneous
 - [Assets Attribution](assets-attribution.md)

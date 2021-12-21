@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>629</width>
-    <height>406</height>
+    <height>899</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -197,14 +197,14 @@ and vote on the treasury system receiving a periodic reward.</string>
                <widget class="QPushButton" name="pushImgEmpty">
                 <property name="minimumSize">
                  <size>
-                  <width>100</width>
-                  <height>100</height>
+                  <width>500</width>
+                  <height>500</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>100</width>
-                  <height>100</height>
+                  <width>500</width>
+                  <height>500</height>
                  </size>
                 </property>
                 <property name="focusPolicy">
@@ -213,10 +213,14 @@ and vote on the treasury system receiving a periodic reward.</string>
                 <property name="text">
                  <string/>
                 </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>../res/img/img-empty-dark-masternode.svg</normaloff>../res/img/img-empty-dark-masternode.svg</iconset>
+                </property>
                 <property name="iconSize">
                  <size>
-                  <width>100</width>
-                  <height>100</height>
+                  <width>500</width>
+                  <height>500</height>
                  </size>
                 </property>
                </widget>

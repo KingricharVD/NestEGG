@@ -1,5 +1,5 @@
 // Copyright (c) 2019 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -19,14 +19,14 @@ namespace AddressBook {
     }
 
     bool IsColdStakingPurpose(const std::string& purpose) {
-        return purpose == AddressBookPurpose::COLD_STAKING
-               || purpose == AddressBookPurpose::COLD_STAKING_SEND;
-    }
+          return purpose == AddressBookPurpose::COLD_STAKING
+                 || purpose == AddressBookPurpose::COLD_STAKING_SEND;
+      }
 
-    bool CAddressBookData::isSendColdStakingPurpose() const {
-        return purpose == AddressBookPurpose::COLD_STAKING_SEND;
-    }
-
+      bool CAddressBookData::isSendColdStakingPurpose() const {
+          return purpose == AddressBookPurpose::COLD_STAKING_SEND;
+      }
+      
     bool CAddressBookData::isSendPurpose() const {
         return purpose == AddressBookPurpose::SEND;
     }
@@ -36,4 +36,3 @@ namespace AddressBook {
 
 
 }
-

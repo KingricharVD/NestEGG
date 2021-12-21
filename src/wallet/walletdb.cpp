@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -89,6 +89,12 @@ bool CWalletDB::WriteKey(const CPubKey& vchPubKey, const CPrivKey& vchPrivKey, c
     return Write(std::make_pair(std::string("key"), vchPubKey), std::make_pair(vchPrivKey, Hash(vchKey.begin(), vchKey.end())), false);
 }
 
+bool CWalletDB::WriteKeyMetadata(const CPubKey& vchPubKey, const CKeyMetadata& keyMeta) {
+    nWalletDBUpdateCounter++;
+
+    return Write(std::make_pair(std::string("keymeta"), vchPubKey), keyMeta, true);
+}
+
 bool CWalletDB::WriteCryptedKey(const CPubKey& vchPubKey,
     const std::vector<unsigned char>& vchCryptedSecret,
     const CKeyMetadata& keyMeta)
@@ -105,48 +111,6 @@ bool CWalletDB::WriteCryptedKey(const CPubKey& vchPubKey,
     if (fEraseUnencryptedKey) {
         Erase(std::make_pair(std::string("key"), vchPubKey));
         Erase(std::make_pair(std::string("wkey"), vchPubKey));
-    }
-    return true;
-}
-
-bool CWalletDB::WriteSaplingZKey(const libzcash::SaplingIncomingViewingKey &ivk,
-                                 const libzcash::SaplingExtendedSpendingKey &key,
-                                 const CKeyMetadata &keyMeta)
-{
-    nWalletDBUpdateCounter++;
-
-    if (!Write(std::make_pair(std::string("eggzkeymeta"), ivk), keyMeta))
-        return false;
-
-    return Write(std::make_pair(std::string("eggzkey"), ivk), key, false);
-}
-
-bool CWalletDB::WriteSaplingPaymentAddress(
-        const libzcash::SaplingPaymentAddress &addr,
-        const libzcash::SaplingIncomingViewingKey &ivk)
-{
-    nWalletDBUpdateCounter++;
-
-    return Write(std::make_pair(std::string("eggzaddr"), addr), ivk, false);
-}
-
-bool CWalletDB::WriteCryptedSaplingZKey(
-        const libzcash::SaplingExtendedFullViewingKey &extfvk,
-        const std::vector<unsigned char>& vchCryptedSecret,
-        const CKeyMetadata &keyMeta)
-{
-    const bool fEraseUnencryptedKey = true;
-    nWalletDBUpdateCounter++;
-    auto ivk = extfvk.fvk.in_viewing_key();
-
-    if (!Write(std::make_pair(std::string("eggzkeymeta"), ivk), keyMeta))
-        return false;
-
-    if (!Write(std::make_pair(std::string("ceggzkey"), ivk), std::make_pair(extfvk, vchCryptedSecret), false))
-        return false;
-
-    if (fEraseUnencryptedKey) {
-        Erase(std::make_pair(std::string("eggzkey"), ivk));
     }
     return true;
 }
@@ -331,8 +295,6 @@ bool CWalletDB::WriteHDChain(const CHDChain& chain)
 {
     nWalletDBUpdateCounter++;
     std::string key = std::string("hdchain");
-    if (chain.chainType == HDChain::ChainCounterType::Sapling)
-        key += std::string("_egg");
     return Write(key, chain);
 }
 
@@ -486,7 +448,7 @@ public:
     unsigned int nKeyMeta;
     unsigned int nZKeys;
     unsigned int nZKeyMeta;
-    unsigned int nEggZAddrs;
+    unsigned int nSapZAddrs;
     bool fIsEncrypted;
     bool fAnyUnordered;
     int nFileVersion;
@@ -494,7 +456,7 @@ public:
 
     CWalletScanState()
     {
-        nKeys = nCKeys = nKeyMeta = nZKeys = nZKeyMeta = nEggZAddrs = 0;
+        nKeys = nCKeys = nKeyMeta = nZKeys = nZKeyMeta = nSapZAddrs = 0;
         fIsEncrypted = false;
         fAnyUnordered = false;
         nFileVersion = 0;
@@ -738,58 +700,6 @@ bool ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue, CW
             CHDChain chain;
             ssValue >> chain;
             pwallet->GetScriptPubKeyMan()->SetHDChain(chain, true);
-        } else if (strType == "hdchain_egg") {
-            CHDChain chain;
-            ssValue >> chain;
-            pwallet->GetSaplingScriptPubKeyMan()->SetHDChain(chain, true);
-        } else if (strType == "eggzkey") {
-            libzcash::SaplingIncomingViewingKey ivk;
-            ssKey >> ivk;
-            libzcash::SaplingExtendedSpendingKey key;
-            ssValue >> key;
-
-            if (!pwallet->LoadSaplingZKey(key)) {
-                strErr = "Error reading wallet database: LoadSaplingZKey failed";
-                return false;
-            }
-
-            //add checks for integrity
-            wss.nZKeys++;
-        } else if (strType == "ceggzkey") {
-            libzcash::SaplingIncomingViewingKey ivk;
-            ssKey >> ivk;
-            libzcash::SaplingExtendedFullViewingKey extfvk;
-            ssValue >> extfvk;
-            std::vector<unsigned char> vchCryptedSecret;
-            ssValue >> vchCryptedSecret;
-            wss.nCKeys++;
-
-            if (!pwallet->LoadCryptedSaplingZKey(extfvk, vchCryptedSecret)) {
-                strErr = "Error reading wallet database: LoadCryptedSaplingZKey failed";
-                return false;
-            }
-            wss.fIsEncrypted = true;
-        } else if (strType == "eggzkeymeta") {
-            libzcash::SaplingIncomingViewingKey ivk;
-            ssKey >> ivk;
-            CKeyMetadata keyMeta;
-            ssValue >> keyMeta;
-
-            wss.nZKeyMeta++;
-
-            pwallet->LoadSaplingZKeyMetadata(ivk, keyMeta);
-        } else if (strType == "eggzaddr") {
-            libzcash::SaplingPaymentAddress addr;
-            ssKey >> addr;
-            libzcash::SaplingIncomingViewingKey ivk;
-            ssValue >> ivk;
-
-            wss.nEggZAddrs++;
-
-            if (!pwallet->LoadSaplingPaymentAddress(addr, ivk)) {
-                strErr = "Error reading wallet database: LoadSaplingPaymentAddress failed";
-                return false;
-            }
         }
     } catch (...) {
         return false;
@@ -801,7 +711,7 @@ static bool IsKeyType(std::string strType)
 {
     return (strType == "key" || strType == "wkey" ||
             strType == "mkey" || strType == "ckey" ||
-            strType == "eggzkey" || strType == "ceggzkey");
+            strType == "sapzkey" || strType == "csapzkey");
 }
 
 DBErrors CWalletDB::LoadWallet(CWallet* pwallet)
@@ -846,6 +756,7 @@ DBErrors CWalletDB::LoadWallet(CWallet* pwallet)
                 if (IsKeyType(strType) || strType == "defaultkey")
                     result = DB_CORRUPT;
                 else {
+                    std::cout << strType << " - " << strErr << std::endl;
                     // Leave other errors alone, if we try to fix them we might make things worse.
                     fNoncriticalErrors = true; // ... but do warn the user there is something wrong.
                     if (strType == "tx")
@@ -984,7 +895,7 @@ DBErrors CWalletDB::ZapWalletTx(CWallet* pwallet, std::vector<CWalletTx>& vWtx)
 void ThreadFlushWalletDB()
 {
     // Make this thread recognisable as the wallet flushing thread
-    util::ThreadRename("nestegg-wallet");
+    util::ThreadRename("pivx-wallet");
 
     static bool fOneThread;
     if (fOneThread)

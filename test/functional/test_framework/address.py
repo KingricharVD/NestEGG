@@ -106,7 +106,7 @@ def byte_to_base58(b, version):
     checksum = hash256(data)[0:4]
     return b58encode(data + checksum)
 
-def keyhash_to_p2pkh(hash, main=False, isCold=False):
+ef keyhash_to_p2pkh(hash, main=False, isCold=False):
     assert (len(hash) == 20)
     if isCold:
         version = COLD_ADD_VERSION if main else TNET_COLD_ADD_VERSION

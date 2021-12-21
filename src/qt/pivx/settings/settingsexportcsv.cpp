@@ -1,5 +1,5 @@
 // Copyright (c) 2019-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -38,18 +38,12 @@ SettingsExportCSV::SettingsExportCSV(PIVXGUI* _window, QWidget *parent) :
     setShadow(ui->pushButtonAddressDocuments);
     ui->labelDivider->setProperty("cssClass", "container-divider");
 
-    SortEdit* lineEdit = new SortEdit(ui->comboBoxSort);
-    connect(lineEdit, &SortEdit::Mouse_Pressed, [this](){ui->comboBoxSort->showPopup();});
-    setSortTx(ui->comboBoxSort, lineEdit);
+    setSortTx(ui->comboBoxSort);
 
-    SortEdit* lineEditType = new SortEdit(ui->comboBoxSortType);
-    connect(lineEditType, &SortEdit::Mouse_Pressed, [this](){ui->comboBoxSortType->showPopup();});
-    setSortTxTypeFilter(ui->comboBoxSortType, lineEditType);
+    setSortTxTypeFilter(ui->comboBoxSortType);
     ui->comboBoxSortType->setCurrentIndex(0);
 
-    SortEdit* lineEditAddressBook = new SortEdit(ui->comboBoxSortAddressType);
-    connect(lineEditAddressBook, &SortEdit::Mouse_Pressed, [this](){ui->comboBoxSortAddressType->showPopup();});
-    setFilterAddressBook(ui->comboBoxSortAddressType, lineEditAddressBook);
+    setFilterAddressBook(ui->comboBoxSortAddressType);
     ui->comboBoxSortAddressType->setCurrentIndex(0);
 
     connect(ui->pushButtonDocuments, &QPushButton::clicked, [this](){selectFileOutput(true);});
@@ -60,7 +54,7 @@ void SettingsExportCSV::selectFileOutput(const bool& isTxExport)
 {
     QString filename = GUIUtil::getSaveFileName(this,
                                         isTxExport ? tr("Export CSV") : tr("Export Address List"), QString(),
-                                        isTxExport ? tr("NestEgg_tx_csv_export(*.csv)") : tr("NestEgg_addresses_csv_export(*.csv)"),
+                                        isTxExport ? tr("Human_Charity_Coin_Protocol_tx_csv_export(*.csv)") : tr("Human_Charity_Coin_Protocol_addresses_csv_export(*.csv)"),
                                         nullptr);
 
     if (isTxExport) {

@@ -1,7 +1,7 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -82,8 +82,7 @@ bool WalletModel::isHDEnabled() const
 
 bool WalletModel::upgradeWallet(std::string& upgradeError)
 {
-    // For now, Sapling features are locked to regtest.
-    WalletFeature features = Params().IsRegTestNet() ? FEATURE_EGGLING : FEATURE_PRE_SPLIT_KEYPOOL;
+    WalletFeature features = FEATURE_PRE_SPLIT_KEYPOOL;
 
     // This action must be performed in a separate thread and not the main one.
     LOCK2(cs_main, wallet->cs_wallet);
@@ -98,12 +97,12 @@ bool WalletModel::upgradeWallet(std::string& upgradeError)
     return wallet->Upgrade(upgradeError, prev_version);
 }
 
-CAmount WalletModel::getBalance(const CCoinControl* coinControl, bool fIncludeDelegated, bool fUnlockedOnly) const
+CAmount WalletModel::getBalance(const CCoinControl* coinControl, bool fUnlockedOnly) const
 {
     if (coinControl) {
         CAmount nBalance = 0;
         std::vector<COutput> vCoins;
-        wallet->AvailableCoins(&vCoins, coinControl, fIncludeDelegated);
+        wallet->AvailableCoins(&vCoins, coinControl);
         for (const COutput& out : vCoins) {
             bool fSkip = fUnlockedOnly && isLockedCoin(out.tx->GetHash(), out.i);
             if (out.fSpendable && !fSkip)
@@ -113,12 +112,12 @@ CAmount WalletModel::getBalance(const CCoinControl* coinControl, bool fIncludeDe
         return nBalance;
     }
 
-    return wallet->GetAvailableBalance(fIncludeDelegated) - (fUnlockedOnly ? wallet->GetLockedCoins() : CAmount(0));
+    return wallet->GetAvailableBalance() - (fUnlockedOnly ? wallet->GetLockedCoins() : CAmount(0));
 }
 
-CAmount WalletModel::getUnlockedBalance(const CCoinControl* coinControl, bool fIncludeDelegated) const
+CAmount WalletModel::getUnlockedBalance(const CCoinControl* coinControl) const
 {
-    return getBalance(coinControl, fIncludeDelegated, true);
+    return getBalance(coinControl, true);
 }
 
 CAmount WalletModel::getMinColdStakingAmount() const
@@ -282,13 +281,13 @@ void WalletModel::updateWatchOnlyFlag(bool fHaveWatchonly)
 
 bool WalletModel::validateAddress(const QString& address)
 {
-    // Only regular base58 addresses accepted here
-    return IsValidDestinationString(address.toStdString(), false);
+  // Only regular base58 addresses accepted here
+  return IsValidDestinationString(address.toStdString(), false);
 }
 
 bool WalletModel::validateAddress(const QString& address, bool fStaking)
 {
-    return IsValidDestinationString(address.toStdString(), fStaking);
+  return IsValidDestinationString(address.toStdString(), fStaking);
 }
 
 bool WalletModel::updateAddressBookLabels(const CTxDestination& dest, const std::string& strName, const std::string& strPurpose)
@@ -306,7 +305,7 @@ bool WalletModel::updateAddressBookLabels(const CTxDestination& dest, const std:
     return false;
 }
 
-WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransaction& transaction, const CCoinControl* coinControl, bool fIncludeDelegations)
+WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransaction& transaction, const CCoinControl* coinControl)
 {
     CAmount total = 0;
     QList<SendCoinsRecipient> recipients = transaction.getRecipients();
@@ -340,8 +339,8 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
                 return InvalidAmount;
             }
             total += subtotal;
-        } else { // User-entered nestegg address / amount:
-            if (!validateAddress(rcp.address, rcp.isP2CS)) {
+        } else { // User-entered HCCP address / amount:
+            if (!validateAddress(rcp.address)) {
                 return InvalidAddress;
             }
             if (rcp.amount <= 0) {
@@ -353,27 +352,9 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
             CScript scriptPubKey;
             CTxDestination out = DecodeDestination(rcp.address.toStdString());
 
-            if (rcp.isP2CS) {
-                Destination ownerAdd;
-                if (rcp.ownerAddress.isEmpty()) {
-                    // Create new internal owner address
-                    if (!getNewAddress(ownerAdd).result)
-                        return CannotCreateInternalAddress;
-                } else {
-                    ownerAdd = Destination(DecodeDestination(rcp.ownerAddress.toStdString()), false);
-                }
+            // Regular P2PK or P2PKH
+            scriptPubKey = GetScriptForDestination(out);
 
-                const CKeyID* stakerId = boost::get<CKeyID>(&out);
-                const CKeyID* ownerId = boost::get<CKeyID>(&ownerAdd.dest);
-                if (!stakerId || !ownerId) {
-                    return InvalidAddress;
-                }
-
-                scriptPubKey = GetScriptForStakeDelegation(*stakerId, *ownerId);
-            } else {
-                // Regular P2PK or P2PKH
-                scriptPubKey = GetScriptForDestination(out);
-            }
             vecSend.push_back(CRecipient{scriptPubKey, rcp.amount, false});
 
             total += rcp.amount;
@@ -383,7 +364,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
         return DuplicateAddress;
     }
 
-    CAmount nSpendableBalance = getUnlockedBalance(coinControl, fIncludeDelegations);
+    CAmount nSpendableBalance = getUnlockedBalance(coinControl);
 
     if (total > nSpendableBalance) {
         return AmountExceedsBalance;
@@ -400,12 +381,11 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
         CWalletTx* newTx = transaction.getTransaction();
         CReserveKey* keyChange = transaction.getPossibleKeyChange();
 
-
         if (recipients[0].useSwiftTX && total > sporkManager.GetSporkValue(SPORK_5_MAX_VALUE) * COIN) {
-            Q_EMIT message(tr("Send Coins"), tr("SwiftX doesn't support sending values that high yet. Transactions are currently limited to %1 %2.").arg(sporkManager.GetSporkValue(SPORK_5_MAX_VALUE)).arg(CURRENCY_UNIT.c_str()),
-                CClientUIInterface::MSG_ERROR);
-            return TransactionCreationFailed;
-        }
+          Q_EMIT message(tr("Send Coins"), tr("SwiftX doesn't support sending values that high yet. Transactions are currently limited to %1 %2.").arg(sporkManager.GetSporkValue(SPORK_5_MAX_VALUE)).arg(CURRENCY_UNIT.c_str()),
+              CClientUIInterface::MSG_ERROR);
+          return TransactionCreationFailed;
+      }
 
         bool fCreated = wallet->CreateTransaction(vecSend,
                                                   *newTx,
@@ -417,15 +397,14 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
                                                   recipients[0].inputType,
                                                   true,
                                                   recipients[0].useSwiftTX,
-                                                  0,
-                                                  fIncludeDelegations);
+                                                  0);
         transaction.setTransactionFee(nFeeRequired);
 
         if (recipients[0].useSwiftTX && newTx->GetValueOut() > sporkManager.GetSporkValue(SPORK_5_MAX_VALUE) * COIN) {
-            Q_EMIT message(tr("Send Coins"), tr("SwiftX doesn't support sending values that high yet. Transactions are currently limited to %1 %2.").arg(sporkManager.GetSporkValue(SPORK_5_MAX_VALUE)).arg(CURRENCY_UNIT.c_str()),
-                CClientUIInterface::MSG_ERROR);
-            return TransactionCreationFailed;
-        }
+                  Q_EMIT message(tr("Send Coins"), tr("SwiftX doesn't support sending values that high yet. Transactions are currently limited to %1 %2.").arg(sporkManager.GetSporkValue(SPORK_5_MAX_VALUE)).arg(CURRENCY_UNIT.c_str()),
+                      CClientUIInterface::MSG_ERROR);
+                  return TransactionCreationFailed;
+              }
 
         if (!fCreated) {
             if ((total + nFeeRequired) > nSpendableBalance) {
@@ -476,7 +455,7 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(WalletModelTransaction& tran
                 std::string value;
                 rcp.paymentRequest.SerializeToString(&value);
                 newTx->vOrderForm.push_back(std::make_pair(key, value));
-            } else if (!rcp.message.isEmpty()) // Message from normal nestegg:URI (nestegg:XyZ...?message=example)
+            } else if (!rcp.message.isEmpty()) // Message from normal Human_Charity_Coin_Protocol:URI (Human_Charity_Coin_Protocol:XyZ...?message=example)
             {
                 newTx->vOrderForm.push_back(std::make_pair("Message", rcp.message.toStdString()));
             }
@@ -746,95 +725,95 @@ WalletModel::UnlockContext::~UnlockContext()
 
 void WalletModel::UnlockContext::CopyFrom(UnlockContext&& rhs)
 {
-    // Transfer context; old object no longer relocks wallet
-    *this = rhs;
-    rhs.relock = false;
+  // Transfer context; old object no longer relocks wallet
+  *this = rhs;
+  rhs.relock = false;
 }
 
 bool WalletModel::getPubKey(const CKeyID& address, CPubKey& vchPubKeyOut) const
 {
-    return wallet->GetPubKey(address, vchPubKeyOut);
+  return wallet->GetPubKey(address, vchPubKeyOut);
 }
 
 int64_t WalletModel::getCreationTime() const {
-    return wallet->nTimeFirstKey;
+  return wallet->nTimeFirstKey;
 }
 
 int64_t WalletModel::getKeyCreationTime(const CPubKey& key)
 {
-    return pwalletMain->GetKeyCreationTime(key);
+  return pwalletMain->GetKeyCreationTime(key);
 }
 
 int64_t WalletModel::getKeyCreationTime(const CTxDestination& address)
 {
-    if (this->isMine(address)) {
-        return pwalletMain->GetKeyCreationTime(address);
-    }
-    return 0;
+  if (this->isMine(address)) {
+      return pwalletMain->GetKeyCreationTime(address);
+  }
+  return 0;
 }
 
 PairResult WalletModel::getNewAddress(Destination& ret, std::string label) const
 {
-    CTxDestination dest;
-    PairResult res = wallet->getNewAddress(dest, label);
-    if (res.result) ret = Destination(dest, false);
-    return res;
+  CTxDestination dest;
+  PairResult res = wallet->getNewAddress(dest, label);
+  if (res.result) ret = Destination(dest, false);
+  return res;
 }
 
 PairResult WalletModel::getNewStakingAddress(Destination& ret,std::string label) const
 {
-    CTxDestination dest;
-    PairResult res = wallet->getNewStakingAddress(dest, label);
-    if (res.result) ret = Destination(dest, true);
-    return res;
+  CTxDestination dest;
+  PairResult res = wallet->getNewStakingAddress(dest, label);
+  if (res.result) ret = Destination(dest, true);
+  return res;
 }
 
 bool WalletModel::whitelistAddressFromColdStaking(const QString &addressStr)
 {
-    return updateAddressBookPurpose(addressStr, AddressBook::AddressBookPurpose::DELEGATOR);
+  return updateAddressBookPurpose(addressStr, AddressBook::AddressBookPurpose::DELEGATOR);
 }
 
 bool WalletModel::blacklistAddressFromColdStaking(const QString &addressStr)
 {
-    return updateAddressBookPurpose(addressStr, AddressBook::AddressBookPurpose::DELEGABLE);
+  return updateAddressBookPurpose(addressStr, AddressBook::AddressBookPurpose::DELEGABLE);
 }
 
 bool WalletModel::updateAddressBookPurpose(const QString &addressStr, const std::string& purpose)
 {
-    bool isStaking = false;
-    CTxDestination address = DecodeDestination(addressStr.toStdString(), isStaking);
-    if (isStaking)
-        return error("Invalid NestEgg address, cold staking address");
-    CKeyID keyID;
-    if (!getKeyId(address, keyID))
-        return false;
-    return pwalletMain->SetAddressBook(keyID, getLabelForAddress(address), purpose);
+  bool isStaking = false;
+  CTxDestination address = DecodeDestination(addressStr.toStdString(), isStaking);
+  if (isStaking)
+      return error("Invalid NestEgg address, cold staking address");
+  CKeyID keyID;
+  if (!getKeyId(address, keyID))
+      return false;
+  return pwalletMain->SetAddressBook(keyID, getLabelForAddress(address), purpose);
 }
 
 bool WalletModel::getKeyId(const CTxDestination& address, CKeyID& keyID)
 {
-    if (!IsValidDestination(address))
-        return error("Invalid NestEgg address");
+  if (!IsValidDestination(address))
+      return error("Invalid NestEgg address");
 
-    const CKeyID* inKeyID = boost::get<CKeyID>(&address);
-    if (!inKeyID)
-        return error("Unable to get KeyID from NestEgg address");
+  const CKeyID* inKeyID = boost::get<CKeyID>(&address);
+  if (!inKeyID)
+      return error("Unable to get KeyID from NestEgg address");
 
-    keyID = *inKeyID;
-    return true;
+  keyID = *inKeyID;
+  return true;
 }
 
 std::string WalletModel::getLabelForAddress(const CTxDestination& address)
 {
-    std::string label = "";
-    {
-        LOCK(wallet->cs_wallet);
-        std::map<CTxDestination, AddressBook::CAddressBookData>::iterator mi = wallet->mapAddressBook.find(address);
-        if (mi != wallet->mapAddressBook.end()) {
-            label = mi->second.name;
-        }
-    }
-    return label;
+  std::string label = "";
+  {
+      LOCK(wallet->cs_wallet);
+      std::map<CTxDestination, AddressBook::CAddressBookData>::iterator mi = wallet->mapAddressBook.find(address);
+      if (mi != wallet->mapAddressBook.end()) {
+          label = mi->second.name;
+      }
+  }
+  return label;
 }
 
 // returns a list of COutputs from COutPoints
@@ -851,11 +830,11 @@ void WalletModel::getOutputs(const std::vector<COutPoint>& vOutpoints, std::vect
     }
 }
 
-// returns a COutPoint of 25000 EGG if found
+// returns a COutPoint of collateral amount if found
 bool WalletModel::getMNCollateralCandidate(COutPoint& outPoint)
 {
     std::vector<COutput> vCoins;
-    wallet->AvailableCoins(&vCoins, nullptr, false, false, ONLY_10000);
+    wallet->AvailableCoins(&vCoins, nullptr, ONLY_10000);
     for (const COutput& out : vCoins) {
         // skip locked collaterals
         if (!isLockedCoin(out.tx->GetHash(), out.i)) {

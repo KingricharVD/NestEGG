@@ -1,11 +1,11 @@
 Sample configuration files for:
 ```
-SystemD: nesteggd.service
-Upstart: nesteggd.conf
-OpenRC:  nesteggd.openrc
-         nesteggd.openrcconf
-CentOS:  nesteggd.init
-macOS:    org.nestegg.nesteggd.plist
+SystemD: pivxd.service
+Upstart: pivxd.conf
+OpenRC:  pivxd.openrc
+         pivxd.openrcconf
+CentOS:  pivxd.init
+macOS:    org.pivx.pivxd.plist
 ```
 have been made available to assist packagers in creating node packages here.
 

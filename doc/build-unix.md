@@ -1,5 +1,5 @@
 UNIX BUILD NOTES
-======
+====================
 Some notes on how to build PIVX Core in Unix.
 
 Note

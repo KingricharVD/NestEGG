@@ -1,6 +1,6 @@
 // Copyright (c) 2018-2020 The Bitcoin Core developers
 // Copyright (c) 2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or https://www.opensource.org/licenses/mit-license.php.
 
@@ -25,14 +25,14 @@ struct WalletBalances
     CAmount delegate_balance{0};
     CAmount coldstaked_balance{0};
 
-    bool balanceChanged(const WalletBalances& prev) const
-    {
-        return balance != prev.balance || unconfirmed_balance != prev.unconfirmed_balance ||
-               immature_balance != prev.immature_balance || watch_only_balance != prev.watch_only_balance ||
-               unconfirmed_watch_only_balance != prev.unconfirmed_watch_only_balance ||
-               immature_watch_only_balance != prev.immature_watch_only_balance ||
-               delegate_balance != prev.delegate_balance || coldstaked_balance != prev.coldstaked_balance;
-    }
+  bool balanceChanged(const WalletBalances& prev) const
+  {
+      return balance != prev.balance || unconfirmed_balance != prev.unconfirmed_balance ||
+             immature_balance != prev.immature_balance || watch_only_balance != prev.watch_only_balance ||
+             unconfirmed_watch_only_balance != prev.unconfirmed_watch_only_balance ||
+             immature_watch_only_balance != prev.immature_watch_only_balance ||
+             delegate_balance != prev.delegate_balance || coldstaked_balance != prev.coldstaked_balance;
+  }
 };
 
 class Wallet {

@@ -1,7 +1,7 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -36,7 +36,7 @@ bool TransactionRecord::decomposeCoinStake(const CWallet* wallet, const CWalletT
     TransactionRecord sub(hash, wtx.GetTxTime(), wtx.GetTotalSize());
 
     if (wtx.HasZerocoinSpendInputs() && (fZSpendFromMe || wallet->zpivTracker->HasMintTx(hash))) {
-        //zEGG stake reward
+        //zHCCP stake reward
         sub.involvesWatchAddress = false;
         sub.type = TransactionRecord::StakeZPIV;
         sub.address = getValueOrReturnEmpty(wtx.mapValue, "zerocoinmint");
@@ -48,22 +48,21 @@ bool TransactionRecord::decomposeCoinStake(const CWallet* wallet, const CWalletT
         sub.debit -= wtx.vin[0].nSequence * COIN;
     } else if (isminetype mine = wallet->IsMine(wtx.vout[1])) {
 
-        // Check for cold stakes.
-        if (wtx.HasP2CSOutputs()) {
-            sub.credit = nCredit;
-            sub.debit = -nDebit;
-            loadHotOrColdStakeOrContract(wallet, wtx, sub);
-        } else {
-            // PIV stake reward
-            CTxDestination address;
-            if (!ExtractDestination(wtx.vout[1].scriptPubKey, address))
-                return true;
+      // Check for cold stakes.
+      if (wtx.HasP2CSOutputs()) {
+          sub.credit = nCredit;
+          sub.debit = -nDebit;
+          loadHotOrColdStakeOrContract(wallet, wtx, sub);
+      } else {
+        // HCCP stake reward
+        CTxDestination address;
+        if (!ExtractDestination(wtx.vout[1].scriptPubKey, address))
+            return true;
 
-            sub.involvesWatchAddress = mine & ISMINE_WATCH_ONLY;
-            sub.type = TransactionRecord::StakeMint;
-            sub.address = EncodeDestination(address);
-            sub.credit = nCredit - nDebit;
-        }
+        sub.involvesWatchAddress = mine & ISMINE_WATCH_ONLY;
+        sub.type = TransactionRecord::StakeMint;
+        sub.address = EncodeDestination(address);
+        sub.credit = nCredit - nDebit;
     } else {
         //Masternode reward
         CTxDestination destMN;
@@ -193,7 +192,7 @@ bool TransactionRecord::decomposeCreditTransaction(const CWallet* wallet, const 
             sub.credit = txout.nValue;
             sub.involvesWatchAddress = mine & ISMINE_WATCH_ONLY;
             if (ExtractDestination(txout.scriptPubKey, address) && IsMine(*wallet, address)) {
-                // Received by NestEgg Address
+                // Received by HCCP Address
                 sub.type = TransactionRecord::RecvWithAddress;
                 sub.address = EncodeDestination(address);
             } else {
@@ -274,7 +273,7 @@ bool TransactionRecord::decomposeDebitTransaction(const CWallet* wallet, const C
             //private keys that the change was sent to. Do not display a "sent to" here.
             if (wtx.HasZerocoinMintOutputs())
                 continue;
-            // Sent to NestEgg Address
+            // Sent to HCCP Address
             sub.type = TransactionRecord::SendToAddress;
             sub.address = EncodeDestination(address);
         } else if (txout.IsZerocoinMint()){
@@ -326,10 +325,10 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* 
     }
 
     // Decompose cold staking related transactions (with the exception of cold stakes that are decoupled in decomposeCoinStake)
-    // future: merge this flow with the 'credit/debit decomposing flow'.
-    if (decomposeP2CS(wallet, wtx, nCredit, nDebit, parts)) {
-        return parts;
-    }
+  // future: merge this flow with the 'credit/debit decomposing flow'.
+  if (decomposeP2CS(wallet, wtx, nCredit, nDebit, parts)) {
+      return parts;
+  }
 
     // Credit/Debit decomposing flow
     CAmount nNet = nCredit - nDebit;
@@ -527,7 +526,6 @@ void TransactionRecord::updateStatus(const CWalletTx& wtx)
     status.countsForBalance = isTrusted && !(nBlocksToMaturity > 0);
     status.cur_num_blocks = chainHeight;
     status.depth = depth;
-    status.cur_num_ix_locks = nCompleteTXLocks;
 
     if (!IsFinalTx(wtx, chainHeight + 1)) {
         if (wtx.nLockTime < LOCKTIME_THRESHOLD) {
@@ -542,9 +540,7 @@ void TransactionRecord::updateStatus(const CWalletTx& wtx)
     else if (type == TransactionRecord::Generated ||
             type == TransactionRecord::StakeMint ||
             type == TransactionRecord::StakeZPIV ||
-            type == TransactionRecord::MNReward ||
-            type == TransactionRecord::StakeDelegated ||
-            type == TransactionRecord::StakeHot) {
+            type == TransactionRecord::MNReward) {
 
         if (nBlocksToMaturity > 0) {
             status.status = TransactionStatus::Immature;
@@ -573,7 +569,7 @@ void TransactionRecord::updateStatus(const CWalletTx& wtx)
 bool TransactionRecord::statusUpdateNeeded()
 {
     AssertLockHeld(cs_main);
-    return status.cur_num_blocks != chainActive.Height() || status.cur_num_ix_locks != nCompleteTXLocks;
+    return status.cur_num_blocks != chainActive.Height();
 }
 
 QString TransactionRecord::getTxID() const

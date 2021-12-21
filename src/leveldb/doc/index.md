@@ -1,5 +1,5 @@
 leveldb
-
+=======
 
 _Jeff Dean, Sanjay Ghemawat_
 
@@ -240,7 +240,7 @@ Use(slice);
 ```
 
 When the if statement goes out of scope, str will be destroyed and the backing
-storage for slice will dieggear.
+storage for slice will disappear.
 
 ## Comparators
 

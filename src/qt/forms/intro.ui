@@ -101,7 +101,7 @@
                <string notr="true">QLabel { font-style:italic; }</string>
               </property>
               <property name="text">
-               <string>Welcome to NestEgg Core.</string>
+               <string>Welcome to Human_Charity_Coin_Protocol.</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -136,7 +136,7 @@
                </size>
               </property>
               <property name="text">
-               <string>As this is the first time the program is launched, you can choose where NestEgg Core will store its data.</string>
+               <string>As this is the first time the program is launched, you can choose where Human_Charity_Coin_Protocol will store its data.</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -154,7 +154,7 @@
 }</string>
               </property>
               <property name="text">
-               <string>NestEgg Core will download and store a copy of the NestEgg block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</string>
+               <string>Human_Charity_Coin_Protocol will download and store a copy of the HCCP block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>

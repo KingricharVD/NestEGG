@@ -276,7 +276,7 @@
                </size>
               </property>
               <property name="text">
-               <string>NestEgg address or contact label</string>
+               <string>HCCP address or contact label</string>
               </property>
              </widget>
             </item>

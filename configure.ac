@@ -1,22 +1,22 @@
 dnl require autoconf 2.60 (AS_ECHO/AS_ECHO_N)
 AC_PREREQ([2.60])
 define(_CLIENT_VERSION_MAJOR, 1)
-define(_CLIENT_VERSION_MINOR, 5)
+define(_CLIENT_VERSION_MINOR, 0)
 define(_CLIENT_VERSION_REVISION, 0)
 define(_CLIENT_VERSION_BUILD, 0)
 define(_CLIENT_VERSION_RC, 0)
 define(_CLIENT_VERSION_IS_RELEASE, true)
-define(_COPYRIGHT_YEAR, 2020)
-AC_INIT([NestEgg Core],m4_join([.], _CLIENT_VERSION_MAJOR, _CLIENT_VERSION_MINOR, _CLIENT_VERSION_REVISION, m4_if(_CLIENT_VERSION_BUILD, [0], [], _CLIENT_VERSION_BUILD))m4_if(_CLIENT_VERSION_RC, [0], [], [rc]_CLIENT_VERSION_RC),[https://github.com/eggcoin-com/EGG/issues],[nestegg],[https://nesteggcoin.com/])
+define(_COPYRIGHT_YEAR, 2022)
+AC_INIT([Human_Charity_Coin_Protocol Core],m4_join([.], _CLIENT_VERSION_MAJOR, _CLIENT_VERSION_MINOR, _CLIENT_VERSION_REVISION, m4_if(_CLIENT_VERSION_BUILD, [0], [], _CLIENT_VERSION_BUILD))m4_if(_CLIENT_VERSION_RC, [0], [], [rc]_CLIENT_VERSION_RC),[https://github.com/Human-Charity-Coin/HCCP/issues],[Human_Charity_Coin_Protocol],[https://www.humancharitycoin.com/])
 AC_CONFIG_SRCDIR([src/main.cpp])
 AC_CONFIG_HEADERS([src/config/pivx-config.h])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([build-aux/m4])
 
-BITCOIN_DAEMON_NAME=nesteggd
-BITCOIN_GUI_NAME=nestegg-qt
-BITCOIN_CLI_NAME=nestegg-cli
-BITCOIN_TX_NAME=nestegg-tx
+BITCOIN_DAEMON_NAME=Human_Charity_Coin_Protocold
+BITCOIN_GUI_NAME=Human_Charity_Coin_Protocol-qt
+BITCOIN_CLI_NAME=Human_Charity_Coin_Protocol-cli
+BITCOIN_TX_NAME=Human_Charity_Coin_Protocol-tx
 
 dnl Unless the user specified ARFLAGS, force it to be cr
 AC_ARG_VAR(ARFLAGS, [Flags for the archiver, defaults to <cr> if not set])
@@ -86,8 +86,6 @@ dnl Python 3.5 is specified in .python-version and should be used if available, 
 AC_PATH_PROGS([PYTHON], [python3.5 python3.6 python3.7 python3.8 python3 python])
 AC_PATH_PROG(GENHTML, genhtml)
 AC_PATH_PROG([GIT], [git])
-AC_PATH_PROG(RUSTC, rustc)
-AC_PATH_PROG(CARGO, cargo)
 AC_PATH_PROG(CCACHE,ccache)
 AC_PATH_PROG(XGETTEXT,xgettext)
 AC_PATH_PROG(HEXDUMP,hexdump)
@@ -101,13 +99,6 @@ fi
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 
 AC_ARG_VAR(PYTHONPATH, Augments the default search path for python module files)
-
-AC_ARG_ENABLE([online-rust],
-  [AS_HELP_STRING([--disable-online-rust],
-  [disable fetching Rust dependencies from crates.io (default is to use crates.io)])],
-  [enable_online_rust=$enableval],
-  [enable_online_rust=yes])
-AM_CONDITIONAL(ENABLE_ONLINE_RUST, test "$enable_online_rust" != no)
 
 AC_ARG_WITH([params-dir],
   AS_HELP_STRING([--with-params-dir=PARAMS_DIR],
@@ -458,7 +449,7 @@ CPPFLAGS="$CPPFLAGS -DHAVE_BUILD_INFO -D__STDC_FORMAT_MACROS"
 
 AC_ARG_WITH([utils],
   [AS_HELP_STRING([--with-utils],
-  [build nestegg-cli nestegg-tx (default=yes)])],
+  [build Human_Charity_Coin_Protocol-cli Human_Charity_Coin_Protocol-tx (default=yes)])],
   [build_bitcoin_utils=$withval],
   [build_bitcoin_utils=yes])
 
@@ -470,7 +461,7 @@ AC_ARG_WITH([libs],
 
 AC_ARG_WITH([daemon],
   [AS_HELP_STRING([--with-daemon],
-  [build nesteggd daemon (default=yes)])],
+  [build Human_Charity_Coin_Protocold daemon (default=yes)])],
   [build_bitcoind=$withval],
   [build_bitcoind=yes])
 
@@ -1081,7 +1072,6 @@ if test x$use_pkgconfig = xyes; then
         if test x$TARGET_OS != xwindows; then
           PKG_CHECK_MODULES([EVENT_PTHREADS], [libevent_pthreads],, [AC_MSG_ERROR(libevent_pthreads not found.)])
         fi
-        PKG_CHECK_MODULES([SODIUM], [libsodium],, [AC_MSG_ERROR(libsodium not found.)])
       fi
 
       if test "x$use_zmq" = "xyes"; then
@@ -1108,8 +1098,6 @@ else
     if test x$TARGET_OS != xwindows; then
       AC_CHECK_LIB([event_pthreads],[main],EVENT_PTHREADS_LIBS=-levent_pthreads,AC_MSG_ERROR(libevent_pthreads missing))
     fi
-    AC_CHECK_HEADER([sodium/core.h],, AC_MSG_ERROR(libsodium headers missing),)
-    AC_CHECK_LIB([sodium],[main],SODIUM_LIBS=-lsodium,AC_MSG_ERROR(libsodium missing))
   fi
 
   if test "x$use_zmq" = "xyes"; then
@@ -1144,8 +1132,6 @@ else
     BITCOIN_QT_CHECK([AC_CHECK_HEADER([QtCharts/qchartview.h],, have_qtcharts=no)])
   fi
 fi
-
-LIBEGGLING_LIBS="-lgmp -lboost_system-mt -lcrypto -lsodium"
 
 dnl univalue check
 
@@ -1197,32 +1183,17 @@ AC_SUBST(UNIVALUE_LIBS)
 
 BITCOIN_QT_PATH_PROGS([PROTOC], [protoc],$protoc_bin_path)
 
-RUST_LIBS=""
-case $host in
-  *mingw*)
-    RUST_LIBS="$RUST_LIBS -luserenv"
-    ;;
-  *)
-    RUST_LIBS="$RUST_LIBS -ldl"
-    ;;
-esac
-
-if test -z "$RUST_TARGET"; then
-  AC_MSG_WARN([RUST_TARGET not set, assuming native build])
-fi
-AM_CONDITIONAL([HAVE_RUST_TARGET], [test -n "$RUST_TARGET"])
-
 # Additional Zcash flags
 AX_CHECK_COMPILE_FLAG([-fno-strict-aliasing],[CXXFLAGS="$CXXFLAGS -fno-strict-aliasing"])
 AX_CHECK_COMPILE_FLAG([-Wno-builtin-declaration-mismatch],[CXXFLAGS="$CXXFLAGS -Wno-builtin-declaration-mismatch"],,[[$CXXFLAG_WERROR]])
 
-LIBZCASH_LIBS="$BOOST_SYSTEM_LIB $CRYPTO_LIBS $SODIUM_LIBS $RUST_LIBS"
+LIBZCASH_LIBS="$BOOST_SYSTEM_LIB $CRYPTO_LIBS"
 
-AC_MSG_CHECKING([whether to build nesteggd])
+AC_MSG_CHECKING([whether to build Human_Charity_Coin_Protocold])
 AM_CONDITIONAL([BUILD_BITCOIND], [test x$build_bitcoind = xyes])
 AC_MSG_RESULT($build_bitcoind)
 
-AC_MSG_CHECKING([whether to build utils (nestegg-cli nestegg-tx)])
+AC_MSG_CHECKING([whether to build utils (Human_Charity_Coin_Protocol-cli Human_Charity_Coin_Protocol-tx)])
 AM_CONDITIONAL([BUILD_BITCOIN_UTILS], [test x$build_bitcoin_utils = xyes])
 AC_MSG_RESULT($build_bitcoin_utils)
 
@@ -1350,7 +1321,7 @@ if test x$bitcoin_enable_qt != xno; then
     AC_MSG_WARN("xgettext is required to update qt translations")
   fi
 
-  AC_MSG_CHECKING([whether to build test_nestegg-qt])
+  AC_MSG_CHECKING([whether to build test_Human_Charity_Coin_Protocol-qt])
   if test x$use_gui_tests$bitcoin_enable_qt_test = xyesyes; then
     AC_MSG_RESULT([yes])
     BUILD_TEST_QT="yes"
@@ -1377,7 +1348,7 @@ esac
 AM_CONDITIONAL([USE_NUM_GMP], [test "x$set_bignum" = "xgmp"])
 AM_CONDITIONAL([USE_NUM_OPENSSL], [test "x$set_bignum" = "xopenssl"])
 
-AC_MSG_CHECKING([whether to build test_nestegg])
+AC_MSG_CHECKING([whether to build test_Human_Charity_Coin_Protocol])
 if test x$use_tests = xyes; then
   AC_MSG_RESULT([yes])
   BUILD_TEST="yes"
@@ -1436,8 +1407,6 @@ AC_SUBST(BITCOIN_GUI_NAME)
 AC_SUBST(BITCOIN_CLI_NAME)
 AC_SUBST(BITCOIN_TX_NAME)
 
-AC_SUBST(RUST_TARGET)
-AC_SUBST(RUST_VENDORED_SOURCES)
 AC_SUBST(RELDFLAGS)
 AC_SUBST(DEBUG_CPPFLAGS)
 AC_SUBST(WARN_CXXFLAGS)
@@ -1470,9 +1439,7 @@ AC_SUBST(CRYPTO_LIBS)
 AC_SUBST(SSL_LIBS)
 AC_SUBST(EVENT_LIBS)
 AC_SUBST(EVENT_PTHREADS_LIBS)
-AC_SUBST(SODIUM_LIBS)
 AC_SUBST(ZMQ_LIBS)
-AC_SUBST(LIBEGGLING_LIBS)
 AC_SUBST(LIBZCASH_LIBS)
 AC_SUBST(PROTOBUF_LIBS)
 AC_SUBST(QR_LIBS)
@@ -1563,7 +1530,6 @@ echo "  debug enabled = $enable_debug"
 echo "  gprof enabled = $enable_gprof"
 echo "  werror        = $enable_werror"
 echo "  host          = $host"
-echo "  rust target   = $RUST_TARGET"
 echo
 echo "  target os     = $TARGET_OS"
 echo "  build os      = $BUILD_OS"

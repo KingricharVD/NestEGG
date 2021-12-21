@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -266,11 +266,11 @@ UniValue stop(const JSONRPCRequest& jsonRequest)
     if (jsonRequest.fHelp || jsonRequest.params.size() > 1)
         throw std::runtime_error(
             "stop\n"
-            "\nStop NestEgg server.");
+            "\nStop Human_Charity_Coin_Protocol server.");
     // Event loop will exit after current HTTP requests have been handled, so
     // this reply will get back to the client.
     StartShutdown();
-    return "NestEgg server stopping";
+    return "Human_Charity_Coin_Protocol server stopping";
 }
 
 
@@ -360,32 +360,32 @@ static const CRPCCommand vRPCCommands[] =
         { "hidden",             "waitforblock",           &waitforblock,           true },
         { "hidden",             "waitforblockheight",     &waitforblockheight,     true },
 
-        /* NestEgg features */
-        {"nestegg", "listmasternodes", &listmasternodes, true },
-        {"nestegg", "getmasternodecount", &getmasternodecount, true },
-        {"nestegg", "createmasternodebroadcast", &createmasternodebroadcast, true },
-        {"nestegg", "decodemasternodebroadcast", &decodemasternodebroadcast, true },
-        {"nestegg", "relaymasternodebroadcast", &relaymasternodebroadcast, true },
-        {"nestegg", "masternodecurrent", &masternodecurrent, true },
-        {"nestegg", "startmasternode", &startmasternode, true },
-        {"nestegg", "createmasternodekey", &createmasternodekey, true },
-        {"nestegg", "getmasternodeoutputs", &getmasternodeoutputs, true },
-        {"nestegg", "listmasternodeconf", &listmasternodeconf, true },
-        {"nestegg", "getmasternodestatus", &getmasternodestatus, true },
-        {"nestegg", "getmasternodewinners", &getmasternodewinners, true },
-        {"nestegg", "getmasternodescores", &getmasternodescores, true },
-        {"nestegg", "preparebudget", &preparebudget, true },
-        {"nestegg", "submitbudget", &submitbudget, true },
-        {"nestegg", "mnbudgetvote", &mnbudgetvote, true },
-        {"nestegg", "getbudgetvotes", &getbudgetvotes, true },
-        {"nestegg", "getnextsuperblock", &getnextsuperblock, true },
-        {"nestegg", "getbudgetprojection", &getbudgetprojection, true },
-        {"nestegg", "getbudgetinfo", &getbudgetinfo, true },
-        {"nestegg", "mnbudgetrawvote", &mnbudgetrawvote, true },
-        {"nestegg", "mnfinalbudget", &mnfinalbudget, true },
-        {"nestegg", "checkbudgets", &checkbudgets, true },
-        {"nestegg", "mnsync", &mnsync, true },
-        {"nestegg", "spork", &spork, true },
+        /* HCCP features */
+        {"Human_Charity_Coin_Protocol", "listmasternodes", &listmasternodes, true },
+        {"Human_Charity_Coin_Protocol", "getmasternodecount", &getmasternodecount, true },
+        {"Human_Charity_Coin_Protocol", "createmasternodebroadcast", &createmasternodebroadcast, true },
+        {"Human_Charity_Coin_Protocol", "decodemasternodebroadcast", &decodemasternodebroadcast, true },
+        {"Human_Charity_Coin_Protocol", "relaymasternodebroadcast", &relaymasternodebroadcast, true },
+        {"Human_Charity_Coin_Protocol", "masternodecurrent", &masternodecurrent, true },
+        {"Human_Charity_Coin_Protocol", "startmasternode", &startmasternode, true },
+        {"Human_Charity_Coin_Protocol", "createmasternodekey", &createmasternodekey, true },
+        {"Human_Charity_Coin_Protocol", "getmasternodeoutputs", &getmasternodeoutputs, true },
+        {"Human_Charity_Coin_Protocol", "listmasternodeconf", &listmasternodeconf, true },
+        {"Human_Charity_Coin_Protocol", "getmasternodestatus", &getmasternodestatus, true },
+        {"Human_Charity_Coin_Protocol", "getmasternodewinners", &getmasternodewinners, true },
+        {"Human_Charity_Coin_Protocol", "getmasternodescores", &getmasternodescores, true },
+        {"Human_Charity_Coin_Protocol", "preparebudget", &preparebudget, true },
+        {"Human_Charity_Coin_Protocol", "submitbudget", &submitbudget, true },
+        {"Human_Charity_Coin_Protocol", "mnbudgetvote", &mnbudgetvote, true },
+        {"Human_Charity_Coin_Protocol", "getbudgetvotes", &getbudgetvotes, true },
+        {"Human_Charity_Coin_Protocol", "getnextsuperblock", &getnextsuperblock, true },
+        {"Human_Charity_Coin_Protocol", "getbudgetprojection", &getbudgetprojection, true },
+        {"Human_Charity_Coin_Protocol", "getbudgetinfo", &getbudgetinfo, true },
+        {"Human_Charity_Coin_Protocol", "mnbudgetrawvote", &mnbudgetrawvote, true },
+        {"Human_Charity_Coin_Protocol", "mnfinalbudget", &mnfinalbudget, true },
+        {"Human_Charity_Coin_Protocol", "checkbudgets", &checkbudgets, true },
+        {"Human_Charity_Coin_Protocol", "mnsync", &mnsync, true },
+        {"Human_Charity_Coin_Protocol", "spork", &spork, true },
 
 #ifdef ENABLE_WALLET
         /* Wallet */
@@ -598,14 +598,14 @@ std::vector<std::string> CRPCTable::listCommands() const
 
 std::string HelpExampleCli(std::string methodname, std::string args)
 {
-    return "> nestegg-cli " + methodname + " " + args + "\n";
+    return "> Human_Charity_Coin_Protocol-cli " + methodname + " " + args + "\n";
 }
 
 std::string HelpExampleRpc(std::string methodname, std::string args)
 {
     return "> curl --user myusername --data-binary '{\"jsonrpc\": \"1.0\", \"id\":\"curltest\", "
            "\"method\": \"" +
-           methodname + "\", \"params\": [" + args + "] }' -H 'content-type: text/plain;' http://127.0.0.1:51473/\n";
+           methodname + "\", \"params\": [" + args + "] }' -H 'content-type: text/plain;' http://127.0.0.1:9335/\n";
 }
 
 void RPCSetTimerInterfaceIfUnset(RPCTimerInterface *iface)

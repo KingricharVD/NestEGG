@@ -1,6 +1,6 @@
 // Copyright (c) 2011-2013 The Bitcoin developers
 // Copyright (c) 2017-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -12,6 +12,8 @@
 #include <cstdlib>
 
 #include <QDateTime>
+
+#define SKIP_ROWCOUNT_N_TIMES 10
 
 // Earliest date that can be represented (far in the past)
 const QDateTime TransactionFilterProxy::MIN_DATE = QDateTime::fromTime_t(0);
@@ -65,11 +67,11 @@ bool TransactionFilterProxy::filterAcceptsRow(int sourceRow, const QModelIndex& 
         return false;
     }
     if (fOnlyStakes && !isStakeTx(type))
-        return false;
+      return false;
 
-    if (fOnlyColdStaking && !isColdStake(type))
-        return false;
-
+  if (fOnlyColdStaking && !isColdStake(type))
+      return false;
+      
     return true;
 }
 
@@ -129,24 +131,25 @@ void TransactionFilterProxy::setShowZcTxes(bool fOnlyZc)
     invalidateFilter();
 }
 
-void TransactionFilterProxy::setOnlyStakes(bool fOnlyStakes)
+void TransactionFilterProxy::setOnlyStakesandMN(bool fOnlyStakesandMN)
 {
-    this->fOnlyStakes = fOnlyStakes;
-    invalidateFilter();
-}
-
-void TransactionFilterProxy::setOnlyColdStakes(bool fOnlyColdStakes)
-{
-    this->fOnlyColdStaking = fOnlyColdStakes;
+    this->fOnlyStakesandMN = fOnlyStakesandMN;
     invalidateFilter();
 }
 
 int TransactionFilterProxy::rowCount(const QModelIndex& parent) const
 {
+    static int entryCount = 0;
+
+    int rowCount =
+        entryCount++ < SKIP_ROWCOUNT_N_TIMES ?
+        sourceModel()->rowCount() :
+        QSortFilterProxyModel::rowCount(parent);
+
     if (limitRows != -1) {
-        return std::min(QSortFilterProxyModel::rowCount(parent), limitRows);
+        return std::min(rowCount, limitRows);
     } else {
-        return QSortFilterProxyModel::rowCount(parent);
+        return rowCount;
     }
 }
 
@@ -163,15 +166,9 @@ bool TransactionFilterProxy::isZcTx(int type) const {
 }
 
 bool TransactionFilterProxy::isStakeTx(int type) const {
-    return type == TransactionRecord::StakeMint || type == TransactionRecord::Generated || type == TransactionRecord::StakeZPIV || type == TransactionRecord::StakeDelegated;
+    return type == TransactionRecord::StakeMint || type == TransactionRecord::Generated;
 }
 
-bool TransactionFilterProxy::isColdStake(int type) const {
-    return type == TransactionRecord::P2CSDelegation || type == TransactionRecord::P2CSDelegationSent || type == TransactionRecord::P2CSDelegationSentOwner || type == TransactionRecord::StakeDelegated || type == TransactionRecord::StakeHot;
+bool TransactionFilterProxy::isMasternodeRewardTx(int type) const {
+    return (type == TransactionRecord::MNReward);
 }
-
-/*QVariant TransactionFilterProxy::dataFromSourcePos(int sourceRow, int role) const {
-    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-    return index.data(index, role);
-}
- */

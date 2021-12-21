@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2015 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2016-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -221,7 +221,7 @@ extern const char* REJECT;
  * @see https://bitcoin.org/en/developer-reference#sendheaders
  */
 extern const char* SENDHEADERS;
-/**
+ /**
  * The ix message transmits a single SwiftX transaction
  */
 extern const char* IX;
@@ -383,24 +383,24 @@ public:
 };
 
 enum {
-    MSG_TX = 1,
-    MSG_BLOCK,
+    MSG_TX                          = 1,
+    MSG_BLOCK                       = 2,
     // Nodes may always request a MSG_FILTERED_BLOCK in a getdata, however,
     // MSG_FILTERED_BLOCK should not appear in any invs except as a part of getdata.
-    MSG_FILTERED_BLOCK,
-    MSG_TXLOCK_REQUEST,
-    MSG_TXLOCK_VOTE,
-    MSG_SPORK,
-    MSG_MASTERNODE_WINNER,
-    MSG_MASTERNODE_SCANNING_ERROR,
-    MSG_BUDGET_VOTE,
-    MSG_BUDGET_PROPOSAL,
-    MSG_BUDGET_FINALIZED,
-    MSG_BUDGET_FINALIZED_VOTE,
-    MSG_MASTERNODE_QUORUM,
-    MSG_MASTERNODE_ANNOUNCE,
-    MSG_MASTERNODE_PING,
-    MSG_DSTX
+    MSG_FILTERED_BLOCK              = 3,
+    // MSG_TXLOCK_REQUEST              = 4,
+    // MSG_TXLOCK_VOTE                 = 5,
+    MSG_SPORK                       = 6,
+    MSG_MASTERNODE_WINNER           = 7,
+    MSG_MASTERNODE_SCANNING_ERROR   = 8,
+    MSG_BUDGET_VOTE                 = 9,
+    MSG_BUDGET_PROPOSAL             = 10,
+    MSG_BUDGET_FINALIZED            = 11,
+    MSG_BUDGET_FINALIZED_VOTE       = 12,
+    MSG_MASTERNODE_QUORUM           = 13,
+    MSG_MASTERNODE_ANNOUNCE         = 14,
+    MSG_MASTERNODE_PING             = 15,
+    MSG_DSTX                        = 16,
 };
 
 #endif // BITCOIN_PROTOCOL_H

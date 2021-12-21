@@ -5,42 +5,42 @@ and tests weren't explicitly disabled.
 
 After configuring, they can be run with `make check`.
 
-To run the nesteggd tests manually, launch `src/test/test_nestegg`. To recompile
+To run the Human_Charity_Coin_Protocold tests manually, launch `src/test/test_Human_Charity_Coin_Protocol`. To recompile
 after a test file was modified, run `make` and then run the test again. If you
 modify a non-test file, use `make -C src/test` to recompile only what's needed
-to run the nesteggd tests.
+to run the Human_Charity_Coin_Protocold tests.
 
-To add more nesteggd tests, add `BOOST_AUTO_TEST_CASE` functions to the existing
+To add more Human_Charity_Coin_Protocold tests, add `BOOST_AUTO_TEST_CASE` functions to the existing
 .cpp files in the `test/` directory or add new .cpp files that
 implement new BOOST_FIXTURE_TEST_SUITE sections.
 
-To run the nestegg-qt tests manually, launch `src/qt/test/test_nestegg-qt`
+To run the Human_Charity_Coin_Protocol-qt tests manually, launch `src/qt/test/test_Human_Charity_Coin_Protocol-qt`
 
-To add more nestegg-qt tests, add them to the `src/qt/test/` directory and
+To add more Human_Charity_Coin_Protocol-qt tests, add them to the `src/qt/test/` directory and
 the `src/qt/test/test_main.cpp` file.
 
 ### Running individual tests
 
-test_nestegg has some built-in command-line arguments; for
+test_Human_Charity_Coin_Protocol has some built-in command-line arguments; for
 example, to run just the getarg_tests verbosely:
 
-    test_nestegg --log_level=all --run_test=getarg_tests
+    test_Human_Charity_Coin_Protocol --log_level=all --run_test=getarg_tests
 
 ... or to run just the doubledash test:
 
-    test_nestegg --run_test=getarg_tests/doubledash
+    test_Human_Charity_Coin_Protocol --run_test=getarg_tests/doubledash
 
-Run `test_nestegg --help` for the full list.
+Run `test_Human_Charity_Coin_Protocol --help` for the full list.
 
 ### Note on adding test cases
 
 The sources in this directory are unit test cases.  Boost includes a
-unit testing framework, and since nestegg already uses boost, it makes
+unit testing framework, and since Human_Charity_Coin_Protocol already uses boost, it makes
 sense to simply use this framework rather than require developers to
 configure some other framework (we want as few impediments to creating
 unit tests as possible).
 
-The build system is setup to compile an executable called `test_nestegg`
+The build system is setup to compile an executable called `test_Human_Charity_Coin_Protocol`
 that runs all of the unit tests.  The main source file is called
 test_pivx.cpp, which simply includes other files that contain the
 actual unit tests (outside of a couple required preprocessor

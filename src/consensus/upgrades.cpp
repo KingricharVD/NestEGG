@@ -1,6 +1,6 @@
 // Copyright (c) 2018 The Zcash developers
 // Copyright (c) 2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -16,7 +16,7 @@
 const struct NUInfo NetworkUpgradeInfo[Consensus::MAX_NETWORK_UPGRADES] = {
         {
                 /*.strName =*/ "Base",
-                /*.strInfo =*/ "NestEgg network",
+                /*.strInfo =*/ "Human_Charity_Coin_Protocol network",
         },
         {
                 /*.strName =*/ "PoS",
@@ -43,24 +43,28 @@ const struct NUInfo NetworkUpgradeInfo[Consensus::MAX_NETWORK_UPGRADES] = {
                 /*.strInfo =*/ "activation of zerocoin public spends (spend v3)",
         },
         {
-          /*.strName =*/ "stake_modifier_v2",
-           /*.strInfo =*/ "new 256-bit stake modifier - start block v6",
-   },
-   {
-           /*.strName =*/ "time_protocol_v2",
-           /*.strInfo =*/ "new message sigs - start block v7 - time protocol - zc spend v4",
-   },
-   {
-           /*.strName =*/ "p2pkh_block_signatures",
-           /*.strInfo =*/ "activation of p2pkh block signatures",
-   },
-   {
-           /*.strName =*/ "Stake_min_depth_v2",
-           /*.strInfo =*/ "Increases the stake min depth",
-   },
-   {
-           /*.strName =*/ "masternode_rank_v2",
-           /*.strInfo =*/ "new masternode ranking system",
+                /*.strName =*/ "stake_modifier_v2",
+                /*.strInfo =*/ "new 256-bit stake modifier - start block v6",
+        },
+        {
+                /*.strName =*/ "time_protocol_v2",
+                /*.strInfo =*/ "new message sigs - start block v7 - time protocol - zc spend v4",
+        },
+        {
+                /*.strName =*/ "p2pkh_block_signatures",
+                /*.strInfo =*/ "activation of p2pkh block signatures",
+        },
+        {
+                /*.strName =*/ "Stake_min_depth_v2",
+                /*.strInfo =*/ "Increases the stake min depth",
+        },
+        {
+                /*.strName =*/ "check_work_v2",
+                /*.strInfo =*/ "check work V2",
+        },
+        {
+                /*.strName =*/ "masternode_rank_v2",
+                /*.strInfo =*/ "new masternode ranking system",
         },
         {
                 /*.strName =*/ "Test_dummy",

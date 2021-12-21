@@ -15,9 +15,9 @@
  * because there is no clear convention on how octet streams are encoded
  * on such systems.
  *
- * =====(LICENSE BEGIN)
+ * ==========================(LICENSE BEGIN)============================
  *
- * Copyright (c) 2007-2010  Projet RNRT EGGHIR
+ * Copyright (c) 2007-2010  Projet RNRT SAPHIR
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -38,7 +38,7 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * ======(LICENSE END)=
+ * ===========================(LICENSE END)=============================
  *
  * @file     sph_types.h
  * @author   Thomas Pornin <thomas.pornin@cryptolog.com>
@@ -57,7 +57,7 @@
 #error This code requires 8-bit bytes
 #endif
 
-/* ====== BEGIN documentation block for Doxygen ===== */
+/* ============= BEGIN documentation block for Doxygen ============ */
 
 #ifdef DOXYGEN_IGNORE
 
@@ -802,7 +802,7 @@ static inline void sph_enc64be_aligned(void *dst, sph_u64 val);
 
 #endif
 
-/*  END documentation block for Doxygen ====== */
+/* ============== END documentation block for Doxygen ============= */
 
 #ifndef DOXYGEN_IGNORE
 

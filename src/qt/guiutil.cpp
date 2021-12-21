@@ -1,7 +1,7 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -19,6 +19,7 @@
 #include "script/script.h"
 #include "script/standard.h"
 #include "util.h"
+#include "qt/pivx/qtutils.h"
 
 #ifdef WIN32
 #ifdef _WIN32_WINNT
@@ -70,7 +71,7 @@ extern double NSAppKitVersionNumber;
 #endif
 #endif
 
-#define URI_SCHEME "nestegg"
+#define URI_SCHEME "Human_Charity_Coin_Protocol"
 
 #if defined(Q_OS_MAC)
 #pragma GCC diagnostic push
@@ -136,7 +137,7 @@ void setupAddressWidget(QValidatedLineEdit* widget, QWidget* parent)
     widget->setFont(bitcoinAddressFont());
     // We don't want translators to use own addresses in translations
     // and this is the only place, where this address is supplied.
-    widget->setPlaceholderText(QObject::tr("Enter NestEgg address (e.g. %1)").arg("D7VFR83SQbiezrW72hjcWJtcfip5krte2Z"));
+    widget->setPlaceholderText(QObject::tr("Enter HCCP address (e.g. %1)").arg("D7VFR83SQbiezrW72hjcWJtcfip5krte2Z"));
     widget->setValidator(new BitcoinAddressEntryValidator(parent));
     widget->setCheckValidator(new BitcoinAddressCheckValidator(parent));
 }
@@ -158,7 +159,7 @@ void updateWidgetTextAndCursorPosition(QLineEdit* widget, const QString& str)
 
 bool parseBitcoinURI(const QUrl& uri, SendCoinsRecipient* out)
 {
-    // return if URI is not valid or is no NestEgg: URI
+    // return if URI is not valid or is no HCCP: URI
     if (!uri.isValid() || uri.scheme() != QString(URI_SCHEME))
         return false;
 
@@ -207,9 +208,9 @@ bool parseBitcoinURI(const QUrl& uri, SendCoinsRecipient* out)
 
 bool parseBitcoinURI(QString uri, SendCoinsRecipient* out)
 {
-    // Convert nestegg:// to nestegg:
+    // Convert Human_Charity_Coin_Protocol:// to Human_Charity_Coin_Protocol:
     //
-    //    Cannot handle this later, because nestegg:// will cause Qt to see the part after // as host,
+    //    Cannot handle this later, because Human_Charity_Coin_Protocol:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
     if (uri.startsWith(URI_SCHEME "://", Qt::CaseInsensitive)) {
         uri.replace(0, std::strlen(URI_SCHEME) + 3, URI_SCHEME ":");
@@ -628,12 +629,12 @@ bool DHMSTableWidgetItem::operator<(QTableWidgetItem const& item) const
 #ifdef WIN32
 fs::path static StartupShortcutPath()
 {
-    return GetSpecialFolderPath(CSIDL_STARTUP) / "NestEgg.lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / "Human_Charity_Coin_Protocol.lnk";
 }
 
 bool GetStartOnSystemStartup()
 {
-    // check for NestEgg.lnk
+    // check for Human_Charity_Coin_Protocol.lnk
     return fs::exists(StartupShortcutPath());
 }
 
@@ -705,7 +706,7 @@ fs::path static GetAutostartDir()
 
 fs::path static GetAutostartFilePath()
 {
-    return GetAutostartDir() / "nestegg.desktop";
+    return GetAutostartDir() / "Human_Charity_Coin_Protocol.desktop";
 }
 
 bool GetStartOnSystemStartup()
@@ -741,10 +742,10 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         fs::ofstream optionFile(GetAutostartFilePath(), std::ios_base::out | std::ios_base::trunc);
         if (!optionFile.good())
             return false;
-        // Write a nestegg.desktop file to the autostart directory:
+        // Write a Human_Charity_Coin_Protocol.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
-        optionFile << "Name=NestEgg\n";
+        optionFile << "Name=Human_Charity_Coin_Protocol\n";
         optionFile << "Exec=" << pszExePath << " -min\n";
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -760,7 +761,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
 LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef findUrl);
 LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef findUrl)
 {
-    // loop through the list of startup items and try to find the nestegg app
+    // loop through the list of startup items and try to find the Human_Charity_Coin_Protocol app
     CFArrayRef listSnapshot = LSSharedFileListCopySnapshot(list, NULL);
     for (int i = 0; i < CFArrayGetCount(listSnapshot); i++) {
         LSSharedFileListItemRef item = (LSSharedFileListItemRef)CFArrayGetValueAtIndex(listSnapshot, i);
@@ -805,7 +806,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
     LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, bitcoinAppUrl);
 
     if (fAutoStart && !foundItem) {
-        // add nestegg app to startup item list
+        // add Human_Charity_Coin_Protocol app to startup item list
         LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst, NULL, NULL, bitcoinAppUrl, NULL, NULL);
     } else if (!fAutoStart && foundItem) {
         // remove item
@@ -875,8 +876,8 @@ QString loadStyleSheet()
         if (!theme.isEmpty()) {
             cssName = QString(":/css/") + theme;
         } else {
-            cssName = QString(":/css/default");
-            settings.setValue("theme", "default");
+            cssName = QString(":/css/default-dark");
+            setTheme(false);
         }
     }
 

@@ -22,7 +22,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string notr="true">NestEgg Core - Command-line options</string>
+   <string notr="true">Human_Charity_Coin_Protocol - Command-line options</string>
   </property>
   <property name="styleSheet">
    <string notr="true">#HelpMessageDialog {

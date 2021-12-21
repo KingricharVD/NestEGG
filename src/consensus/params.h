@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2016 The Bitcoin Core developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -33,13 +33,14 @@ enum UpgradeIndex : uint32_t {
     UPGRADE_BIP65,
     UPGRADE_ZC_PUBLIC,
     UPGRADE_STAKE_MODIFIER_V2,
-   UPGRADE_TIME_PROTOCOL_V2,
-   UPGRADE_P2PKH_BLOCK_SIGNATURES,
-   UPGRADE_STAKE_MIN_DEPTH_V2,
-   UPGRADE_MASTERNODE_RANK_V2,
-   // NOTE: Also add new upgrades to NetworkUpgradeInfo in upgrades.cpp
-   UPGRADE_TESTDUMMY,
-   MAX_NETWORK_UPGRADES,
+    UPGRADE_TIME_PROTOCOL_V2,
+    UPGRADE_P2PKH_BLOCK_SIGNATURES,
+    UPGRADE_STAKE_MIN_DEPTH_V2,
+    UPGRADE_CHECK_WORK_V2,
+    UPGRADE_MASTERNODE_RANK_V2,
+    // NOTE: Also add new upgrades to NetworkUpgradeInfo in upgrades.cpp
+    UPGRADE_TESTDUMMY,
+    MAX_NETWORK_UPGRADES,
 };
 
 struct NetworkUpgrade {
@@ -124,10 +125,6 @@ struct Params {
     int height_start_ZC_SerialRangeCheck;
     int height_ZC_RecalcAccumulators;
 
-    // validation by-pass
-    // int64_t nPivxBadBlockTime;
-    // unsigned int nPivxBadBlockBits;
-
     // Map with network updates
     NetworkUpgrade vUpgrades[MAX_NETWORK_UPGRADES];
 
@@ -160,13 +157,12 @@ struct Params {
             return (utxoFromBlockTime + nStakeMinAge <= contextTime);
         // with stake modifier V2+, we require the utxo to be nStakeMinDepth deep in the chain
         return (
-            contextHeight - utxoFromBlockHeight
-                >=
-            NetworkUpgradeActive(contextHeight, Consensus::UPGRADE_STAKE_MIN_DEPTH_V2) ?
+            contextHeight - utxoFromBlockHeight 
+                >= 
+            NetworkUpgradeActive(contextHeight, Consensus::UPGRADE_STAKE_MIN_DEPTH_V2) ? 
                 nStakeMinDepthV2 : nStakeMinDepth
         );
     }
-
 
     /*
      * (Legacy) Zerocoin consensus params

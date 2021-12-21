@@ -1,5 +1,5 @@
 Release Process
-======
+====================
 
 ## Branch updates
 

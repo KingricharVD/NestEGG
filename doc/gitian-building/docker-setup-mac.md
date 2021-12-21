@@ -1,5 +1,5 @@
 Setting up Docker for macOS
-
+============================
 
 Docker is available to users of macOS as a standalone app from [docker.com](https://www.docker.com).
 

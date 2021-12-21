@@ -13,17 +13,17 @@ if [ -n "${1:-}" ]; then
     PARAMS_DIR="$1"
 else
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        PARAMS_DIR="$HOME/Library/Application Support/NestEggParams"
+        PARAMS_DIR="$HOME/Library/Application Support/Human_Charity_Coin_ProtocolParams"
     else
-        PARAMS_DIR="$HOME/.nestegg-params"
+        PARAMS_DIR="$HOME/.Human_Charity_Coin_Protocol-params"
     fi
 fi
 
 SPROUT_PKEY_NAME='sprout-proving.key'
 SPROUT_VKEY_NAME='sprout-verifying.key'
-EGGLING_SPEND_NAME='sapling-spend.params'
-EGGLING_OUTPUT_NAME='sapling-output.params'
-EGGLING_SPROUT_GROTH16_NAME='sprout-groth16.params'
+HCCPLING_SPEND_NAME='sapling-spend.params'
+HCCPLING_OUTPUT_NAME='sapling-output.params'
+HCCPLING_SPROUT_GROTH16_NAME='sprout-groth16.params'
 DOWNLOAD_URL="https://download.z.cash/downloads"
 IPFS_HASH="/ipfs/QmXRHVGLQBiKwvNq7c2vPxAKz1zRVmMYbmt7G5TQss7tY7"
 
@@ -99,7 +99,7 @@ EOF
 function fetch_failure {
     cat >&2 <<EOF
 
-Failed to fetch the NestEgg zkSNARK parameters!
+Failed to fetch the Human_Charity_Coin_Protocol zkSNARK parameters!
 Try installing one of the following programs and make sure you're online:
 
  * ipfs
@@ -184,9 +184,9 @@ function main() {
     || exit_locked_error
 
     cat <<EOF
-NestEgg - fetch-params.sh
+Human_Charity_Coin_Protocol - fetch-params.sh
 
-This script will fetch the NestEgg zkSNARK parameters and verify their
+This script will fetch the Human_Charity_Coin_Protocol zkSNARK parameters and verify their
 integrity with sha256sum.
 
 If they already exist locally, it will exit now and do nothing else.
@@ -198,7 +198,7 @@ EOF
         mkdir -p "$PARAMS_DIR"
         README_PATH="$PARAMS_DIR/README"
         cat >> "$README_PATH" <<EOF
-This directory stores common NestEgg zkSNARK parameters. Note that it is
+This directory stores common Human_Charity_Coin_Protocol zkSNARK parameters. Note that it is
 distinct from the daemon's -datadir argument because the parameters are
 large and may be shared across multiple distinct -datadir's such as when
 setting up test networks.
@@ -222,9 +222,9 @@ EOF
     cd "$PARAMS_DIR"
 
     # Sapling parameters:
-    fetch_params "$EGGLING_SPEND_NAME" "$PARAMS_DIR/$EGGLING_SPEND_NAME" "8e48ffd23abb3a5fd9c5589204f32d9c31285a04b78096ba40a79b75677efc13"
-    fetch_params "$EGGLING_OUTPUT_NAME" "$PARAMS_DIR/$EGGLING_OUTPUT_NAME" "2f0ebbcbb9bb0bcffe95a397e7eba89c29eb4dde6191c339db88570e3f3fb0e4"
-    fetch_params "$EGGLING_SPROUT_GROTH16_NAME" "$PARAMS_DIR/$EGGLING_SPROUT_GROTH16_NAME" "b685d700c60328498fbde589c8c7c484c722b788b265b72af448a5bf0ee55b50"
+    fetch_params "$HCCPLING_SPEND_NAME" "$PARAMS_DIR/$HCCPLING_SPEND_NAME" "8e48ffd23abb3a5fd9c5589204f32d9c31285a04b78096ba40a79b75677efc13"
+    fetch_params "$HCCPLING_OUTPUT_NAME" "$PARAMS_DIR/$HCCPLING_OUTPUT_NAME" "2f0ebbcbb9bb0bcffe95a397e7eba89c29eb4dde6191c339db88570e3f3fb0e4"
+    fetch_params "$HCCPLING_SPROUT_GROTH16_NAME" "$PARAMS_DIR/$HCCPLING_SPROUT_GROTH16_NAME" "b685d700c60328498fbde589c8c7c484c722b788b265b72af448a5bf0ee55b50"
 }
 
 if [ "x${1:-}" = 'x--testnet' ]

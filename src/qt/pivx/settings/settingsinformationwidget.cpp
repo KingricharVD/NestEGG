@@ -1,5 +1,5 @@
 // Copyright (c) 2019-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -101,7 +101,7 @@ SettingsInformationWidget::SettingsInformationWidget(PIVXGUI* _window,QWidget *p
     });
     connect(ui->pushButtonFile, &QPushButton::clicked, [this](){
         if (!GUIUtil::openConfigfile())
-            inform(tr("Unable to open nestegg.conf with default application"));
+            inform(tr("Unable to open Human_Charity_Coin_Protocol.conf with default application"));
     });
     connect(ui->pushButtonNetworkMonitor, &QPushButton::clicked, this, &SettingsInformationWidget::openNetworkMonitor);
 }
@@ -159,6 +159,15 @@ void SettingsInformationWidget::openNetworkMonitor()
         rpcConsole->setClientModel(clientModel);
     }
     rpcConsole->showNetwork();
+}
+
+void SettingsInformationWidget::showPeers()
+{
+    if (!rpcConsole) {
+        rpcConsole = new RPCConsole(0);
+        rpcConsole->setClientModel(clientModel);
+    }
+    rpcConsole->showPeers();
 }
 
 void SettingsInformationWidget::showEvent(QShowEvent *event)

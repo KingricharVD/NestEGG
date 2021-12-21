@@ -16,14 +16,14 @@ BEGIN
     BEGIN
         BLOCK "040904E4" // U.S. English - multilingual (hex)
         BEGIN
-            VALUE "CompanyName",        "NestEgg"
-            VALUE "FileDescription",    "nesteggd (OSS daemon/client for NestEgg)"
+            VALUE "CompanyName",        "Human_Charity_Coin_Protocol"
+            VALUE "FileDescription",    "Human_Charity_Coin_Protocold (OSS daemon/client for Human_Charity_Coin_Protocol)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
-            VALUE "InternalName",       "nesteggd"
+            VALUE "InternalName",       "Human_Charity_Coin_Protocold"
             VALUE "LegalCopyright",     COPYRIGHT_STR
             VALUE "LegalTrademarks1",   "Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php."
-            VALUE "OriginalFilename",   "nesteggd.exe"
-            VALUE "ProductName",        "nesteggd"
+            VALUE "OriginalFilename",   "Human_Charity_Coin_Protocold.exe"
+            VALUE "ProductName",        "Human_Charity_Coin_Protocold"
             VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
         END
     END

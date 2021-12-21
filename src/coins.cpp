@@ -1,6 +1,6 @@
 // Copyright (c) 2012-2014 The Bitcoin developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -9,6 +9,7 @@
 #include "consensus/consensus.h"
 #include "memusage.h"
 #include "random.h"
+#include "util.h"
 
 #include <assert.h>
 
@@ -169,10 +170,10 @@ bool CCoinsViewCache::BatchWrite(CCoinsMap& mapCoins, const uint256& hashBlockIn
             } else {
                 // Assert that the child cache entry was not marked FRESH if the
                 // parent cache entry has unspent outputs. If this ever happens,
-                // it means the FRESH flag was miegglied and there is a logic
+                // it means the FRESH flag was misapplied and there is a logic
                 // error in the calling code.
                 if ((it->second.flags & CCoinsCacheEntry::FRESH) && !itUs->second.coin.IsSpent())
-                    throw std::logic_error("FRESH flag miegglied to cache entry for base transaction with spendable outputs");
+                    throw std::logic_error("FRESH flag misapplied to cache entry for base transaction with spendable outputs");
 
                 // Found the entry in the parent cache
                 if ((itUs->second.flags & CCoinsCacheEntry::FRESH) && it->second.coin.IsSpent()) {
@@ -245,7 +246,7 @@ bool CCoinsViewCache::HaveInputs(const CTransaction& tx) const
     if (!tx.IsCoinBase() && !tx.HasZerocoinSpendInputs()) {
         for (unsigned int i = 0; i < tx.vin.size(); i++) {
             if (!HaveCoin(tx.vin[i].prevout)) {
-                return false;
+                return error("%s : invalid input %s", __func__, tx.vin[i].prevout.ToString());
             }
         }
     }

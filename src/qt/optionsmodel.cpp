@@ -1,7 +1,7 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -70,8 +70,8 @@ void OptionsModel::Init()
     fCoinControlFeatures = settings.value("fCoinControlFeatures", false).toBool();
 
     if (!settings.contains("fShowColdStakingScreen"))
-        settings.setValue("fShowColdStakingScreen", false);
-    showColdStakingScreen = settings.value("fShowColdStakingScreen", false).toBool();
+      settings.setValue("fShowColdStakingScreen", false);
+  showColdStakingScreen = settings.value("fShowColdStakingScreen", false).toBool();
 
     if (!settings.contains("fShowMasternodesTab"))
         settings.setValue("fShowMasternodesTab", masternodeConfig.getCount());
@@ -286,7 +286,7 @@ QVariant OptionsModel::data(const QModelIndex& index, int role) const
             return settings.value("language");
         case CoinControlFeatures:
             return fCoinControlFeatures;
-        case ShowColdStakingScreen:
+            case ShowColdStakingScreen:
             return showColdStakingScreen;
         case DatabaseCache:
             return settings.value("nDatabaseCache");
@@ -431,11 +431,11 @@ bool OptionsModel::setData(const QModelIndex& index, const QVariant& value, int 
             settings.setValue("fCoinControlFeatures", fCoinControlFeatures);
             Q_EMIT coinControlFeaturesChanged(fCoinControlFeatures);
             break;
-        case ShowColdStakingScreen:
-            this->showColdStakingScreen = value.toBool();
-            settings.setValue("fShowColdStakingScreen", this->showColdStakingScreen);
-            Q_EMIT showHideColdStakingScreen(this->showColdStakingScreen);
-            break;
+            case ShowColdStakingScreen:
+          this->showColdStakingScreen = value.toBool();
+          settings.setValue("fShowColdStakingScreen", this->showColdStakingScreen);
+          Q_EMIT showHideColdStakingScreen(this->showColdStakingScreen);
+          break;
         case DatabaseCache:
             if (settings.value("nDatabaseCache") != value) {
                 settings.setValue("nDatabaseCache", value);

@@ -5,10 +5,10 @@
 """Test bitcoind with different proxy configuration.
 
 Test plan:
-- Start nesteggd's with different proxy configurations
+- Start Human_Charity_Coin_Protocold's with different proxy configurations
 - Use addnode to initiate connections
 - Verify that proxies are connected to, and the right connection command is given
-- Proxy configurations to test on nesteggd side:
+- Proxy configurations to test on Human_Charity_Coin_Protocold side:
     - `-proxy` (proxy everything)
     - `-onion` (proxy just onions)
     - `-proxyrandomize` Circuit randomization
@@ -18,8 +18,8 @@ Test plan:
     - proxy on IPv6
 
 - Create various proxies (as threads)
-- Create nesteggds that connect to them
-- Manipulate the nesteggds using addnode (onetry) an observe effects
+- Create Human_Charity_Coin_Protocolds that connect to them
+- Manipulate the Human_Charity_Coin_Protocolds using addnode (onetry) an observe effects
 
 addnode connect to IPv4
 addnode connect to IPv6

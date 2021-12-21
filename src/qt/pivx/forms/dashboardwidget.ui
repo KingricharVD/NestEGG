@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>1527</width>
     <height>595</height>
    </rect>
   </property>
@@ -389,14 +389,14 @@
              <widget class="QPushButton" name="pushImgEmpty">
               <property name="minimumSize">
                <size>
-                <width>100</width>
-                <height>100</height>
+                <width>150</width>
+                <height>150</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>100</width>
-                <height>100</height>
+                <width>150</width>
+                <height>150</height>
                </size>
               </property>
               <property name="focusPolicy">
@@ -405,10 +405,14 @@
               <property name="text">
                <string/>
               </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>../res/img/img-empty-transactions.svg</normaloff>../res/img/img-empty-transactions.svg</iconset>
+              </property>
               <property name="iconSize">
                <size>
-                <width>100</width>
-                <height>100</height>
+                <width>150</width>
+                <height>150</height>
                </size>
               </property>
              </widget>
@@ -454,7 +458,7 @@
             <enum>Qt::NoFocus</enum>
            </property>
            <property name="text">
-            <string>How to get EGG</string>
+            <string>How to get HCCP</string>
            </property>
           </widget>
          </item>
@@ -519,7 +523,7 @@
             <item>
              <widget class="QLabel" name="labelMessage">
               <property name="text">
-               <string>Amount of EGG and zEGG staked.</string>
+               <string>Amount of HCCP staked.</string>
               </property>
              </widget>
             </item>
@@ -567,7 +571,7 @@
           <item>
            <widget class="QLabel" name="labelAmountPiv">
             <property name="text">
-             <string notr="true">0 EGG</string>
+             <string notr="true">0 HCCP</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -575,9 +579,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="labelAmountZpiv">
+           <widget class="QLabel" name="labelAmountMNRewards">
             <property name="text">
-             <string notr="true">0 zEGG</string>
+             <string>TextLabel</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -694,7 +698,7 @@
                 <item>
                  <widget class="QLabel" name="labelPiv">
                   <property name="text">
-                   <string notr="true">EGG</string>
+                   <string notr="true">HCCP</string>
                   </property>
                  </widget>
                 </item>
@@ -715,7 +719,7 @@
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLabel" name="labelSquarezPiv">
+                 <widget class="QLabel" name="labelSquareMNRewards">
                   <property name="minimumSize">
                    <size>
                     <width>14</width>
@@ -734,9 +738,9 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="labelZpiv">
+                 <widget class="QLabel" name="labelMNRewards">
                   <property name="text">
-                   <string notr="true">zEGG</string>
+                   <string>HCCP MN</string>
                   </property>
                  </widget>
                 </item>
@@ -1261,14 +1265,14 @@ margin:0px;</string>
                <widget class="QPushButton" name="pushImgEmptyChart">
                 <property name="minimumSize">
                  <size>
-                  <width>100</width>
-                  <height>100</height>
+                  <width>150</width>
+                  <height>150</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>100</width>
-                  <height>100</height>
+                  <width>150</width>
+                  <height>150</height>
                  </size>
                 </property>
                 <property name="focusPolicy">
@@ -1276,6 +1280,10 @@ margin:0px;</string>
                 </property>
                 <property name="text">
                  <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>../res/img/img-empty-staking-on.svg</normaloff>../res/img/img-empty-staking-on.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>

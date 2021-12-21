@@ -7,7 +7,7 @@
 # This file is distributed under the University of Illinois Open Source
 # License.
 #
-#           ====
+#           ============================================================
 #
 # University of Illinois/NCSA
 # Open Source License
@@ -50,13 +50,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS WITH THE
 # SOFTWARE.
 #
-#           ====
+#           ============================================================
 #
 #===------------------------------------------------------------------------===#
 
 r"""
 ClangFormat Diff Reformatter
-
+============================
 
 This script reads input from a unified diff and reformats all the changed
 lines. This is useful to reformat all the lines touched by a specific patch.

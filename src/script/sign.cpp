@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2016-2019 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -111,31 +111,32 @@ static bool SignStep(const BaseSignatureCreator& creator, const CScript& scriptP
         ret.push_back(valtype()); // workaround CHECKMULTISIG bug
         return (SignN(vSolutions, creator, scriptPubKey, ret, sigversion));
 
-    case TX_COLDSTAKE:
-        if (fColdStake) {
-            // sign with the cold staker key
-            keyID = CKeyID(uint160(vSolutions[0]));
-        } else {
-            // sign with the owner key
-            keyID = CKeyID(uint160(vSolutions[1]));
-        }
-        if (!Sign1(keyID, creator, scriptPubKey, ret, sigversion))
-            return error("*** %s: failed to sign with the %s key.",
-                    __func__, fColdStake ? "cold staker" : "owner");
-        CPubKey vch;
-        if (!creator.KeyStore().GetPubKey(keyID, vch))
-            return error("%s : Unable to get public key from keyID", __func__);
+        case TX_COLDSTAKE:
+              if (fColdStake) {
+                  // sign with the cold staker key
+                  keyID = CKeyID(uint160(vSolutions[0]));
+              } else {
+                  // sign with the owner key
+                  keyID = CKeyID(uint160(vSolutions[1]));
+              }
+              if (!Sign1(keyID, creator, scriptPubKey, ret, sigversion))
+                  return error("*** %s: failed to sign with the %s key.",
+                          __func__, fColdStake ? "cold staker" : "owner");
+              CPubKey vch;
+              if (!creator.KeyStore().GetPubKey(keyID, vch))
+                  return error("%s : Unable to get public key from keyID", __func__);
 
-        valtype oper;
-        oper.reserve(4);
-        oper.emplace_back((fColdStake ? (int) OP_TRUE : OP_FALSE));
-        ret.emplace_back(oper);
-        ret.emplace_back(ToByteVector(vch));
-        return true;
-    }
-    LogPrintf("*** solver no case met \n");
-    return false;
-}
+              valtype oper;
+              oper.reserve(4);
+              oper.emplace_back((fColdStake ? (int) OP_TRUE : OP_FALSE));
+              ret.emplace_back(oper);
+              ret.emplace_back(ToByteVector(vch));
+              return true;
+          }
+          LogPrintf("*** solver no case met \n");
+          return false;
+      }
+
 
 static CScript PushAll(const std::vector<valtype>& values)
 {
@@ -389,7 +390,7 @@ bool IsSolvable(const CKeyStore& store, const CScript& script)
     // if found in a transaction, we would still accept and relay that transaction. In particular,
     DummySignatureCreator creator(&store);
     SignatureData sigs;
-    if (ProduceSignature(creator, script, sigs, false)) {
+    if (ProduceSignature(creator, script, sigs)) {
         // VerifyScript check is just defensive, and should never fail.
         assert(VerifyScript(sigs.scriptSig, script, STANDARD_SCRIPT_VERIFY_FLAGS, creator.Checker()));
         return true;

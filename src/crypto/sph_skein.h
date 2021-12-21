@@ -9,9 +9,9 @@
  * specification defines as Skein-512-224, Skein-512-256, Skein-512-384
  * and Skein-512-512, respectively.
  *
- * =====(LICENSE BEGIN)
+ * ==========================(LICENSE BEGIN)============================
  *
- * Copyright (c) 2007-2010  Projet RNRT EGGHIR
+ * Copyright (c) 2007-2010  Projet RNRT SAPHIR
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -32,7 +32,7 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * ======(LICENSE END)=
+ * ===========================(LICENSE END)=============================
  *
  * @file     sph_skein.h
  * @author   Thomas Pornin <thomas.pornin@cryptolog.com>
