@@ -39,35 +39,33 @@ public:
     bool EncryptSaplingKeys(CKeyingMaterial& vMasterKeyIn);
 
     //! Generates new Sapling key
-    bool libzcash::SaplingPaymentAddress GenerateNewSaplingZKey();
-    //! Adds Sapling spending key to the store, and saves it to disk
-    bool AddSaplingZKey(const libzcash::SaplingExtendedSpendingKey &key,
-                        const libzcash::SaplingPaymentAddress &defaultAddr);
-    bool AddSaplingIncomingViewingKey(
-            const libzcash::SaplingIncomingViewingKey &ivk,
-            const libzcash::SaplingPaymentAddress &addr);
-    bool AddCryptedSaplingSpendingKeyDB(
-            const libzcash::SaplingExtendedFullViewingKey &extfvk,
-            const std::vector<unsigned char> &vchCryptedSecret,
-            const libzcash::SaplingPaymentAddress &defaultAddr);
-    //! Returns true if the wallet contains the spending key
-    bool HaveSpendingKeyForPaymentAddress(const libzcash::SaplingPaymentAddress &zaddr) const;
+   libzcash::SaplingPaymentAddress GenerateNewSaplingZKey();
+   //! Adds Sapling spending key to the store, and saves it to disk
+   bool AddSaplingZKey(const libzcash::SaplingExtendedSpendingKey &key);
+   bool AddSaplingIncomingViewingKey(
+           const libzcash::SaplingIncomingViewingKey &ivk,
+           const libzcash::SaplingPaymentAddress &addr);
+   bool AddCryptedSaplingSpendingKeyDB(
+           const libzcash::SaplingExtendedFullViewingKey &extfvk,
+           const std::vector<unsigned char> &vchCryptedSecret);
+   //! Returns true if the wallet contains the spending key
+   bool HaveSpendingKeyForPaymentAddress(const libzcash::SaplingPaymentAddress &zaddr) const;
+   //! Returns true if the wallet contains the spending and viewing key for the shielded address
+   bool PaymentAddressBelongsToWallet(const libzcash::SaplingPaymentAddress &zaddr) const;
 
-    //! Adds spending key to the store, without saving it to disk (used by LoadWallet)
-    bool LoadSaplingZKey(const libzcash::SaplingExtendedSpendingKey &key);
-    //! Load spending key metadata (used by LoadWallet)
-    bool LoadSaplingZKeyMetadata(const libzcash::SaplingIncomingViewingKey &ivk, const CKeyMetadata &meta);
-    //! Adds an encrypted spending key to the store, without saving it to disk (used by LoadWallet)
-    bool LoadCryptedSaplingZKey(const libzcash::SaplingExtendedFullViewingKey &extfvk,
-                                const std::vector<unsigned char> &vchCryptedSecret);
-    //! Adds a Sapling payment address -> incoming viewing key map entry,
-    //! without saving it to disk (used by LoadWallet)
-    bool LoadSaplingPaymentAddress(
-            const libzcash::SaplingPaymentAddress &addr,
-            const libzcash::SaplingIncomingViewingKey &ivk);
-    bool AddSaplingSpendingKey(
-            const libzcash::SaplingExtendedSpendingKey &sk,
-            const libzcash::SaplingPaymentAddress &defaultAddr);
+   //! Adds spending key to the store, without saving it to disk (used by LoadWallet)
+   bool LoadSaplingZKey(const libzcash::SaplingExtendedSpendingKey &key);
+   //! Load spending key metadata (used by LoadWallet)
+   bool LoadSaplingZKeyMetadata(const libzcash::SaplingIncomingViewingKey &ivk, const CKeyMetadata &meta);
+   //! Adds an encrypted spending key to the store, without saving it to disk (used by LoadWallet)
+   bool LoadCryptedSaplingZKey(const libzcash::SaplingExtendedFullViewingKey &extfvk,
+                               const std::vector<unsigned char> &vchCryptedSecret);
+   //! Adds a Sapling payment address -> incoming viewing key map entry,
+   //! without saving it to disk (used by LoadWallet)
+   bool LoadSaplingPaymentAddress(
+           const libzcash::SaplingPaymentAddress &addr,
+           const libzcash::SaplingIncomingViewingKey &ivk);
+   bool AddSaplingSpendingKey(const libzcash::SaplingExtendedSpendingKey &sk);
 
     // Sapling metadata
     std::map<libzcash::SaplingIncomingViewingKey, CKeyMetadata> mapSaplingZKeyMetadata;
