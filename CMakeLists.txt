@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+make_minimum_required(VERSION 3.10)
 
 # Search for and use ccache if available to speed up build times
 find_program(CCACHE_PROGRAM ccache)
@@ -167,7 +167,7 @@ file(GLOB COMPAT_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/src/compat/*.h)
 file(GLOB CONSENSUS_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/src/consensus/*.h)
 file(GLOB CTAES_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/src/crypto/ctaes/*.h)
 file(GLOB ZRUST_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/src/rust/include/*.h)
-file(GLOB SAPLING_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/src/sapling/*.h)
+file(GLOB EGGLING_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/src/sapling/*.h)
 
 source_group("BitcoinHeaders" FILES
         ${HEADERS}
@@ -180,7 +180,7 @@ source_group("BitcoinHeaders" FILES
         ${CONSENSUS_HEADERS}
         ${CTAES_HEADERS}
         ${ZRUST_HEADERS}
-        ${SAPLING_HEADERS}
+        ${EGGLING_HEADERS}
         ./src/support/cleanse.h
         )
 
@@ -441,7 +441,7 @@ target_include_directories(CLI_A PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/src/univalue/include
         )
 
-set(SAPLING_SOURCES
+set(EGGLING_SOURCES
         ./src/bech32.cpp
         ./src/sapling/util.cpp
         ./src/sapling/key_io_sapling.cpp
@@ -454,8 +454,8 @@ set(SAPLING_SOURCES
         ./src/sapling/saplingscriptpubkeyman.cpp
         )
 
-add_library(SAPLING_A STATIC ${BitcoinHeaders} ${SAPLING_SOURCES})
-target_include_directories(SAPLING_A PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
+add_library(EGGLING_A STATIC ${BitcoinHeaders} ${EGGLING_SOURCES})
+target_include_directories(EGGLING_A PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/src/sapling
         ${CMAKE_CURRENT_SOURCE_DIR}/src/rust/include
         ${OPENSSL_INCLUDE_DIR}
@@ -481,7 +481,7 @@ target_link_libraries(pivx-cli
         univalue
         UTIL_A
         BITCOIN_CRYPTO_A
-        SAPLING_A
+        EGGLING_A
         rustzcash
         ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES} ${LIBEVENT_LIB} ${sodium_LIBRARY_RELEASE} -ldl pthread
         )
@@ -502,7 +502,7 @@ target_link_libraries(pivx-tx
         UTIL_A
         BITCOIN_CRYPTO_A
         secp256k1
-        SAPLING_A
+        EGGLING_A
         rustzcash
         ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES} ${LIBEVENT_LIB} ${sodium_LIBRARY_RELEASE} -ldl pthread
         )
@@ -532,7 +532,7 @@ target_link_libraries(pivxd
         univalue
         ZEROCOIN_A
         UTIL_A
-        SAPLING_A
+        EGGLING_A
         BITCOIN_CRYPTO_A
         leveldb
         crc32c
