@@ -39,7 +39,7 @@ public:
     bool EncryptSaplingKeys(CKeyingMaterial& vMasterKeyIn);
 
     //! Generates new Sapling key
-    libzcash::SaplingPaymentAddress GenerateNewSaplingZKey();
+    bool libzcash::SaplingPaymentAddress GenerateNewSaplingZKey();
     //! Adds Sapling spending key to the store, and saves it to disk
     bool AddSaplingZKey(const libzcash::SaplingExtendedSpendingKey &key,
                         const libzcash::SaplingPaymentAddress &defaultAddr);
