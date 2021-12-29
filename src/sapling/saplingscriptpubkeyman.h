@@ -39,17 +39,20 @@ public:
     bool EncryptSaplingKeys(CKeyingMaterial& vMasterKeyIn);
 
     //! Generates new Sapling key
-   libzcash::SaplingPaymentAddress GenerateNewSaplingZKey();
-   //! Adds Sapling spending key to the store, and saves it to disk
-   bool AddSaplingZKey(const libzcash::SaplingExtendedSpendingKey &key);
-   bool AddSaplingIncomingViewingKey(
-           const libzcash::SaplingIncomingViewingKey &ivk,
-           const libzcash::SaplingPaymentAddress &addr);
-   bool AddCryptedSaplingSpendingKeyDB(
-           const libzcash::SaplingExtendedFullViewingKey &extfvk,
-           const std::vector<unsigned char> &vchCryptedSecret);
+    libzcash::SaplingPaymentAddress GenerateNewSaplingZKey();
+    //! Adds Sapling spending key to the store, and saves it to disk
+    bool AddSaplingZKey(const libzcash::SaplingExtendedSpendingKey &key,
+            const libzcash::SaplingPaymentAddress &defaultAddr);
+    bool AddSaplingIncomingViewingKeyW(
+            const libzcash::SaplingIncomingViewingKey &ivk,
+            const libzcash::SaplingPaymentAddress &addr);
+    bool AddCryptedSaplingSpendingKeyW(
+            const libzcash::SaplingExtendedFullViewingKey &extfvk,
+            const std::vector<unsigned char> &vchCryptedSecret,
+            const libzcash::SaplingPaymentAddress &defaultAddr);
    //! Returns true if the wallet contains the spending key
    bool HaveSpendingKeyForPaymentAddress(const libzcash::SaplingPaymentAddress &zaddr) const;
+
    //! Returns true if the wallet contains the spending and viewing key for the shielded address
    bool PaymentAddressBelongsToWallet(const libzcash::SaplingPaymentAddress &zaddr) const;
 
