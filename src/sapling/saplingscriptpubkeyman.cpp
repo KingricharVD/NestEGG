@@ -9,7 +9,7 @@
 
 //! TODO: Should be Sapling address format, SaplingPaymentAddress
 // Generate a new Sapling spending key and return its public payment address
-libzcash::SaplingPaymentAddress SaplingScriptPubKeyMan::GenerateNewSaplingZKey()
+namespace libzcash::SaplingPaymentAddress SaplingScriptPubKeyMan::GenerateNewSaplingZKey()
 {
     LOCK(wallet->cs_wallet); // mapSaplingZKeyMetadata
 
