@@ -63,13 +63,15 @@ static const unsigned int MAX_FREE_TRANSACTION_CREATE_SIZE = 1000;
 //! -custombackupthreshold default
 static const int DEFAULT_CUSTOMBACKUPTHRESHOLD = 1;
 //! -minstakesplit default
-static const CAmount DEFAULT_MIN_STAKE_SPLIT_THRESHOLD = 1 * COIN;
+static const CAmount DEFAULT_MIN_STAKE_SPLIT_THRESHOLD = 100 * COIN;
 //! Default for -spendzeroconfchange
 static const bool DEFAULT_SPEND_ZEROCONF_CHANGE = true;
 //! Default for -sendfreetransactions
 static const bool DEFAULT_SEND_FREE_TRANSACTIONS = false;
 //! Default for -staking
 static const bool DEFAULT_STAKING = true;
+//! Default for -coldstaking
+static const bool DEFAULT_COLDSTAKING = true;
 //! Defaults for -gen and -genproclimit
 static const bool DEFAULT_GENERATE = false;
 static const unsigned int DEFAULT_GENERATE_PROCLIMIT = 1;
@@ -139,8 +141,7 @@ public:
 
     bool IsInternal() const { return type == HDChain::ChangeType::INTERNAL; }
     bool IsExternal() const { return type == HDChain::ChangeType::EXTERNAL; }
-    bool IsStaking() const { return type == HDChain::ChangeType::STAKING; } // obsolete
-    bool IsECommerce() const { return type == HDChain::ChangeType::ECOMMERCE; }
+    bool IsStaking() const { return type == HDChain::ChangeType::STAKING; }
 
     ADD_SERIALIZE_METHODS;
 
@@ -318,14 +319,19 @@ public:
     //! >> Available coins (generic)
     bool AvailableCoins(std::vector<COutput>* pCoins,   // --> populates when != nullptr
                         const CCoinControl* coinControl = nullptr,
+                        bool fIncludeDelegated          = true,
+                        bool fIncludeColdStaking        = false,
                         AvailableCoinsType nCoinType    = ALL_COINS,
-                        bool fOnlyConfirmed             = true
+                        bool fOnlyConfirmed             = true,
+                        bool fUseIX                     = false
                         ) const;
     //! >> Available coins (spending)
     bool SelectCoinsToSpend(const std::vector<COutput>& vAvailableCoins, const CAmount& nTargetValue, std::set<std::pair<const CWalletTx*, unsigned int> >& setCoinsRet, CAmount& nValueRet, const CCoinControl* coinControl = nullptr) const;
     bool SelectCoinsMinConf(const CAmount& nTargetValue, int nConfMine, int nConfTheirs, std::vector<COutput> vCoins, std::set<std::pair<const CWalletTx*, unsigned int> >& setCoinsRet, CAmount& nValueRet) const;
     //! >> Available coins (staking)
     bool StakeableCoins(std::vector<COutput>* pCoins = nullptr);
+    //! >> Available coins (P2CS)
+    void GetAvailableP2CSCoins(std::vector<COutput>& vCoins) const;
 
     std::map<CTxDestination, std::vector<COutput> > AvailableCoinsByAddress(bool fConfirmed = true, CAmount maxCoinValue = 0);
 
@@ -333,7 +339,7 @@ public:
     bool GetMasternodeVinAndKeys(CTxIn& txinRet, CPubKey& pubKeyRet,
             CKey& keyRet, std::string strTxHash, std::string strOutputIndex, std::string& strError);
     /// Extract txin information and keys from output
-    bool GetVinAndKeysFromOutput(COutput out, CTxIn& txinRet, CPubKey& pubKeyRet, CKey& keyRet);
+    bool GetVinAndKeysFromOutput(COutput out, CTxIn& txinRet, CPubKey& pubKeyRet, CKey& keyRet, bool fColdStake = false);
 
     bool IsSpent(const uint256& hash, unsigned int n) const;
 
@@ -402,9 +408,13 @@ public:
     void ResendWalletTransactions(CConnman* connman);
 
     CAmount loopTxsBalance(std::function<void(const uint256&, const CWalletTx&, CAmount&)>method) const;
-    CAmount GetAvailableBalance() const;
+    CAmount GetAvailableBalance(bool fIncludeDelegated = true) const;
     CAmount GetAvailableBalance(isminefilter& filter, bool useCache = false, int minDepth = 1) const;
-    CAmount GetStakingBalance() const;
+    CAmount GetColdStakingBalance() const;  // delegated coins for which we have the staking key
+    CAmount GetImmatureColdStakingBalance() const;
+    CAmount GetStakingBalance(const bool fIncludeColdStaking = true) const;
+    CAmount GetDelegatedBalance() const;    // delegated coins for which we have the spending key
+    CAmount GetImmatureDelegatedBalance() const;
     CAmount GetLockedCoins() const;
     CAmount GetUnconfirmedBalance() const;
     CAmount GetImmatureBalance() const;
@@ -427,8 +437,10 @@ public:
         const CCoinControl* coinControl = NULL,
         AvailableCoinsType coin_type = ALL_COINS,
         bool sign = true,
-        CAmount nFeePay = 0);
-    bool CreateTransaction(CScript scriptPubKey, const CAmount& nValue, CWalletTx& wtxNew, CReserveKey& reservekey, CAmount& nFeeRet, std::string& strFailReason, const CCoinControl* coinControl = NULL, AvailableCoinsType coin_type = ALL_COINS, CAmount nFeePay = 0);
+        bool useIX = false,
+        CAmount nFeePay = 0,
+        bool fIncludeDelegated = false);
+    bool CreateTransaction(CScript scriptPubKey, const CAmount& nValue, CWalletTx& wtxNew, CReserveKey& reservekey, CAmount& nFeeRet, std::string& strFailReason, const CCoinControl* coinControl = NULL, AvailableCoinsType coin_type = ALL_COINS, bool useIX = false, CAmount nFeePay = 0, bool fIncludeDelegated = false);
 
     // enumeration for CommitResult (return status of CommitTransaction)
     enum CommitStatus
@@ -446,7 +458,7 @@ public:
         // converts CommitResult in human-readable format
         std::string ToString() const;
     };
-    CWallet::CommitResult CommitTransaction(CWalletTx& wtxNew, CReserveKey& reservekey, CConnman* connman);
+    CWallet::CommitResult CommitTransaction(CWalletTx& wtxNew, CReserveKey& reservekey, CConnman* connman, std::string strCommand = NetMsgType::TX);
     bool AddAccountingEntry(const CAccountingEntry&, CWalletDB & pwalletdb);
     bool CreateCoinStake(const CKeyStore& keystore,
                          const CBlockIndex* pindexPrev,
@@ -470,7 +482,7 @@ public:
     size_t KeypoolCountExternalKeys();
     bool TopUpKeyPool(unsigned int kpSize = 0);
     void KeepKey(int64_t nIndex);
-    void ReturnKey(int64_t nIndex, const bool& internal = false);
+    void ReturnKey(int64_t nIndex, const bool& internal = false, const bool& staking = false);
     bool GetKeyFromPool(CPubKey& key, const uint8_t& type = HDChain::ChangeType::EXTERNAL);
     int64_t GetOldestKeyPoolTime();
 
@@ -499,6 +511,7 @@ public:
     bool SetAddressBook(const CTxDestination& address, const std::string& strName, const std::string& purpose);
     bool DelAddressBook(const CTxDestination& address, const CChainParams::Base58Type addrType = CChainParams::PUBKEY_ADDRESS);
     bool HasAddressBook(const CTxDestination& address) const;
+    bool HasDelegator(const CTxOut& out) const;
 
     std::string purposeForAddress(const CTxDestination& address) const;
     const std::string& GetAccountName(const CScript& scriptPubKey) const;
@@ -506,7 +519,7 @@ public:
     bool UpdatedTransaction(const uint256& hashTx);
 
     unsigned int GetKeyPoolSize();
-    unsigned int GetECommerceKeyPoolSize();
+    unsigned int GetStakingKeyPoolSize();
 
     //! signify that a particular wallet feature is now used. this may change nWalletVersion and nWalletMaxVersion if those are lower
     bool SetMinVersion(enum WalletFeature, CWalletDB* pwalletdbIn = NULL, bool fExplicit = false);
@@ -718,6 +731,7 @@ public:
     bool IsAmountCached(AmountType type, const isminefilter& filter) const; // Only used in unit tests
     mutable CachableAmount m_amounts[AMOUNTTYPE_ENUM_ELEMENTS];
     mutable bool fChangeCached;
+    mutable bool fStakeDelegationVoided;
     mutable CAmount nChangeCached;
 
     CWalletTx();
@@ -762,6 +776,8 @@ public:
     void MarkDirty();
 
     void BindWallet(CWallet* pwalletIn);
+    //! checks whether a tx has P2CS inputs or not
+    bool HasP2CSInputs() const;
 
     int GetDepthAndMempool(bool& fConflicted, bool enableIX = true) const;
 
@@ -775,6 +791,12 @@ public:
     CAmount GetImmatureWatchOnlyCredit(const bool& fUseCache = true) const;
     CAmount GetAvailableWatchOnlyCredit(const bool& fUseCache = true) const;
     CAmount GetChange() const;
+
+    // Cold staking contracts credit/debit
+    CAmount GetColdStakingCredit(bool fUseCache = true) const;
+    CAmount GetColdStakingDebit(bool fUseCache = true) const;
+    CAmount GetStakeDelegationCredit(bool fUseCache = true) const;
+    CAmount GetStakeDelegationDebit(bool fUseCache = true) const;
 
     void GetAmounts(std::list<COutputEntry>& listReceived,
         std::list<COutputEntry>& listSent,
@@ -790,7 +812,7 @@ public:
 
     int64_t GetTxTime() const;
     void UpdateTimeSmart();
-    void RelayWalletTransaction(CConnman* connman);
+    void RelayWalletTransaction(CConnman* connman, std::string strCommand = NetMsgType::TX);
     std::set<uint256> GetConflicts() const;
 };
 
