@@ -25,9 +25,9 @@ enum SporkId : int32_t {
 
       // SPORK_18_COLDSTAKING_ENFORCEMENT is being set to 10020 for compatibility with v1.3.3.x wallets.
           // SPORK_18_COLDSTAKING_ENFORCEMENT            = 10017,
-    SPORK_18_COLDSTAKING_ENFORCEMENT            = 10020,
+    SPORK_17_COLDSTAKING_ENFORCEMENT            = 10020,
 
-    SPORK_19_ZEROCOIN_PUBLICSPEND_V4            = 10018,
+    SPORK_18_ZEROCOIN_PUBLICSPEND_V4            = 10018,
     SPORK_20_UPGRADE_CYCLE_FACTOR               = 10019,
 
     SPORK_101_SERVICES_ENFORCEMENT              = 10100,
