@@ -4215,11 +4215,6 @@ bool LoadExternalBlockFile(FILE* fileIn, CDiskBlockPos* dbp)
 
                     case MSG_BLOCK:
                         return mapBlockIndex.count(inv.hash);
-                    case DB_LOCK_OLDEST:
-                        return mapTxLockReq.count(inv.hash) ||
-                               mapTxLockReqRejected.count(inv.hash);
-                    case MSG_BUDGET_VOTE:
-                        return mapTxLockVote.count(inv.hash);
                     case MSG_SPORK:
                         return mapSporks.count(inv.hash);
                     case MSG_MASTERNODE_WINNER:
