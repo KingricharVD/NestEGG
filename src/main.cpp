@@ -4215,10 +4215,10 @@ bool LoadExternalBlockFile(FILE* fileIn, CDiskBlockPos* dbp)
 
                     case MSG_BLOCK:
                         return mapBlockIndex.count(inv.hash);
-                    case MSG_TXLOCK_REQUEST:
+                    case DB_LOCK_OLDEST:
                         return mapTxLockReq.count(inv.hash) ||
                                mapTxLockReqRejected.count(inv.hash);
-                    case MSG_TXLOCK_VOTE:
+                    case MSG_BUDGET_VOTE:
                         return mapTxLockVote.count(inv.hash);
                     case MSG_SPORK:
                         return mapSporks.count(inv.hash);
@@ -4394,7 +4394,7 @@ bool LoadExternalBlockFile(FILE* fileIn, CDiskBlockPos* dbp)
                                     }
                                 }
 
-                                if (!pushed && inv.type == MSG_TXLOCK_VOTE) {
+                                if (!pushed && inv.type == MSG_BUDGET_VOTE) {
                                     if (mapTxLockVote.count(inv.hash)) {
                                         CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
                                         ss.reserve(1000);
@@ -4403,7 +4403,7 @@ bool LoadExternalBlockFile(FILE* fileIn, CDiskBlockPos* dbp)
                                         pushed = true;
                                     }
                                 }
-                                if (!pushed && inv.type == MSG_TXLOCK_REQUEST) {
+                                if (!pushed && inv.type == DB_LOCK_OLDEST) {
                                     if (mapTxLockReq.count(inv.hash)) {
                                         CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
                                         ss.reserve(1000);

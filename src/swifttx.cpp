@@ -48,7 +48,7 @@ void ProcessMessageSwiftTX(CNode* pfrom, std::string& strCommand, CDataStream& v
         CTransaction tx;
         vRecv >> tx;
 
-        CInv inv(MSG_TXLOCK_REQUEST, tx.GetHash());
+        CInv inv(DB_LOCK_OLDEST, tx.GetHash());
         pfrom->AddInventoryKnown(inv);
 
         if (mapTxLockReq.count(tx.GetHash()) || mapTxLockReqRejected.count(tx.GetHash())) {
@@ -132,7 +132,7 @@ void ProcessMessageSwiftTX(CNode* pfrom, std::string& strCommand, CDataStream& v
         CConsensusVote ctx;
         vRecv >> ctx;
 
-        CInv inv(MSG_TXLOCK_VOTE, ctx.GetHash());
+        CInv inv(MSG_BUDGET_VOTE, ctx.GetHash());
         pfrom->AddInventoryKnown(inv);
 
         if (mapTxLockVote.count(ctx.GetHash())) {
@@ -302,7 +302,7 @@ void DoConsensusVote(CTransaction& tx, int64_t nBlockHeight)
 
     mapTxLockVote[ctx.GetHash()] = ctx;
 
-    CInv inv(MSG_TXLOCK_VOTE, ctx.GetHash());
+    CInv inv(MSG_BUDGET_VOTE, ctx.GetHash());
     g_connman->RelayInv(inv);
 }
 

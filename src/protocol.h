@@ -388,8 +388,8 @@ enum {
     // Nodes may always request a MSG_FILTERED_BLOCK in a getdata, however,
     // MSG_FILTERED_BLOCK should not appear in any invs except as a part of getdata.
     MSG_FILTERED_BLOCK              = 3,
-    // MSG_TXLOCK_REQUEST              = 4,
-    // MSG_TXLOCK_VOTE                 = 5,
+    // DB_LOCK_OLDEST              = 4,
+    // MSG_BUDGET_VOTE                 = 5,
     MSG_SPORK                       = 6,
     MSG_MASTERNODE_WINNER           = 7,
     MSG_MASTERNODE_SCANNING_ERROR   = 8,

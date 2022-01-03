@@ -1592,7 +1592,7 @@ void CWalletTx::RelayWalletTransaction(CConnman* connman, std::string strCommand
             if (strCommand == NetMsgType::IX) {
                 mapTxLockReq.insert(std::make_pair(hash, (CTransaction) * this));
                 CreateNewLock(((CTransaction) * this));
-                invType = MSG_TXLOCK_REQUEST;
+                invType = DB_LOCK_OLDEST;
             }
 
             if (connman) {
