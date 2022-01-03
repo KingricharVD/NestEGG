@@ -585,9 +585,9 @@ CMasternodeBroadcast::CMasternodeBroadcast() : CMasternode()
 {
 }
 
-CMasternodeBroadcast::CMasternodeBroadcast(CService newAddr, CTxIn newVin, CPubKey pubKeyCollateralAddressNew, CPubKey pubKeyMasternodeNew, int protocolVersionIn) : CMasternode()
+CMasternodeBroadcast::CMasternodeBroadcast(CService newAddr, CTxIn GetVin, CPubKey pubKeyCollateralAddressNew, CPubKey pubKeyMasternodeNew, int protocolVersionIn) : CMasternode()
 {
-    vin = newVin;
+    vin = GetVin;
     addr = newAddr;
     pubKeyCollateralAddress = pubKeyCollateralAddressNew;
     pubKeyMasternode = pubKeyMasternodeNew;
@@ -1014,8 +1014,8 @@ CMasternodePing::CMasternodePing() : CSignedMessage(),
 {
 }
 
-CMasternodePing::CMasternodePing(CTxIn& newVin) : CSignedMessage(),
-                                                  vin(newVin),
+CMasternodePing::CMasternodePing(CTxIn& GetVin) : CSignedMessage(),
+                                                  vin(GetVin),
                                                   sigTime(GetAdjustedTime())
 {
     int nHeight;

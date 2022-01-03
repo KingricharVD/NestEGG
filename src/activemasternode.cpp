@@ -174,14 +174,14 @@ bool CActiveMasternode::SendMasternodePing(std::string& errorMessage)
 }
 
 // when starting a Masternode, this can enable to run as a hot wallet with no funds
-bool CActiveMasternode::EnableHotColdMasterNode(CTxIn& newVin, CService& newService)
+bool CActiveMasternode::EnableHotColdMasterNode(CTxIn& GetVin, CService& newService)
 {
     if (!fMasterNode) return false;
 
     status = ACTIVE_MASTERNODE_STARTED;
 
     //The values below are needed for signing mnping messages going forward
-    vin = newVin;
+    vin = GetVin;
     service = newService;
 
     LogPrintf("CActiveMasternode::EnableHotColdMasterNode() - Enabled! You may shut down the cold daemon.\n");
