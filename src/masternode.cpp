@@ -227,7 +227,7 @@ void CMasternode::Check(bool forceCheck)
         CScript dummyScript;
         dummyScript << ToByteVector(pubKeyCollateralAddress) << OP_CHECKSIG;
 
-        CTxOut vout = CTxOut(GetMasterNodeCollateral(chainActive.Height()) - (COIN / 100), dummyScript);
+        CTxOut vout = CTxOut(GetMasternodeNodeollateral(chainActive.Height()) - (COIN / 100), dummyScript);
 
         CTxOut vout = CTxOut((CMasternode::GetMasternodeNodeCollateral(chainActive.Height()) - 0.01 * COIN), dummyScript);
 
@@ -327,7 +327,7 @@ bool CMasternode::IsInputAssociatedWithPubkey() const
     if (GetTransaction(vin.prevout.hash, txVin, hash, true)) {
         for (CTxOut out : txVin.vout) {
 
-            if (out.nValue == CMasternode::GetMasterNodeCollateral(chainActive.Height()) && out.scriptPubKey == payee) return true;
+            if (out.nValue == CMasternode::GetMasternodeNodeollateral(chainActive.Height()) && out.scriptPubKey == payee) return true;
 
             if (out.nValue == CMasternode::GetMasternodeNodeCollateral(chainActive.Height()) && out.scriptPubKey == payee) return true;
 
@@ -342,7 +342,7 @@ bool CMasternode::IsInputAssociatedWithPubkey() const
  * Masternode collateral change schedule
  */
 
-CAmount CMasternode::GetMasterNodeCollateral(int nHeight)
+CAmount CMasternode::GetMasternodeNodeollateral(int nHeight)
 {
     if (nHeight <= 2000 && nHeight > 500) {
         return 10 * COIN;
@@ -913,7 +913,7 @@ bool CMasternodeBroadcast::CheckInputsAndAdd(int& nDoS)
     CScript dummyScript;
     dummyScript << ToByteVector(pubKeyCollateralAddress) << OP_CHECKSIG;
 
-    CTxOut vout = CTxOut(GetMasterNodeCollateral(chainActive.Height()) - (COIN / 100), dummyScript);
+    CTxOut vout = CTxOut(GetMasternodeNodeollateral(chainActive.Height()) - (COIN / 100), dummyScript);
 
     CTxOut vout = CTxOut((CMasternode::GetMasternodeNodeCollateral(chainActive.Height()) - 0.01 * COIN), dummyScript);
 
