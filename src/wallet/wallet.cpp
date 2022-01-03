@@ -1368,7 +1368,7 @@ CAmount CWalletTx::GetLockedCredit() const
         }
 
         // Add masternode collaterals which are handled like locked coins
-        else if (fMasterNode && vout[i].nValue == CMasternode::GetMasternodeNodeollateral(chainActive.Height())) {
+        else if (fMasterNode && vout[i].nValue == CMasternode::GetMasternodeNodeCollateral(chainActive.Height())) {
             nCredit += pwallet->GetCredit(txout, ISMINE_SPENDABLE);
         }
 
@@ -1977,7 +1977,7 @@ bool CWallet::GetMasternodeVinAndKeys(CTxIn& txinRet, CPubKey& pubKeyRet, CKey& 
     CTxOut txOut = wtx.vout[nOutputIndex];
 
     // Masternode collateral value
-    if (txOut.nValue != CMasternode::GetMasternodeNodeollateral(chainActive.Height())) {
+    if (txOut.nValue != CMasternode::GetMasternodeNodeCollateral(chainActive.Height())) {
         strError = "Invalid collateral tx value, must be 25,000 EGG";
         return error("%s: tx %s, index %d not a masternode collateral", __func__, strTxHash, nOutputIndex);
     }
@@ -2057,7 +2057,7 @@ bool CWallet::AvailableCoins(std::vector<COutput>* pCoins,      // --> populates
             for (unsigned int i = 0; i < pcoin->vout.size(); i++) {
 
                 // Check for only 10k utxo
-                if (nCoinType == ONLY_10000 && pcoin->vout[i].nValue != CMasternode::GetMasternodeNodeollateral(chainActive.Height())) continue;
+                if (nCoinType == ONLY_10000 && pcoin->vout[i].nValue != CMasternode::GetMasternodeNodeCollateral(chainActive.Height())) continue;
 
                 // Check for stakeable utxo
                 if (nCoinType == STAKEABLE_COINS && pcoin->vout[i].IsZerocoinMint()) continue;
