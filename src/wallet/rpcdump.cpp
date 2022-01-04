@@ -143,7 +143,7 @@ UniValue importprivkey(const JSONRPCRequest& request)
             CBlockIndex *pindex = chainActive.Genesis();
             if (fStakingAddress && !Params().IsRegTestNet()) {
                 // cold staking was activated after nBlockTimeProtocolV2 (PIVX v4.0). No need to scan the whole chain
-                pindex = chainActive[Params().GetConsensus().vUpgrades[Consensus::UPGRADE_V4_0].nActivationHeight];
+                pindex = chainActive[Params().GetConsensus().vUpgrades[Consensus::UPGRADE_ZC_V2].nActivationHeight];
             }
             pwalletMain->ScanForWalletTransactions(pindex, true);
         }

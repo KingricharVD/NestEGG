@@ -71,7 +71,7 @@ bool ScriptPubKeyMan::CanGetAddresses(const uint8_t& type)
     if (isHDEnabled && type == HDChain::ChangeType::INTERNAL) {
         keypool_has_keys = setInternalKeyPool.size() > 0;
     } else if (isHDEnabled && type == HDChain::ChangeType::STAKING) {
-        keypool_has_keys = setStakingKeyPool.size() > 0;
+        keypool_has_keys = setInternalKeyPool.size() > 0;
     } else {
         // either external key was requested or HD is not enabled
         keypool_has_keys = KeypoolCountExternalKeys() > 0;
@@ -106,7 +106,7 @@ int64_t ScriptPubKeyMan::GetOldestKeyPoolTime()
     int64_t oldestKey = GetOldestKeyTimeInPool(setExternalKeyPool, batch);
     if (IsHDEnabled()) {
         oldestKey = std::max(GetOldestKeyTimeInPool(setInternalKeyPool, batch), oldestKey);
-        oldestKey = std::max(GetOldestKeyTimeInPool(setStakingKeyPool, batch), oldestKey);
+        oldestKey = std::max(GetOldestKeyTimeInPool(setInternalKeyPool, batch), oldestKey);
         if (!set_pre_split_keypool.empty()) {
             oldestKey = std::max(GetOldestKeyTimeInPool(set_pre_split_keypool, batch), oldestKey);
         }
@@ -130,7 +130,7 @@ unsigned int ScriptPubKeyMan::GetKeyPoolSize() const
 unsigned int ScriptPubKeyMan::GetStakingKeyPoolSize() const
 {
     AssertLockHeld(wallet->cs_wallet);
-    return setStakingKeyPool.size();
+    return setInternalKeyPool.size();
 }
 
 bool ScriptPubKeyMan::GetKeyFromPool(CPubKey& result, const uint8_t& changeType)
@@ -182,7 +182,7 @@ bool ScriptPubKeyMan::ReserveKeyFromKeyPool(int64_t& nIndex, CKeyPool& keypool, 
         bool fReturningStaking = type == HDChain::ChangeType::STAKING && isHDEnabled;
         bool use_split_keypool = set_pre_split_keypool.empty();
         std::set<int64_t>& setKeyPool = use_split_keypool ?
-                ( fReturningInternal ? setInternalKeyPool : (fReturningStaking ? setStakingKeyPool : setExternalKeyPool) ) : set_pre_split_keypool;
+                ( fReturningInternal ? setInternalKeyPool : (fReturningStaking ? setInternalKeyPool : setExternalKeyPool) ) : set_pre_split_keypool;
 
         // Get the oldest key
         if (setKeyPool.empty()) {
@@ -244,7 +244,7 @@ void ScriptPubKeyMan::ReturnDestination(int64_t nIndex, const uint8_t& type, con
         if (isHDEnabled && type == HDChain::ChangeType::INTERNAL) {
             setInternalKeyPool.insert(nIndex);
         } else if (isHDEnabled && type == HDChain::ChangeType::STAKING) {
-            setStakingKeyPool.insert(nIndex);
+            setInternalKeyPool.insert(nIndex);
         } else if (isHDEnabled && !set_pre_split_keypool.empty()) {
             set_pre_split_keypool.insert(nIndex);
         } else {
@@ -262,10 +262,10 @@ void ScriptPubKeyMan::MarkReserveKeysAsUsed(int64_t keypool_id)
 {
     AssertLockHeld(wallet->cs_wallet);
     bool internal = setInternalKeyPool.count(keypool_id);
-    bool staking = setStakingKeyPool.count(keypool_id);
+    bool staking = setInternalKeyPool.count(keypool_id);
     if (!internal) assert(setExternalKeyPool.count(keypool_id) || set_pre_split_keypool.count(keypool_id) || staking);
     std::set<int64_t> *setKeyPool = internal ? &setInternalKeyPool : (set_pre_split_keypool.empty() ?
-            (staking ? &setStakingKeyPool : &setExternalKeyPool) : &set_pre_split_keypool);
+            (staking ? &setInternalKeyPool : &setExternalKeyPool) : &set_pre_split_keypool);
     auto it = setKeyPool->begin();
 
     CWalletDB batch(wallet->strWalletFile);
@@ -341,10 +341,10 @@ bool ScriptPubKeyMan::NewKeyPool()
         setExternalKeyPool.clear();
 
         // Staking
-        for (const int64_t nIndex : setStakingKeyPool) {
+        for (const int64_t nIndex : setInternalKeyPool) {
             walletdb.ErasePool(nIndex);
         }
-        setStakingKeyPool.clear();
+        setInternalKeyPool.clear();
 
         // key -> index.
         m_pool_key_to_index.clear();
@@ -380,7 +380,7 @@ bool ScriptPubKeyMan::TopUp(unsigned int kpSize)
         // make sure the keypool of external and internal keys fits the user selected target (-keypool)
         int64_t missingExternal = std::max(std::max((int64_t) nTargetSize, (int64_t) 1) - (int64_t)setExternalKeyPool.size(), (int64_t) 0);
         int64_t missingInternal = std::max(std::max((int64_t) nTargetSize, (int64_t) 1) - (int64_t)setInternalKeyPool.size(), (int64_t) 0);
-        int64_t missingStaking = std::max(std::max((int64_t) nTargetSize, (int64_t) 1) - (int64_t)setStakingKeyPool.size(), (int64_t) 0);
+        int64_t missingStaking = std::max(std::max((int64_t) nTargetSize, (int64_t) 1) - (int64_t)setInternalKeyPool.size(), (int64_t) 0);
 
         if (!IsHDEnabled()) {
             // don't create extra internal or staking keys
@@ -397,7 +397,7 @@ bool ScriptPubKeyMan::TopUp(unsigned int kpSize)
             LogPrintf("keypool added %d keys (%d internal), size=%u (%u internal), \n", missingInternal + missingExternal, missingInternal, setInternalKeyPool.size() + setExternalKeyPool.size() + set_pre_split_keypool.size(), setInternalKeyPool.size());
         }
         if (missingStaking > 0) {
-            LogPrintf("keypool added %d staking keys\n", setStakingKeyPool.size());
+            LogPrintf("keypool added %d staking keys\n", setInternalKeyPool.size());
         }
     }
     // TODO: Implement this.
@@ -426,7 +426,7 @@ void ScriptPubKeyMan::AddKeypoolPubkeyWithDB(const CPubKey& pubkey, const uint8_
     if (isHDEnabled && type == HDChain::ChangeType::INTERNAL) {
         setInternalKeyPool.insert(index);
     } else if (isHDEnabled && type == HDChain::ChangeType::STAKING) {
-        setStakingKeyPool.insert(index);
+        setInternalKeyPool.insert(index);
     } else {
         setExternalKeyPool.insert(index);
     }
@@ -541,7 +541,7 @@ void ScriptPubKeyMan::LoadKeyPool(int64_t nIndex, const CKeyPool &keypool)
     } else if (keypool.IsExternal()){
         setExternalKeyPool.insert(nIndex);
     } else if (keypool.IsStaking()){
-        setStakingKeyPool.insert(nIndex);
+        setInternalKeyPool.insert(nIndex);
     } else {
         throw std::runtime_error(std::string(__func__) + ": invalid CKeypool type");
     }
