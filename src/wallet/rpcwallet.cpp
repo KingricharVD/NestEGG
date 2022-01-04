@@ -169,7 +169,7 @@ UniValue getaddressinfo(const JSONRPCRequest& request)
     }
     std::string currentAddress = request.params[0].get_str();
     ret.pushKV("address", currentAddress);
-    CScript scriptPubKey = GetScriptForDestination(dest);
+    CScript scriptPubKey = GetScriptForStakeDelegation(dest);
     ret.pushKV("scriptPubKey", HexStr(scriptPubKey.begin(), scriptPubKey.end()));
     isminetype mine = IsMine(*pwallet, dest);
     ret.pushKV("ismine", bool(mine & ISMINE_SPENDABLE_ALL));
@@ -352,7 +352,7 @@ UniValue sethdseed(const JSONRPCRequest& request)
                "\nNote that you will need to MAKE A NEW BACKUP of your wallet after setting the HD wallet seed.\n\n"
                "\nArguments:\n"
                "1. newkeypool (boolean, optional, default true): Whether to flush old unused addresses, including change addresses, from the keypool and regenerate it.\n"
-               "           If true, the next address from getnewaddress and change address from getrawchangeaddress will be from this new seed.\n"
+               "           If true, the next address from getnewaddress and change address from getaccountaddress will be from this new seed.\n"
                "           If false, addresses (including change addresses if the wallet already had HD Chain Split enabled) from the existing\n"
                "           keypool will be used until it has been depleted."
                "2. \"seed\" (string, optional, default random seed): The WIF private key to use as the new HD seed.\n"
@@ -598,17 +598,17 @@ CTxDestination GetLabelDestination(CWallet* const pwallet, const std::string& la
     ret = EncodeDestination(GetLabelDestination(pwalletMain, account));
     return ret;
 }
-UniValue getrawchangeaddress(const JSONRPCRequest& request)
+UniValue getaccountaddress(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() > 1)
         throw std::runtime_error(
-            "getrawchangeaddress\n"
+            "getaccountaddress\n"
             "\nReturns a new 777 address, for receiving change.\n"
             "This is for use with raw transactions, NOT normal use.\n"
             "\nResult:\n"
             "\"address\"    (string) The address\n"
             "\nExamples:\n" +
-            HelpExampleCli("getrawchangeaddress", "") + HelpExampleRpc("getrawchangeaddress", ""));
+            HelpExampleCli("getaccountaddress", "") + HelpExampleRpc("getaccountaddress", ""));
     LOCK2(cs_main, pwalletMain->cs_wallet);
     if (!pwalletMain->IsLocked())
         pwalletMain->TopUpKeyPool();
@@ -743,7 +743,7 @@ void SendMoney(const CTxDestination& address, CAmount nValue, CWalletTx& wtxNew,
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
     }
     // Parse 777 address
-    CScript scriptPubKey = GetScriptForDestination(address);
+    CScript scriptPubKey = GetScriptForStakeDelegation(address);
     // Create and send the transaction
     CReserveKey reservekey(pwalletMain);
     CAmount nFeeRequired;
@@ -1166,7 +1166,7 @@ UniValue getreceivedbyaddress(const JSONRPCRequest& request)
     CTxDestination address = DecodeDestination(request.params[0].get_str());
     if (!IsValidDestination(address))
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid 777 address");
-    CScript scriptPubKey = GetScriptForDestination(address);
+    CScript scriptPubKey = GetScriptForStakeDelegation(address);
     if (!IsMine(*pwalletMain, scriptPubKey))
         throw JSONRPCError(RPC_WALLET_ERROR, "Address not found in wallet");
     // Minimum confirmations
@@ -1593,7 +1593,7 @@ UniValue sendmany(const JSONRPCRequest& request)
         if (setAddress.count(dest))
             throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ")+name_);
         setAddress.insert(dest);
-        CScript scriptPubKey = GetScriptForDestination(dest);
+        CScript scriptPubKey = GetScriptForStakeDelegation(dest);
         CAmount nAmount = AmountFromValue(sendTo[name_]);
         totalAmount += nAmount;
         vecSend.push_back(CRecipient{scriptPubKey, nAmount, false});
@@ -4271,7 +4271,7 @@ const CRPCCommand vWalletRPCCommands[] =
         { "wallet",             "sethdseed",                &sethdseed,                true  },
         { "wallet",             "getnewaddress",            &getnewaddress,            true  },
         { "wallet",             "getnewstakingaddress",     &getnewstakingaddress,     true  },
-        { "wallet",             "getrawchangeaddress",      &getrawchangeaddress,      true  },
+        { "wallet",             "getaccountaddress",      &getaccountaddress,      true  },
         { "wallet",             "getreceivedbyaddress",     &getreceivedbyaddress,     false },
         { "wallet",             "gettransaction",           &gettransaction,           false },
         { "wallet",             "getstakesplitthreshold",   &getstakesplitthreshold,   false },

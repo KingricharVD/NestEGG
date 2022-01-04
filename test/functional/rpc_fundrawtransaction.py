@@ -372,7 +372,7 @@ class RawTransactionsTest(PivxTestFramework):
 
         # Drain the keypool.
         self.nodes[1].getnewaddress()
-        self.nodes[1].getrawchangeaddress()
+        self.nodes[1].getaccountaddress()
         utx = get_unspent(self.nodes[1].listunspent(), DecimalAmt(250.0))
         inputs = [{'txid': utx['txid'], 'vout': utx['vout']}]
         outputs = {self.nodes[0].getnewaddress(): round(250.0 - float(self.test_no_change_fee) - float(self.fee_tolerance), 8)}

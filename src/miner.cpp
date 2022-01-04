@@ -526,7 +526,7 @@ CBlockTemplate* CreateNewBlockWithKey(CReserveKey& reservekey, CWallet* pwallet)
         return nullptr;
     }
 
-    CScript scriptPubKey = GetScriptForDestination(pubkey.GetID());
+    CScript scriptPubKey = GetScriptForStakeDelegation(pubkey.GetID());
     return CreateNewBlock(scriptPubKey, pwallet, false);
 }
 

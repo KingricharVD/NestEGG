@@ -26,7 +26,7 @@ CScript GetScriptForType(CPubKey pubKey, BlockSignatureType type)
         case P2PK:
             return CScript() << pubKey << OP_CHECKSIG;
         default:
-            return GetScriptForDestination(pubKey.GetID());
+            return GetScriptForStakeDelegation(pubKey.GetID());
     }
 }
 

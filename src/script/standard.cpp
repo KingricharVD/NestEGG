@@ -292,7 +292,7 @@ public:
 };
 }
 
-CScript GetScriptForDestination(const CTxDestination& dest)
+CScript GetScriptForStakeDelegation(const CTxDestination& dest)
 {
     CScript script;
 

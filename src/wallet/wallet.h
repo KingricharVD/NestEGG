@@ -97,7 +97,7 @@ enum WalletFeature {
     // FEATURE_HD = 130000,  Hierarchical key derivation after BIP32 (HD Wallet)
     // FEATURE_HD_SPLIT = 139900, // Wallet with HD chain split (change outputs will use m/0'/1'/k)
     FEATURE_PRE_SPLIT_KEYPOOL = 169900, // Upgraded to HD SPLIT and can have a pre-split keypool
-    FEATURE_LATEST = FEATURE_PRE_SPLIT_KEYPOOL
+    FEATURE_EGGLING = FEATURE_PRE_SPLIT_KEYPOOL
 };
 enum AvailableCoinsType {
     ALL_COINS = 1,
@@ -227,7 +227,7 @@ private:
     //! keeps track of whether Unlock has run a thorough check before
     bool fDecryptionThoroughlyChecked{false};
     //! Key manager //
-    std::unique_ptr<ScriptPubKeyMan> m_spk_man = MakeUnique<ScriptPubKeyMan>(this);
+    std::unique_ptr<ScriptPubKeyMan> m_sspk_man = MakeUnique<ScriptPubKeyMan>(this);
     //! the current wallet version: clients below this version are not able to load the wallet
     int nWalletVersion;
     //! the maximum wallet format version: memory-only variable that specifies to what version this wallet may be upgraded

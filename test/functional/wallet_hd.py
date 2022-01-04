@@ -35,7 +35,7 @@ class WalletHDTest(PivxTestFramework):
         assert_equal(len(masterkeyid), 40)
 
         # create an internal key
-        change_addr = self.nodes[1].getrawchangeaddress()
+        change_addr = self.nodes[1].getaccountaddress()
         change_addrV= self.nodes[1].getaddressinfo(change_addr)
         assert_equal(change_addrV["hdkeypath"], "m/44'/119'/0'/1'/0'") #first internal child key
 
@@ -63,7 +63,7 @@ class WalletHDTest(PivxTestFramework):
         self.nodes[0].generate(1)
 
         # create an internal key (again)
-        change_addr = self.nodes[1].getrawchangeaddress()
+        change_addr = self.nodes[1].getaccountaddress()
         change_addrV= self.nodes[1].getaddressinfo(change_addr)
         assert_equal(change_addrV["hdkeypath"], "m/44'/119'/0'/1'/1'") #second internal child key
 

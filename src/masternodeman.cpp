@@ -450,7 +450,7 @@ CMasternode* CMasternodeMan::Find(const CScript& payee)
     CScript payee2;
 
     for (CMasternode& mn : vMasternodes) {
-        payee2 = GetScriptForDestination(mn.pubKeyCollateralAddress.GetID());
+        payee2 = GetScriptForStakeDelegation(mn.pubKeyCollateralAddress.GetID());
         if (payee2 == payee)
             return &mn;
     }

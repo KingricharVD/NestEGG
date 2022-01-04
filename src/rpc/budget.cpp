@@ -132,7 +132,7 @@ UniValue preparebudget(const JSONRPCRequest& request)
     checkBudgetInputs(request.params, strProposalName, strURL, nPaymentCount, nBlockStart, address, nAmount);
 
     // Parse HCCP address
-    CScript scriptPubKey = GetScriptForDestination(address);
+    CScript scriptPubKey = GetScriptForStakeDelegation(address);
 
     // create transaction 15 minutes into the future, to allow for confirmation time
     CBudgetProposalBroadcast budgetProposalBroadcast(strProposalName, strURL, nPaymentCount, scriptPubKey, nAmount, nBlockStart, UINT256_ZERO);
@@ -190,7 +190,7 @@ UniValue submitbudget(const JSONRPCRequest& request)
     checkBudgetInputs(request.params, strProposalName, strURL, nPaymentCount, nBlockStart, address, nAmount);
 
     // Parse HCCP address
-    CScript scriptPubKey = GetScriptForDestination(address);
+    CScript scriptPubKey = GetScriptForStakeDelegation(address);
 
     uint256 hash = ParseHashV(request.params[6], "parameter 1");
 

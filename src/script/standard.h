@@ -81,7 +81,7 @@ int ScriptSigArgsExpected(txnouttype t, const std::vector<std::vector<unsigned c
 bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet, bool fColdStake = false);
 bool ExtractDestinations(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<CTxDestination>& addressRet, int& nRequiredRet);
 
-CScript GetScriptForDestination(const CTxDestination& dest);
+CScript GetScriptForStakeDelegation(const CTxDestination& dest);
 CScript GetScriptForRawPubKey(const CPubKey& pubKey);
 CScript GetScriptForMultisig(int nRequired, const std::vector<CPubKey>& keys);
 

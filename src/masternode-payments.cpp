@@ -282,7 +282,7 @@ bool IsBlockPayeeValid(const CBlock& block, int nBlockHeight)
     //         if (transactionStatus == TrxValidationStatus::Valid) {
     //             return true;
     //         }
-    
+
     if (transactionStatus == TrxValidationStatus::InValid) {
                   LogPrint(BCLog::MASTERNODE, "Invalid budget payment detected %s\n", txNew.ToString().c_str());
                   if (sporkManager.IsSporkActive(SPORK_9_MASTERNODE_BUDGET_ENFORCEMENT))
@@ -350,7 +350,7 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, const CBloc
         //no masternode detected
         CMasternode* winningNode = mnodeman.GetCurrentMasterNode(1);
         if (winningNode) {
-            payee = GetScriptForDestination(winningNode->pubKeyCollateralAddress.GetID());
+            payee = GetScriptForStakeDelegation(winningNode->pubKeyCollateralAddress.GetID());
         } else {
             LogPrint(BCLog::MASTERNODE,"CreateNewBlock: Failed to detect masternode to pay\n");
             hasPayment = false;
@@ -514,7 +514,7 @@ bool CMasternodePayments::IsScheduled(CMasternode& mn, int nNotBlockHeight)
     }
 
     CScript mnpayee;
-    mnpayee = GetScriptForDestination(mn.pubKeyCollateralAddress.GetID());
+    mnpayee = GetScriptForStakeDelegation(mn.pubKeyCollateralAddress.GetID());
 
     CScript payee;
     for (int64_t h = nHeight; h <= nHeight + 8; h++) {
@@ -711,7 +711,7 @@ bool CMasternodePayments::ProcessBlock(int nBlockHeight)
 
             newWinner.nBlockHeight = nBlockHeight;
 
-            CScript payee = GetScriptForDestination(pmn->pubKeyCollateralAddress.GetID());
+            CScript payee = GetScriptForStakeDelegation(pmn->pubKeyCollateralAddress.GetID());
             newWinner.AddPayee(payee);
 
             CTxDestination address1;

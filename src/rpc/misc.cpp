@@ -302,7 +302,7 @@ public:
         UniValue ret(UniValue::VOBJ);
         std::string currentAddress = EncodeDestination(dest, isStaking);
         ret.push_back(Pair("address", currentAddress));
-        CScript scriptPubKey = GetScriptForDestination(dest);
+        CScript scriptPubKey = GetScriptForStakeDelegation(dest);
         ret.push_back(Pair("scriptPubKey", HexStr(scriptPubKey.begin(), scriptPubKey.end())));
 
 #ifdef ENABLE_WALLET
@@ -363,7 +363,7 @@ std::string currentAddress = request.params[0].get_str();
    ret.push_back(Pair("isvalid", isValid));
    if (isValid) {
        ret.push_back(Pair("address", currentAddress));
-       CScript scriptPubKey = GetScriptForDestination(dest);
+       CScript scriptPubKey = GetScriptForStakeDelegation(dest);
        ret.push_back(Pair("scriptPubKey", HexStr(scriptPubKey.begin(), scriptPubKey.end())));
 
 #ifdef ENABLE_WALLET

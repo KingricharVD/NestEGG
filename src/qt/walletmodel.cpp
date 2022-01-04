@@ -353,7 +353,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
             CTxDestination out = DecodeDestination(rcp.address.toStdString());
 
             // Regular P2PK or P2PKH
-            scriptPubKey = GetScriptForDestination(out);
+            scriptPubKey = GetScriptForStakeDelegation(out);
 
             vecSend.push_back(CRecipient{scriptPubKey, rcp.amount, false});
 

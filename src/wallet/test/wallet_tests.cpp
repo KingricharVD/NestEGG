@@ -419,7 +419,7 @@ BOOST_AUTO_TEST_CASE(cached_balances_tests)
     // Receive balance from an external source
     CTxDestination receivingAddr;
     BOOST_ASSERT(wallet.getNewAddress(receivingAddr, "receiving_address").result);
-    CTxOut creditOut(nCredit/2, GetScriptForDestination(receivingAddr));
+    CTxOut creditOut(nCredit/2, GetScriptForStakeDelegation(receivingAddr));
     CWalletTx& wtxCredit = ReceiveBalanceWith({creditOut, creditOut},wallet);
 
     // Validates (1)
@@ -447,7 +447,7 @@ BOOST_AUTO_TEST_CASE(cached_balances_tests)
     std::vector<CTxIn> vinDebit = {CTxIn(COutPoint(wtxCredit.GetHash(), 0))};
     CKey key;
     key.MakeNewKey(true);
-    std::vector<CTxOut> voutDebit = {CTxOut(nDebit, GetScriptForDestination(key.GetPubKey().GetID()))};
+    std::vector<CTxOut> voutDebit = {CTxOut(nDebit, GetScriptForStakeDelegation(key.GetPubKey().GetID()))};
     CWalletTx& wtxDebit = BuildAndLoadTxToWallet(vinDebit, voutDebit, wallet);
 
     // Validates (3)

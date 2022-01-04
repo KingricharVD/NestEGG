@@ -844,7 +844,7 @@ BOOST_AUTO_TEST_CASE(script_combineSigs)
         keystore.AddKey(key);
     }
 
-    CMutableTransaction txFrom = BuildCreditingTransaction(GetScriptForDestination(keys[0].GetPubKey().GetID()));
+    CMutableTransaction txFrom = BuildCreditingTransaction(GetScriptForStakeDelegation(keys[0].GetPubKey().GetID()));
     CMutableTransaction txTo = BuildSpendingTransaction(CScript(), txFrom);
     CScript& scriptPubKey = txFrom.vout[0].scriptPubKey;
     CScript& scriptSig = txTo.vin[0].scriptSig;
@@ -868,7 +868,7 @@ BOOST_AUTO_TEST_CASE(script_combineSigs)
     // P2SH, single-signature case:
     CScript pkSingle; pkSingle << ToByteVector(keys[0].GetPubKey()) << OP_CHECKSIG;
     keystore.AddCScript(pkSingle);
-    scriptPubKey = GetScriptForDestination(CScriptID(pkSingle));
+    scriptPubKey = GetScriptForStakeDelegation(CScriptID(pkSingle));
     SignSignature(keystore, txFrom, txTo, 0, SIGHASH_ALL);
     combined = CombineSignatures(scriptPubKey, MutableTransactionSignatureChecker(&txTo, 0, amount), SignatureData(scriptSig), empty);
     BOOST_CHECK(combined.scriptSig == scriptSig);
