@@ -97,7 +97,7 @@ enum WalletFeature {
     // FEATURE_HD = 130000,  Hierarchical key derivation after BIP32 (HD Wallet)
     // FEATURE_HD_SPLIT = 139900, // Wallet with HD chain split (change outputs will use m/0'/1'/k)
     FEATURE_PRE_SPLIT_KEYPOOL = 169900, // Upgraded to HD SPLIT and can have a pre-split keypool
-    FEATURE_EGGLING = FEATURE_PRE_SPLIT_KEYPOOL
+    FEATURE_LATEST = FEATURE_PRE_SPLIT_KEYPOOL
 };
 enum AvailableCoinsType {
     ALL_COINS = 1,
@@ -227,7 +227,7 @@ private:
     //! keeps track of whether Unlock has run a thorough check before
     bool fDecryptionThoroughlyChecked{false};
     //! Key manager //
-    std::unique_ptr<ScriptPubKeyMan> m_sspk_man = MakeUnique<ScriptPubKeyMan>(this);
+    std::unique_ptr<ScriptPubKeyMan> m_spk_man = MakeUnique<ScriptPubKeyMan>(this);
     //! the current wallet version: clients below this version are not able to load the wallet
     int nWalletVersion;
     //! the maximum wallet format version: memory-only variable that specifies to what version this wallet may be upgraded
@@ -254,12 +254,12 @@ public:
     //! Generates hd wallet //
     bool SetupSPKM(bool newKeypool = true);
     //! Whether the wallet is hd or not //
-    bool IsEnabled() const;
+    bool IsHDEnabled() const;
     /* SPKM Helpers */
     const CKeyingMaterial& GetEncryptionKey() const;
     bool HasEncryptionKeys() const;
     //! Get spkm
-    ScriptPubKeyMan* GetSaplingScriptPubKeyMan() const;
+    ScriptPubKeyMan* GetScriptPubKeyMan() const;
     /*
      * Main wallet lock.
      * This lock protects all the fields added by CWallet
@@ -365,7 +365,7 @@ public:
     //! Adds an encrypted key to the store, and saves it to disk.
     bool AddCryptedKey(const CPubKey& vchPubKey, const std::vector<unsigned char>& vchCryptedSecret);
     //! Adds an encrypted key to the store, without saving it to disk (used by LoadWallet)
-    bool LoadCyptedSaplingKey(const CPubKey& vchPubKey, const std::vector<unsigned char>& vchCryptedSecret);
+    bool LoadCryptedKey(const CPubKey& vchPubKey, const std::vector<unsigned char>& vchCryptedSecret);
     bool AddCScript(const CScript& redeemScript);
     bool LoadCScript(const CScript& redeemScript);
     //! Adds a destination data tuple to the store, and saves it to disk
@@ -518,7 +518,7 @@ public:
 
     bool UpdatedTransaction(const uint256& hashTx);
 
-    unsigned int GetStakingKeyPoolSize();
+    unsigned int GetKeyPoolSize();
     unsigned int GetStakingKeyPoolSize();
 
     //! signify that a particular wallet feature is now used. this may change nWalletVersion and nWalletMaxVersion if those are lower
