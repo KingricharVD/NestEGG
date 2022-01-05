@@ -152,7 +152,7 @@ public:
     /* current staking status from the miner thread **/
     bool isStakingStatusActive() const;
 
-    bool isHDEnabled() const;
+    bool IsEnabled() const;
     bool upgradeWallet(std::string& upgradeError);
 
     interfaces::WalletBalances GetWalletBalances() { return m_cached_balances; };

@@ -254,12 +254,12 @@ public:
     //! Generates hd wallet //
     bool SetupSPKM(bool newKeypool = true);
     //! Whether the wallet is hd or not //
-    bool IsHDEnabled() const;
+    bool IsEnabled() const;
     /* SPKM Helpers */
     const CKeyingMaterial& GetEncryptionKey() const;
     bool HasEncryptionKeys() const;
     //! Get spkm
-    ScriptPubKeyMan* GetScriptPubKeyMan() const;
+    ScriptPubKeyMan* GetSaplingScriptPubKeyMan() const;
     /*
      * Main wallet lock.
      * This lock protects all the fields added by CWallet
@@ -365,7 +365,7 @@ public:
     //! Adds an encrypted key to the store, and saves it to disk.
     bool AddCryptedKey(const CPubKey& vchPubKey, const std::vector<unsigned char>& vchCryptedSecret);
     //! Adds an encrypted key to the store, without saving it to disk (used by LoadWallet)
-    bool LoadCryptedKey(const CPubKey& vchPubKey, const std::vector<unsigned char>& vchCryptedSecret);
+    bool LoadCyptedSaplingKey(const CPubKey& vchPubKey, const std::vector<unsigned char>& vchCryptedSecret);
     bool AddCScript(const CScript& redeemScript);
     bool LoadCScript(const CScript& redeemScript);
     //! Adds a destination data tuple to the store, and saves it to disk
@@ -518,7 +518,7 @@ public:
 
     bool UpdatedTransaction(const uint256& hashTx);
 
-    unsigned int GetKeyPoolSize();
+    unsigned int GetStakingKeyPoolSize();
     unsigned int GetStakingKeyPoolSize();
 
     //! signify that a particular wallet feature is now used. this may change nWalletVersion and nWalletMaxVersion if those are lower

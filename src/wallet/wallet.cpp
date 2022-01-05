@@ -95,9 +95,9 @@ bool CWallet::ActivateSaplingWallet()
     return false;
 }
 
-bool CWallet::IsHDEnabled() const
+bool CWallet::IsEnabled() const
 {
-    return m_sspk_man->IsHDEnabled();
+    return m_sspk_man->IsEnabled();
 }
 
 const CWalletTx* CWallet::GetWalletTx(const uint256& hash) const
@@ -229,7 +229,7 @@ bool CWallet::LoadKeyMetadata(const CPubKey& pubkey, const CKeyMetadata& meta)
     return true;
 }
 
-bool CWallet::LoadCryptedKey(const CPubKey& vchPubKey, const std::vector<unsigned char>& vchCryptedSecret)
+bool CWallet::LoadCyptedSaplingKey(const CPubKey& vchPubKey, const std::vector<unsigned char>& vchCryptedSecret)
 {
     return CCryptoKeyStore::AddCryptedKey(vchPubKey, vchCryptedSecret);
 }
@@ -610,7 +610,7 @@ bool CWallet::HasEncryptionKeys() const
     return !mapMasterKeys.empty();
 }
 
-ScriptPubKeyMan* CWallet::GetScriptPubKeyMan() const
+ScriptPubKeyMan* CWallet::GetSaplingScriptPubKeyMan() const
 {
     return m_sspk_man.get();
 }
@@ -769,7 +769,7 @@ bool CWallet::EncryptWallet(const SecureString& strWalletPassphrase)
         Lock();
         Unlock(strWalletPassphrase);
         // if we are using HD, replace the HD seed with a new one
-        if (m_sspk_man->IsHDEnabled()) {
+        if (m_sspk_man->IsEnabled()) {
             if (!m_sspk_man->SetupGeneration(true, true)) {
                 return false;
             }
@@ -3256,7 +3256,7 @@ std::set<CTxDestination> CWallet::GetLabelAddresses(const std::string& label) co
 bool CReserveKey::GetReservedKey(CPubKey& pubkey, bool _internal)
 {
 
-    ScriptPubKeyMan* m_sspk_man = pwallet->GetScriptPubKeyMan();
+    ScriptPubKeyMan* m_sspk_man = pwallet->GetSaplingScriptPubKeyMan();
     if (!m_sspk_man) {
         return false;
     }
@@ -4245,9 +4245,9 @@ CAmount CWallet::GetChange(const CTransaction& tx) const
     return nChange;
 }
 
-unsigned int CWallet::GetKeyPoolSize()
+unsigned int CWallet::GetStakingKeyPoolSize()
 {
-    return m_sspk_man->GetKeyPoolSize();
+    return m_sspk_man->GetStakingKeyPoolSize();
 }
 
 unsigned int CWallet::GetStakingKeyPoolSize()

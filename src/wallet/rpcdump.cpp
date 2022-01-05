@@ -442,7 +442,7 @@ UniValue dumpwallet(const JSONRPCRequest& request)
 
     EnsureWalletIsUnlocked();
 
-    ScriptPubKeyMan* spk_man = pwalletMain->GetScriptPubKeyMan();
+    ScriptPubKeyMan* spk_man = pwalletMain->GetSaplingScriptPubKeyMan();
 
     fs::path filepath = request.params[0].get_str().c_str();
     filepath = fs::absolute(filepath);

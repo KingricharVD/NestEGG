@@ -649,8 +649,8 @@ bool ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue, CW
             ssValue >> vchPrivKey;
             wss.nCKeys++;
 
-            if (!pwallet->LoadCryptedKey(vchPubKey, vchPrivKey)) {
-                strErr = "Error reading wallet database: LoadCryptedKey failed";
+            if (!pwallet->LoadCyptedSaplingKey(vchPubKey, vchPrivKey)) {
+                strErr = "Error reading wallet database: LoadCyptedSaplingKey failed";
                 return false;
             }
             wss.fIsEncrypted = true;
@@ -681,7 +681,7 @@ bool ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue, CW
             ssKey >> nIndex;
             CKeyPool keypool;
             ssValue >> keypool;
-            pwallet->GetScriptPubKeyMan()->LoadKeyPool(nIndex, keypool);
+            pwallet->GetSaplingScriptPubKeyMan()->LoadKeyPool(nIndex, keypool);
         } else if (strType == "version") {
             ssValue >> wss.nFileVersion;
             if (wss.nFileVersion == 10300)
@@ -743,7 +743,7 @@ bool ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue, CW
         } else if (strType == "hdchain") { // Regular key chain counter
             CHDChain chain;
             ssValue >> chain;
-            pwallet->GetScriptPubKeyMan()->SetHDChain(chain, true);
+            pwallet->GetSaplingScriptPubKeyMan()->SetHDChain(chain, true);
         } else if (strType == "hdchain_egg") {
             CHDChain chain;
             ssValue >> chain;

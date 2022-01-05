@@ -26,7 +26,7 @@ bool ScriptPubKeyMan::Upgrade(const int& prev_version, std::string& error)
     LOCK(wallet->cs_KeyStore);
     error = "";
     bool hd_upgrade = false;
-    if (!IsHDEnabled()) {
+    if (!IsEnabled()) {
         LogPrintf("Upgrading wallet to use HD chain split\n");
         wallet->SetMinVersion(FEATURE_PRE_SPLIT_KEYPOOL);
 
@@ -52,12 +52,12 @@ bool ScriptPubKeyMan::Upgrade(const int& prev_version, std::string& error)
 
 bool ScriptPubKeyMan::CanGenerateKeys()
 {
-    // A wallet can generate keys if it has an HD seed (IsHDEnabled) or it is a non-HD wallet (pre FEATURE_HD)
+    // A wallet can generate keys if it has an HD seed (IsEnabled) or it is a non-HD wallet (pre FEATURE_HD)
     LOCK(wallet->cs_wallet);
-    return IsHDEnabled() || wallet->GetVersion() < FEATURE_PRE_SPLIT_KEYPOOL;
+    return IsEnabled() || wallet->GetVersion() < FEATURE_PRE_SPLIT_KEYPOOL;
 }
 
-bool ScriptPubKeyMan::IsHDEnabled() const
+bool ScriptPubKeyMan::IsEnabled() const
 {
     return !hdChain.IsNull();
 }
@@ -66,11 +66,11 @@ bool ScriptPubKeyMan::CanGetAddresses(const uint8_t& type)
 {
     LOCK(wallet->cs_wallet);
     // Check if the keypool has keys
-    const bool isHDEnabled = IsHDEnabled();
+    const bool IsEnabled = IsEnabled();
     bool keypool_has_keys = false;
-    if (isHDEnabled && type == HDChain::ChangeType::INTERNAL) {
+    if (IsEnabled && type == HDChain::ChangeType::INTERNAL) {
         keypool_has_keys = setInternalKeyPool.size() > 0;
-    } else if (isHDEnabled && type == HDChain::ChangeType::STAKING) {
+    } else if (IsEnabled && type == HDChain::ChangeType::STAKING) {
         keypool_has_keys = setInternalKeyPool.size() > 0;
     } else {
         // either external key was requested or HD is not enabled
@@ -104,7 +104,7 @@ int64_t ScriptPubKeyMan::GetOldestKeyPoolTime()
     CWalletDB batch(wallet->strWalletFile);
     // load oldest key from keypool, get time and return
     int64_t oldestKey = GetOldestKeyTimeInPool(setExternalKeyPool, batch);
-    if (IsHDEnabled()) {
+    if (IsEnabled()) {
         oldestKey = std::max(GetOldestKeyTimeInPool(setInternalKeyPool, batch), oldestKey);
         oldestKey = std::max(GetOldestKeyTimeInPool(setInternalKeyPool, batch), oldestKey);
         if (!set_pre_split_keypool.empty()) {
@@ -121,7 +121,7 @@ size_t ScriptPubKeyMan::KeypoolCountExternalKeys()
     return setExternalKeyPool.size() + set_pre_split_keypool.size();
 }
 
-unsigned int ScriptPubKeyMan::GetKeyPoolSize() const
+unsigned int ScriptPubKeyMan::GetStakingKeyPoolSize() const
 {
     AssertLockHeld(wallet->cs_wallet);
     return setInternalKeyPool.size() + setExternalKeyPool.size() + set_pre_split_keypool.size();
@@ -177,9 +177,9 @@ bool ScriptPubKeyMan::ReserveKeyFromKeyPool(int64_t& nIndex, CKeyPool& keypool, 
     {
         LOCK(wallet->cs_wallet);
 
-        bool isHDEnabled = IsHDEnabled();
-        bool fReturningInternal = type == HDChain::ChangeType::INTERNAL && isHDEnabled;
-        bool fReturningStaking = type == HDChain::ChangeType::STAKING && isHDEnabled;
+        bool IsEnabled = IsEnabled();
+        bool fReturningInternal = type == HDChain::ChangeType::INTERNAL && IsEnabled;
+        bool fReturningStaking = type == HDChain::ChangeType::STAKING && IsEnabled;
         bool use_split_keypool = set_pre_split_keypool.empty();
         std::set<int64_t>& setKeyPool = use_split_keypool ?
                 ( fReturningInternal ? setInternalKeyPool : (fReturningStaking ? setInternalKeyPool : setExternalKeyPool) ) : set_pre_split_keypool;
@@ -240,12 +240,12 @@ void ScriptPubKeyMan::ReturnDestination(int64_t nIndex, const uint8_t& type, con
     // Return to key pool
     {
         LOCK(wallet->cs_wallet);
-        const bool isHDEnabled = IsHDEnabled();
-        if (isHDEnabled && type == HDChain::ChangeType::INTERNAL) {
+        const bool IsEnabled = IsEnabled();
+        if (IsEnabled && type == HDChain::ChangeType::INTERNAL) {
             setInternalKeyPool.insert(nIndex);
-        } else if (isHDEnabled && type == HDChain::ChangeType::STAKING) {
+        } else if (IsEnabled && type == HDChain::ChangeType::STAKING) {
             setInternalKeyPool.insert(nIndex);
-        } else if (isHDEnabled && !set_pre_split_keypool.empty()) {
+        } else if (IsEnabled && !set_pre_split_keypool.empty()) {
             set_pre_split_keypool.insert(nIndex);
         } else {
             setExternalKeyPool.insert(nIndex);
@@ -382,7 +382,7 @@ bool ScriptPubKeyMan::TopUp(unsigned int kpSize)
         int64_t missingInternal = std::max(std::max((int64_t) nTargetSize, (int64_t) 1) - (int64_t)setInternalKeyPool.size(), (int64_t) 0);
         int64_t missingStaking = std::max(std::max((int64_t) nTargetSize, (int64_t) 1) - (int64_t)setInternalKeyPool.size(), (int64_t) 0);
 
-        if (!IsHDEnabled()) {
+        if (!IsEnabled()) {
             // don't create extra internal or staking keys
             missingInternal = 0;
             missingStaking = 0;
@@ -422,10 +422,10 @@ void ScriptPubKeyMan::AddKeypoolPubkeyWithDB(const CPubKey& pubkey, const uint8_
         throw std::runtime_error(std::string(__func__) + ": writing imported pubkey failed");
     }
 
-    const bool isHDEnabled = IsHDEnabled();
-    if (isHDEnabled && type == HDChain::ChangeType::INTERNAL) {
+    const bool IsEnabled = IsEnabled();
+    if (IsEnabled && type == HDChain::ChangeType::INTERNAL) {
         setInternalKeyPool.insert(index);
-    } else if (isHDEnabled && type == HDChain::ChangeType::STAKING) {
+    } else if (IsEnabled && type == HDChain::ChangeType::STAKING) {
         setInternalKeyPool.insert(index);
     } else {
         setExternalKeyPool.insert(index);
@@ -449,7 +449,7 @@ CPubKey ScriptPubKeyMan::GenerateNewKey(CWalletDB &batch, const uint8_t& type)
     CKeyMetadata metadata(nCreationTime);
 
     // use HD key derivation if HD was enabled during wallet creation and a seed is present
-    if (IsHDEnabled()) {
+    if (IsEnabled()) {
         DeriveNewChildKey(batch, metadata, secret, type);
     } else {
         secret.MakeNewKey(fCompressed);

@@ -75,9 +75,9 @@ bool WalletModel::isStakingStatusActive() const
     return wallet->pStakerStatus->IsActive();
 }
 
-bool WalletModel::isHDEnabled() const
+bool WalletModel::IsEnabled() const
 {
-    return wallet->IsHDEnabled();
+    return wallet->IsEnabled();
 }
 
 bool WalletModel::upgradeWallet(std::string& upgradeError)

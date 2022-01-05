@@ -39,13 +39,13 @@ public:
     /* Returns true if the wallet can generate new keys */
     bool CanGenerateKeys();
     /* True is HD wallet is enabled */
-    bool IsHDEnabled() const;
+    bool IsEnabled() const;
     /* Return the oldest key time */
     int64_t GetOldestKeyPoolTime();
     /* Count external keypool available keys */
     size_t KeypoolCountExternalKeys();
     /* Key pool size */
-    unsigned int GetKeyPoolSize() const;
+    unsigned int GetStakingKeyPoolSize() const;
 
     /* Staking key pool size */
     unsigned int GetECommerceKeyPoolSize() const;

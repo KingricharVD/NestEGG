@@ -537,7 +537,7 @@ void TopBar::showUpgradeDialog()
 void TopBar::loadWalletModel()
 {
     // Upgrade wallet.
-    if (walletModel->isHDEnabled()) {
+    if (walletModel->IsEnabled()) {
         ui->pushButtonHDUpgrade->setVisible(false);
     } else {
         connect(ui->pushButtonHDUpgrade, &ExpandableButton::Mouse_Pressed, this, &TopBar::showUpgradeDialog);
