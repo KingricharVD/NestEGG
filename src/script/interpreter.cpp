@@ -1,12 +1,9 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2017-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
 #include "interpreter.h"
-
 #include "primitives/transaction.h"
 #include "crypto/ripemd160.h"
 #include "crypto/sha1.h"
@@ -14,28 +11,21 @@
 #include "pubkey.h"
 #include "script/script.h"
 #include "uint256.h"
-
-
 typedef std::vector<unsigned char> valtype;
-
 namespace {
-
 inline bool set_success(ScriptError* ret)
 {
     if (ret)
         *ret = SCRIPT_ERR_OK;
     return true;
 }
-
 inline bool set_error(ScriptError* ret, const ScriptError serror)
 {
     if (ret)
         *ret = serror;
     return false;
 }
-
 } // anon namespace
-
 bool CastToBool(const valtype& vch)
 {
     for (unsigned int i = 0; i < vch.size(); i++)
@@ -50,7 +40,6 @@ bool CastToBool(const valtype& vch)
     }
     return false;
 }
-
 /**
  * Script is a stack machine (like Forth) that evaluates a predicate
  * returning a bool indicating valid or not.  There are no loops.
@@ -63,7 +52,6 @@ static inline void popstack(std::vector<valtype>& stack)
         throw std::runtime_error("popstack() : stack empty");
     stack.pop_back();
 }
-
 bool static IsCompressedOrUncompressedPubKey(const valtype &vchPubKey) {
     if (vchPubKey.size() < CPubKey::COMPRESSED_PUBLIC_KEY_SIZE) {
         //  Non-canonical public key: too short
@@ -85,7 +73,6 @@ bool static IsCompressedOrUncompressedPubKey(const valtype &vchPubKey) {
     }
     return true;
 }
-
 /**
  * A canonical signature exists of: <30> <total len> <02> <len R> <R> <02> <len S> <S> <hashtype>
  * Where R and S are not negative (their first byte has its highest bit not set), and not
@@ -108,59 +95,42 @@ bool static IsValidSignatureEncoding(const std::vector<unsigned char> &sig) {
     // * S: arbitrary-length big-endian encoded S value. The same rules apply.
     // * sighash: 1-byte value indicating what data is hashed (not part of the DER
     //   signature)
-
     // Minimum and maximum size constraints.
     if (sig.size() < 9) return false;
     if (sig.size() > 73) return false;
-
     // A signature is of type 0x30 (compound).
     if (sig[0] != 0x30) return false;
-
     // Make sure the length covers the entire signature.
     if (sig[1] != sig.size() - 3) return false;
-
     // Extract the length of the R element.
     unsigned int lenR = sig[3];
-
     // Make sure the length of the S element is still inside the signature.
     if (5 + lenR >= sig.size()) return false;
-
     // Extract the length of the S element.
     unsigned int lenS = sig[5 + lenR];
-
     // Verify that the length of the signature matches the sum of the length
     // of the elements.
     if ((size_t)(lenR + lenS + 7) != sig.size()) return false;
-
     // Check whether the R element is an integer.
     if (sig[2] != 0x02) return false;
-
     // Zero-length integers are not allowed for R.
     if (lenR == 0) return false;
-
     // Negative numbers are not allowed for R.
     if (sig[4] & 0x80) return false;
-
     // Null bytes at the start of R are not allowed, unless R would
     // otherwise be interpreted as a negative number.
     if (lenR > 1 && (sig[4] == 0x00) && !(sig[5] & 0x80)) return false;
-
     // Check whether the S element is an integer.
     if (sig[lenR + 4] != 0x02) return false;
-
     // Zero-length integers are not allowed for S.
     if (lenS == 0) return false;
-
     // Negative numbers are not allowed for S.
     if (sig[lenR + 6] & 0x80) return false;
-
     // Null bytes at the start of S are not allowed, unless S would otherwise be
     // interpreted as a negative number.
     if (lenS > 1 && (sig[lenR + 6] == 0x00) && !(sig[lenR + 7] & 0x80)) return false;
-
     return true;
 }
-
 bool static IsLowDERSignature(const valtype &vchSig, ScriptError* serror) {
     if (!IsValidSignatureEncoding(vchSig)) {
         return set_error(serror, SCRIPT_ERR_SIG_DER);
@@ -174,10 +144,8 @@ bool static IsLowDERSignature(const valtype &vchSig, ScriptError* serror) {
     // one byte shorter when encoded correctly.
     if (!CPubKey::CheckLowS(vchSigCopy))
         return set_error(serror, SCRIPT_ERR_SIG_HIGH_S);
-
     return true;
 }
-
 bool static IsDefinedHashtypeSignature(const valtype &vchSig) {
     if (vchSig.size() == 0) {
         return false;
@@ -185,10 +153,8 @@ bool static IsDefinedHashtypeSignature(const valtype &vchSig) {
     unsigned char nHashType = vchSig[vchSig.size() - 1] & (~(SIGHASH_ANYONECANPAY));
     if (nHashType < SIGHASH_ALL || nHashType > SIGHASH_SINGLE)
         return false;
-
     return true;
 }
-
 bool CheckSignatureEncoding(const std::vector<unsigned char> &vchSig, unsigned int flags, ScriptError* serror) {
     // Empty signature. Not strictly DER encoded, but allowed to provide a
     // compact way to provide an invalid signature for use with CHECK(MULTI)SIG
@@ -205,14 +171,12 @@ bool CheckSignatureEncoding(const std::vector<unsigned char> &vchSig, unsigned i
     }
     return true;
 }
-
 bool static CheckPubKeyEncoding(const valtype &vchSig, unsigned int flags, ScriptError* serror) {
     if ((flags & SCRIPT_VERIFY_STRICTENC) != 0 && !IsCompressedOrUncompressedPubKey(vchSig)) {
         return set_error(serror, SCRIPT_ERR_PUBKEYTYPE);
     }
     return true;
 }
-
 bool static CheckMinimalPush(const valtype& data, opcodetype opcode) {
     if (data.size() == 0) {
         // Could have used OP_0.
@@ -235,7 +199,6 @@ bool static CheckMinimalPush(const valtype& data, opcodetype opcode) {
     }
     return true;
 }
-
 bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& script, unsigned int flags, const BaseSignatureChecker& checker, SigVersion sigversion, ScriptError* serror)
 {
     static const CScriptNum bnZero(0);
@@ -245,7 +208,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
     static const valtype vchFalse(0);
     static const valtype vchZero(0);
     static const valtype vchTrue(1, 1);
-
     CScript::const_iterator pc = script.begin();
     CScript::const_iterator pend = script.end();
     CScript::const_iterator pbegincodehash = script.begin();
@@ -258,13 +220,11 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
         return set_error(serror, SCRIPT_ERR_SCRIPT_SIZE);
     int nOpCount = 0;
     bool fRequireMinimal = (flags & SCRIPT_VERIFY_MINIMALDATA) != 0;
-
     try
     {
         while (pc < pend)
         {
             bool fExec = !count(vfExec.begin(), vfExec.end(), false);
-
             //
             // Read instruction
             //
@@ -272,11 +232,9 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                 return set_error(serror, SCRIPT_ERR_BAD_OPCODE);
             if (vchPushValue.size() > MAX_SCRIPT_ELEMENT_SIZE)
                 return set_error(serror, SCRIPT_ERR_PUSH_SIZE);
-
             // Note how OP_RESERVED does not count towards the opcode limit.
             if (opcode > OP_16 && ++nOpCount > 201)
                 return set_error(serror, SCRIPT_ERR_OP_COUNT);
-
             if (opcode == OP_CAT ||
                 opcode == OP_SUBSTR ||
                 opcode == OP_LEFT ||
@@ -293,7 +251,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                 opcode == OP_LSHIFT ||
                 opcode == OP_RSHIFT)
                 return set_error(serror, SCRIPT_ERR_DISABLED_OPCODE); // Disabled opcodes.
-
             if (fExec && 0 <= opcode && opcode <= OP_PUSHDATA4) {
                 if (fRequireMinimal && !CheckMinimalPush(vchPushValue, opcode)) {
                     return set_error(serror, SCRIPT_ERR_MINIMALDATA);
@@ -330,14 +287,11 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     // they push, so no need for a CheckMinimalPush here.
                 }
                 break;
-
-
                 //
                 // Control
                 //
                 case OP_NOP:
                     break;
-
                 case OP_CHECKLOCKTIMEVERIFY:
                 {
                     if (!(flags & SCRIPT_VERIFY_CHECKLOCKTIMEVERIFY)) {
@@ -347,13 +301,10 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                         }
                         break;
                     }
-
                     if (stack.size() < 1)
                         return set_error(serror, SCRIPT_ERR_INVALID_STACK_OPERATION);
-
                     // CLTV will only be verified if it is a supermajority.
                     // Otherwise it will be ignored and transaction will be treated as normal.
-
                     // Note that elsewhere numeric opcodes are limited to
                     // operands in the range -2**31+1 to 2**31-1, however it is
                     // legal for opcodes to produce results exceeding that
@@ -369,20 +320,16 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     // to 5-byte bignums, which are good until 2**39-1, well
                     // beyond the 2**32-1 limit of the nLockTime field itself.
                     const CScriptNum nLockTime(stacktop(-1), fRequireMinimal, 5);
-
                     // In the rare event that the argument may be < 0 due to
                     // some arithmetic being done first, you can always use
                     // 0 MAX CHECKLOCKTIMEVERIFY.
                     if (nLockTime < 0)
                         return set_error(serror, SCRIPT_ERR_NEGATIVE_LOCKTIME);
-
                     // Actually compare the specified lock time with the transaction.
                     if (!checker.CheckLockTime(nLockTime))
                         return set_error(serror, SCRIPT_ERR_UNSATISFIED_LOCKTIME);
-
                     break;
                 }
-
                 case OP_NOP1: case OP_NOP3: case OP_NOP4: case OP_NOP5:
                 case OP_NOP6: case OP_NOP7: case OP_NOP8: case OP_NOP9: case OP_NOP10:
                 {
@@ -390,7 +337,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                         return set_error(serror, SCRIPT_ERR_DISCOURAGE_UPGRADABLE_NOPS);
                 }
                 break;
-
                 case OP_IF:
                 case OP_NOTIF:
                 {
@@ -409,7 +355,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     vfExec.push_back(fValue);
                 }
                 break;
-
                 case OP_ELSE:
                 {
                     if (vfExec.empty())
@@ -417,7 +362,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     vfExec.back() = !vfExec.back();
                 }
                 break;
-
                 case OP_ENDIF:
                 {
                     if (vfExec.empty())
@@ -425,7 +369,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     vfExec.pop_back();
                 }
                 break;
-
                 case OP_VERIFY:
                 {
                     // (true -- ) or
@@ -439,14 +382,11 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                         return set_error(serror, SCRIPT_ERR_VERIFY);
                 }
                 break;
-
                 case OP_RETURN:
                 {
                     return set_error(serror, SCRIPT_ERR_OP_RETURN);
                 }
                 break;
-
-
                 //
                 // Stack ops
                 //
@@ -458,7 +398,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     popstack(stack);
                 }
                 break;
-
                 case OP_FROMALTSTACK:
                 {
                     if (altstack.size() < 1)
@@ -467,7 +406,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     popstack(altstack);
                 }
                 break;
-
                 case OP_2DROP:
                 {
                     // (x1 x2 -- )
@@ -477,7 +415,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     popstack(stack);
                 }
                 break;
-
                 case OP_2DUP:
                 {
                     // (x1 x2 -- x1 x2 x1 x2)
@@ -489,7 +426,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.push_back(vch2);
                 }
                 break;
-
                 case OP_3DUP:
                 {
                     // (x1 x2 x3 -- x1 x2 x3 x1 x2 x3)
@@ -503,7 +439,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.push_back(vch3);
                 }
                 break;
-
                 case OP_2OVER:
                 {
                     // (x1 x2 x3 x4 -- x1 x2 x3 x4 x1 x2)
@@ -515,7 +450,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.push_back(vch2);
                 }
                 break;
-
                 case OP_2ROT:
                 {
                     // (x1 x2 x3 x4 x5 x6 -- x3 x4 x5 x6 x1 x2)
@@ -528,7 +462,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.push_back(vch2);
                 }
                 break;
-
                 case OP_2SWAP:
                 {
                     // (x1 x2 x3 x4 -- x3 x4 x1 x2)
@@ -538,7 +471,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     swap(stacktop(-3), stacktop(-1));
                 }
                 break;
-
                 case OP_IFDUP:
                 {
                     // (x - 0 | x x)
@@ -549,7 +481,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                         stack.push_back(vch);
                 }
                 break;
-
                 case OP_DEPTH:
                 {
                     // -- stacksize
@@ -557,7 +488,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.push_back(bn.getvch());
                 }
                 break;
-
                 case OP_DROP:
                 {
                     // (x -- )
@@ -566,7 +496,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     popstack(stack);
                 }
                 break;
-
                 case OP_DUP:
                 {
                     // (x -- x x)
@@ -576,7 +505,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.push_back(vch);
                 }
                 break;
-
                 case OP_NIP:
                 {
                     // (x1 x2 -- x2)
@@ -585,7 +513,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.erase(stack.end() - 2);
                 }
                 break;
-
                 case OP_OVER:
                 {
                     // (x1 x2 -- x1 x2 x1)
@@ -595,7 +522,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.push_back(vch);
                 }
                 break;
-
                 case OP_PICK:
                 case OP_ROLL:
                 {
@@ -613,7 +539,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.push_back(vch);
                 }
                 break;
-
                 case OP_ROT:
                 {
                     // (x1 x2 x3 -- x2 x3 x1)
@@ -625,7 +550,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     swap(stacktop(-2), stacktop(-1));
                 }
                 break;
-
                 case OP_SWAP:
                 {
                     // (x1 x2 -- x2 x1)
@@ -634,7 +558,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     swap(stacktop(-2), stacktop(-1));
                 }
                 break;
-
                 case OP_TUCK:
                 {
                     // (x1 x2 -- x2 x1 x2)
@@ -644,8 +567,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.insert(stack.end()-2, vch);
                 }
                 break;
-
-
                 case OP_SIZE:
                 {
                     // (in -- in size)
@@ -655,8 +576,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.push_back(bn.getvch());
                 }
                 break;
-
-
                 //
                 // Bitwise logic
                 //
@@ -687,8 +606,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     }
                 }
                 break;
-
-
                 //
                 // Numeric
                 //
@@ -717,7 +634,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.push_back(bn.getvch());
                 }
                 break;
-
                 case OP_ADD:
                 case OP_SUB:
                 case OP_BOOLAND:
@@ -743,11 +659,9 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     case OP_ADD:
                         bn = bn1 + bn2;
                         break;
-
                     case OP_SUB:
                         bn = bn1 - bn2;
                         break;
-
                     case OP_BOOLAND:             bn = (bn1 != bnZero && bn2 != bnZero); break;
                     case OP_BOOLOR:              bn = (bn1 != bnZero || bn2 != bnZero); break;
                     case OP_NUMEQUAL:            bn = (bn1 == bn2); break;
@@ -764,7 +678,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     popstack(stack);
                     popstack(stack);
                     stack.push_back(bn.getvch());
-
                     if (opcode == OP_NUMEQUALVERIFY)
                     {
                         if (CastToBool(stacktop(-1)))
@@ -774,7 +687,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     }
                 }
                 break;
-
                 case OP_WITHIN:
                 {
                     // (x min max -- out)
@@ -790,8 +702,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.push_back(fValue ? vchTrue : vchFalse);
                 }
                 break;
-
-
                 //
                 // Crypto
                 //
@@ -820,36 +730,29 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     stack.push_back(vchHash);
                 }
                 break;
-
                 case OP_CODESEPARATOR:
                 {
                     // Hash starts after the code separator
                     pbegincodehash = pc;
                 }
                 break;
-
                 case OP_CHECKSIG:
                 case OP_CHECKSIGVERIFY:
                 {
                     // (sig pubkey -- bool)
                     if (stack.size() < 2)
                         return set_error(serror, SCRIPT_ERR_INVALID_STACK_OPERATION);
-
                     valtype& vchSig    = stacktop(-2);
                     valtype& vchPubKey = stacktop(-1);
-
                     // Subset of script starting at the most recent codeseparator
                     CScript scriptCode(pbegincodehash, pend);
-
                     // Drop the signature, since there's no way for a signature to sign itself
                     scriptCode.FindAndDelete(CScript(vchSig));
-
                     if (!CheckSignatureEncoding(vchSig, flags, serror) || !CheckPubKeyEncoding(vchPubKey, flags, serror)) {
                         //serror is set
                         return false;
                     }
                     bool fSuccess = checker.CheckSig(vchSig, vchPubKey, scriptCode, sigversion);
-
                     popstack(stack);
                     popstack(stack);
                     stack.push_back(fSuccess ? vchTrue : vchFalse);
@@ -862,16 +765,13 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     }
                 }
                 break;
-
                 case OP_CHECKMULTISIG:
                 case OP_CHECKMULTISIGVERIFY:
                 {
                     // ([sig ...] num_of_signatures [pubkey ...] num_of_pubkeys -- bool)
-
                     int i = 1;
                     if ((int)stack.size() < i)
                         return set_error(serror, SCRIPT_ERR_INVALID_STACK_OPERATION);
-
                     int nKeysCount = CScriptNum(stacktop(-i), fRequireMinimal).getint();
                     if (nKeysCount < 0 || nKeysCount > 20)
                         return set_error(serror, SCRIPT_ERR_PUBKEY_COUNT);
@@ -882,7 +782,6 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     i += nKeysCount;
                     if ((int)stack.size() < i)
                         return set_error(serror, SCRIPT_ERR_INVALID_STACK_OPERATION);
-
                     int nSigsCount = CScriptNum(stacktop(-i), fRequireMinimal).getint();
                     if (nSigsCount < 0 || nSigsCount > nKeysCount)
                         return set_error(serror, SCRIPT_ERR_SIG_COUNT);
@@ -890,23 +789,19 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     i += nSigsCount;
                     if ((int)stack.size() < i)
                         return set_error(serror, SCRIPT_ERR_INVALID_STACK_OPERATION);
-
                     // Subset of script starting at the most recent codeseparator
                     CScript scriptCode(pbegincodehash, pend);
-
                     // Drop the signatures, since there's no way for a signature to sign itself
                     for (int k = 0; k < nSigsCount; k++)
                     {
                         valtype& vchSig = stacktop(-isig-k);
                         scriptCode.FindAndDelete(CScript(vchSig));
                     }
-
                     bool fSuccess = true;
                     while (fSuccess && nSigsCount > 0)
                     {
                         valtype& vchSig    = stacktop(-isig);
                         valtype& vchPubKey = stacktop(-ikey);
-
                         // Note how this makes the exact order of pubkey/signature evaluation
                         // distinguishable by CHECKMULTISIG NOT if the STRICTENC flag is set.
                         // See the script_(in)valid tests for details.
@@ -914,28 +809,23 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                             // serror is set
                             return false;
                         }
-
                         // Check signature
                         bool fOk = checker.CheckSig(vchSig, vchPubKey, scriptCode, sigversion);
-
                         if (fOk) {
                             isig++;
                             nSigsCount--;
                         }
                         ikey++;
                         nKeysCount--;
-
                         // If there are more signatures left than keys left,
                         // then too many signatures have failed. Exit early,
                         // without checking any further signatures.
                         if (nSigsCount > nKeysCount)
                             fSuccess = false;
                     }
-
                     // Clean up stack of actual arguments
                     while (i-- > 1)
                         popstack(stack);
-
                     // A bug causes CHECKMULTISIG to consume one extra argument
                     // whose contents were not checked in any way.
                     //
@@ -947,9 +837,7 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     if ((flags & SCRIPT_VERIFY_NULLDUMMY) && stacktop(-1).size())
                         return set_error(serror, SCRIPT_ERR_SIG_NULLDUMMY);
                     popstack(stack);
-
                     stack.push_back(fSuccess ? vchTrue : vchFalse);
-
                     if (opcode == OP_CHECKMULTISIGVERIFY)
                     {
                         if (fSuccess)
@@ -961,18 +849,17 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                 break;
 
                 case OP_CHECKCOLDSTAKEVERIFY:
-                              {
-                                  // check it is used in a valid cold stake transaction.
-                                  if(!checker.CheckColdStake(script)) {
-                                      return set_error(serror, SCRIPT_ERR_CHECKCOLDSTAKEVERIFY);
-                                  }
-                              }
-                              break;
+                {
+                    // check it is used in a valid cold stake transaction.
+                    if(!checker.CheckColdStake(script)) {
+                        return set_error(serror, SCRIPT_ERR_CHECKCOLDSTAKEVERIFY);
+                    }
+                }
+                break;
 
                 default:
                     return set_error(serror, SCRIPT_ERR_BAD_OPCODE);
             }
-
             // Size limits
             if (stack.size() + altstack.size() > 1000)
                 return set_error(serror, SCRIPT_ERR_STACK_SIZE);
@@ -982,15 +869,11 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
     {
         return set_error(serror, SCRIPT_ERR_UNKNOWN_ERROR);
     }
-
     if (!vfExec.empty())
         return set_error(serror, SCRIPT_ERR_UNBALANCED_CONDITIONAL);
-
     return set_success(serror);
 }
-
 namespace {
-
 /**
  * Wrapper that serializes like CTransaction, but with the modifications
  *  required for the signature hash done in-place
@@ -1003,14 +886,12 @@ private:
     const bool fAnyoneCanPay;  //! whether the hashtype has the SIGHASH_ANYONECANPAY flag set
     const bool fHashSingle;    //! whether the hashtype is SIGHASH_SINGLE
     const bool fHashNone;      //! whether the hashtype is SIGHASH_NONE
-
 public:
     CTransactionSignatureSerializer(const CTransaction &txToIn, const CScript &scriptCodeIn, unsigned int nInIn, int nHashTypeIn) :
         txTo(txToIn), scriptCode(scriptCodeIn), nIn(nInIn),
         fAnyoneCanPay(!!(nHashTypeIn & SIGHASH_ANYONECANPAY)),
         fHashSingle((nHashTypeIn & 0x1f) == SIGHASH_SINGLE),
         fHashNone((nHashTypeIn & 0x1f) == SIGHASH_NONE) {}
-
     /** Serialize the passed scriptCode, skipping OP_CODESEPARATORs */
     template<typename S>
     void SerializeScriptCode(S &s) const {
@@ -1033,7 +914,6 @@ public:
         if (itBegin != scriptCode.end())
             s.write((char*)&itBegin[0], it-itBegin);
     }
-
     /** Serialize an input of txTo */
     template<typename S>
     void SerializeInput(S &s, unsigned int nInput) const {
@@ -1055,7 +935,6 @@ public:
         else
             ::Serialize(s, txTo.vin[nInput].nSequence);
     }
-
     /** Serialize an output of txTo */
     template<typename S>
     void SerializeOutput(S &s, unsigned int nOutput) const {
@@ -1065,7 +944,6 @@ public:
         else
             ::Serialize(s, txTo.vout[nOutput]);
     }
-
     /** Serialize txTo */
     template<typename S>
     void Serialize(S &s) const {
@@ -1085,7 +963,6 @@ public:
         ::Serialize(s, txTo.nLockTime);
     }
 };
-
 uint256 GetPrevoutHash(const CTransaction& txTo) {
     CHashWriter ss(SER_GETHASH, 0);
     for (unsigned int n = 0; n < txTo.vin.size(); n++) {
@@ -1093,7 +970,6 @@ uint256 GetPrevoutHash(const CTransaction& txTo) {
     }
     return ss.GetHash();
 }
-
 uint256 GetSequenceHash(const CTransaction& txTo) {
     CHashWriter ss(SER_GETHASH, 0);
     for (unsigned int n = 0; n < txTo.vin.size(); n++) {
@@ -1101,7 +977,6 @@ uint256 GetSequenceHash(const CTransaction& txTo) {
     }
     return ss.GetHash();
 }
-
 uint256 GetOutputsHash(const CTransaction& txTo) {
     CHashWriter ss(SER_GETHASH, 0);
     for (unsigned int n = 0; n < txTo.vout.size(); n++) {
@@ -1109,37 +984,29 @@ uint256 GetOutputsHash(const CTransaction& txTo) {
     }
     return ss.GetHash();
 }
-
 } // anon namespace
-
 PrecomputedTransactionData::PrecomputedTransactionData(const CTransaction& txTo)
 {
     hashPrevouts = GetPrevoutHash(txTo);
     hashSequence = GetSequenceHash(txTo);
     hashOutputs = GetOutputsHash(txTo);
 }
-
 uint256 SignatureHash(const CScript& scriptCode, const CTransaction& txTo, unsigned int nIn, int nHashType, const CAmount& amount, SigVersion sigversion, const PrecomputedTransactionData* cache)
 {
     if (nIn >= txTo.vin.size()) {
         //  nIn out of range
         return UINT256_ONE;
     }
-
     if (sigversion == SIGVERSION_WITNESS_V0) {
-
         uint256 hashPrevouts;
         uint256 hashSequence;
         uint256 hashOutputs;
-
         if (!(nHashType & SIGHASH_ANYONECANPAY)) {
             hashPrevouts = cache ? cache->hashPrevouts : GetPrevoutHash(txTo);
         }
-
         if (!(nHashType & SIGHASH_ANYONECANPAY) && (nHashType & 0x1f) != SIGHASH_SINGLE && (nHashType & 0x1f) != SIGHASH_NONE) {
             hashSequence = cache ? cache->hashSequence : GetSequenceHash(txTo);
         }
-
         if ((nHashType & 0x1f) != SIGHASH_SINGLE && (nHashType & 0x1f) != SIGHASH_NONE) {
             hashOutputs = cache ? cache->hashOutputs : GetOutputsHash(txTo);
         } else if ((nHashType & 0x1f) == SIGHASH_SINGLE && nIn < txTo.vout.size()) {
@@ -1147,7 +1014,6 @@ uint256 SignatureHash(const CScript& scriptCode, const CTransaction& txTo, unsig
             ss << txTo.vout[nIn];
             hashOutputs = ss.GetHash();
         }
-
         CHashWriter ss(SER_GETHASH, 0);
         // Version
         ss << txTo.nVersion;
@@ -1167,10 +1033,8 @@ uint256 SignatureHash(const CScript& scriptCode, const CTransaction& txTo, unsig
         ss << txTo.nLockTime;
         // Sighash type
         ss << nHashType;
-
         return ss.GetHash();
     }
-
     // Check for invalid use of SIGHASH_SINGLE
     if ((nHashType & 0x1f) == SIGHASH_SINGLE) {
         if (nIn >= txTo.vout.size()) {
@@ -1178,42 +1042,33 @@ uint256 SignatureHash(const CScript& scriptCode, const CTransaction& txTo, unsig
             return UINT256_ONE;
         }
     }
-
     // Wrapper to serialize only the necessary parts of the transaction being signed
     CTransactionSignatureSerializer txTmp(txTo, scriptCode, nIn, nHashType);
-
     // Serialize and hash
     CHashWriter ss(SER_GETHASH, 0);
     ss << txTmp << nHashType;
     return ss.GetHash();
 }
-
 bool TransactionSignatureChecker::VerifySignature(const std::vector<unsigned char>& vchSig, const CPubKey& pubkey, const uint256& sighash) const
 {
     return pubkey.Verify(sighash, vchSig);
 }
-
 bool TransactionSignatureChecker::CheckSig(const std::vector<unsigned char>& vchSigIn, const std::vector<unsigned char>& vchPubKey, const CScript& scriptCode, SigVersion sigversion) const
 {
     CPubKey pubkey(vchPubKey);
     if (!pubkey.IsValid())
         return false;
-
     // Hash type is one byte tacked on to the end of the signature
     std::vector<unsigned char> vchSig(vchSigIn);
     if (vchSig.empty())
         return false;
     int nHashType = vchSig.back();
     vchSig.pop_back();
-
     uint256 sighash = SignatureHash(scriptCode, *txTo, nIn, nHashType, amount, sigversion, this->precomTxData);
-
     if (!VerifySignature(vchSig, pubkey, sighash))
         return false;
-
     return true;
 }
-
 bool TransactionSignatureChecker::CheckLockTime(const CScriptNum& nLockTime) const
 {
     // There are two times of nLockTime: lock-by-blockheight
@@ -1228,12 +1083,10 @@ bool TransactionSignatureChecker::CheckLockTime(const CScriptNum& nLockTime) con
         (txTo->nLockTime >= LOCKTIME_THRESHOLD && nLockTime >= LOCKTIME_THRESHOLD)
     ))
         return false;
-
     // Now that we know we're comparing apples-to-apples, the
     // comparison is a simple numeric one.
     if (nLockTime > (int64_t)txTo->nLockTime)
         return false;
-
     // Finally the nLockTime feature can be disabled and thus
     // CHECKLOCKTIMEVERIFY bypassed if every txin has been
     // finalized by setting nSequence to maxint. The
@@ -1246,19 +1099,14 @@ bool TransactionSignatureChecker::CheckLockTime(const CScriptNum& nLockTime) con
     // required to prove correct CHECKLOCKTIMEVERIFY execution.
     if (txTo->vin[nIn].IsFinal())
         return false;
-
     return true;
 }
-
-
 bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, unsigned int flags, const BaseSignatureChecker& checker, ScriptError* serror)
 {
     set_error(serror, SCRIPT_ERR_UNKNOWN_ERROR);
-
     if ((flags & SCRIPT_VERIFY_SIGPUSHONLY) != 0 && !scriptSig.IsPushOnly()) {
         return set_error(serror, SCRIPT_ERR_SIG_PUSHONLY);
     }
-
     std::vector<std::vector<unsigned char> > stack, stackCopy;
     if (!EvalScript(stack, scriptSig, flags, checker, SIGVERSION_BASE, serror))
         // serror is set
@@ -1270,26 +1118,21 @@ bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, unsigne
         return false;
     if (stack.empty())
         return set_error(serror, SCRIPT_ERR_EVAL_FALSE);
-
     if (CastToBool(stack.back()) == false)
         return set_error(serror, SCRIPT_ERR_EVAL_FALSE);
-
     // Additional validation for spend-to-script-hash transactions:
     if ((flags & SCRIPT_VERIFY_P2SH) && scriptPubKey.IsPayToScriptHash())
     {
         // scriptSig must be literals-only or validation fails
         if (!scriptSig.IsPushOnly())
             return set_error(serror, SCRIPT_ERR_SIG_PUSHONLY);
-
         // stackCopy cannot be empty here, because if it was the
         // P2SH  HASH <> EQUAL  scriptPubKey would be evaluated with
         // an empty stack and the EvalScript above would return false.
         assert(!stackCopy.empty());
-
         const valtype& pubKeySerialized = stackCopy.back();
         CScript pubKey2(pubKeySerialized.begin(), pubKeySerialized.end());
         popstack(stackCopy);
-
         if (!EvalScript(stackCopy, pubKey2, flags, checker, SIGVERSION_BASE, serror))
             // serror is set
             return false;
@@ -1300,6 +1143,5 @@ bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, unsigne
         else
             return set_success(serror);
     }
-
     return set_success(serror);
 }
