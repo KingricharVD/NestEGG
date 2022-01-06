@@ -259,7 +259,7 @@ public:
     const CKeyingMaterial& GetEncryptionKey() const;
     bool HasEncryptionKeys() const;
     //! Get spkm
-    ScriptPubKeyMan* GetScriptPubKeyMan() const;
+    ScriptPubKeyMan* GetSaplingScriptPubKeyMan() const;
     /*
      * Main wallet lock.
      * This lock protects all the fields added by CWallet
