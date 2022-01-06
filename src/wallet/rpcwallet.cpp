@@ -4271,7 +4271,7 @@ const CRPCCommand vWalletRPCCommands[] =
         { "wallet",             "sethdseed",                &sethdseed,                true  },
         { "wallet",             "getnewaddress",            &getnewaddress,            true  },
         { "wallet",             "getnewstakingaddress",     &getnewstakingaddress,     true  },
-        { "wallet",             "getaccountaddress",      &getaccountaddress,      true  },
+        { "wallet",             "getaccountaddress",        &getaccountaddress,        true  },
         { "wallet",             "getreceivedbyaddress",     &getreceivedbyaddress,     false },
         { "wallet",             "gettransaction",           &gettransaction,           false },
         { "wallet",             "getstakesplitthreshold",   &getstakesplitthreshold,   false },
