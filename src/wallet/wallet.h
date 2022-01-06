@@ -254,7 +254,7 @@ public:
     //! Generates hd wallet //
     bool SetupSPKM(bool newKeypool = true);
     //! Whether the wallet is hd or not //
-    bool IsHDEnabled() const;
+    bool IsEnabled() const;
     /* SPKM Helpers */
     const CKeyingMaterial& GetEncryptionKey() const;
     bool HasEncryptionKeys() const;
