@@ -28,6 +28,7 @@
 #include <boost/thread/thread.hpp>
 #include <univalue.h>
 #include <iostream>
+void walletRegisterRPCCommands();
 int64_t nWalletUnlockTime;
 static RecursiveMutex cs_nWalletUnlockTime;
 std::string HelpRequiringPassphrase()
