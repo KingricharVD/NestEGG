@@ -42,6 +42,7 @@ extern CWallet* pwalletMain;
 /**
  * Settings
  */
+ void walletRegisterRPCCommands();
 extern CFeeRate payTxFee;
 extern CAmount maxTxFee;
 extern unsigned int nTxConfirmTarget;
