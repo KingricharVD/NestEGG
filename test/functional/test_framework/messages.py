@@ -216,8 +216,8 @@ class CInv():
         1: "MSG_TX",
         2: "MSG_BLOCK",
         3: "MSG_FILTERED_BLOCK",
-        # 4: "DB_LOCK_OLDEST",
-        # 5: "MSG_BUDGET_VOTE",
+        4: "MSG_TXLOCK_REQUEST",
+        5: "MSG_TXLOCK_VOTE",
         6: "MSG_SPORK",
         7: "MSG_MASTERNODE_WINNER",
         8: "MSG_MASTERNODE_SCANNING_ERROR",
@@ -1361,4 +1361,3 @@ class msg_witness_blocktxn(msg_blocktxn):
         r = b""
         r += self.block_transactions.serialize(with_witness=True)
         return r
-
