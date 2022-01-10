@@ -10,6 +10,7 @@
 #include "httpserver.h"
 #include "consensus/zerocoin_verify.h"
 #include "init.h"
+#include "sapling/key_io_sapling.h"
 #include "main.h"
 #include "masternode-sync.h"
 #include "net.h"
@@ -50,7 +51,7 @@ UniValue getinfo(const JSONRPCRequest& request)
             "  \"version\": xxxxx,             (numeric) the server version\n"
             "  \"protocolversion\": xxxxx,     (numeric) the protocol version\n"
             "  \"walletversion\": xxxxx,       (numeric) the wallet version\n"
-            "  \"balance\": xxxxxxx,           (numeric) the total 777 balance of the wallet (excluding zerocoins)\n"
+            "  \"balance\": xxxxxxx,           (numeric) the total __DSW__ balance of the wallet (excluding zerocoins)\n"
             "  \"zerocoinbalance\": xxxxxxx,   (numeric) the total zerocoin balance of the wallet\n"
             "  \"staking status\": true|false, (boolean) if the wallet is staking or not\n"
             "  \"blocks\": xxxxxx,             (numeric) the current number of blocks processed in the server\n"
@@ -63,8 +64,8 @@ UniValue getinfo(const JSONRPCRequest& request)
             "  \"keypoololdest\": xxxxxx,      (numeric) the timestamp (seconds since GMT epoch) of the oldest pre-generated key in the key pool\n"
             "  \"keypoolsize\": xxxx,          (numeric) how many new keys are pre-generated\n"
             "  \"unlocked_until\": ttt,        (numeric) the timestamp in seconds since epoch (midnight Jan 1 1970 GMT) that the wallet is unlocked for transfers, or 0 if the wallet is locked\n"
-            "  \"paytxfee\": x.xxxx,           (numeric) the transaction fee set in 777/kb\n"
-            "  \"relayfee\": x.xxxx,           (numeric) minimum relay fee for non-free transactions in 777/kb\n"
+            "  \"paytxfee\": x.xxxx,           (numeric) the transaction fee set in __DSW__/kb\n"
+            "  \"relayfee\": x.xxxx,           (numeric) minimum relay fee for non-free transactions in __DSW__/kb\n"
             "  \"errors\": \"...\"             (string) any error messages\n"
             "}\n"
             "\nExamples:\n" +
@@ -293,18 +294,39 @@ UniValue spork(const JSONRPCRequest& request)
         "\nExamples:\n" +
         HelpExampleCli("spork", "show") + HelpExampleRpc("spork", "show"));
 }
+
+// Every possibly address (todo: clean sprout address)
+typedef boost::variant<libzcash::InvalidEncoding, libzcash::SproutPaymentAddress, libzcash::SaplingPaymentAddress, CTxDestination> PPaymentAddress;
+
 class DescribePaymentAddressVisitor : public boost::static_visitor<UniValue>
 {
 public:
     explicit DescribePaymentAddressVisitor(bool _isStaking) : isStaking(_isStaking) {}
+    UniValue operator()(const libzcash::InvalidEncoding &zaddr) const { return UniValue(UniValue::VOBJ); }
+
+    UniValue operator()(const libzcash::SproutPaymentAddress &zaddr) const {
+        return UniValue(UniValue::VOBJ); // todo: Clean Sprout code.
+    }
+
+    UniValue operator()(const libzcash::SaplingPaymentAddress &zaddr) const {
+        UniValue obj(UniValue::VOBJ);
+        obj.push_back(Pair("type", "sapling"));
+        obj.push_back(Pair("diversifier", HexStr(zaddr.d)));
+        obj.push_back(Pair("diversifiedtransmissionkey", zaddr.pk_d.GetHex()));
+#ifdef ENABLE_WALLET
+        if (pwalletMain) {
+            obj.push_back(Pair("ismine", pwalletMain->HaveSpendingKeyForPaymentAddress(zaddr)));
+        }
+#endif
+        return obj;
+    }
 
     UniValue operator()(const CTxDestination &dest) const {
         UniValue ret(UniValue::VOBJ);
         std::string currentAddress = EncodeDestination(dest, isStaking);
         ret.push_back(Pair("address", currentAddress));
-        CScript scriptPubKey = GetScriptForStakeDelegation(dest);
+        CScript scriptPubKey = GetScriptForDestination(dest);
         ret.push_back(Pair("scriptPubKey", HexStr(scriptPubKey.begin(), scriptPubKey.end())));
-
 #ifdef ENABLE_WALLET
         isminetype mine = pwalletMain ? IsMine(*pwalletMain, dest) : ISMINE_NO;
         ret.push_back(Pair("ismine", bool(mine & (ISMINE_SPENDABLE_ALL | ISMINE_COLD))));
@@ -317,27 +339,25 @@ public:
 #endif
         return ret;
     }
-
 private:
     bool isStaking{false};
 };
-
 UniValue validateaddress(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() != 1)
         throw std::runtime_error(
-            "validateaddress \"777address\"\n"
-            "\nReturn information about the given 777 address.\n"
+            "validateaddress \"__DSW__address\"\n"
+            "\nReturn information about the given __DSW__ address.\n"
             "\nArguments:\n"
-            "1. \"777address\"     (string, required) The 777 address to validate\n"
+            "1. \"__DSW__address\"     (string, required) The __DSW__ address to validate\n"
             "\nResult:\n"
             "{\n"
             "  \"isvalid\" : true|false,         (boolean) If the address is valid or not. If not, this is the only property returned.\n"
-            "  \"type\" : \"xxxx\",              (string) \"standard\"\n"
-            "  \"address\" : \"777 address\",    (string) The 777 address validated\n"
+            "  \"type\" : \"xxxx\",              (string) \"standard\" or \"sapling\"\n"
+            "  \"address\" : \"__DSW__ address\",    (string) The __DSW__ address validated\n"
             "  \"scriptPubKey\" : \"hex\",       (string) The hex encoded scriptPubKey generated by the address -only if is standard address-\n"
             "  \"ismine\" : true|false,          (boolean) If the address is yours or not\n"
-            "  \"isstaking\" : true|false,       (boolean) If the address is a staking address for 777 cold staking -only if is standard address-\n"
+            "  \"isstaking\" : true|false,       (boolean) If the address is a staking address for __DSW__ cold staking -only if is standard address-\n"
             "  \"iswatchonly\" : true|false,     (boolean) If the address is watchonly -only if standard address-\n"
             "  \"isscript\" : true|false,        (boolean) If the key is a script -only if standard address-\n"
             "  \"hex\" : \"hex\",                (string, optional) The redeemscript for the P2SH address -only if standard address-\n"
@@ -345,287 +365,297 @@ UniValue validateaddress(const JSONRPCRequest& request)
             "  \"iscompressed\" : true|false,    (boolean) If the address is compressed -only if standard address-\n"
             "  (\"pubkey\" : \"decompressed publickey hex\",    (string) The hex value of the decompressed raw public key -only if standard address)-\n"
             "  \"account\" : \"account\"         (string) DEPRECATED. The account associated with the address, \"\" is the default account\n"
+            // Sapling
+            "  \"payingkey\" : \"hex\",         (string) [sprout] The hex value of the paying key, a_pk -only if is sapling address-\n"
+            "  \"transmissionkey\" : \"hex\",   (string) [sprout] The hex value of the transmission key, pk_enc -only if is sapling address-\n"
+            "  \"diversifier\" : \"hex\",       (string) [sapling] The hex value of the diversifier, d -only if is sapling address-\n"
+            "  \"diversifiedtransmissionkey\" : \"hex\", (string) [sapling] The hex value of pk_d -only if is sapling address-\n"
             "}\n"
+
             "\nExamples:\n" +
-            HelpExampleCli("validateaddress", "\"1PSSGeFHDnKNxiEyFrD1wcEaHr9hrQDDWc\""));
+            HelpExampleCli("validateaddress", "\"1PSSGeFHDnKNxiEyFrD1wcEaHr9hrQDDWc\"") +
+            HelpExampleCli("validateaddress", "\"sapling_address\"") +
+            HelpExampleRpc("validateaddress", "\"1PSSGeFHDnKNxiEyFrD1wcEaHr9hrQDDWc\""));
+
 #ifdef ENABLE_WALLET
     LOCK2(cs_main, pwalletMain ? &pwalletMain->cs_wallet : nullptr);
 #else
     LOCK(cs_main);
 #endif
 
-std::string currentAddress = request.params[0].get_str();
-   bool isStakingAddress = false;
-   CTxDestination dest = DecodeDestination(currentAddress, isStakingAddress);
-   bool isValid = IsValidDestination(dest);
+    std::string strAddress = request.params[0].get_str();
 
-   UniValue ret(UniValue::VOBJ);
-   ret.push_back(Pair("isvalid", isValid));
-   if (isValid) {
-       ret.push_back(Pair("address", currentAddress));
-       CScript scriptPubKey = GetScriptForStakeDelegation(dest);
-       ret.push_back(Pair("scriptPubKey", HexStr(scriptPubKey.begin(), scriptPubKey.end())));
+    // First check if it's a regular address
+    bool isStakingAddress = false;
+    CTxDestination dest = DecodeDestination(strAddress, isStakingAddress);
+    bool isValid = IsValidDestination(dest);
 
-#ifdef ENABLE_WALLET
-       isminetype mine = pwalletMain ? IsMine(*pwalletMain, dest) : ISMINE_NO;
-       ret.push_back(Pair("ismine", bool(mine & (ISMINE_SPENDABLE_ALL | ISMINE_COLD))));
-       ret.push_back(Pair("isstaking", isStakingAddress));
-       ret.push_back(Pair("iswatchonly", bool(mine & ISMINE_WATCH_ONLY)));
-       UniValue detail = boost::apply_visitor(DescribeAddressVisitor(mine), dest);
-       ret.pushKVs(detail);
-       if (pwalletMain && pwalletMain->mapAddressBook.count(dest))
-           ret.push_back(Pair("account", pwalletMain->mapAddressBook[dest].name));
-#endif
-   }
-   return ret;
+    PPaymentAddress finalAddress;
+    if (!isValid) {
+        isValid = KeyIO::IsValidPaymentAddressString(strAddress);
+        if (isValid) finalAddress = KeyIO::DecodePaymentAddress(strAddress);
+    } else {
+        finalAddress = dest;
+    }
+
+    UniValue ret(UniValue::VOBJ);
+    ret.push_back(Pair("isvalid", isValid));
+    if (isValid) {
+        ret.push_back(Pair("address", strAddress));
+        UniValue detail = boost::apply_visitor(DescribePaymentAddressVisitor(isStakingAddress), finalAddress);
+        ret.pushKVs(detail);
+    }
+
+    return ret;
 }
+
 /**
-* Used by addmultisigaddress / createmultisig:
-*/
+ * Used by addmultisigaddress / createmultisig:
+ */
 CScript _createmultisig_redeemScript(const UniValue& params)
 {
-   int nRequired = params[0].get_int();
-   const UniValue& keys = params[1].get_array();
-   // Gather public keys
-   if (nRequired < 1)
-       throw std::runtime_error("a multisignature address must require at least one key to redeem");
-   if ((int)keys.size() < nRequired)
-       throw std::runtime_error(
-           strprintf("not enough keys supplied "
-                     "(got %u keys, but need at least %d to redeem)",
-               keys.size(), nRequired));
-   if (keys.size() > 16)
-       throw std::runtime_error("Number of addresses involved in the multisignature address creation > 16\nReduce the number");
-   std::vector<CPubKey> pubkeys;
-   pubkeys.resize(keys.size());
-   for (unsigned int i = 0; i < keys.size(); i++) {
-       const std::string& ks = keys[i].get_str();
+    int nRequired = params[0].get_int();
+    const UniValue& keys = params[1].get_array();
+    // Gather public keys
+    if (nRequired < 1)
+        throw std::runtime_error("a multisignature address must require at least one key to redeem");
+    if ((int)keys.size() < nRequired)
+        throw std::runtime_error(
+            strprintf("not enough keys supplied "
+                      "(got %u keys, but need at least %d to redeem)",
+                keys.size(), nRequired));
+    if (keys.size() > 16)
+        throw std::runtime_error("Number of addresses involved in the multisignature address creation > 16\nReduce the number");
+    std::vector<CPubKey> pubkeys;
+    pubkeys.resize(keys.size());
+    for (unsigned int i = 0; i < keys.size(); i++) {
+        const std::string& ks = keys[i].get_str();
 #ifdef ENABLE_WALLET
-       // Case 1: 777 address and we have full public key:
-       CTxDestination dest = DecodeDestination(ks);
-       if (pwalletMain && IsValidDestination(dest)) {
-           const CKeyID* keyID = boost::get<CKeyID>(&dest);
-           if (!keyID) {
-               throw std::runtime_error(
-                       strprintf("%s does not refer to a key", ks));
-           }
-           CPubKey vchPubKey;
-           if (!pwalletMain->GetPubKey(*keyID, vchPubKey))
-               throw std::runtime_error(
-                   strprintf("no full public key for address %s", ks));
-           if (!vchPubKey.IsFullyValid())
-               throw std::runtime_error(" Invalid public key: " + ks);
-           pubkeys[i] = vchPubKey;
-       }
-       // Case 2: hex public key
-       else
+        // Case 1: __DSW__ address and we have full public key:
+        CTxDestination dest = DecodeDestination(ks);
+        if (pwalletMain && IsValidDestination(dest)) {
+            const CKeyID* keyID = boost::get<CKeyID>(&dest);
+            if (!keyID) {
+                throw std::runtime_error(
+                        strprintf("%s does not refer to a key", ks));
+            }
+            CPubKey vchPubKey;
+            if (!pwalletMain->GetPubKey(*keyID, vchPubKey))
+                throw std::runtime_error(
+                    strprintf("no full public key for address %s", ks));
+            if (!vchPubKey.IsFullyValid())
+                throw std::runtime_error(" Invalid public key: " + ks);
+            pubkeys[i] = vchPubKey;
+        }
+        // Case 2: hex public key
+        else
 #endif
-           if (IsHex(ks)) {
-           CPubKey vchPubKey(ParseHex(ks));
-           if (!vchPubKey.IsFullyValid())
-               throw std::runtime_error(" Invalid public key: " + ks);
-           pubkeys[i] = vchPubKey;
-       } else {
-           throw std::runtime_error(" Invalid public key: " + ks);
-       }
-   }
-   CScript result = GetScriptForMultisig(nRequired, pubkeys);
-   if (result.size() > MAX_SCRIPT_ELEMENT_SIZE)
-       throw std::runtime_error(
-           strprintf("redeemScript exceeds size limit: %d > %d", result.size(), MAX_SCRIPT_ELEMENT_SIZE));
-   return result;
+            if (IsHex(ks)) {
+            CPubKey vchPubKey(ParseHex(ks));
+            if (!vchPubKey.IsFullyValid())
+                throw std::runtime_error(" Invalid public key: " + ks);
+            pubkeys[i] = vchPubKey;
+        } else {
+            throw std::runtime_error(" Invalid public key: " + ks);
+        }
+    }
+    CScript result = GetScriptForMultisig(nRequired, pubkeys);
+    if (result.size() > MAX_SCRIPT_ELEMENT_SIZE)
+        throw std::runtime_error(
+            strprintf("redeemScript exceeds size limit: %d > %d", result.size(), MAX_SCRIPT_ELEMENT_SIZE));
+    return result;
 }
 UniValue createmultisig(const JSONRPCRequest& request)
 {
-   if (request.fHelp || request.params.size() < 2 || request.params.size() > 2)
-       throw std::runtime_error(
-           "createmultisig nrequired [\"key\",...]\n"
-           "\nCreates a multi-signature address with n signature of m keys required.\n"
-           "It returns a json object with the address and redeemScript.\n"
-           "\nArguments:\n"
-           "1. nrequired      (numeric, required) The number of required signatures out of the n keys or addresses.\n"
-           "2. \"keys\"       (string, required) A json array of keys which are 777 addresses or hex-encoded public keys\n"
-           "     [\n"
-           "       \"key\"    (string) 777 address or hex-encoded public key\n"
-           "       ,...\n"
-           "     ]\n"
-           "\nResult:\n"
-           "{\n"
-           "  \"address\":\"multisigaddress\",  (string) The value of the new multisig address.\n"
-           "  \"redeemScript\":\"script\"       (string) The string value of the hex-encoded redemption script.\n"
-           "}\n"
-           "\nExamples:\n"
-           "\nCreate a multisig address from 2 addresses\n" +
-           HelpExampleCli("createmultisig", "2 \"[\\\"16sSauSf5pF2UkUwvKGq4qjNRzBZYqgEL5\\\",\\\"171sgjn4YtPu27adkKGrdDwzRTxnRkBfKV\\\"]\"") +
-           "\nAs a json rpc call\n" +
-           HelpExampleRpc("createmultisig", "2, \"[\\\"16sSauSf5pF2UkUwvKGq4qjNRzBZYqgEL5\\\",\\\"171sgjn4YtPu27adkKGrdDwzRTxnRkBfKV\\\"]\""));
-   // Construct using pay-to-script-hash:
-   CScript inner = _createmultisig_redeemScript(request.params);
-   CScriptID innerID(inner);
-   UniValue result(UniValue::VOBJ);
-   result.push_back(Pair("address", EncodeDestination(innerID)));
-   result.push_back(Pair("redeemScript", HexStr(inner.begin(), inner.end())));
-   return result;
+    if (request.fHelp || request.params.size() < 2 || request.params.size() > 2)
+        throw std::runtime_error(
+            "createmultisig nrequired [\"key\",...]\n"
+            "\nCreates a multi-signature address with n signature of m keys required.\n"
+            "It returns a json object with the address and redeemScript.\n"
+            "\nArguments:\n"
+            "1. nrequired      (numeric, required) The number of required signatures out of the n keys or addresses.\n"
+            "2. \"keys\"       (string, required) A json array of keys which are __DSW__ addresses or hex-encoded public keys\n"
+            "     [\n"
+            "       \"key\"    (string) __DSW__ address or hex-encoded public key\n"
+            "       ,...\n"
+            "     ]\n"
+            "\nResult:\n"
+            "{\n"
+            "  \"address\":\"multisigaddress\",  (string) The value of the new multisig address.\n"
+            "  \"redeemScript\":\"script\"       (string) The string value of the hex-encoded redemption script.\n"
+            "}\n"
+            "\nExamples:\n"
+            "\nCreate a multisig address from 2 addresses\n" +
+            HelpExampleCli("createmultisig", "2 \"[\\\"16sSauSf5pF2UkUwvKGq4qjNRzBZYqgEL5\\\",\\\"171sgjn4YtPu27adkKGrdDwzRTxnRkBfKV\\\"]\"") +
+            "\nAs a json rpc call\n" +
+            HelpExampleRpc("createmultisig", "2, \"[\\\"16sSauSf5pF2UkUwvKGq4qjNRzBZYqgEL5\\\",\\\"171sgjn4YtPu27adkKGrdDwzRTxnRkBfKV\\\"]\""));
+    // Construct using pay-to-script-hash:
+    CScript inner = _createmultisig_redeemScript(request.params);
+    CScriptID innerID(inner);
+    UniValue result(UniValue::VOBJ);
+    result.push_back(Pair("address", EncodeDestination(innerID)));
+    result.push_back(Pair("redeemScript", HexStr(inner.begin(), inner.end())));
+    return result;
 }
 UniValue verifymessage(const JSONRPCRequest& request)
 {
-   if (request.fHelp || request.params.size() != 3)
-       throw std::runtime_error(
-           "verifymessage \"777address\" \"signature\" \"message\"\n"
-           "\nVerify a signed message\n"
-           "\nArguments:\n"
-           "1. \"777address\"  (string, required) The 777 address to use for the signature.\n"
-           "2. \"signature\"       (string, required) The signature provided by the signer in base 64 encoding (see signmessage).\n"
-           "3. \"message\"         (string, required) The message that was signed.\n"
-           "\nResult:\n"
-           "true|false   (boolean) If the signature is verified or not.\n"
-           "\nExamples:\n"
-           "\nUnlock the wallet for 30 seconds\n" +
-           HelpExampleCli("walletpassphrase", "\"mypassphrase\" 30") +
-           "\nCreate the signature\n" +
-           HelpExampleCli("signmessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XZ\" \"my message\"") +
-           "\nVerify the signature\n" +
-           HelpExampleCli("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XZ\" \"signature\" \"my message\"") +
-           "\nAs json rpc\n" +
-           HelpExampleRpc("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XZ\", \"signature\", \"my message\""));
-   LOCK(cs_main);
-   std::string strAddress = request.params[0].get_str();
-   std::string strSign = request.params[1].get_str();
-   std::string strMessage = request.params[2].get_str();
-   CTxDestination destination = DecodeDestination(strAddress);
-   if (!IsValidDestination(destination))
-       throw JSONRPCError(RPC_TYPE_ERROR, "Invalid address");
-   const CKeyID* keyID = boost::get<CKeyID>(&destination);
-   if (!keyID) {
-       throw JSONRPCError(RPC_TYPE_ERROR, "Address does not refer to key");
-   }
-   bool fInvalid = false;
-   std::vector<unsigned char> vchSig = DecodeBase64(strSign.c_str(), &fInvalid);
-   if (fInvalid)
-       throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Malformed base64 encoding");
-   CHashWriter ss(SER_GETHASH, 0);
-   ss << strMessageMagic;
-   ss << strMessage;
-   CPubKey pubkey;
-   if (!pubkey.RecoverCompact(ss.GetHash(), vchSig))
-       return false;
-   return (pubkey.GetID() == *keyID);
+    if (request.fHelp || request.params.size() != 3)
+        throw std::runtime_error(
+            "verifymessage \"__DSW__address\" \"signature\" \"message\"\n"
+            "\nVerify a signed message\n"
+            "\nArguments:\n"
+            "1. \"__DSW__address\"  (string, required) The __DSW__ address to use for the signature.\n"
+            "2. \"signature\"       (string, required) The signature provided by the signer in base 64 encoding (see signmessage).\n"
+            "3. \"message\"         (string, required) The message that was signed.\n"
+            "\nResult:\n"
+            "true|false   (boolean) If the signature is verified or not.\n"
+            "\nExamples:\n"
+            "\nUnlock the wallet for 30 seconds\n" +
+            HelpExampleCli("walletpassphrase", "\"mypassphrase\" 30") +
+            "\nCreate the signature\n" +
+            HelpExampleCli("signmessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XZ\" \"my message\"") +
+            "\nVerify the signature\n" +
+            HelpExampleCli("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XZ\" \"signature\" \"my message\"") +
+            "\nAs json rpc\n" +
+            HelpExampleRpc("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XZ\", \"signature\", \"my message\""));
+    LOCK(cs_main);
+    std::string strAddress = request.params[0].get_str();
+    std::string strSign = request.params[1].get_str();
+    std::string strMessage = request.params[2].get_str();
+    CTxDestination destination = DecodeDestination(strAddress);
+    if (!IsValidDestination(destination))
+        throw JSONRPCError(RPC_TYPE_ERROR, "Invalid address");
+    const CKeyID* keyID = boost::get<CKeyID>(&destination);
+    if (!keyID) {
+        throw JSONRPCError(RPC_TYPE_ERROR, "Address does not refer to key");
+    }
+    bool fInvalid = false;
+    std::vector<unsigned char> vchSig = DecodeBase64(strSign.c_str(), &fInvalid);
+    if (fInvalid)
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Malformed base64 encoding");
+    CHashWriter ss(SER_GETHASH, 0);
+    ss << strMessageMagic;
+    ss << strMessage;
+    CPubKey pubkey;
+    if (!pubkey.RecoverCompact(ss.GetHash(), vchSig))
+        return false;
+    return (pubkey.GetID() == *keyID);
 }
 UniValue setmocktime(const JSONRPCRequest& request)
 {
-   if (request.fHelp || request.params.size() != 1)
-       throw std::runtime_error(
-           "setmocktime timestamp\n"
-           "\nSet the local time to given timestamp (-regtest only)\n"
-           "\nArguments:\n"
-           "1. timestamp  (integer, required) Unix seconds-since-epoch timestamp\n"
-           "   Pass 0 to go back to using the system time.");
-   if (!Params().IsRegTestNet())
-       throw std::runtime_error("setmocktime for regression testing (-regtest mode) only");
-   LOCK(cs_main);
-   RPCTypeCheck(request.params, boost::assign::list_of(UniValue::VNUM));
-   SetMockTime(request.params[0].get_int64());
-   uint64_t t = GetTime();
-   if(g_connman) {
-       g_connman->ForEachNode([t](CNode* pnode) {
-           pnode->nLastSend = pnode->nLastRecv = t;
-       });
-   }
-   return NullUniValue;
+    if (request.fHelp || request.params.size() != 1)
+        throw std::runtime_error(
+            "setmocktime timestamp\n"
+            "\nSet the local time to given timestamp (-regtest only)\n"
+            "\nArguments:\n"
+            "1. timestamp  (integer, required) Unix seconds-since-epoch timestamp\n"
+            "   Pass 0 to go back to using the system time.");
+    if (!Params().IsRegTestNet())
+        throw std::runtime_error("setmocktime for regression testing (-regtest mode) only");
+    LOCK(cs_main);
+    RPCTypeCheck(request.params, boost::assign::list_of(UniValue::VNUM));
+    SetMockTime(request.params[0].get_int64());
+    uint64_t t = GetTime();
+    if(g_connman) {
+        g_connman->ForEachNode([t](CNode* pnode) {
+            pnode->nLastSend = pnode->nLastRecv = t;
+        });
+    }
+    return NullUniValue;
 }
 void EnableOrDisableLogCategories(UniValue cats, bool enable) {
-   cats = cats.get_array();
-   for (unsigned int i = 0; i < cats.size(); ++i) {
-       std::string cat = cats[i].get_str();
-       bool success;
-       if (enable) {
-           success = g_logger->EnableCategory(cat);
-       } else {
-           success = g_logger->DisableCategory(cat);
-       }
-       if (!success)
-           throw JSONRPCError(RPC_INVALID_PARAMETER, "unknown logging category " + cat);
-   }
+    cats = cats.get_array();
+    for (unsigned int i = 0; i < cats.size(); ++i) {
+        std::string cat = cats[i].get_str();
+        bool success;
+        if (enable) {
+            success = g_logger->EnableCategory(cat);
+        } else {
+            success = g_logger->DisableCategory(cat);
+        }
+        if (!success)
+            throw JSONRPCError(RPC_INVALID_PARAMETER, "unknown logging category " + cat);
+    }
 }
 UniValue logging(const JSONRPCRequest& request)
 {
-   if (request.fHelp || request.params.size() > 2) {
-       throw std::runtime_error(
-           "logging [include,...] <exclude>\n"
-           "Gets and sets the logging configuration.\n"
-           "When called without an argument, returns the list of categories that are currently being debug logged.\n"
-           "When called with arguments, adds or removes categories from debug logging.\n"
-           "The valid logging categories are: " + ListLogCategories() + "\n"
-           "libevent logging is configured on startup and cannot be modified by this RPC during runtime."
-           "Arguments:\n"
-           "1. \"include\" (array of strings) add debug logging for these categories.\n"
-           "2. \"exclude\" (array of strings) remove debug logging for these categories.\n"
-           "\nResult: <categories>  (string): a list of the logging categories that are active.\n"
-           "\nExamples:\n"
-           + HelpExampleCli("logging", "\"[\\\"all\\\"]\" \"[\\\"http\\\"]\"")
-           + HelpExampleRpc("logging", "[\"all\"], \"[libevent]\"")
-       );
-   }
-   uint32_t original_log_categories = g_logger->GetCategoryMask();
-   if (request.params.size() > 0 && request.params[0].isArray()) {
-       EnableOrDisableLogCategories(request.params[0], true);
-   }
-   if (request.params.size() > 1 && request.params[1].isArray()) {
-       EnableOrDisableLogCategories(request.params[1], false);
-   }
-   uint32_t updated_log_categories = g_logger->GetCategoryMask();
-   uint32_t changed_log_categories = original_log_categories ^ updated_log_categories;
-   // Update libevent logging if BCLog::LIBEVENT has changed.
-   // If the library version doesn't allow it, UpdateHTTPServerLogging() returns false,
-   // in which case we should clear the BCLog::LIBEVENT flag.
-   // Throw an error if the user has explicitly asked to change only the libevent
-   // flag and it failed.
-   if (changed_log_categories & BCLog::LIBEVENT) {
-       if (!UpdateHTTPServerLogging(g_logger->WillLogCategory(BCLog::LIBEVENT))) {
-           g_logger->DisableCategory(BCLog::LIBEVENT);
-           if (changed_log_categories == BCLog::LIBEVENT) {
-           throw JSONRPCError(RPC_INVALID_PARAMETER, "libevent logging cannot be updated when using libevent before v2.1.1.");
-           }
-       }
-   }
-   UniValue result(UniValue::VOBJ);
-   std::vector<CLogCategoryActive> vLogCatActive = ListActiveLogCategories();
-   for (const auto& logCatActive : vLogCatActive) {
-       result.pushKV(logCatActive.category, logCatActive.active);
-   }
-   return result;
+    if (request.fHelp || request.params.size() > 2) {
+        throw std::runtime_error(
+            "logging [include,...] <exclude>\n"
+            "Gets and sets the logging configuration.\n"
+            "When called without an argument, returns the list of categories that are currently being debug logged.\n"
+            "When called with arguments, adds or removes categories from debug logging.\n"
+            "The valid logging categories are: " + ListLogCategories() + "\n"
+            "libevent logging is configured on startup and cannot be modified by this RPC during runtime."
+            "Arguments:\n"
+            "1. \"include\" (array of strings) add debug logging for these categories.\n"
+            "2. \"exclude\" (array of strings) remove debug logging for these categories.\n"
+            "\nResult: <categories>  (string): a list of the logging categories that are active.\n"
+            "\nExamples:\n"
+            + HelpExampleCli("logging", "\"[\\\"all\\\"]\" \"[\\\"http\\\"]\"")
+            + HelpExampleRpc("logging", "[\"all\"], \"[libevent]\"")
+        );
+    }
+    uint32_t original_log_categories = g_logger->GetCategoryMask();
+    if (request.params.size() > 0 && request.params[0].isArray()) {
+        EnableOrDisableLogCategories(request.params[0], true);
+    }
+    if (request.params.size() > 1 && request.params[1].isArray()) {
+        EnableOrDisableLogCategories(request.params[1], false);
+    }
+    uint32_t updated_log_categories = g_logger->GetCategoryMask();
+    uint32_t changed_log_categories = original_log_categories ^ updated_log_categories;
+    // Update libevent logging if BCLog::LIBEVENT has changed.
+    // If the library version doesn't allow it, UpdateHTTPServerLogging() returns false,
+    // in which case we should clear the BCLog::LIBEVENT flag.
+    // Throw an error if the user has explicitly asked to change only the libevent
+    // flag and it failed.
+    if (changed_log_categories & BCLog::LIBEVENT) {
+        if (!UpdateHTTPServerLogging(g_logger->WillLogCategory(BCLog::LIBEVENT))) {
+            g_logger->DisableCategory(BCLog::LIBEVENT);
+            if (changed_log_categories == BCLog::LIBEVENT) {
+            throw JSONRPCError(RPC_INVALID_PARAMETER, "libevent logging cannot be updated when using libevent before v2.1.1.");
+            }
+        }
+    }
+    UniValue result(UniValue::VOBJ);
+    std::vector<CLogCategoryActive> vLogCatActive = ListActiveLogCategories();
+    for (const auto& logCatActive : vLogCatActive) {
+        result.pushKV(logCatActive.category, logCatActive.active);
+    }
+    return result;
 }
 #ifdef ENABLE_WALLET
 UniValue getstakingstatus(const JSONRPCRequest& request)
 {
-   if (request.fHelp || request.params.size() != 0)
-       throw std::runtime_error(
-           "getstakingstatus\n"
-           "\nReturns an object containing various staking information.\n"
-           "\nResult:\n"
-           "{\n"
-           "  \"staking_status\": true|false,      (boolean) whether the wallet is staking or not\n"
-           "  \"staking_enabled\": true|false,     (boolean) whether staking is enabled/disabled in jackpot.conf\n"
-           "  \"coldstaking_enabled\": true|false, (boolean) whether cold-staking is enabled/disabled in jackpot.conf\n"
-           "  \"haveconnections\": true|false,     (boolean) whether network connections are present\n"
-           "  \"mnsync\": true|false,              (boolean) whether the required masternode/spork data is synced\n"
-           "  \"walletunlocked\": true|false,      (boolean) whether the wallet is unlocked\n"
-           "  \"stakeablecoins\": n                (numeric) number of stakeable UTXOs\n"
-           "  \"stakingbalance\": d                (numeric) 777 value of the stakeable coins (minus reserve balance, if any)\n"
-           "  \"stakesplitthreshold\": d           (numeric) value of the current threshold for stake split\n"
-           "  \"lastattempt_age\": n               (numeric) seconds since last stake attempt\n"
-           "  \"lastattempt_depth\": n             (numeric) depth of the block on top of which the last stake attempt was made\n"
-           "  \"lastattempt_hash\": xxx            (hex string) hash of the block on top of which the last stake attempt was made\n"
-           "  \"lastattempt_coins\": n             (numeric) number of stakeable coins available during last stake attempt\n"
-           "  \"lastattempt_tries\": n             (numeric) number of stakeable coins checked during last stake attempt\n"
-           "}\n"
-           "\nExamples:\n" +
-           HelpExampleCli("getstakingstatus", "") + HelpExampleRpc("getstakingstatus", ""));
-   if (!pwalletMain)
-       throw JSONRPCError(RPC_IN_WARMUP, "Try again after active chain is loaded");
-   {
-LOCK2(cs_main, &pwalletMain->cs_wallet);
-UniValue obj(UniValue::VOBJ);
+    if (request.fHelp || request.params.size() != 0)
+        throw std::runtime_error(
+            "getstakingstatus\n"
+            "\nReturns an object containing various staking information.\n"
+            "\nResult:\n"
+            "{\n"
+            "  \"staking_status\": true|false,      (boolean) whether the wallet is staking or not\n"
+            "  \"staking_enabled\": true|false,     (boolean) whether staking is enabled/disabled in __decenomy__.conf\n"
+            "  \"coldstaking_enabled\": true|false, (boolean) whether cold-staking is enabled/disabled in __decenomy__.conf\n"
+            "  \"haveconnections\": true|false,     (boolean) whether network connections are present\n"
+            "  \"mnsync\": true|false,              (boolean) whether the required masternode/spork data is synced\n"
+            "  \"walletunlocked\": true|false,      (boolean) whether the wallet is unlocked\n"
+            "  \"stakeablecoins\": n                (numeric) number of stakeable UTXOs\n"
+            "  \"stakingbalance\": d                (numeric) __DSW__ value of the stakeable coins (minus reserve balance, if any)\n"
+            "  \"stakesplitthreshold\": d           (numeric) value of the current threshold for stake split\n"
+            "  \"lastattempt_age\": n               (numeric) seconds since last stake attempt\n"
+            "  \"lastattempt_depth\": n             (numeric) depth of the block on top of which the last stake attempt was made\n"
+            "  \"lastattempt_hash\": xxx            (hex string) hash of the block on top of which the last stake attempt was made\n"
+            "  \"lastattempt_coins\": n             (numeric) number of stakeable coins available during last stake attempt\n"
+            "  \"lastattempt_tries\": n             (numeric) number of stakeable coins checked during last stake attempt\n"
+            "}\n"
+            "\nExamples:\n" +
+            HelpExampleCli("getstakingstatus", "") + HelpExampleRpc("getstakingstatus", ""));
+    if (!pwalletMain)
+        throw JSONRPCError(RPC_IN_WARMUP, "Try again after active chain is loaded");
+    {
+        LOCK2(cs_main, &pwalletMain->cs_wallet);
+        UniValue obj(UniValue::VOBJ);
         obj.push_back(Pair("staking_status", pwalletMain->pStakerStatus->IsActive()));
         obj.push_back(Pair("staking_enabled", GetBoolArg("-staking", DEFAULT_STAKING)));
         bool fColdStaking = GetBoolArg("-coldstaking", true);

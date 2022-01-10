@@ -15,7 +15,7 @@ use zcash_primitives::{
     },
 };
 
-use zcash_proofs::circuit::sapling::TREE_DEPTH as EGGLING_TREE_DEPTH;
+use zcash_proofs::circuit::sapling::TREE_DEPTH as SAPLING_TREE_DEPTH;
 use zcash_proofs::circuit::sprout::{self, TREE_DEPTH as SPROUT_TREE_DEPTH};
 
 use bellman::gadgets::multipack;
@@ -64,12 +64,12 @@ use zcash_proofs::{
 #[cfg(test)]
 mod tests;
 
-static mut EGGLING_SPEND_VK: Option<PreparedVerifyingKey<Bls12>> = None;
-static mut EGGLING_OUTPUT_VK: Option<PreparedVerifyingKey<Bls12>> = None;
+static mut SAPLING_SPEND_VK: Option<PreparedVerifyingKey<Bls12>> = None;
+static mut SAPLING_OUTPUT_VK: Option<PreparedVerifyingKey<Bls12>> = None;
 static mut SPROUT_GROTH16_VK: Option<PreparedVerifyingKey<Bls12>> = None;
 
-static mut EGGLING_SPEND_PARAMS: Option<Parameters<Bls12>> = None;
-static mut EGGLING_OUTPUT_PARAMS: Option<Parameters<Bls12>> = None;
+static mut SAPLING_SPEND_PARAMS: Option<Parameters<Bls12>> = None;
+static mut SAPLING_OUTPUT_PARAMS: Option<Parameters<Bls12>> = None;
 static mut SPROUT_GROTH16_PARAMS_PATH: Option<PathBuf> = None;
 
 /// Writes an FrRepr to [u8] of length 32
@@ -227,12 +227,12 @@ fn init_zksnark_params(
     // Caller is responsible for calling this function once, so
     // these global mutations are safe.
     unsafe {
-        EGGLING_SPEND_PARAMS = Some(spend_params);
-        EGGLING_OUTPUT_PARAMS = Some(output_params);
+        SAPLING_SPEND_PARAMS = Some(spend_params);
+        SAPLING_OUTPUT_PARAMS = Some(output_params);
         SPROUT_GROTH16_PARAMS_PATH = sprout_path.map(|p| p.to_owned());
 
-        EGGLING_SPEND_VK = Some(spend_vk);
-        EGGLING_OUTPUT_VK = Some(output_vk);
+        SAPLING_SPEND_VK = Some(spend_vk);
+        SAPLING_OUTPUT_VK = Some(output_vk);
         SPROUT_GROTH16_VK = sprout_vk;
     }
 }
@@ -653,7 +653,7 @@ pub extern "system" fn librustzcash_sapling_check_spend(
         unsafe { &*sighash_value },
         spend_auth_sig,
         zkproof,
-        unsafe { EGGLING_SPEND_VK.as_ref() }.unwrap(),
+        unsafe { SAPLING_SPEND_VK.as_ref() }.unwrap(),
         &JUBJUB,
     )
 }
@@ -696,7 +696,7 @@ pub extern "system" fn librustzcash_sapling_check_output(
         cm,
         epk,
         zkproof,
-        unsafe { EGGLING_OUTPUT_VK.as_ref() }.unwrap(),
+        unsafe { SAPLING_OUTPUT_VK.as_ref() }.unwrap(),
         &JUBJUB,
     )
 }
@@ -960,7 +960,7 @@ pub extern "system" fn librustzcash_sapling_output_proof(
         payment_address,
         rcm,
         value,
-        unsafe { EGGLING_OUTPUT_PARAMS.as_ref() }.unwrap(),
+        unsafe { SAPLING_OUTPUT_PARAMS.as_ref() }.unwrap(),
         &JUBJUB,
     );
 
@@ -1044,7 +1044,7 @@ pub extern "system" fn librustzcash_sapling_spend_proof(
     ar: *const [c_uchar; 32],
     value: u64,
     anchor: *const [c_uchar; 32],
-    witness: *const [c_uchar; 1 + 33 * EGGLING_TREE_DEPTH + 8],
+    witness: *const [c_uchar; 1 + 33 * SAPLING_TREE_DEPTH + 8],
     cv: *mut [c_uchar; 32],
     rk_out: *mut [c_uchar; 32],
     zkproof: *mut [c_uchar; GROTH_PROOF_SIZE],
@@ -1111,8 +1111,8 @@ pub extern "system" fn librustzcash_sapling_spend_proof(
             value,
             anchor,
             witness,
-            unsafe { EGGLING_SPEND_PARAMS.as_ref() }.unwrap(),
-            unsafe { EGGLING_SPEND_VK.as_ref() }.unwrap(),
+            unsafe { SAPLING_SPEND_PARAMS.as_ref() }.unwrap(),
+            unsafe { SAPLING_SPEND_VK.as_ref() }.unwrap(),
             &JUBJUB,
         )
         .expect("proving should not fail");
@@ -1198,26 +1198,25 @@ pub extern "system" fn librustzcash_zip32_xfvk_derive(
 }
 
 #[no_mangle]
-pub extern "system" fn librustzcash_zip32_xfvk_address(
-    xfvk: *const [c_uchar; 169],
-    j: *const [c_uchar; 11],
-    j_ret: *mut [c_uchar; 11],
-    addr_ret: *mut [c_uchar; 43],
+xfvk: *const [c_uchar; 169],
+j: *const [c_uchar; 11],
+j_ret: *mut [c_uchar; 11],
+addr_ret: *mut [c_uchar; 43],
 ) -> bool {
-    let xfvk = zip32::ExtendedFullViewingKey::read(&unsafe { *xfvk }[..])
-        .expect("valid ExtendedFullViewingKey");
-    let j = zip32::DiversifierIndex(unsafe { *j });
+let xfvk = zip32::ExtendedFullViewingKey::read(&unsafe { *xfvk }[..])
+    .expect("valid ExtendedFullViewingKey");
+let j = zip32::DiversifierIndex(unsafe { *j });
 
-    let addr = match xfvk.address(j) {
-        Ok(addr) => addr,
-        Err(_) => return false,
-    };
+let addr = match xfvk.address(j) {
+    Ok(addr) => addr,
+    Err(_) => return false,
+};
 
-    let j_ret = unsafe { &mut *j_ret };
-    let addr_ret = unsafe { &mut *addr_ret };
+let j_ret = unsafe { &mut *j_ret };
+let addr_ret = unsafe { &mut *addr_ret };
 
-    j_ret.copy_from_slice(&(addr.0).0);
-    addr_ret.copy_from_slice(&addr.1.to_bytes());
+j_ret.copy_from_slice(&(addr.0).0);
+addr_ret.copy_from_slice(&addr.1.to_bytes());
 
-    true
+true
 }

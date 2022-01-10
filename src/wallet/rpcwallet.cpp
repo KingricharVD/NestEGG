@@ -20,6 +20,9 @@
 #include "wallet.h"
 #include "walletdb.h"
 #include "zpivchain.h"
+
+#include "sapling/key_io_sapling.h"
+
 #include <stdint.h>
 #include "libzerocoin/Coin.h"
 #include "spork.h"
@@ -28,7 +31,7 @@
 #include <boost/thread/thread.hpp>
 #include <univalue.h>
 #include <iostream>
-void walletRegisterRPCCommands();
+
 int64_t nWalletUnlockTime;
 static RecursiveMutex cs_nWalletUnlockTime;
 std::string HelpRequiringPassphrase()
@@ -320,15 +323,26 @@ UniValue upgradewallet(const JSONRPCRequest& request)
                                  "Bump the wallet features to the latest supported version. Non-HD wallets will be upgraded to HD wallet functionality. "
                                  "Marking all the previous keys as pre-split keys and managing them separately. Once the last key in the pre-split keypool gets marked as used (received balance), the wallet will automatically start using the HD generated keys.\n"
                                  "The upgraded HD wallet will have a new HD seed set so that new keys added to the keypool will be derived from this new seed.\n"
+                                 "Wallets that are already runnning the latest HD version will be upgraded to Sapling support\n"
+                                 "Enabling the Sapling key manager. Sapling keys will be deterministically derived by the same HD wallet seed.\n"
+                                 "Wallets that are running the latest Sapling version will not be upgraded"
                                  "\nNote that you will need to MAKE A NEW BACKUP of your wallet after upgrade it.\n"
                                  + HelpExampleCli("upgradewallet", "") + HelpExampleRpc("upgradewallet", "")
         );
     EnsureWallet();
     EnsureWalletIsUnlocked();
     LOCK2(cs_main, pwalletMain->cs_wallet);
+    // Do not do anything to non-HD wallets
+    if (pwalletMain->HasSaplingSPKM()) {
+        throw JSONRPCError(RPC_WALLET_ERROR, "Cannot upgrade the wallet. The wallet is already running the latest version");
+    }
     // Get version
     int prev_version = pwalletMain->GetVersion();
-    WalletFeature features = FEATURE_PRE_SPLIT_KEYPOOL;
+    // For now, Sapling features are locked to regtest.
+        WalletFeature features = Params().IsRegTestNet() ? FEATURE_SAPLING : FEATURE_PRE_SPLIT_KEYPOOL;
+
+  //  WalletFeature features = FEATURE_PRE_SPLIT_KEYPOOL;
+
     // Upgrade wallet's version
     pwalletMain->SetMinVersion(features);
     pwalletMain->SetMaxVersion(features);
@@ -420,6 +434,36 @@ UniValue getnewstakingaddress(const JSONRPCRequest& request)
 
     return EncodeDestination(GetNewAddressFromLabel("coldstaking", request.params, CChainParams::STAKING_ADDRESS), CChainParams::STAKING_ADDRESS);
 }
+
+
+
+UniValue getnewshieldedaddress(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() > 1)
+        throw std::runtime_error(
+                "getnewshieldedaddress\n"
+                "\nReturns a new shielded address for receiving payments.\n"
+                "\nArguments:\n"
+                "\nResult:\n"
+                "\"address\"    (string) The new shielded address.\n"
+                "\nExamples:\n"
+                + HelpExampleCli("getnewshieldedaddress", "")
+                + HelpExampleRpc("getnewshieldedaddress", "")
+        );
+
+    if (!Params().IsRegTestNet()) {
+        throw std::runtime_error("Sapling only available on regtest");
+    }
+
+    EnsureWallet();
+
+    LOCK2(cs_main, pwalletMain->cs_wallet);
+
+    EnsureWalletIsUnlocked();
+
+    return KeyIO::EncodePaymentAddress(pwalletMain->GenerateNewSaplingZKey());
+}
+
 
 UniValue delegatoradd(const JSONRPCRequest& request)
 {
@@ -571,6 +615,54 @@ UniValue liststakingaddresses(const JSONRPCRequest& request)
 
     return ListaddressesForPurpose(AddressBook::AddressBookPurpose::COLD_STAKING);
 }
+UniValue listshieldedaddresses(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() > 1)
+        throw std::runtime_error(
+                "listshieldedaddresses ( includeWatchonly )\n"
+                "\nReturns the list of shielded addresses belonging to the wallet.\n"
+                "\nArguments:\n"
+                "1. includeWatchonly (bool, optional, default=false) Also include watchonly addresses (see 'importviewingkey')\n"
+                "\nResult:\n"
+                "[                     (json array of string)\n"
+                "  \"addr\"           (string) a shielded address belonging to the wallet\n"
+                "  ,...\n"
+                "]\n"
+                "\nExamples:\n"
+                + HelpExampleCli("listshieldedaddresses", "")
+                + HelpExampleRpc("listshieldedaddresses", "")
+        );
+
+    if (!Params().IsRegTestNet()) {
+        throw std::runtime_error("Sapling only available on regtest");
+    }
+
+    EnsureWallet();
+    LOCK2(cs_main, pwalletMain->cs_wallet);
+
+    bool fIncludeWatchonly = false;
+    if (request.params.size() > 0) {
+        fIncludeWatchonly = request.params[0].get_bool();
+    }
+
+    UniValue ret(UniValue::VARR);
+
+    std::set<libzcash::SaplingPaymentAddress> addresses;
+    pwalletMain->GetSaplingPaymentAddresses(addresses);
+    libzcash::SaplingIncomingViewingKey ivk;
+    libzcash::SaplingFullViewingKey fvk;
+    for (libzcash::SaplingPaymentAddress addr : addresses) {
+        if (fIncludeWatchonly || (
+                pwalletMain->GetSaplingIncomingViewingKey(addr, ivk) &&
+                pwalletMain->GetSaplingFullViewingKey(ivk, fvk) &&
+                pwalletMain->HaveSaplingSpendingKey(fvk)
+        )) {
+            ret.push_back(KeyIO::EncodePaymentAddress(addr));
+        }
+    }
+    return ret;
+}
+
 
 CTxDestination GetLabelDestination(CWallet* const pwallet, const std::string& label, bool bForceNew = false)
 {
@@ -4304,6 +4396,10 @@ const CRPCCommand vWalletRPCCommands[] =
 { "wallet",             "walletpassphrase",         &walletpassphrase,         true  },
 { "wallet",             "delegatoradd",             &delegatoradd,             true  },
 { "wallet",             "delegatorremove",          &delegatorremove,          true  },
+
+/** Sapling functions */
+{ "wallet",             "getnewshieldedaddress",     &getnewshieldedaddress,     true  },
+{ "wallet",             "listshieldedaddresses",     &listshieldedaddresses,     false },
 
 /** Account functions (deprecated) */
 { "wallet",             "getaccountaddress",        &getaccountaddress,        true  },
