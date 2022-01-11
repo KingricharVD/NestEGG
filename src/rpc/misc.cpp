@@ -429,7 +429,7 @@ CScript _createmultisig_redeemScript(const UniValue& params)
             throw std::runtime_error(" Invalid public key: " + ks);
         }
     }
-    CScript result = GetScriptForMultisig(nRequired, pubkeys);
+    CScript result = GetScriptForDestination(nRequired, pubkeys);
     if (result.size() > MAX_SCRIPT_ELEMENT_SIZE)
         throw std::runtime_error(
             strprintf("redeemScript exceeds size limit: %d > %d", result.size(), MAX_SCRIPT_ELEMENT_SIZE));
