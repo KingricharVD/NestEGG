@@ -54,7 +54,7 @@
 
 // Sapling
 #include "sapling/util.h"
-#include "rust/include/librustzcash.h"
+#include <librustzcash.h>
 
 #ifdef ENABLE_WALLET
 #include "wallet/db.h"
