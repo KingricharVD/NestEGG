@@ -136,7 +136,7 @@ LIBEGGLING_H = \
   sapling/zip32.h \
   sapling/saplingscriptpubkeyman.h
 
-.PHONY: FORCE check-symbols check-security
+.PHONY: FORCE cargo-build check-security
 # Human_Charity_Coin_Protocol core #
 BITCOIN_CORE_H = \
   activemasternode.h \
