@@ -968,11 +968,11 @@ bool AppInit2()
 #endif
         if (SoftSetBoolArg("-staking", false))
             LogPrintf("AppInit2 : parameter interaction: wallet functionality not enabled -> setting -staking=0\n");
-            
+
 #ifdef ENABLE_WALLET
 bool fDisableWallet = GetBoolArg("-disablewallet", false);
 if (!fDisableWallet)
-  walletRegisterRPCCommands();
+
   #endif
 
     nConnectTimeout = GetArg("-timeout", DEFAULT_CONNECT_TIMEOUT);
