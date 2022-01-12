@@ -108,21 +108,25 @@ UniValue preparebudget(const JSONRPCRequest& request)
     // Parse __DSW__ address
     CScript scriptPubKey = GetScriptForDestination(address);
     // create transaction 15 minutes into the future, to allow for confirmation time
-    CBudgetProposalBroadcast budgetProposalBroadcast(strProposalName, strURL, nPaymentCount, scriptPubKey, nAmount, nBlockStart, UINT256_ZERO);
-    const uint256& proposalHash = budgetProposalBroadcast.GetHash();
+   CBudgetProposalBroadcast budgetProposalBroadcast(strProposalName, strURL, nPaymentCount, scriptPubKey, nAmount, nBlockStart, UINT256_ZERO);
+   const uint256& proposalHash = budgetProposalBroadcast.GetHash();
+   int nChainHeight = chainActive.Height();
+   if (!budgetProposalBroadcast.UpdateValid(nChainHeight, false))
+       throw std::runtime_error("Proposal is not valid - " + proposalHash.ToString() + " - " + budgetProposalBroadcast.IsInvalidReason());
+   bool useIX = false; //true;
+   // if (request.params.size() > 7) {
+   //     if(request.params[7].get_str() != "false" && request.params[7].get_str() != "true")
+   //         return "Invalid use_ix, must be true or false";
+   //     useIX = request.params[7].get_str() == "true" ? true : false;
+   // }
+   CWalletTx wtx;
+   // make our change address
+   CReserveKey keyChange(pwalletMain);
+   if (!pwalletMain->CreateBudgetFeeTX(wtx, proposalHash, keyChange, false)) { // 50 777 collateral for proposal
+       throw std::runtime_error("Error making collateral transaction for proposal. Please check your wallet balance.");
+   }
 
-    int nChainHeight = chainActive.Height();
-    if (!budgetProposalBroadcast.UpdateValid(nChainHeight, false))
-        throw std::runtime_error("Proposal is not valid - " + proposalHash.ToString() + " - " + budgetProposalBroadcast.IsInvalidReason());
-
-    CWalletTx wtx;
-    // make our change address
-    CReserveKey keyChange(pwalletMain);
-    if (!pwalletMain->CreateBudgetFeeTX(wtx, proposalHash, keyChange, false)) { // 50 __DSW__ collateral for proposal
-        throw std::runtime_error("Error making collateral transaction for proposal. Please check your wallet balance.");
-    }
-
-    //send the tx to the network
+//send the tx to the network
     const CWallet::CommitResult& res = pwalletMain->CommitTransaction(wtx, keyChange, g_connman.get());
     if (res.status != CWallet::CommitStatus::OK)
         throw JSONRPCError(RPC_WALLET_ERROR, res.ToString());

@@ -19,7 +19,7 @@
 #include "utilstrencodings.h"
 #include "utiltime.h"
 
-#include <librustzcash.h>
+#include "rust/include/librustzcash.h"
 
 #include <stdarg.h>
 #include <thread>
