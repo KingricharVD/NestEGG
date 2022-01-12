@@ -110,6 +110,7 @@ UniValue preparebudget(const JSONRPCRequest& request)
     // create transaction 15 minutes into the future, to allow for confirmation time
     CBudgetProposalBroadcast budgetProposalBroadcast(strProposalName, strURL, nPaymentCount, scriptPubKey, nAmount, nBlockStart, UINT256_ZERO);
     const uint256& proposalHash = budgetProposalBroadcast.GetHash();
+
     int nChainHeight = chainActive.Height();
     if (!budgetProposalBroadcast.UpdateValid(nChainHeight, false))
         throw std::runtime_error("Proposal is not valid - " + proposalHash.ToString() + " - " + budgetProposalBroadcast.IsInvalidReason());
@@ -132,27 +133,32 @@ UniValue submitbudget(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() != 7)
         throw std::runtime_error(
-            "submitbudget \"proposal-name\" \"url\" payment-count block-start \"__DSW__-address\" monthly-payment \"fee-tx\"\n"
+            "submitbudget \"proposal-name\" \"url\" payment-count block-start \"EGG-address\" monthly-payment \"fee-tx\"\n"
             "\nSubmit proposal to the network\n"
+
             "\nArguments:\n"
             "1. \"proposal-name\":  (string, required) Desired proposal name (20 character limit)\n"
             "2. \"url\":            (string, required) URL of proposal details (64 character limit)\n"
             "3. payment-count:    (numeric, required) Total number of monthly payments\n"
             "4. block-start:      (numeric, required) Starting super block height\n"
-            "5. \"__DSW__-address\":   (string, required) __DSW__ address to send payments to\n"
+            "5. \"EGG-address\":   (string, required) EGG address to send payments to\n"
             "6. monthly-payment:  (numeric, required) Monthly payment amount\n"
             "7. \"fee-tx\":         (string, required) Transaction hash from preparebudget command\n"
+
             "\nResult:\n"
             "\"xxxx\"       (string) proposal hash (if successful) or error message (if failed)\n"
+
             "\nExamples:\n" +
             HelpExampleCli("submitbudget", "\"test-proposal\" \"https://forum.pivx.org/t/test-proposal\" 2 820800 \"D9oc6C3dttUbv8zd7zGNq1qKBGf4ZQ1XEE\" 500") +
             HelpExampleRpc("submitbudget", "\"test-proposal\" \"https://forum.pivx.org/t/test-proposal\" 2 820800 \"D9oc6C3dttUbv8zd7zGNq1qKBGf4ZQ1XEE\" 500"));
+
     std::string strProposalName;
     std::string strURL;
     int nPaymentCount;
     int nBlockStart;
     CTxDestination address;
     CAmount nAmount;
+
     checkBudgetInputs(request.params, strProposalName, strURL, nPaymentCount, nBlockStart, address, nAmount);
     // Parse __DSW__ address
     CScript scriptPubKey = GetScriptForDestination(address);
