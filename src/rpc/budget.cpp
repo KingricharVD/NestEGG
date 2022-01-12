@@ -162,9 +162,15 @@ UniValue submitbudget(const JSONRPCRequest& request)
     checkBudgetInputs(request.params, strProposalName, strURL, nPaymentCount, nBlockStart, address, nAmount);
     // Parse __DSW__ address
     CScript scriptPubKey = GetScriptForDestination(address);
-    uint256 hash = ParseHashV(request.params[6], "parameter 1");
-    //create the proposal incase we're the first to make it
-    CBudgetProposalBroadcast budgetProposalBroadcast(strProposalName, strURL, nPaymentCount, scriptPubKey, nAmount, nBlockStart, hash);
+uint256 hash = ParseHashV(request.params[6], "parameter 1");
+        //create the proposal incase we're the first to make it
+        CBudgetProposalBroadcast budgetProposalBroadcast(strProposalName, strURL, nPaymentCount, scriptPubKey, nAmount, nBlockStart, hash);
+        const uint256& proposalHash = budgetProposalBroadcast.GetHash();
+        int nChainHeight = chainActive.Height();
+    if (!budgetProposalBroadcast.UpdateValid(nChainHeight, false))
+        throw std::runtime_error("Proposal is not valid - " + proposalHash.ToString() + " - " + budgetProposalBroadcast.IsInvalidReason());
+
+    CWalletTx wtx;
     std::string strError = "";
     int nConf = 0;
     if (!IsBudgetCollateralValid(hash, budgetProposalBroadcast.GetHash(), strError, budgetProposalBroadcast.nTime, nConf)) {
