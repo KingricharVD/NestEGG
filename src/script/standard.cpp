@@ -315,7 +315,7 @@ CScript GetScriptForStakeDelegation(const CKeyID& stakingKey, const CKeyID& spen
     return script;
 }
 
-CScript GetScriptForDestination(int nRequired, const std::vector<CPubKey>& keys)
+CScript GetScriptForMultisig(int nRequired, const std::vector<CPubKey>& keys)
 {
     CScript script;
 

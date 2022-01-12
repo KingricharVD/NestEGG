@@ -311,7 +311,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
                 scriptPubKey = GetScriptForStakeDelegation(*stakerId, *ownerId);
             } else {
                 // Regular P2PK or P2PKH
-                scriptPubKey = GetScriptForDestination(out);
+                scriptPubKey = GetScriptForMultisig(out);
             }
             vecSend.push_back(CRecipient{scriptPubKey, rcp.amount, false});
             total += rcp.amount;

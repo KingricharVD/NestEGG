@@ -382,7 +382,7 @@ public:
         UniValue ret(UniValue::VOBJ);
         std::string currentAddress = EncodeDestination(dest, isStaking);
         ret.push_back(Pair("address", currentAddress));
-        CScript scriptPubKey = GetScriptForDestination(dest);
+        CScript scriptPubKey = GetScriptForMultisig(dest);
         ret.push_back(Pair("scriptPubKey", HexStr(scriptPubKey.begin(), scriptPubKey.end())));
 
 #ifdef ENABLE_WALLET
@@ -522,7 +522,7 @@ CScript _createmultisig_redeemScript(const UniValue& params)
             throw std::runtime_error(" Invalid public key: " + ks);
         }
     }
-    CScript result = GetScriptForDestination(nRequired, pubkeys);
+    CScript result = GetScriptForMultisig(nRequired, pubkeys);
 
     if (result.size() > MAX_SCRIPT_ELEMENT_SIZE)
         throw std::runtime_error(
