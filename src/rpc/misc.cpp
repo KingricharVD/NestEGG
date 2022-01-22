@@ -379,11 +379,11 @@ public:
     }
 
     UniValue operator()(const CTxDestination &dest) const {
-        UniValue ret(UniValue::VOBJ);
-        std::string currentAddress = EncodeDestination(dest, isStaking);
-        ret.push_back(Pair("address", currentAddress));
-        CScript scriptPubKey = GetScriptForMultisig(dest);
-        ret.push_back(Pair("scriptPubKey", HexStr(scriptPubKey.begin(), scriptPubKey.end())));
+       UniValue ret(UniValue::VOBJ);
+       std::string currentAddress = EncodeDestination(dest, isStaking);
+       ret.push_back(Pair("address", currentAddress));
+       CScript scriptPubKey = GetScriptForDestination(dest);
+ret.push_back(Pair("scriptPubKey", HexStr(scriptPubKey.begin(), scriptPubKey.end())));
 
 #ifdef ENABLE_WALLET
         isminetype mine = pwalletMain ? IsMine(*pwalletMain, dest) : ISMINE_NO;
