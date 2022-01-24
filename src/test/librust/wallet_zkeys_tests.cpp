@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE(StoreAndLoadSaplingZkeys) {
     CKey seed;
     seed.MakeNewKey(true);
     wallet.AddKeyPubKey(seed, seed.GetPubKey());
-    wallet.GetSaplingScriptPubKeyMan()->SetHDSeed(seed.GetPubKey(), false, true);
+    wallet.GetScriptPubKeyMan()->SetHDSeed(seed.GetPubKey(), false, true);
 
     // wallet should have one key
     auto address = wallet.GenerateNewSaplingZKey();
@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_CASE(StoreAndLoadSaplingZkeys) {
     BOOST_CHECK(wallet.LoadSaplingZKeyMetadata(ivk2, meta));
 
     // check metadata is the same
-    BOOST_CHECK_EQUAL(wallet.GetSaplingScriptPubKeyMan()->mapSaplingZKeyMetadata[ivk2].nCreateTime, now);
+    BOOST_CHECK_EQUAL(wallet.GetScriptPubKeyMan()->mapSaplingZKeyMetadata[ivk2].nCreateTime, now);
 
     // Load a diversified address for the third key into the wallet
     auto dpa2 = sk2.ToXFVK().Address(diversifier).get().second;

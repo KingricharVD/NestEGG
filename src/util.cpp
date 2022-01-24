@@ -57,7 +57,9 @@
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
-#include <io.h> /* for _commit */
+#ifdef WIN32
+#include <io.h>
+#elif __linux__
 #include <shlobj.h>
 #endif
 #ifdef HAVE_SYS_PRCTL_H

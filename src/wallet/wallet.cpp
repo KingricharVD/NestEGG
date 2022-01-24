@@ -610,14 +610,14 @@ bool CWallet::HasEncryptionKeys() const
     return !mapMasterKeys.empty();
 }
 
-ScriptPubKeyMan* CWallet::GetSaplingScriptPubKeyMan() const
+ScriptPubKeyMan* CWallet::GetScriptPubKeyMan() const
 {
     return m_sspk_man.get();
 }
 
 bool CWallet::HasSaplingSPKM()
 {
-    return GetSaplingScriptPubKeyMan()->IsEnabled();
+    return GetScriptPubKeyMan()->IsEnabled();
 }
 
 /**
@@ -3256,7 +3256,7 @@ std::set<CTxDestination> CWallet::GetLabelAddresses(const std::string& label) co
 bool CReserveKey::GetReservedKey(CPubKey& pubkey, bool _internal)
 {
 
-    ScriptPubKeyMan* m_sspk_man = pwallet->GetSaplingScriptPubKeyMan();
+    ScriptPubKeyMan* m_sspk_man = pwallet->GetScriptPubKeyMan();
     if (!m_sspk_man) {
         return false;
     }

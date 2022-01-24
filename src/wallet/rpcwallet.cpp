@@ -189,7 +189,7 @@ UniValue getaddressinfo(const JSONRPCRequest& request)
     }
     // TODO: Backport IsChange.
     //ret.pushKV("ischange", pwallet->IsChange(scriptPubKey));
-    ScriptPubKeyMan* spk_man = pwallet->GetSaplingScriptPubKeyMan();
+    ScriptPubKeyMan* spk_man = pwallet->GetScriptPubKeyMan();
     if (spk_man) {
         CKeyID* keyID = boost::get<CKeyID>(&dest);
         if (keyID) {
@@ -314,7 +314,7 @@ CPubKey parseWIFKey(std::string strKey, CWallet* pwallet)
     if (HaveKey(pwallet, key)) {
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Already have this key (either as an HD seed or as a loose private key)");
     }
-    return pwallet->GetSaplingScriptPubKeyMan()->DeriveNewSeed(key);
+    return pwallet->GetScriptPubKeyMan()->DeriveNewSeed(key);
 }
 UniValue upgradewallet(const JSONRPCRequest& request)
 {
@@ -390,7 +390,7 @@ UniValue sethdseed(const JSONRPCRequest& request)
     if (!request.params[0].isNull()) {
         flush_key_pool = request.params[0].get_bool();
     }
-    ScriptPubKeyMan* spk_man = pwallet->GetSaplingScriptPubKeyMan();
+    ScriptPubKeyMan* spk_man = pwallet->GetScriptPubKeyMan();
     CPubKey master_pub_key = request.params[1].isNull() ?
             spk_man->GenerateNewSeed() : parseWIFKey(request.params[1].get_str(), pwallet);
     spk_man->SetHDSeed(master_pub_key, true);
@@ -3051,7 +3051,7 @@ UniValue getwalletinfo(const JSONRPCRequest& request)
 
     size_t kpExternalSize = pwalletMain->KeypoolCountExternalKeys();
     obj.pushKV("keypoolsize", (int64_t)kpExternalSize);
-    ScriptPubKeyMan* spk_man = pwalletMain->GetSaplingScriptPubKeyMan();
+    ScriptPubKeyMan* spk_man = pwalletMain->GetScriptPubKeyMan();
     if (spk_man) {
         const CKeyID& seed_id = spk_man->GetHDChain().GetID();
         if (!seed_id.IsNull()) {

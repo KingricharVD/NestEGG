@@ -681,7 +681,7 @@ bool ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue, CW
             ssKey >> nIndex;
             CKeyPool keypool;
             ssValue >> keypool;
-            pwallet->GetSaplingScriptPubKeyMan()->LoadKeyPool(nIndex, keypool);
+            pwallet->GetScriptPubKeyMan()->LoadKeyPool(nIndex, keypool);
         } else if (strType == "version") {
             ssValue >> wss.nFileVersion;
             if (wss.nFileVersion == 10300)
@@ -743,11 +743,11 @@ bool ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue, CW
         } else if (strType == "hdchain") { // Regular key chain counter
             CHDChain chain;
             ssValue >> chain;
-            pwallet->GetSaplingScriptPubKeyMan()->SetHDChain(chain, true);
+            pwallet->GetScriptPubKeyMan()->SetHDChain(chain, true);
         } else if (strType == "hdchain_egg") {
             CHDChain chain;
             ssValue >> chain;
-            pwallet->GetSaplingScriptPubKeyMan()->SetHDChain(chain, true);
+            pwallet->GetScriptPubKeyMan()->SetHDChain(chain, true);
         } else if (strType == "eggzkey") {
             libzcash::SaplingIncomingViewingKey ivk;
             ssKey >> ivk;

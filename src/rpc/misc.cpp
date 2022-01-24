@@ -382,7 +382,7 @@ public:
        UniValue ret(UniValue::VOBJ);
        std::string currentAddress = EncodeDestination(dest, isStaking);
        ret.push_back(Pair("address", currentAddress));
-       CScript scriptPubKey = GetScriptForMultisig(dest);
+       CScript scriptPubKey = GetScriptForDestination(dest);
 ret.push_back(Pair("scriptPubKey", HexStr(scriptPubKey.begin(), scriptPubKey.end())));
 
 #ifdef ENABLE_WALLET
