@@ -453,7 +453,7 @@ bool CWallet::SetMinVersion(enum WalletFeature nVersion, CWalletDB* pwalletdbIn,
     if (fExplicit && nVersion > nWalletMaxVersion) {
 
         // For now, Sapling features are locked to regtest.
-        WalletFeature features = Params().IsRegTestNet() ? FEATURE_EGGLING : FEATURE_PRE_SPLIT_KEYPOOL;
+        WalletFeature features = Params().IsRegTestNet() ? FEATURE_SAPLING : FEATURE_PRE_SPLIT_KEYPOOL;
 
         nVersion = features;
     }
@@ -1457,7 +1457,7 @@ bool CWallet::Upgrade(std::string& error, const int& prevVersion)
     LOCK2(cs_wallet, cs_KeyStore);
 
     // Do not upgrade versions if we are already in the last one
-    if (prevVersion >= FEATURE_EGGLING) {
+    if (prevVersion >= FEATURE_SAPLING) {
         error = strprintf(_("Cannot upgrade to Sapling wallet (already running Sapling support). Version: %d"), prevVersion);
         return false;
     }
@@ -1470,7 +1470,7 @@ bool CWallet::Upgrade(std::string& error, const int& prevVersion)
     }
 
     // Now upgrade to Sapling manager
-    if (prevVersion < FEATURE_EGGLING) {
+    if (prevVersion < FEATURE_SAPLING) {
         if (!ActivateSaplingWallet()) {
             return false;
         }
@@ -3811,7 +3811,7 @@ CWallet* CWallet::CreateWalletFromFile(const std::string walletFile)
         if (nMaxVersion == 0) // the -upgradewallet without argument case
         {
             // For now, Sapling features are locked to regtest.
-            WalletFeature features = Params().IsRegTestNet() ? FEATURE_EGGLING : FEATURE_PRE_SPLIT_KEYPOOL;
+            WalletFeature features = Params().IsRegTestNet() ? FEATURE_SAPLING : FEATURE_PRE_SPLIT_KEYPOOL;
 
             LogPrintf("Performing wallet upgrade to %i\n", features);
             nMaxVersion = features;
@@ -3840,7 +3840,7 @@ CWallet* CWallet::CreateWalletFromFile(const std::string walletFile)
             LogPrintf("Creating HD Wallet\n");
 
             // For now, Sapling features are locked to regtest.
-            WalletFeature features = Params().IsRegTestNet() ? FEATURE_EGGLING : FEATURE_PRE_SPLIT_KEYPOOL;
+            WalletFeature features = Params().IsRegTestNet() ? FEATURE_SAPLING : FEATURE_PRE_SPLIT_KEYPOOL;
 
             // Ensure this wallet can only be opened by clients supporting HD.
             walletInstance->SetMinVersion(features);
