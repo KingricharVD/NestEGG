@@ -173,7 +173,7 @@ void ImportScript(const CScript& script, const std::string& strLabel, bool isRed
 
 void ImportAddress(const CTxDestination& dest, const std::string& strLabel, const std::string& strPurpose)
 {
-    CScript script = GetScriptForStakeDelegation(dest);
+    CScript script = GetScriptForDestination(dest);
     ImportScript(script, strLabel, false);
     // add to address book or update label
     if (IsValidDestination(dest)) {

@@ -200,7 +200,7 @@ void CMasternode::Check(bool forceCheck)
 int64_t CMasternode::SecondsSincePayment()
 {
     CScript pubkeyScript;
-    pubkeyScript = GetScriptForStakeDelegation(pubKeyCollateralAddress.GetID());
+    pubkeyScript = GetScriptForDestination(pubKeyCollateralAddress.GetID());
     int64_t sec = (GetAdjustedTime() - GetLastPaid());
     int64_t month = 60 * 60 * 24 * 30;
     if (sec < month) return sec; //if it's less than 30 days, give seconds
@@ -216,7 +216,7 @@ int64_t CMasternode::GetLastPaid()
     const CBlockIndex* BlockReading = GetChainTip();
     if (BlockReading == nullptr) return false;
     CScript mnpayee;
-    mnpayee = GetScriptForStakeDelegation(pubKeyCollateralAddress.GetID());
+    mnpayee = GetScriptForDestination(pubKeyCollateralAddress.GetID());
     CHashWriter ss(SER_GETHASH, PROTOCOL_VERSION);
     ss << vin;
     ss << sigTime;
@@ -257,7 +257,7 @@ bool CMasternode::IsValidNetAddr()
 bool CMasternode::IsInputAssociatedWithPubkey() const
 {
     CScript payee;
-    payee = GetScriptForStakeDelegation(pubKeyCollateralAddress.GetID());
+    payee = GetScriptForDestination(pubKeyCollateralAddress.GetID());
     CTransaction txVin;
     uint256 hash;
     if(GetTransaction(vin.prevout.hash, txVin, hash, true)) {
@@ -495,14 +495,14 @@ bool CMasternodeBroadcast::CheckAndUpdate(int& nDos)
        return false;
    }
    CScript pubkeyScript;
-   pubkeyScript = GetScriptForStakeDelegation(pubKeyCollateralAddress.GetID());
+   pubkeyScript = GetScriptForDestination(pubKeyCollateralAddress.GetID());
    if (pubkeyScript.size() != 25) {
        LogPrint(BCLog::MASTERNODE,"mnb - pubkey the wrong size\n");
        nDos = 100;
        return false;
    }
    CScript pubkeyScript2;
-   pubkeyScript2 = GetScriptForStakeDelegation(pubKeyMasternode.GetID());
+   pubkeyScript2 = GetScriptForDestination(pubKeyMasternode.GetID());
    if (pubkeyScript2.size() != 25) {
        LogPrint(BCLog::MASTERNODE,"mnb - pubkey2 the wrong size\n");
        nDos = 100;

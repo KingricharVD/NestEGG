@@ -226,7 +226,7 @@ static void MutateTxAddOutAddr(CMutableTransaction& tx, const std::string& strIn
     if (!IsValidDestination(destination)) {
         throw std::runtime_error("invalid TX output address");
     }
-    CScript scriptPubKey = GetScriptForStakeDelegation(destination);
+    CScript scriptPubKey = GetScriptForDestination(destination);
 
     // construct TxOut, append to transaction output list
     CTxOut txout(value, scriptPubKey);

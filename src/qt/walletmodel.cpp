@@ -308,7 +308,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
                 if (!stakerId || !ownerId) {
                     return InvalidAddress;
                 }
-                scriptPubKey = GetScriptForStakeDelegation(*stakerId, *ownerId);
+                scriptPubKey = GetScriptForDestination(*stakerId, *ownerId);
             } else {
                 // Regular P2PK or P2PKH
                 scriptPubKey = GetScriptForMultisig(out);

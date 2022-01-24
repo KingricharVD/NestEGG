@@ -238,10 +238,10 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
     unsigned int nBlockMaxSizeSpork = (unsigned int)sporkManager.GetSporkValue(SPORK_105_MAX_BLOCK_SIZE);
 
     nBlockMaxSize = std::max(
-        (unsigned int)1000, 
-        std::min( 
-            nBlockMaxSizeSpork, 
-            nBlockMaxSize 
+        (unsigned int)1000,
+        std::min(
+            nBlockMaxSizeSpork,
+            nBlockMaxSize
         )
     );
 
@@ -526,7 +526,7 @@ CBlockTemplate* CreateNewBlockWithKey(CReserveKey& reservekey, CWallet* pwallet)
         return nullptr;
     }
 
-    CScript scriptPubKey = GetScriptForStakeDelegation(pubkey.GetID());
+    CScript scriptPubKey = GetScriptForDestination(pubkey.GetID());
     return CreateNewBlock(scriptPubKey, pwallet, false);
 }
 

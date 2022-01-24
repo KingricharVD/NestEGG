@@ -173,7 +173,7 @@ UniValue getaddressinfo(const JSONRPCRequest& request)
     }
     std::string currentAddress = request.params[0].get_str();
     ret.pushKV("address", currentAddress);
-    CScript scriptPubKey = GetScriptForStakeDelegation(dest);
+    CScript scriptPubKey = GetScriptForDestination(dest);
     ret.pushKV("scriptPubKey", HexStr(scriptPubKey.begin(), scriptPubKey.end()));
     isminetype mine = IsMine(*pwallet, dest);
     ret.pushKV("ismine", bool(mine & ISMINE_SPENDABLE_ALL));
@@ -836,7 +836,7 @@ void SendMoney(const CTxDestination& address, CAmount nValue, CWalletTx& wtxNew,
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
     }
     // Parse 777 address
-    CScript scriptPubKey = GetScriptForStakeDelegation(address);
+    CScript scriptPubKey = GetScriptForDestination(address);
     // Create and send the transaction
     CReserveKey reservekey(pwalletMain);
     CAmount nFeeRequired;
@@ -969,7 +969,7 @@ UniValue CreateColdStakeDelegation(const UniValue& params, CWalletTx& wtxNew, CR
     }
 
     // Get P2CS script for addresses
-    CScript scriptPubKey = GetScriptForStakeDelegation(*stakeKey, ownerKey);
+    CScript scriptPubKey = GetScriptForDestination(*stakeKey, ownerKey);
 
     // Create the transaction
     CAmount nFeeRequired;
@@ -1259,7 +1259,7 @@ UniValue getreceivedbyaddress(const JSONRPCRequest& request)
     CTxDestination address = DecodeDestination(request.params[0].get_str());
     if (!IsValidDestination(address))
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid 777 address");
-    CScript scriptPubKey = GetScriptForStakeDelegation(address);
+    CScript scriptPubKey = GetScriptForDestination(address);
     if (!IsMine(*pwalletMain, scriptPubKey))
         throw JSONRPCError(RPC_WALLET_ERROR, "Address not found in wallet");
     // Minimum confirmations
@@ -1686,7 +1686,7 @@ UniValue sendmany(const JSONRPCRequest& request)
         if (setAddress.count(dest))
             throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ")+name_);
         setAddress.insert(dest);
-        CScript scriptPubKey = GetScriptForStakeDelegation(dest);
+        CScript scriptPubKey = GetScriptForDestination(dest);
         CAmount nAmount = AmountFromValue(sendTo[name_]);
         totalAmount += nAmount;
         vecSend.push_back(CRecipient{scriptPubKey, nAmount, false});

@@ -31,7 +31,7 @@ unsigned int HaveKeys(const std::vector<valtype>& pubkeys, const CKeyStore& keys
 
 isminetype IsMine(const CKeyStore& keystore, const CTxDestination& dest)
 {
-    CScript script = GetScriptForStakeDelegation(dest);
+    CScript script = GetScriptForDestination(dest);
     return IsMine(keystore, script);
 }
 

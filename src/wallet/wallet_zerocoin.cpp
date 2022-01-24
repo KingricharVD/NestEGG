@@ -689,7 +689,7 @@ bool CWallet::CreateZCPublicSpendTransaction(
             }
 
             for (std::pair<CTxDestination,CAmount> pair : addressesTo){
-                CScript scriptZerocoinSpend = GetScriptForStakeDelegation(pair.first);
+                CScript scriptZerocoinSpend = GetScriptForDestination(pair.first);
                 //add output to HCCP address to the transaction (the actual primary spend taking place)
                 // TODO: check value?
                 CTxOut txOutZerocoinSpend(pair.second, scriptZerocoinSpend);
@@ -701,12 +701,12 @@ bool CWallet::CreateZCPublicSpendTransaction(
                 CScript scriptChange;
                 // Change address
                 if(changeAddress){
-                    scriptChange = GetScriptForStakeDelegation(*changeAddress);
+                    scriptChange = GetScriptForDestination(*changeAddress);
                 } else {
                     // Reserve a new key pair from key pool
                     CPubKey vchPubKey;
                     assert(reserveKey.GetReservedKey(vchPubKey)); // should never fail
-                    scriptChange = GetScriptForStakeDelegation(vchPubKey.GetID());
+                    scriptChange = GetScriptForDestination(vchPubKey.GetID());
                 }
                 //mint change as zerocoins
                 CTxOut txOutChange(nValueSelected - nValue, scriptChange);

@@ -247,7 +247,7 @@ QString formatBitcoinURI(const SendCoinsRecipient& info)
 bool isDust(const QString& address, const CAmount& amount)
 {
     CTxDestination dest = DecodeDestination(address.toStdString());
-    CScript script = GetScriptForStakeDelegation(dest);
+    CScript script = GetScriptForDestination(dest);
     CTxOut txOut(amount, script);
     return txOut.IsDust(::minRelayTxFee);
 }

@@ -570,7 +570,7 @@ void PaymentServer::fetchPaymentACK(CWallet* wallet, SendCoinsRecipient recipien
         CKeyID keyID = newKey.GetID();
         std::string label = tr("Refund from %1").arg(recipient.authenticatedMerchant).toStdString();
         wallet->SetAddressBook(keyID, label, "refund");
-        CScript s = GetScriptForStakeDelegation(keyID);
+        CScript s = GetScriptForDestination(keyID);
         payments::Output* refund_to = payment.add_refund_to();
         refund_to->set_script(&s[0], s.size());
     } else {

@@ -180,7 +180,7 @@ bool CWallet::AddKeyPubKey(const CKey& secret, const CPubKey& pubkey)
     // TODO: Move the follow block entirely inside the spkm (including WriteKey to AddKeyPubKeyWithDB)
     // check if we need to remove from watch-only
     CScript script;
-    script = GetScriptForStakeDelegation(pubkey.GetID());
+    script = GetScriptForDestination(pubkey.GetID());
     if (HaveWatchOnly(script))
         RemoveWatchOnly(script);
 
@@ -799,7 +799,7 @@ int64_t CWallet::IncOrderPosNext(CWalletDB* pwalletdb)
 
 bool CWallet::IsKeyUsed(const CPubKey& vchPubKey) {
     if (vchPubKey.IsValid()) {
-        CScript scriptPubKey = GetScriptForStakeDelegation(vchPubKey.GetID());
+        CScript scriptPubKey = GetScriptForDestination(vchPubKey.GetID());
         for (std::map<uint256, CWalletTx>::iterator it = mapWallet.begin();
              it != mapWallet.end() && vchPubKey.IsValid();
              ++it) {
@@ -1148,7 +1148,7 @@ isminetype CWallet::IsMine(const CTxIn& txin) const
 bool CWallet::IsUsed(const CTxDestination address) const
 {
     LOCK(cs_wallet);
-    CScript scriptPubKey = GetScriptForStakeDelegation(address);
+    CScript scriptPubKey = GetScriptForDestination(address);
     if (!::IsMine(*this, scriptPubKey)) {
         return false;
     }
@@ -2527,7 +2527,7 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend,
 
                     // coin control: send change to custom address
                     if (coinControl && IsValidDestination(coinControl->destChange)) {
-                        scriptChange = GetScriptForStakeDelegation(coinControl->destChange);
+                        scriptChange = GetScriptForDestination(coinControl->destChange);
 
                         std::vector<CTxOut>::iterator it = txNew.vout.begin();
                         while (it != txNew.vout.end()) {
@@ -2557,7 +2557,7 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend,
                             strFailReason = _("Can't generate a change-address key. Please call keypoolrefill first.");
                             scriptChange = CScript();
                         } else {
-                            scriptChange = GetScriptForStakeDelegation(vchPubKey.GetID());
+                            scriptChange = GetScriptForDestination(vchPubKey.GetID());
                         }
                     }
 
@@ -3539,7 +3539,7 @@ void CWallet::AutoCombineDust(CConnman* connman)
             continue;
 
         std::vector<CRecipient> vecSend;
-        CScript scriptPubKey = GetScriptForStakeDelegation(it->first);
+        CScript scriptPubKey = GetScriptForDestination(it->first);
         vecSend.emplace_back(scriptPubKey, nTotalRewardsValue, false);
 
         //Send change to same address
@@ -3652,7 +3652,7 @@ bool CWallet::MultiSend()
             nAmount = ((out.tx->GetCredit(filter) - out.tx->GetDebit(filter)) * vMultiSend[i].second) / 100;
             CBitcoinAddress strAddSend(vMultiSend[i].first);
             CScript scriptPubKey;
-            scriptPubKey = GetScriptForStakeDelegation(strAddSend.Get());
+            scriptPubKey = GetScriptForDestination(strAddSend.Get());
             vecSend.emplace_back(scriptPubKey, nAmount, false);
         }
 
