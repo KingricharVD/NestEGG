@@ -615,7 +615,7 @@ ScriptPubKeyMan* CWallet::GetScriptPubKeyMan() const
     return m_sspk_man.get();
 }
 
-bool CWallet::HasSaplingSPKM()
+bool CWallet::AddSaplingZKey()
 {
     return GetScriptPubKeyMan()->IsEnabled();
 }

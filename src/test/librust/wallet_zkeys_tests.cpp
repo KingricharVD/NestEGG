@@ -123,7 +123,7 @@ BOOST_AUTO_TEST_CASE(StoreAndLoadSaplingZkeys) {
 BOOST_AUTO_TEST_CASE(WriteCryptedSaplingZkeyDirectToDb) {
     SelectParams(CBaseChainParams::TESTNET);
 
-    BOOST_CHECK(!pwalletMain->HasSaplingSPKM());
+    BOOST_CHECK(!pwalletMain->AddSaplingZKey());
     assert(pwalletMain->SetupSPKM(true));
 
     // wallet should be empty
@@ -158,7 +158,7 @@ BOOST_AUTO_TEST_CASE(WriteCryptedSaplingZkeyDirectToDb) {
 
     // Confirm it's not the same as the other wallet
     BOOST_CHECK(pwalletMain != &wallet2);
-    BOOST_CHECK(wallet2.HasSaplingSPKM());
+    BOOST_CHECK(wallet2.AddSaplingZKey());
 
     // wallet should have two keys
     wallet2.GetSaplingPaymentAddresses(addrs);

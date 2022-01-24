@@ -333,7 +333,7 @@ UniValue upgradewallet(const JSONRPCRequest& request)
     EnsureWalletIsUnlocked();
     LOCK2(cs_main, pwalletMain->cs_wallet);
     // Do not do anything to non-HD wallets
-    if (pwalletMain->HasSaplingSPKM()) {
+    if (pwalletMain->AddSaplingZKey()) {
         throw JSONRPCError(RPC_WALLET_ERROR, "Cannot upgrade the wallet. The wallet is already running the latest version");
     }
     // Get version
