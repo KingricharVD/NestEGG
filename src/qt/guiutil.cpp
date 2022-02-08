@@ -35,8 +35,8 @@
 #define NOMINMAX
 #endif
 #include "shellapi.h"
-#include "src/shlobj.h"
-#include "src/shlwapi.h"
+#include "shlobj.h"
+#include "shlwapi.h"
 #endif
 
 #include <QAbstractItemView>
