@@ -60,7 +60,7 @@
 #ifdef WIN32
 #include <io.h>
 #elif __linux__
-#include <shlobj.h>
+#include "src/shlobj.h"
 #endif
 #ifdef HAVE_SYS_PRCTL_H
 #include <sys/prctl.h>
