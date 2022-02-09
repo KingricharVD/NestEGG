@@ -38,7 +38,6 @@
 #include <fcntl.h>
 #include <sys/resource.h>
 #include <sys/stat.h>
-#else
 #ifdef _MSC_VER
 #pragma warning(disable : 4786)
 #pragma warning(disable : 4804)
