@@ -1,4 +1,4 @@
-Source: Human_Charity_Coin_Protocol
+Source: sapphire
 Section: utils
 Priority: optional
 Maintainer: Fuzzbawls <fuzzbawls@gmail.com>
@@ -28,15 +28,15 @@ Build-Depends: debhelper,
  libzmq3-dev,
  dh-systemd
 Standards-Version: 3.9.2
-Homepage: https://www.humancharitycoin.com
-Vcs-Git: git://github.com/Human-Charity-Coin/HCCP.git
-Vcs-Browser: https://github.com/Human-Charity-Coin/HCCP
+Homepage: https://sappcoin.com
+Vcs-Git: git://github.com/sappcoin-com/SAPP.git
+Vcs-Browser: https://github.com/sappcoin-com/SAPP
 
-Package: Human_Charity_Coin_Protocold
+Package: sapphired
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - daemon
- Human_Charity_Coin_Protocol is a free, open source peer-to-peer electronic cash system that
+ Sapphire is a free, open source peer-to-peer electronic cash system that
  is completely decentralized, without the need for a central server or
  trusted parties.  Users hold the crypto keys to their own money and
  transact directly with each other, with the help of a P2P network to
@@ -45,14 +45,14 @@ Description: peer-to-peer network based digital currency - daemon
  Full transaction history is stored locally at each client.  This
  requires 18.5+ GB of space, slowly growing.
  .
- This package provides the daemon, Human_Charity_Coin_Protocold, and the CLI tool
- Human_Charity_Coin_Protocol-cli to interact with the daemon.
+ This package provides the daemon, sapphired, and the CLI tool
+ sapphire-cli to interact with the daemon.
 
-Package: Human_Charity_Coin_Protocol-qt
+Package: sapphire-qt
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - Qt GUI
- Human_Charity_Coin_Protocol is a free, open source peer-to-peer electronic cash system that
+ Sapphire is a free, open source peer-to-peer electronic cash system that
  is completely decentralized, without the need for a central server or
  trusted parties.  Users hold the crypto keys to their own money and
  transact directly with each other, with the help of a P2P network to
@@ -61,4 +61,4 @@ Description: peer-to-peer network based digital currency - Qt GUI
  Full transaction history is stored locally at each client.  This
  requires 18.5+ GB of space, slowly growing.
  .
- This package provides Human_Charity_Coin_Protocol-Qt, a GUI for Human_Charity_Coin_Protocol based on Qt.
+ This package provides Sapphire-Qt, a GUI for Sapphire based on Qt.

@@ -1,20 +1,20 @@
 #!/bin/bash
 
 TMP_FOLDER=$(mktemp -d)
-CONFIG_FILE='Human_Charity_Coin_Protocol.conf'
-CONFIGFOLDER='/root/.Human_Charity_Coin_Protocol'
-COIN_DAEMON='Human_Charity_Coin_Protocold'
-COIN_CLI='Human_Charity_Coin_Protocol-cli'
+CONFIG_FILE='sapphire.conf'
+CONFIGFOLDER='/root/.sapphire'
+COIN_DAEMON='sapphired'
+COIN_CLI='sapphire-cli'
 COIN_PATH='/usr/local/bin/'
-COIN_TGZ=`curl -s https://api.github.com/Human-Charity-Coin/HCCP/releases/latest | grep "browser_download_url.*Linux\\.zip" | cut -d : -f 2,3 | tr -d \" | xargs`
+COIN_TGZ=`curl -s https://api.github.com/repos/sappcoin-com/SAPP/releases/latest | grep "browser_download_url.*Linux\\.zip" | cut -d : -f 2,3 | tr -d \" | xargs`
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
-COIN_NAME='Human_Charity_Coin_Protocol'
-COIN_PORT=6949
-RPC_PORT=9335
+COIN_NAME='sapphire'
+COIN_PORT=45328
+RPC_PORT=45329
 
 BLUE="\033[0;34m"
 YELLOW="\033[0;33m"
-CYAN="\033[0;36m"
+CYAN="\033[0;36m" 
 PURPLE="\033[0;35m"
 RED='\033[0;31m'
 GREEN="\033[0;32m"
@@ -143,9 +143,8 @@ clear
 function update_config() {
   sed -i 's/daemon=1/daemon=0/' $CONFIGFOLDER/$CONFIG_FILE
   cat << EOF >> $CONFIGFOLDER/$CONFIG_FILE
-logintimestamps=1
 maxconnections=256
-#bind=$NODEIP
+bind=$NODEIP
 masternode=1
 externalip=$NODEIP:$COIN_PORT
 masternodeprivkey=$COINKEY
@@ -188,7 +187,7 @@ function get_ip() {
   else
     NODEIP=${NODE_IPS[0]}
   fi
-
+  
   if [[ -z "$NODEIP" ]]; then
       #Couldn't determine IP, most likely icanhazip.com is timed out
       echo -e "${RED}Failed to determine IP address. Please wait a couple minutes and rerun script. If this continues, ask for assistance in discord.${NC}"
@@ -226,25 +225,20 @@ apt-get update >/dev/null 2>&1
 DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
 DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
 apt install -y software-properties-common >/dev/null 2>&1
-echo -e "${PURPLE}Adding bitcoin PPA repository"
-apt-add-repository -y ppa:bitcoin/bitcoin >/dev/null 2>&1
 echo -e "Installing required packages, it may take some time to finish.${NC}"
 apt-get update >/dev/null 2>&1
-apt-get install libzmq3-dev -y >/dev/null 2>&1
+apt-get install libzmq3-dev net-tools -y >/dev/null 2>&1
 apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
-build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
-libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
-libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev  libdb5.3++ unzip libzmq5 >/dev/null 2>&1
+build-essential libtool autoconf libssl-dev \
+sudo automake git wget curl bsdmainutils net-tools \
+libminiupnpc-dev libgmp3-dev ufw pkg-config unzip >/dev/null 2>&1
 if [ "$?" -gt "0" ];
   then
     echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
     echo "apt-get update"
     echo "apt -y install software-properties-common"
-    echo "apt-add-repository -y ppa:bitcoin/bitcoin"
     echo "apt-get update"
-    echo "apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
-libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git curl libdb4.8-dev \
-bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev libdb5.3++ unzip libzmq5"
+    echo "apt install -y make software-properties-common build-essential libtool autoconf libssl-dev sudo automake git wget curl bsdmainutils net-tools libminiupnpc-dev libgmp3-dev ufw pkg-config unzip"
  exit 1
 fi
 clear
@@ -262,7 +256,7 @@ function important_information() {
  echo -e "${GREEN}$COIN_CLI getmasternodestatus${NC}"
  echo -e "${GREEN}$COIN_CLI getinfo${NC}"
  echo -e "${BLUE}================================================================================================================================${NC}"
-
+ 
  }
 
 function setup_node() {

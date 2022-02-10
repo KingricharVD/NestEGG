@@ -1,6 +1,6 @@
 // Copyright (c) 2014 The Bitcoin developers
 // Copyright (c) 2017-2019 The PIVX developers
-// Copyright (c) 2020-2021 Human Charity Coin Protocol Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -258,24 +258,17 @@ public:
     std::string operator()(const CNoDestination& no) const { return ""; }
 };
 
-CTxDestination DecodeDestination(const std::string& str, const CChainParams& params, bool& isStaking)
+CTxDestination DecodeDestination(const std::string& str, const CChainParams& params)
 {
     std::vector<unsigned char> data;
     uint160 hash;
     if (DecodeBase58Check(str, data)) {
-        // base58-encoded NestEgg addresses.
+        // base58-encoded SAPP addresses.
         // Public-key-hash-addresses have version 30 (or 139 testnet).
         // The data vector contains RIPEMD160(SHA256(pubkey)), where pubkey is the serialized public key.
         const std::vector<unsigned char>& pubkey_prefix = params.Base58Prefix(CChainParams::PUBKEY_ADDRESS);
         if (data.size() == hash.size() + pubkey_prefix.size() && std::equal(pubkey_prefix.begin(), pubkey_prefix.end(), data.begin())) {
             std::copy(data.begin() + pubkey_prefix.size(), data.end(), hash.begin());
-            return CKeyID(hash);
-        }
-        // Public-key-hash-coldstaking-addresses have version 63 (or 73 testnet).
-        const std::vector<unsigned char>& staking_prefix = params.Base58Prefix(CChainParams::STAKING_ADDRESS);
-        if (data.size() == hash.size() + staking_prefix.size() && std::equal(staking_prefix.begin(), staking_prefix.end(), data.begin())) {
-            isStaking = true;
-            std::copy(data.begin() + staking_prefix.size(), data.end(), hash.begin());
             return CKeyID(hash);
         }
         // Script-hash-addresses have version 13 (or 19 testnet).
@@ -320,9 +313,9 @@ std::string EncodeSecret(const CKey& key)
     return ret;
 }
 
-std::string EncodeDestination(const CTxDestination& dest, bool isStaking)
+std::string EncodeDestination(const CTxDestination& dest)
 {
-    return EncodeDestination(dest, isStaking ? CChainParams::STAKING_ADDRESS : CChainParams::PUBKEY_ADDRESS);
+    return EncodeDestination(dest, CChainParams::PUBKEY_ADDRESS);
 }
 
 std::string EncodeDestination(const CTxDestination& dest, const CChainParams::Base58Type addrType)
@@ -332,22 +325,15 @@ std::string EncodeDestination(const CTxDestination& dest, const CChainParams::Ba
 
 CTxDestination DecodeDestination(const std::string& str)
 {
-    bool isStaking;
-    return DecodeDestination(str, Params(), isStaking);
+    return DecodeDestination(str, Params());
 }
 
-CTxDestination DecodeDestination(const std::string& str, bool& isStaking)
+bool IsValidDestinationString(const std::string& str, const CChainParams& params)
 {
-    return DecodeDestination(str, Params(), isStaking);
+    return IsValidDestination(DecodeDestination(str, params));
 }
 
-bool IsValidDestinationString(const std::string& str, bool fStaking, const CChainParams& params)
+bool IsValidDestinationString(const std::string& str)
 {
-    bool isStaking = false;
-    return IsValidDestination(DecodeDestination(str, params, isStaking)) && (isStaking == fStaking);
-}
-
-bool IsValidDestinationString(const std::string& str, bool isStaking)
-{
-    return IsValidDestinationString(str, isStaking, Params());
+    return IsValidDestinationString(str, Params());
 }

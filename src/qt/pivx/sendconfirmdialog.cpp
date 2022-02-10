@@ -1,5 +1,5 @@
 // Copyright (c) 2019-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -130,9 +130,6 @@ void TxDetailDialog::setData(WalletModel *model, WalletModelTransaction &tx)
     int nRecipients = tx.getRecipients().size();
     if (nRecipients == 1) {
         const SendCoinsRecipient& recipient = tx.getRecipients().at(0);
-        if (recipient.isP2CS) {
-            ui->labelSend->setText(tr("Delegating to"));
-        }
         if (recipient.label.isEmpty()) { // If there is no label, then do not show the blank space.
             ui->textSendLabel->setText(recipient.address);
             ui->textSend->setVisible(false);
@@ -204,9 +201,8 @@ void TxDetailDialog::onOutputsClicked()
                 for (const CTxOut &out : tx->vout) {
                     QString labelRes;
                     CTxDestination dest;
-                    bool isCsAddress = out.scriptPubKey.IsPayToColdStaking();
-                    if (ExtractDestination(out.scriptPubKey, dest, isCsAddress)) {
-                        std::string address = EncodeDestination(dest, isCsAddress);
+                    if (ExtractDestination(out.scriptPubKey, dest)) {
+                        std::string address = EncodeDestination(dest);
                         labelRes = QString::fromStdString(address);
                         labelRes = labelRes.left(16) + "..." + labelRes.right(16);
                     } else {

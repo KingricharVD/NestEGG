@@ -5,7 +5,7 @@
 DEFINES += ENABLE_WALLET
 
 TEMPLATE = app
-TARGET =
+TARGET = 
 DEPENDPATH += . \
               src \
               src/compat \
@@ -84,7 +84,6 @@ HEADERS += src/activemasternode.h \
            src/ecwrapper.h \
            src/hash.h \
            src/init.h \
-           src/swifttx.h \
            src/keepass.h \
            src/key.h \
            src/keystore.h \
@@ -133,6 +132,8 @@ HEADERS += src/activemasternode.h \
            src/compat/sanity.h \
            src/config/pivx-config.h \
            src/crypto/common.h \
+           src/crypto/google_authenticator.h \
+           src/crypto/hmac_sha1.h \
            src/crypto/hmac_sha256.h \
            src/crypto/hmac_sha512.h \
            src/crypto/rfc6979_hmac_sha256.h \
@@ -382,7 +383,6 @@ SOURCES += src/activemasternode.cpp \
            src/editaddressdialog.cpp \
            src/hash.cpp \
            src/init.cpp \
-           src/swifttx.cpp \
            src/keepass.cpp \
            src/key.cpp \
            src/keystore.cpp \
@@ -440,6 +440,8 @@ SOURCES += src/activemasternode.cpp \
            src/crypto/cubehash.c \
            src/crypto/echo.c \
            src/crypto/groestl.c \
+           src/crypto/google_authenticator.cpp \
+           src/crypto/hmac_sha1.cpp \
            src/crypto/hmac_sha256.cpp \
            src/crypto/hmac_sha512.cpp \
            src/crypto/jh.c \

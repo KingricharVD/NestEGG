@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -49,8 +49,6 @@ static const CRPCConvertParam vRPCConvertParams[] =
         {"getreceivedbyaddress", 1},
         {"getreceivedbyaccount", 1},
         {"getreceivedbylabel", 1},
-        {"listcoldutxos", 0},
-        {"listdelegators", 0},
         {"listreceivedbyaddress", 0},
         {"listreceivedbyaddress", 1},
         {"listreceivedbyaddress", 2},
@@ -174,6 +172,7 @@ static const CRPCConvertParam vRPCConvertParams[] =
         {"getserials", 1},
         {"getserials", 2},
         {"getfeeinfo", 0},
+        {"getburnaddresses", 0},
     };
 
 class CRPCConvertTable

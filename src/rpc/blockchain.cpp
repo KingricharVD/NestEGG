@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -419,7 +419,7 @@ UniValue getrawmempool(const JSONRPCRequest& request)
             "{                           (json object)\n"
             "  \"transactionid\" : {       (json object)\n"
             "    \"size\" : n,             (numeric) transaction size in bytes\n"
-            "    \"fee\" : n,              (numeric) transaction fee in HCCP\n"
+            "    \"fee\" : n,              (numeric) transaction fee in SAPP\n"
             "    \"modifiedfee\" : n,      (numeric) transaction fee with fee deltas used for mining priority\n"
             "    \"time\" : n,             (numeric) local time transaction entered pool in seconds since 1 Jan 1970 GMT\n"
             "    \"height\" : n,           (numeric) block height when transaction entered pool\n"
@@ -628,6 +628,7 @@ static void ApplyStats(CCoinsStats &stats, CHashWriter& ss, const uint256& hash,
 //! Calculate statistics about the unspent transaction output set
 static bool GetUTXOStats(CCoinsView *view, CCoinsStats &stats)
 {
+    const Consensus::Params& consensus = Params().GetConsensus();
     std::unique_ptr<CCoinsViewCursor> pcursor(view->Cursor());
 
     CHashWriter ss(SER_GETHASH, PROTOCOL_VERSION);
@@ -644,6 +645,17 @@ static bool GetUTXOStats(CCoinsView *view, CCoinsStats &stats)
         COutPoint key;
         Coin coin;
         if (pcursor->GetKey(key) && pcursor->GetValue(coin)) {
+            // ----------- burn address scanning -----------
+            CTxDestination source;
+            if (ExtractDestination(coin.out.scriptPubKey, source)) {
+                const std::string addr = EncodeDestination(source);
+                if (consensus.mBurnAddresses.find(addr) != consensus.mBurnAddresses.end() &&
+                    consensus.mBurnAddresses.at(addr) < stats.nHeight) 
+                {
+                    pcursor->Next();
+                    continue;
+                }
+            }
             if (!outputs.empty() && key.hash != prevkey) {
                 ApplyStats(stats, ss, prevkey, outputs);
                 outputs.clear();
@@ -661,6 +673,45 @@ static bool GetUTXOStats(CCoinsView *view, CCoinsStats &stats)
     stats.hashSerialized = ss.GetHash();
     stats.nDiskSize = view->EstimateSize();
     return true;
+}
+
+static std::map<std::string, CAmount> GetBurnStats(CCoinsView* view, bool fWithValues, int nHeight)
+{
+    std::map<std::string, CAmount> ret;
+
+    const Consensus::Params& consensus = Params().GetConsensus();
+
+    for (const auto &p : consensus.mBurnAddresses ) {
+        if(p.second <= nHeight) {
+            ret[p.first] = 0;
+        }
+    }
+
+    if(fWithValues) {
+        std::unique_ptr<CCoinsViewCursor> pcursor(view->Cursor());
+
+        while (pcursor->Valid()) {
+            boost::this_thread::interruption_point();
+            COutPoint key;
+            Coin coin;
+            if (pcursor->GetKey(key) && pcursor->GetValue(coin)) {
+                CTxDestination source;
+                if (ExtractDestination(coin.out.scriptPubKey, source)) {
+                    const std::string addr = EncodeDestination(source);
+                    if (consensus.mBurnAddresses.find(addr) != consensus.mBurnAddresses.end() &&
+                        consensus.mBurnAddresses.at(addr) <= nHeight) {
+                        ret[addr] = ret[addr] + coin.out.nValue;
+                    }
+                }
+            } else {
+                error("%s: unable to read value", __func__);
+            }
+
+            pcursor->Next();
+        }
+    }
+
+    return ret;
 }
 
 UniValue gettxoutsetinfo(const JSONRPCRequest& request)
@@ -717,14 +768,14 @@ UniValue gettxout(const JSONRPCRequest& request)
             "{\n"
             "  \"bestblock\" : \"hash\",    (string) the block hash\n"
             "  \"confirmations\" : n,       (numeric) The number of confirmations\n"
-            "  \"value\" : x.xxx,           (numeric) The transaction value in HCCP\n"
+            "  \"value\" : x.xxx,           (numeric) The transaction value in SAPP\n"
             "  \"scriptPubKey\" : {         (json object)\n"
             "     \"asm\" : \"code\",       (string) \n"
             "     \"hex\" : \"hex\",        (string) \n"
             "     \"reqSigs\" : n,          (numeric) Number of required signatures\n"
             "     \"type\" : \"pubkeyhash\", (string) The type, eg pubkeyhash\n"
-            "     \"addresses\" : [          (array of string) array of HCCP addresses\n"
-            "     \"HCCPaddress\"            (string) HCCP address\n"
+            "     \"addresses\" : [          (array of string) array of SAPP addresses\n"
+            "     \"SAPPaddress\"            (string) SAPP address\n"
             "        ,...\n"
             "     ]\n"
             "  },\n"
@@ -777,6 +828,49 @@ UniValue gettxout(const JSONRPCRequest& request)
     ScriptPubKeyToJSON(coin.out.scriptPubKey, o, true);
     ret.push_back(Pair("scriptPubKey", o));
     ret.push_back(Pair("coinbase", (bool)coin.fCoinBase));
+
+    return ret;
+}
+
+UniValue getburnaddresses(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() > 1)
+        throw std::runtime_error(
+            "getburnaddresses ( withvalues )\n"
+            "\nReturns burn addresses. When an address is a burn address, it is also rejected from mempool and block inclusion, however a transaction to them is possible.\n"
+
+            "\nArguments:\n"
+            "1. withvalues  (boolean, optional) Whether to include address balance. Default = false\n"
+
+            "\nResult:\n"
+            "[\n"
+            "{\n"
+            "  \"address\": xxxxxx,        (string) The burn address\n"
+            "  \"amount\": 123.45    (numeric) The balance of the burn address\n"
+            "}\n"
+            "]\n"
+
+            "\nExamples:\n" +
+            HelpExampleCli("getburnaddresses", "") + HelpExampleCli("getburnaddresses", "true") + HelpExampleRpc("getburnaddresses", ""));
+
+    bool fWithValues = false;
+    if (request.params.size() > 0)
+        fWithValues = request.params[0].get_bool();
+
+    UniValue ret(UniValue::VARR);
+    int nHeight = WITH_LOCK(cs_main, return chainActive.Height());
+    if (nHeight < 0) return "[]";
+
+    if (fWithValues) FlushStateToDisk();
+
+    for (const auto& kv : GetBurnStats(pcoinsTip, fWithValues, nHeight)) {
+        UniValue obj(UniValue::VOBJ);
+        obj.push_back(Pair("address", kv.first));
+        if (fWithValues) {
+            obj.push_back(Pair("amount", ValueFromAmount(kv.second)));
+        }
+        ret.push_back(obj);
+    }
 
     return ret;
 }
@@ -926,13 +1020,13 @@ UniValue getblockchaininfo(const JSONRPCRequest& request)
     obj.push_back(Pair("verificationprogress", Checkpoints::GuessVerificationProgress(pChainTip)));
     obj.push_back(Pair("chainwork", pChainTip ? pChainTip->nChainWork.GetHex() : ""));
     UniValue upgrades(UniValue::VOBJ);
-
+    
     if(nTipHeight >= 0) {
         for (int i = Consensus::BASE_NETWORK + 1; i < (int) Consensus::MAX_NETWORK_UPGRADES; i++) {
             NetworkUpgradeDescPushBack(upgrades, consensusParams, Consensus::UpgradeIndex(i), nTipHeight);
         }
     }
-
+    
     obj.push_back(Pair("upgrades", upgrades));
 
     return obj;
@@ -1402,9 +1496,9 @@ UniValue getblockindexstats(const JSONRPCRequest& request) {
                 "        \"denom_5\": xxxx           (numeric) number of PUBLIC spends of denom_5 occurred over the block range\n"
                 "         ...                    ... number of PUBLIC spends of other denominations: ..., 10, 50, 100, 500, 1000, 5000\n"
                 "  }\n"
-                "  \"txbytes\": xxxxx                (numeric) Sum of the size of all txes (zHCCP excluded) over block range\n"
-                "  \"ttlfee\": xxxxx                 (numeric) Sum of the fee amount of all txes (zHCCP mints excluded) over block range\n"
-                "  \"ttlfee_all\": xxxxx             (numeric) Sum of the fee amount of all txes (zHCCP mints included) over block range\n"
+                "  \"txbytes\": xxxxx                (numeric) Sum of the size of all txes (zSAPP excluded) over block range\n"
+                "  \"ttlfee\": xxxxx                 (numeric) Sum of the fee amount of all txes (zSAPP mints excluded) over block range\n"
+                "  \"ttlfee_all\": xxxxx             (numeric) Sum of the fee amount of all txes (zSAPP mints included) over block range\n"
                 "  \"feeperkb\": xxxxx               (numeric) Average fee per kb (excluding zc txes)\n"
                 "}\n"
 
@@ -1535,3 +1629,4 @@ UniValue getblockindexstats(const JSONRPCRequest& request) {
     return ret;
 
 }
+

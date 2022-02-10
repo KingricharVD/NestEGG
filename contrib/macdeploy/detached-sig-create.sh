@@ -7,7 +7,7 @@ export LC_ALL=C
 set -e
 
 ROOTDIR=dist
-BUNDLE=${ROOTDIR}/Human_Charity_Coin_Protocol-Qt.app
+BUNDLE=${ROOTDIR}/Sapphire-Qt.app
 CODESIGN=codesign
 TEMPDIR=sign.temp
 TEMPLIST=${TEMPDIR}/signatures.txt

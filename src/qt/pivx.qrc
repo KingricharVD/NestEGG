@@ -206,11 +206,6 @@
         <file alias="ani-loading-dark">pivx/res/img/ani-loading-dark.gif</file>
         <file alias="ani-loading">pivx/res/img/ani-loading.gif</file>
         <file alias="ic-pending">pivx/res/img/ic-pending.svg</file>
-        <file alias="ic-nav-cold-staking">pivx/res/img/ic-nav-cold-staking.svg</file>
-      <file alias="ic-nav-cold-staking-active">pivx/res/img/ic-nav-cold-staking-active.svg</file>
-      <file alias="ic-check-cold-staking">pivx/res/img/ic-check-cold-staking.svg</file>
-      <file alias="ic-check-cold-staking-off">pivx/res/img/ic-check-cold-staking-off.svg</file>
-      <file alias="ic-check-cold-staking-enabled">pivx/res/img/ic-check-cold-staking-enabled.svg</file>
     </qresource>
     <qresource prefix="/font">
         <file alias="Nunito-Black.ttf">pivx/res/font/Nunito-Black.ttf</file>
@@ -242,6 +237,6 @@
         <file alias="Montserrat-SemiBold.ttf">pivx/res/font/Montserrat-SemiBold.ttf</file>
         <file alias="Montserrat-SemiBoldItalic.ttf">pivx/res/font/Montserrat-SemiBoldItalic.ttf</file>
         <file alias="Montserrat-Thin.ttf">pivx/res/font/Montserrat-Thin.ttf</file>
-        <file alias="Montserrat-ThinItalic.ttf">pivx/res/font/Montserrat-ThinItalic.ttf</file>
+        <file alias="Montserrat-ThinItalic.ttf">pivx/res/font/Montserrat-ThinItalic.ttf</file>        
     </qresource>
 </RCC>

@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -19,50 +19,61 @@
 #include "utilstrencodings.h"
 #include "utiltime.h"
 
-#include "rust/include/librustzcash.h"
-
 #include <stdarg.h>
 #include <thread>
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 
+#ifndef WIN32
 // for posix_fallocate
 #ifdef __linux__
+
 #ifdef _POSIX_C_SOURCE
 #undef _POSIX_C_SOURCE
 #endif
+
 #define _POSIX_C_SOURCE 200112L
+
 #endif // __linux__
+
 #include <algorithm>
 #include <fcntl.h>
 #include <sys/resource.h>
 #include <sys/stat.h>
+
+#else
+
 #ifdef _MSC_VER
 #pragma warning(disable : 4786)
 #pragma warning(disable : 4804)
 #pragma warning(disable : 4805)
 #pragma warning(disable : 4717)
 #endif
+
 #ifdef _WIN32_WINNT
 #undef _WIN32_WINNT
 #endif
 #define _WIN32_WINNT 0x0501
+
 #ifdef _WIN32_IE
 #undef _WIN32_IE
 #endif
 #define _WIN32_IE 0x0501
+
 #define WIN32_LEAN_AND_MEAN 1
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
-#ifdef WIN32
-#include <io.h>
-#elif __linux__
+
+#include <io.h> /* for _commit */
+#include <shlobj.h>
 #endif
+
 #ifdef HAVE_SYS_PRCTL_H
 #include <sys/prctl.h>
 #endif
+
 #include <boost/algorithm/string/case_conv.hpp> // for to_lower()
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp> // for startswith() and endswith()
@@ -72,26 +83,30 @@
 #include <openssl/conf.h>
 #include <openssl/crypto.h>
 #include <openssl/rand.h>
-const char * const PIVX_CONF_FILENAME = "__decenomy__.conf";
-const char * const PIVX_PID_FILENAME = "__decenomy__.pid";
+
+const char * const PIVX_CONF_FILENAME = "sapphire.conf";
+const char * const PIVX_PID_FILENAME = "sapphire.pid";
 const char * const PIVX_MASTERNODE_CONF_FILENAME = "masternode.conf";
-// __Decenomy__ only features
+
+
+// Sapphire only features
 // Masternode
 bool fMasterNode = false;
 std::string strMasterNodePrivKey = "";
 std::string strMasterNodeAddr = "";
 bool fLiteMode = false;
-// SwiftX
-bool fEnableSwiftTX = true;
-int nSwiftTXDepth = 5;
+
 /** Spork enforcement enabled time */
 int64_t enforceMasternodePaymentsTime = 4085657524;
 bool fSucessfullyLoaded = false;
 std::string strBudgetMode = "";
+
 std::map<std::string, std::string> mapArgs;
 std::map<std::string, std::vector<std::string> > mapMultiArgs;
+
 bool fDaemon = false;
 std::string strMiscWarning;
+
 /** Init OpenSSL library multithreading support */
 static RecursiveMutex** ppmutexOpenSSL;
 void locking_callback(int mode, int i, const char* file, int line) NO_THREAD_SAFETY_ANALYSIS
@@ -102,6 +117,7 @@ void locking_callback(int mode, int i, const char* file, int line) NO_THREAD_SAF
         LEAVE_CRITICAL_SECTION(*ppmutexOpenSSL[i]);
     }
 }
+
 // Init
 class CInit
 {
@@ -113,16 +129,19 @@ public:
         for (int i = 0; i < CRYPTO_num_locks(); i++)
             ppmutexOpenSSL[i] = new RecursiveMutex();
         CRYPTO_set_locking_callback(locking_callback);
+
         // OpenSSL can optionally load a config file which lists optional loadable modules and engines.
         // We don't use them so we don't require the config. However some of our libs may call functions
         // which attempt to load the config file, possibly resulting in an exit() or crash if it is missing
         // or corrupt. Explicitly tell OpenSSL not to try to load the file. The result for our libs will be
         // that the config appears to have been loaded and there are no modules/engines available.
         OPENSSL_no_config();
+
 #ifdef WIN32
         // Seed OpenSSL PRNG with current contents of the screen
         RAND_screen();
 #endif
+
         // Seed OpenSSL PRNG with performance counter
         RandAddSeed();
     }
@@ -137,6 +156,8 @@ public:
         OPENSSL_free(ppmutexOpenSSL);
     }
 } instance_of_cinit;
+
+
 /** Interpret string as boolean, for argument parsing */
 static bool InterpretBool(const std::string& strValue)
 {
@@ -144,6 +165,7 @@ static bool InterpretBool(const std::string& strValue)
         return true;
     return (atoi(strValue) != 0);
 }
+
 /** Turn -noX into -X=0 */
 static void InterpretNegativeSetting(std::string& strKey, std::string& strValue)
 {
@@ -152,10 +174,12 @@ static void InterpretNegativeSetting(std::string& strKey, std::string& strValue)
         strValue = InterpretBool(strValue) ? "0" : "1";
     }
 }
+
 void ParseParameters(int argc, const char* const argv[])
 {
     mapArgs.clear();
     mapMultiArgs.clear();
+
     for (int i = 1; i < argc; i++) {
         std::string str(argv[i]);
         std::string strValue;
@@ -169,35 +193,42 @@ void ParseParameters(int argc, const char* const argv[])
         if (boost::algorithm::starts_with(str, "/"))
             str = "-" + str.substr(1);
 #endif
+
         if (str[0] != '-')
             break;
+
         // Interpret --foo as -foo.
         // If both --foo and -foo are set, the last takes effect.
         if (str.length() > 1 && str[1] == '-')
             str = str.substr(1);
         InterpretNegativeSetting(str, strValue);
+
         mapArgs[str] = strValue;
         mapMultiArgs[str].push_back(strValue);
     }
 }
+
 std::string GetArg(const std::string& strArg, const std::string& strDefault)
 {
     if (mapArgs.count(strArg))
         return mapArgs[strArg];
     return strDefault;
 }
+
 int64_t GetArg(const std::string& strArg, int64_t nDefault)
 {
     if (mapArgs.count(strArg))
         return atoi64(mapArgs[strArg]);
     return nDefault;
 }
+
 bool GetBoolArg(const std::string& strArg, bool fDefault)
 {
     if (mapArgs.count(strArg))
         return InterpretBool(mapArgs[strArg]);
     return fDefault;
 }
+
 bool SoftSetArg(const std::string& strArg, const std::string& strValue)
 {
     if (mapArgs.count(strArg))
@@ -205,6 +236,7 @@ bool SoftSetArg(const std::string& strArg, const std::string& strValue)
     mapArgs[strArg] = strValue;
     return true;
 }
+
 bool SoftSetBoolArg(const std::string& strArg, bool fValue)
 {
     if (fValue)
@@ -212,25 +244,29 @@ bool SoftSetBoolArg(const std::string& strArg, bool fValue)
     else
         return SoftSetArg(strArg, std::string("0"));
 }
+
 static const int screenWidth = 79;
 static const int optIndent = 2;
 static const int msgIndent = 7;
+
 std::string HelpMessageGroup(const std::string &message) {
     return std::string(message) + std::string("\n\n");
 }
+
 std::string HelpMessageOpt(const std::string &option, const std::string &message) {
     return std::string(optIndent,' ') + std::string(option) +
            std::string("\n") + std::string(msgIndent,' ') +
            FormatParagraph(message, screenWidth - msgIndent, msgIndent) +
            std::string("\n\n");
 }
+
 static std::string FormatException(const std::exception* pex, const char* pszThread)
 {
 #ifdef WIN32
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "__decenomy__";
+    const char* pszModule = "sapphire";
 #endif
     if (pex)
         return strprintf(
@@ -239,6 +275,7 @@ static std::string FormatException(const std::exception* pex, const char* pszThr
         return strprintf(
             "UNKNOWN EXCEPTION       \n%s in %s       \n", pszModule, pszThread);
 }
+
 void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 {
     std::string message = FormatException(pex, pszThread);
@@ -246,15 +283,16 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
     fprintf(stderr, "\n\n************************\n%s\n", message.c_str());
     strMiscWarning = message;
 }
+
 fs::path GetDefaultDataDir()
 {
-// Windows < Vista: C:\Documents and Settings\Username\Application Data\__decenomy__
-// Windows >= Vista: C:\Users\Username\AppData\Roaming\__decenomy__
-// Mac: ~/Library/Application Support/__decenomy__
-// Unix: ~/.__decenomy__
+// Windows < Vista: C:\Documents and Settings\Username\Application Data\sapphire
+// Windows >= Vista: C:\Users\Username\AppData\Roaming\sapphire
+// Mac: ~/Library/Application Support/sapphire
+// Unix: ~/.sapphire
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "__Decenomy__";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Sapphire";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -266,27 +304,29 @@ fs::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectory(pathRet);
-    return pathRet / "__Decenomy__";
+    return pathRet / "Sapphire";
 #else
     // Unix
-    return pathRet / ".__decenomy__";
+    return pathRet / ".sapphire";
 #endif
 #endif
 }
+
 static fs::path pathCached;
 static fs::path pathCachedNetSpecific;
 static fs::path zc_paramsPathCached;
 static RecursiveMutex csPathCached;
+
 static fs::path ZC_GetBaseParamsDir()
 {
     // Copied from GetDefaultDataDir and adapter for zcash params.
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\__decenomy__Params
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\__decenomy__Params
-    // Mac: ~/Library/Application Support/__decenomy__Params
-    // Unix: ~/.__decenomy__-params
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\sapphireParams
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\sapphireParams
+    // Mac: ~/Library/Application Support/sapphireParams
+    // Unix: ~/.sapphire-params
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "__Decenomy__Params";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "SapphireParams";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -298,21 +338,25 @@ static fs::path ZC_GetBaseParamsDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectory(pathRet);
-    return pathRet / "__Decenomy__Params";
+    return pathRet / "SapphireParams";
 #else
     // Unix
-    return pathRet / ".__decenomy__-params";
+    return pathRet / ".sapphire-params";
 #endif
 #endif
 }
+
 const fs::path &ZC_GetParamsDir()
 {
     LOCK(csPathCached); // Reuse the same lock as upstream.
+
     fs::path &path = zc_paramsPathCached;
+
     // This can be called during exceptions by LogPrintf(), so we cache the
     // value so we don't have to do memory allocations after that.
     if (!path.empty())
         return path;
+
 #ifdef USE_CUSTOM_PARAMS
     path = fs::system_complete(PARAMS_DIR);
 #else
@@ -326,55 +370,21 @@ const fs::path &ZC_GetParamsDir()
         path = ZC_GetBaseParamsDir();
     }
 #endif
+
     return path;
-}
-
-void initZKSNARKS()
-{
-    const fs::path& path = ZC_GetParamsDir();
-    fs::path sapling_spend = path / "sapling-spend.params";
-    fs::path sapling_output = path / "sapling-output.params";
-    fs::path sprout_groth16 = path / "sprout-groth16.params";
-
-    if (!(fs::exists(sapling_spend) &&
-          fs::exists(sapling_output) &&
-          fs::exists(sprout_groth16)
-    )) {
-        throw std::runtime_error("Sapling params don't exist");
-    }
-
-    static_assert(
-        sizeof(fs::path::value_type) == sizeof(codeunit),
-        "librustzcash not configured correctly");
-    auto sapling_spend_str = sapling_spend.native();
-    auto sapling_output_str = sapling_output.native();
-    auto sprout_groth16_str = sprout_groth16.native();
-
-    //LogPrintf("Loading Sapling (Spend) parameters from %s\n", sapling_spend.string().c_str());
-
-    librustzcash_init_zksnark_params(
-        reinterpret_cast<const codeunit*>(sapling_spend_str.c_str()),
-        sapling_spend_str.length(),
-        "8270785a1a0d0bc77196f000ee6d221c9c9894f55307bd9357c3f0105d31ca63991ab91324160d8f53e2bbd3c2633a6eb8bdf5205d822e7f3f73edac51b2b70c",
-        reinterpret_cast<const codeunit*>(sapling_output_str.c_str()),
-        sapling_output_str.length(),
-        "657e3d38dbb5cb5e7dd2970e8b03d69b4787dd907285b5a7f0790dcc8072f60bf593b32cc2d1c030e00ff5ae64bf84c5c3beb84ddc841d48264b4a171744d028",
-        reinterpret_cast<const codeunit*>(sprout_groth16_str.c_str()),
-        sprout_groth16_str.length(),
-        "e9b238411bd6c0ec4791e9d04245ec350c9c5744f5610dfcce4365d5ca49dfefd5054e371842b3f88fa1b9d7e8e075249b3ebabd167fa8b0f3161292d36c180a"
-    );
-
-    //std::cout << "### Sapling params initialized ###" << std::endl;
 }
 
 const fs::path& GetDataDir(bool fNetSpecific)
 {
     LOCK(csPathCached);
+
     fs::path& path = fNetSpecific ? pathCachedNetSpecific : pathCached;
+
     // This can be called during exceptions by LogPrintf(), so we cache the
     // value so we don't have to do memory allocations after that.
     if (!path.empty())
         return path;
+
     if (mapArgs.count("-datadir")) {
         path = fs::system_complete(mapArgs["-datadir"]);
         if (!fs::is_directory(path)) {
@@ -386,39 +396,47 @@ const fs::path& GetDataDir(bool fNetSpecific)
     }
     if (fNetSpecific)
         path /= BaseParams().DataDir();
+
     fs::create_directories(path);
+
     return path;
 }
+
 void ClearDatadirCache()
 {
     pathCached = fs::path();
     pathCachedNetSpecific = fs::path();
 }
+
 fs::path GetConfigFile()
 {
     fs::path pathConfigFile(GetArg("-conf", PIVX_CONF_FILENAME));
     return AbsPathForConfigVal(pathConfigFile, false);
 }
+
 fs::path GetMasternodeConfigFile()
 {
     fs::path pathConfigFile(GetArg("-mnconf", PIVX_MASTERNODE_CONF_FILENAME));
     return AbsPathForConfigVal(pathConfigFile);
 }
+
 void ReadConfigFile(std::map<std::string, std::string>& mapSettingsRet,
     std::map<std::string, std::vector<std::string> >& mapMultiSettingsRet)
 {
     fs::ifstream streamConfig(GetConfigFile());
     if (!streamConfig.good()) {
-        // Create empty __decenomy__.conf if it does not exist
+        // Create empty sapphire.conf if it does not exist
         FILE* configFile = fsbridge::fopen(GetConfigFile(), "a");
         if (configFile != NULL)
             fclose(configFile);
         return; // Nothing to read, so just return
     }
+
     std::set<std::string> setOptions;
     setOptions.insert("*");
+
     for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it) {
-        // Don't overwrite existing settings so command line settings override __decenomy__.conf
+        // Don't overwrite existing settings so command line settings override sapphire.conf
         std::string strKey = std::string("-") + it->string_key;
         std::string strValue = it->value[0];
         InterpretNegativeSetting(strKey, strValue);
@@ -429,6 +447,7 @@ void ReadConfigFile(std::map<std::string, std::string>& mapSettingsRet,
     // If datadir is changed in .conf file:
     ClearDatadirCache();
 }
+
 fs::path AbsPathForConfigVal(const fs::path& path, bool net_specific)
 {
     if (path.is_absolute()) {
@@ -436,12 +455,14 @@ fs::path AbsPathForConfigVal(const fs::path& path, bool net_specific)
     }
     return fs::absolute(path, GetDataDir(net_specific));
 }
+
 #ifndef WIN32
 fs::path GetPidFile()
 {
     fs::path pathPidFile(GetArg("-pid", PIVX_PID_FILENAME));
     return AbsPathForConfigVal(pathPidFile);
 }
+
 void CreatePidFile(const fs::path& path, pid_t pid)
 {
     FILE* file = fsbridge::fopen(path, "w");
@@ -451,6 +472,7 @@ void CreatePidFile(const fs::path& path, pid_t pid)
     }
 }
 #endif
+
 bool RenameOver(fs::path src, fs::path dest)
 {
 #ifdef WIN32
@@ -461,6 +483,7 @@ bool RenameOver(fs::path src, fs::path dest)
     return (rc == 0);
 #endif /* WIN32 */
 }
+
 /**
  * Ignores exceptions thrown by Boost's create_directory if the requested directory exists.
  * Specifically handles case where path p exists, but it wasn't possible for the user to
@@ -474,9 +497,11 @@ bool TryCreateDirectory(const fs::path& p)
         if (!fs::exists(p) || !fs::is_directory(p))
             throw;
     }
+
     // create_directory didn't create the directory, it had to have existed already
     return false;
 }
+
 void FileCommit(FILE* fileout)
 {
     fflush(fileout); // harmless if redundantly called
@@ -493,6 +518,7 @@ void FileCommit(FILE* fileout)
 #endif
 #endif
 }
+
 bool TruncateFile(FILE* file, unsigned int length)
 {
 #if defined(WIN32)
@@ -501,6 +527,7 @@ bool TruncateFile(FILE* file, unsigned int length)
     return ftruncate(fileno(file), length) == 0;
 #endif
 }
+
 /**
  * this function tries to raise the file descriptor limit to the requested number.
  * It returns the actual file descriptor limit (which may be more or less than nMinFD)
@@ -524,6 +551,7 @@ int RaiseFileDescriptorLimit(int nMinFD)
     return nMinFD; // getrlimit failed, assume it's fine
 #endif
 }
+
 /**
  * this function tries to make a particular range of a file allocated (corresponding to disk space)
  * it is advisory, and the range specified in the arguments will never contain live data
@@ -570,43 +598,53 @@ void AllocateFileRange(FILE* file, unsigned int offset, unsigned int length)
     }
 #endif
 }
+
 #ifdef WIN32
 fs::path GetSpecialFolderPath(int nFolder, bool fCreate)
 {
     char pszPath[MAX_PATH] = "";
+
     if (SHGetSpecialFolderPathA(NULL, pszPath, nFolder, fCreate)) {
         return fs::path(pszPath);
     }
+
     LogPrintf("SHGetSpecialFolderPathA() failed, could not obtain requested path.\n");
     return fs::path("");
 }
 #endif
+
 fs::path GetTempPath()
 {
     return fs::temp_directory_path();
 }
+
 double double_safe_addition(double fValue, double fIncrement)
 {
     double fLimit = std::numeric_limits<double>::max() - fValue;
+
     if (fLimit > fIncrement)
         return fValue + fIncrement;
     else
         return std::numeric_limits<double>::max();
 }
+
 double double_safe_multiplication(double fValue, double fmultiplicator)
 {
     double fLimit = std::numeric_limits<double>::max() / fmultiplicator;
+
     if (fLimit > fmultiplicator)
         return fValue * fmultiplicator;
     else
         return std::numeric_limits<double>::max();
 }
+
 void runCommand(std::string strCommand)
 {
     int nErr = ::system(strCommand.c_str());
     if (nErr)
         LogPrintf("runCommand error: system(%s) returned %d\n", strCommand, nErr);
 }
+
 void SetupEnvironment()
 {
 // On most POSIX systems (e.g. Linux, but not BSD) the environment's locale
@@ -625,6 +663,7 @@ void SetupEnvironment()
     std::locale loc = fs::path::imbue(std::locale::classic());
     fs::path::imbue(loc);
 }
+
 bool SetupNetworking()
 {
 #ifdef WIN32
@@ -636,6 +675,7 @@ bool SetupNetworking()
 #endif
     return true;
 }
+
 void SetThreadPriority(int nPriority)
 {
 #ifdef WIN32
@@ -648,6 +688,7 @@ void SetThreadPriority(int nPriority)
 #endif // PRIO_THREAD
 #endif // WIN32
 }
+
 int GetNumCores()
 {
     return std::thread::hardware_concurrency();

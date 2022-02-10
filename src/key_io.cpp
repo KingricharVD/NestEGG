@@ -1,5 +1,5 @@
 // Copyright (c) 2014-2019 The Bitcoin Core developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -34,8 +34,12 @@ namespace KeyIO {
     }
 
     std::string EncodeSecret(const CKey &key) {
+        return EncodeSecret(key, CChainParams::SECRET_KEY);
+    }
+
+    std::string EncodeSecret(const CKey &key, const CChainParams::Base58Type addrType) {
         assert(key.IsValid());
-        std::vector<unsigned char> data = Params().Base58Prefix(CChainParams::SECRET_KEY);
+        std::vector<unsigned char> data = Params().Base58Prefix(addrType);
         data.insert(data.end(), key.begin(), key.end());
         if (key.IsCompressed()) {
             data.push_back(1);

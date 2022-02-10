@@ -1,5 +1,5 @@
 // Copyright (c) 2019-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -86,7 +86,7 @@ bool SendMultiRow::addressChanged(const QString& str, bool fOnlyValidate)
 {
     if (!str.isEmpty()) {
         QString trimmedStr = str.trimmed();
-        const bool valid = walletModel->validateAddress(trimmedStr, this->onlyStakingAddressAccepted);
+        const bool valid = walletModel->validateAddress(trimmedStr);
         if (!valid) {
             // check URI
             SendCoinsRecipient rcp;
@@ -111,6 +111,9 @@ bool SendMultiRow::addressChanged(const QString& str, bool fOnlyValidate)
                 if (!label.isEmpty()) {
                     ui->lineEditDescription->setText(label);
                 }
+				else {
+					ui->lineEditDescription->clear();
+				}
             }
         }
         updateStyle(ui->lineEditAddress);
@@ -263,12 +266,6 @@ void SendMultiRow::setFocus()
 {
     ui->lineEditAddress->setFocus();
 }
-
-void SendMultiRow::setOnlyStakingAddressAccepted(bool onlyStakingAddress)
-{
-    this->onlyStakingAddressAccepted = onlyStakingAddress;
-}
-
 
 void SendMultiRow::setNumber(int _number)
 {

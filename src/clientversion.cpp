@@ -1,6 +1,6 @@
 // Copyright (c) 2012-2017 The Bitcoin Core developers
 // Copyright (c) 2016-2019 The PIVX developers
-// Copyright (c) 2022 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,10 +11,10 @@
 
 /**
  * Name of client reported in the 'version' message. Report the same name
- * for both human_charity_coin_protocold and human_charity_coin_protocol-qt, to make it harder for attackers to
+ * for both sapphired and sapphire-qt, to make it harder for attackers to
  * target servers or GUI users specifically.
  */
-const std::string CLIENT_NAME("Human_Charity_Coin_Protocol Core");
+const std::string CLIENT_NAME("Sapphire Core");
 
 /**
  * Client version number
@@ -43,10 +43,11 @@ const std::string CLIENT_NAME("Human_Charity_Coin_Protocol Core");
 #include "obj/build.h"
 #endif
 
-//! git will put "#define GIT_ARCHIVE 1" on the next line inside archives. $Format:%n#define GIT_ARCHIVE 1$
+//! git will put "#define GIT_ARCHIVE 1" on the next line inside archives. 
+#define GIT_ARCHIVE 1
 #ifdef GIT_ARCHIVE
-#define GIT_COMMIT_ID "$Format:%H$"
-#define GIT_COMMIT_DATE "$Format:%cD$"
+#define GIT_COMMIT_ID "173004e81501e5f052a525759668f09158100844"
+#define GIT_COMMIT_DATE "Tue, 18 Jan 2022 02:03:17 +0000"
 #endif
 
 #define BUILD_DESC_WITH_SUFFIX(maj, min, rev, build, suffix) \
@@ -97,8 +98,8 @@ std::string FormatVersionFriendly()
     return FormatVersion(CLIENT_VERSION);
 }
 
-/**
- * Format the subversion field according to BIP 14 spec (https://github.com/bitcoin/bips/blob/master/bip-0014.mediawiki)
+/** 
+ * Format the subversion field according to BIP 14 spec (https://github.com/bitcoin/bips/blob/master/bip-0014.mediawiki) 
  */
 std::string FormatSubVersion(const std::string& name, int nClientVersion, const std::vector<std::string>& comments)
 {

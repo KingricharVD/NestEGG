@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -23,7 +23,7 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
     if (Params().IsRegTestNet())
         return pindexLast->nBits;
 
-    /* current difficulty formula, Human_Charity_Coin_Protocol - DarkGravity v3, written by Evan Duffield - evan@dashpay.io */
+    /* current difficulty formula, sapphire - DarkGravity v3, written by Evan Duffield - evan@dashpay.io */
     const CBlockIndex* BlockLastSolved = pindexLast;
     const CBlockIndex* BlockReading = pindexLast;
     int64_t nActualTimespan = 0;

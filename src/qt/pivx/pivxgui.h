@@ -1,5 +1,5 @@
 // Copyright (c) 2019-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -21,7 +21,6 @@
 #include "qt/pivx/send.h"
 #include "qt/pivx/receivewidget.h"
 #include "qt/pivx/addresseswidget.h"
-#include "qt/pivx/coldstakingwidget.h"
 #include "qt/pivx/masternodeswidget.h"
 #include "qt/pivx/snackbar.h"
 #include "qt/pivx/settings/settingswidget.h"
@@ -35,7 +34,7 @@ class WalletModel;
 
 
 /**
-  NestEgg GUI main class. This class represents the main window of the NestEgg UI. It communicates with both the client and
+  Sapphire GUI main class. This class represents the main window of the Sapphire UI. It communicates with both the client and
   wallet models to give the user an up-to-date view of the current core state.
 */
 class PIVXGUI : public QMainWindow
@@ -67,10 +66,11 @@ public Q_SLOTS:
     void goToReceive();
     void goToAddresses();
     void goToMasterNodes();
-    void goToColdStaking();
     void goToSettings();
     void goToSettingsInfo();
+    void goToDebugConsole();
     void openNetworkMonitor();
+	void showPeers();
 
     void connectActions();
 
@@ -132,7 +132,6 @@ private:
     ReceiveWidget *receiveWidget = nullptr;
     AddressesWidget *addressesWidget = nullptr;
     MasterNodesWidget *masterNodesWidget = nullptr;
-    ColdStakingWidget *coldStakingWidget = nullptr;
     SettingsWidget* settingsWidget = nullptr;
 
     SnackBar *snackBar = nullptr;

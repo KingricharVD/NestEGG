@@ -1,5 +1,5 @@
 // Copyright (c) 2019 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -18,7 +18,7 @@ OpenURIDialog::OpenURIDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystem
 {
     ui->setupUi(this);
     this->setStyleSheet(parent->styleSheet());
-    ui->uriEdit->setPlaceholderText("Human_Charity_Coin_Protocol:");
+    ui->uriEdit->setPlaceholderText("sapphire:");
 
     ui->labelSubtitle->setText("URI");
     setCssProperty(ui->labelSubtitle, "text-title2-dialog");
@@ -80,8 +80,8 @@ void OpenURIDialog::on_selectFileButton_clicked()
         }
 
         QString str = QString::fromStdString(std::string(r.constData(), r.length()));
-        if (!str.startsWith("Human_Charity_Coin_Protocol")) {
-            inform(tr("Invalid URI, not starting with \"Human_Charity_Coin_Protocol\" prefix"));
+        if (!str.startsWith("sapphire")) {
+            inform(tr("Invalid URI, not starting with \"sapphire\" prefix"));
         }
         ui->uriEdit->setText(str);
     }

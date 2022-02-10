@@ -95,11 +95,11 @@
     </message>
     <message>
         <source>Choose the address to send coins to</source>
-        <translation>选择发送NestEgg coin的地址</translation>
+        <translation>选择发送SAPP coin的地址</translation>
     </message>
     <message>
         <source>Choose the address to receive coins with</source>
-        <translation>选择接收NestEgg coin的地址</translation>
+        <translation>选择接收SAPP coin的地址</translation>
     </message>
     <message>
         <source>C&amp;hoose</source>
@@ -114,12 +114,12 @@
         <translation>接收地址</translation>
     </message>
     <message>
-        <source>These are your NestEgg addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>这是用于发送NestEgg的地址。在发送NestEgg之前，请认真核查发送金额和接收地址。</translation>
+        <source>These are your SAPP addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>这是用于发送SAPP的地址。在发送SAPP之前，请认真核查发送金额和接收地址。</translation>
     </message>
     <message>
-        <source>These are your NestEgg addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>这是用于接收NestEgg的钱包地址。建议每一笔交易都使用一个新的钱包地址。</translation>
+        <source>These are your SAPP addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>这是用于接收SAPP的钱包地址。建议每一笔交易都使用一个新的钱包地址。</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -348,8 +348,8 @@ for staking</source>
         <translation>删除</translation>
     </message>
     <message>
-        <source>NestEgg will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your EGGs from being stolen by malware infecting your computer.</source>
-        <translation>NestEgg将关闭以完成加密过程。但是，仅仅加密您的钱包是不够的，因为它并不能阻止恶意软件从您的电脑里面偷取EGGs。</translation>
+        <source>SAPP will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your SAPPs from being stolen by malware infecting your computer.</source>
+        <translation>SAPP将关闭以完成加密过程。但是，仅仅加密您的钱包是不够的，因为它并不能阻止恶意软件从您的电脑里面偷取SAPPs。</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -408,33 +408,6 @@ for staking</source>
     </message>
 </context>
 <context>
-    <name>CSRow</name>
-    <message>
-        <source>Form</source>
-        <translation>来自</translation>
-    </message>
-    <message>
-        <source>Savings</source>
-        <translation>存款</translation>
-    </message>
-    <message>
-        <source>0,00 EGG</source>
-        <translation>0,00 EGG</translation>
-    </message>
-    <message>
-        <source>address</source>
-        <translation>地址</translation>
-    </message>
-    <message>
-        <source>Not Staking</source>
-        <translation>不可加薪</translation>
-    </message>
-    <message>
-        <source>Own delegation</source>
-        <translation>自己的代表团</translation>
-    </message>
-</context>
-<context>
     <name>ClientModel</name>
     <message>
         <source>Total: %1 (IPv4: %2 / IPv6: %3 / Tor: %4 / Unknown: %5)</source>
@@ -460,8 +433,8 @@ for staking</source>
         <translation>币选择</translation>
     </message>
     <message>
-        <source>Select EGG Outputs to Spend</source>
-        <translation>选择EGG支出花费</translation>
+        <source>Select SAPP Outputs to Spend</source>
+        <translation>选择SAPP支出花费</translation>
     </message>
     <message>
         <source>Dust:</source>
@@ -488,8 +461,8 @@ for staking</source>
         <translation>金额</translation>
     </message>
     <message>
-        <source>0.00 EGG</source>
-        <translation>0.00 EGG</translation>
+        <source>0.00 SAPP</source>
+        <translation>0.00 SAPP</translation>
     </message>
     <message>
         <source>0</source>
@@ -640,10 +613,6 @@ for staking</source>
         <translation>是</translation>
     </message>
     <message>
-        <source>delegated to %1 for cold staking</source>
-        <translation>委托到%1进行冷加注</translation>
-    </message>
-    <message>
         <source>Select All</source>
         <translation>选择所有</translation>
     </message>
@@ -686,217 +655,6 @@ for staking</source>
     <message>
         <source>(change)</source>
         <translation>(更改)</translation>
-    </message>
-</context>
-<context>
-    <name>ColdStakingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation>来自</translation>
-    </message>
-    <message>
-        <source>Owner address (optional, if empty a new address will be created)</source>
-        <translation>所有者地址(可选项，如果为空，将创建一个新地址)</translation>
-    </message>
-    <message>
-        <source>Total Staking:</source>
-        <translation>加注总额：</translation>
-    </message>
-    <message>
-        <source>Cold Staking</source>
-        <translation>冷堆</translation>
-    </message>
-    <message>
-        <source>Staker</source>
-        <translation>利益相关者</translation>
-    </message>
-    <message>
-        <source>Delegation</source>
-        <translation>宪法</translation>
-    </message>
-    <message>
-        <source>Delegate</source>
-        <translation>分配</translation>
-    </message>
-    <message>
-        <source>Clear All</source>
-        <translation>清除全部</translation>
-    </message>
-    <message>
-        <source>Delegated balance history</source>
-        <translation>委托余额历史</translation>
-    </message>
-    <message>
-        <source>No delegations yet</source>
-        <translation>没有代表团</translation>
-    </message>
-    <message>
-        <source>Total Staking: %1</source>
-        <translation>总积累：%1</translation>
-    </message>
-    <message>
-        <source>Error loading delegations: %1</source>
-        <translation>加载委托时出错：%1</translation>
-    </message>
-    <message>
-        <source>You can delegate your EGGs, letting a hot node (24/7 online node)
-stake on your behalf, while you keep the keys securely offline.</source>
-        <translation>您可以委托您的EGG并让一个热节点(24/7在线节点)
-代表你加注，而且保持密钥离线安全。</translation>
-    </message>
-    <message>
-        <source>Enter owner address</source>
-        <translation>输入所有者地址</translation>
-    </message>
-    <message>
-        <source>Accept EGG delegation / Delegate EGG</source>
-        <translation>接受EGG委托／委托EGG </translation>
-    </message>
-    <message>
-        <source>Cold Staking address</source>
-        <translation>冷加注地址</translation>
-    </message>
-    <message>
-        <source>No receive addresses available, you can go to the receive screen and create some there!</source>
-        <translation>没有可用接收地址，您可以到接收屏幕那里创建!</translation>
-    </message>
-    <message>
-        <source>No contacts available, you can go to the contacts screen and add some there!</source>
-        <translation>没有可用的联系人，您可以到联系人界面那里添加!</translation>
-    </message>
-    <message>
-        <source>Cannot send delegation, wallet locked</source>
-        <translation>无法发送委托，钱包被锁了</translation>
-    </message>
-    <message>
-        <source>Cold staking is networkely disabled</source>
-        <translation>禁用网络冷积累</translation>
-    </message>
-    <message>
-        <source>Coin Control</source>
-        <translation>币控制</translation>
-    </message>
-    <message>
-        <source>Invalid entry</source>
-        <translation>条目无效</translation>
-    </message>
-    <message>
-        <source>Invalid entry, minimum delegable amount is </source>
-        <translation>输入无效，最小委托数量为</translation>
-    </message>
-    <message>
-        <source>Owner address invalid</source>
-        <translation>所有者地址无效</translation>
-    </message>
-    <message>
-        <source>ALERT!</source>
-        <translation>警报！</translation>
-    </message>
-    <message>
-        <source>Delegating to an external owner address!
-
-The delegated coins will NOT be spendable by this wallet.
-Spending these coins will need to be done from the wallet or
-device containing the owner address.
-
-Do you wish to proceed?</source>
-        <translation>委托给外部所有者地址！
-
-授权的硬币将无法在此钱包中消费。
-花费这些硬币需要从钱包或
-包含所有者地址的设备。
-
-你想继续吗？</translation>
-    </message>
-    <message>
-        <source>Staking address corresponds to this wallet, change it to an external node</source>
-        <translation>放样地址对应于此钱包，将其更改为外部节点</translation>
-    </message>
-    <message>
-        <source>Cannot create transaction.</source>
-        <translation>无法创建交易</translation>
-    </message>
-    <message>
-        <source>Coins delegated</source>
-        <translation>委托硬币</translation>
-    </message>
-    <message>
-        <source>Cannot perform operation, wallet locked</source>
-        <translation>无法进行操作，钱包被锁了</translation>
-    </message>
-    <message>
-        <source>URI copied to clipboard</source>
-        <translation>URI已经复制到剪贴板</translation>
-    </message>
-    <message>
-        <source>Address copied to clipboard</source>
-        <translation>地址已经复制到剪贴板</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>复制</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>编辑</translation>
-    </message>
-    <message>
-        <source>Stake</source>
-        <translation>赌注</translation>
-    </message>
-    <message>
-        <source>Blacklist</source>
-        <translation>黑名单</translation>
-    </message>
-    <message>
-        <source>Edit Label</source>
-        <translation>编辑标签</translation>
-    </message>
-    <message>
-        <source>Copy owner
-address</source>
-        <translation>复制所有者
-地址</translation>
-    </message>
-    <message>
-        <source>Address copied</source>
-        <translation>地址已复制</translation>
-    </message>
-    <message>
-        <source>Edit Cold Address Label</source>
-        <translation>编辑冷地址标签</translation>
-    </message>
-    <message>
-        <source>Whitelist failed, please check the logs</source>
-        <translation>白名单失败，请检查日志</translation>
-    </message>
-    <message>
-        <source> staking!</source>
-        <translation>提高</translation>
-    </message>
-    <message>
-        <source>Blacklist failed, please check the logs</source>
-        <translation>黑名单失败，请检查日志</translation>
-    </message>
-    <message>
-        <source> blacklisted from staking</source>
-        <translation>放样被列入黑名单</translation>
-    </message>
-    <message>
-        <source>Owner address copied</source>
-        <translation>所有者地址已复制</translation>
-    </message>
-    <message>
-        <source>Edit Owner Address Label</source>
-        <translation>编辑所有者地址标签</translation>
-    </message>
-    <message>
-        <source>Address label saved</source>
-        <translation>地址标签已保存</translation>
-    </message>
-    <message>
-        <source>Error storing address label</source>
-        <translation>保存地址标签出错</translation>
     </message>
 </context>
 <context>
@@ -945,8 +703,8 @@ address</source>
         <translation>过滤</translation>
     </message>
     <message>
-        <source>Amount of EGG and zEGG staked.</source>
-        <translation>已加注的EGG 和 zEGG 金额</translation>
+        <source>Amount of SAPP and zSAPP staked.</source>
+        <translation>已加注的SAPP 和 zSAPP 金额</translation>
     </message>
     <message>
         <source>Please wait until the wallet is fully synced to see your correct balance</source>
@@ -1041,8 +799,8 @@ It will start automatically as soon as the wallet has enough confirmations on an
         <translation>编辑发送地址</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid NestEgg address.</source>
-        <translation>所输入的地址“%1”不是有效的NestEgg地址。</translation>
+        <source>The entered address "%1" is not a valid SAPP address.</source>
+        <translation>所输入的地址“%1”不是有效的SAPP地址。</translation>
     </message>
     <message>
         <source>The entered address "%1" is already in the address book.</source>
@@ -1094,16 +852,16 @@ It will start automatically as soon as the wallet has enough confirmations on an
         <translation>版本</translation>
     </message>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
     <message>
         <source>(%1-bit)</source>
         <translation>(%1-位)</translation>
     </message>
     <message>
-        <source>About NestEgg Core</source>
-        <translation>关于NestEgg Core</translation>
+        <source>About Sapphire</source>
+        <translation>关于Sapphire</translation>
     </message>
     <message>
         <source>Command-line options</source>
@@ -1157,16 +915,16 @@ It will start automatically as soon as the wallet has enough confirmations on an
         <translation>欢迎</translation>
     </message>
     <message>
-        <source>Welcome to NestEgg Core.</source>
-        <translation>欢迎使用 NestEgg Core</translation>
+        <source>Welcome to Sapphire.</source>
+        <translation>欢迎使用 Sapphire</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where NestEgg Core will store its data.</source>
-        <translation>由于这是该程序第一次启动，您可以选择存储NestEgg Core 数据的位置。</translation>
+        <source>As this is the first time the program is launched, you can choose where Sapphire will store its data.</source>
+        <translation>由于这是该程序第一次启动，您可以选择存储Sapphire 数据的位置。</translation>
     </message>
     <message>
-        <source>NestEgg Core will download and store a copy of the NestEgg block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>NestEgg Core将下载并存储NestEgg区块链副本。 至少 %1 GB的数据将存储在此目录中，并且会随着时间的推移而增长。 钱包也将存储在此目录中。</translation>
+        <source>Sapphire will download and store a copy of the SAPP block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>Sapphire将下载并存储SAPP区块链副本。 至少 %1 GB的数据将存储在此目录中，并且会随着时间的推移而增长。 钱包也将存储在此目录中。</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1185,8 +943,8 @@ It will start automatically as soon as the wallet has enough confirmations on an
         <translation>好的</translation>
     </message>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
@@ -1285,8 +1043,8 @@ It will start automatically as soon as the wallet has enough confirmations on an
         <translation>创建新的主节点控制器</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To create a NestEgg Masternode you must dedicate 25,000 EGG (the unit of NestEgg) to the network (however, these coins are still yours and will never leave your possession). &lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;You can deactivate the node and unlock the coins at any time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;要去创建一个NestEgg主节点，你必须奉献25,000 EGG（NestEgg的单位）到网络（但是这些币还是属于你的，一直为你所有）。&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;你可以在任何时候关闭该节点并解锁币。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To create a SAPP Masternode you must dedicate a collateral amount of SAPP (the unit of SAPP) to the network (however, these coins are still yours and will never leave your possession). &lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;You can deactivate the node and unlock the coins at any time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;要去创建一个SAPP主节点，你必须奉献10,000 SAPP（SAPP的单位）到网络（但是这些币还是属于你的，一直为你所有）。&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;你可以在任何时候关闭该节点并解锁币。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Set Masternode Name</source>
@@ -1305,8 +1063,8 @@ It will start automatically as soon as the wallet has enough confirmations on an
         <translation>确保你有这么多币</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A transaction of 25,000 EGG will be made&lt;/p&gt;&lt;p&gt;to a new empty address in your wallet.&lt;/p&gt;&lt;p&gt;The Address is labeled under the master node's name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;将进行25,000 EGG的交易&lt;/p&gt;&lt;p&gt;到您的钱包空地址&lt;/p&gt;&lt;p&gt;地址被标记在主节点的名称之下&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A transaction of collateral amount will be made&lt;/p&gt;&lt;p&gt;to a new empty address in your wallet.&lt;/p&gt;&lt;p&gt;The Address is labeled under the master node's name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;将进行10,000 SAPP的交易&lt;/p&gt;&lt;p&gt;到您的钱包空地址&lt;/p&gt;&lt;p&gt;地址被标记在主节点的名称之下&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Address of the node that must always be online running the actual master node.</source>
@@ -1488,7 +1246,7 @@ Please wait few more minutes (masternode collaterals require %1 confirmations).<
 on a remote server to your clipboard.
 
 
-You will only have to paste the data in the nestegg.conf file
+You will only have to paste the data in the sapphire.conf file
 of your remote server and start it, then start the Masternode using
 this controller wallet (select the Masternode in the list and press "start").
 </source>
@@ -1496,7 +1254,7 @@ this controller wallet (select the Masternode in the list and press "start").
 到剪贴板的远程服务器上。
 
 
-您只需将数据粘贴到nestegg.conf文件中
+您只需将数据粘贴到sapphire.conf文件中
 ，然后使用主节点启动它
 这个控制器钱包(在列表中选择主节点并按“开始”)。
 </translation>
@@ -1636,8 +1394,8 @@ Are you sure?</source>
         <translation>解析的数据太大</translation>
     </message>
     <message>
-        <source>Invalid URI, not starting with "nestegg" prefix</source>
-        <translation>无效的URI，不是以“ nestegg”前缀开头</translation>
+        <source>Invalid URI, not starting with "sapphire" prefix</source>
+        <translation>无效的URI，不是以“ sapphire”前缀开头</translation>
     </message>
 </context>
 <context>
@@ -1682,8 +1440,8 @@ Are you sure?</source>
         <translation>如果您要禁用未经确认发送，在至少有一个确认之前&lt;br/&gt;不能更改。&lt;br/&gt;这也将影响您的余额计算。</translation>
     </message>
     <message>
-        <source>Automatically open the NestEgg client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>自动打开路由器上的NestEgg钱包使用的端口。 这只有当您的路由器支持UPnP并且该享生效时才有用。</translation>
+        <source>Automatically open the SAPP client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>自动打开路由器上的SAPP钱包使用的端口。 这只有当您的路由器支持UPnP并且该享生效时才有用。</translation>
     </message>
     <message>
         <source>Accept connections from outside</source>
@@ -1702,12 +1460,12 @@ Are you sure?</source>
         <translation>专家</translation>
     </message>
     <message>
-        <source>Automatically start NestEgg after logging in to the system.</source>
-        <translation>登录系统后自动启动NestEgg。</translation>
+        <source>Automatically start SAPP after logging in to the system.</source>
+        <translation>登录系统后自动启动SAPP。</translation>
     </message>
     <message>
-        <source>&amp;Start NestEgg on system login</source>
-        <translation>&amp;开机启动NestEgg</translation>
+        <source>&amp;Start SAPP on system login</source>
+        <translation>&amp;开机启动SAPP</translation>
     </message>
     <message>
         <source>Whether to show coin control features or not.</source>
@@ -1734,58 +1492,58 @@ Are you sure?</source>
         <translation>&amp;网络</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting NestEgg.</source>
-        <translation>可以在这里设置用户界面语言。此设置将在重新启动NestEgg后生效。</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting SAPP.</source>
+        <translation>可以在这里设置用户界面语言。此设置将在重新启动SAPP后生效。</translation>
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/pivx-project/pivx-project-translations</source>
+        https://discord.gg/zgcXB76</source>
         <translation>语言缺失或翻译不完整?帮助贡献翻译在这里:
-https://www.transifex.com/pivx-project/pivx-project-translations</translation>
+        https://discord.gg/zgcXB76</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
         <translation>端口使用&amp;UPnP</translation>
     </message>
     <message>
-        <source>Enable automatic minting of EGG units to zEGG</source>
-        <translation>启动自动铸造EGG到zEGG</translation>
+        <source>Enable automatic minting of SAPP units to zSAPP</source>
+        <translation>启动自动铸造SAPP到zSAPP</translation>
     </message>
     <message>
-        <source>Enable zEGG Automint</source>
-        <translation>启动自动铸造zEGG</translation>
+        <source>Enable zSAPP Automint</source>
+        <translation>启动自动铸造zSAPP</translation>
     </message>
     <message>
-        <source>Enable automatic zEGG minting from specific addresses</source>
-        <translation>启用从特定地址自动生成zEGG</translation>
+        <source>Enable automatic zSAPP minting from specific addresses</source>
+        <translation>启用从特定地址自动生成zSAPP</translation>
     </message>
     <message>
         <source>Enable Automint Addresses</source>
         <translation>启动自动铸造地址</translation>
     </message>
     <message>
-        <source>Percentage of incoming EGG which get automatically converted to zEGG via Zerocoin Protocol (min: 10%)</source>
-        <translation>通过零币协议自动转换为zEGG的传入EGG的百分比(最小:10%)</translation>
+        <source>Percentage of incoming SAPP which get automatically converted to zSAPP via Zerocoin Protocol (min: 10%)</source>
+        <translation>通过零币协议自动转换为zSAPP的传入SAPP的百分比(最小:10%)</translation>
     </message>
     <message>
-        <source>Percentage of autominted zEGG</source>
-        <translation>自动铸造的zEGG百分比</translation>
+        <source>Percentage of autominted zSAPP</source>
+        <translation>自动铸造的zSAPP百分比</translation>
     </message>
     <message>
-        <source>Wait with automatic conversion to Zerocoin until enough EGG for this denomination is available</source>
-        <translation>等待自动转换为零币，直到足够的EGG为这种面额可用</translation>
+        <source>Wait with automatic conversion to Zerocoin until enough SAPP for this denomination is available</source>
+        <translation>等待自动转换为零币，直到足够的SAPP为这种面额可用</translation>
     </message>
     <message>
-        <source>Preferred Automint zEGG Denomination</source>
-        <translation>首选自动铸造zEGG面额</translation>
+        <source>Preferred Automint zSAPP Denomination</source>
+        <translation>首选自动铸造zSAPP面额</translation>
     </message>
     <message>
         <source>Stake split threshold:</source>
         <translation>股权分割阈值:</translation>
     </message>
     <message>
-        <source>Connect to the NestEgg network through a SOCKS5 proxy.</source>
-        <translation>通过SOCKS5代理连接到NestEgg网络。</translation>
+        <source>Connect to the SAPP network through a SOCKS5 proxy.</source>
+        <translation>通过SOCKS5代理连接到SAPP网络。</translation>
     </message>
     <message>
         <source>Proxy &amp;IP:</source>
@@ -1841,7 +1599,7 @@ https://www.transifex.com/pivx-project/pivx-project-translations</translation>
     </message>
     <message>
         <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation>选择显示发送NestEgg的默认单位。</translation>
+        <translation>选择显示发送SAPP的默认单位。</translation>
     </message>
     <message>
         <source>Decimal digits</source>
@@ -1931,8 +1689,8 @@ https://www.transifex.com/pivx-project/pivx-project-translations</translation>
 <context>
     <name>PIVXGUI</name>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -1959,8 +1717,8 @@ https://www.transifex.com/pivx-project/pivx-project-translations</translation>
         <translation>关闭应用</translation>
     </message>
     <message>
-        <source>NestEgg Core client</source>
-        <translation>NestEgg Core 客户端</translation>
+        <source>Sapphire client</source>
+        <translation>Sapphire 客户端</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2026,12 +1784,12 @@ Address: %4
         <translation>无效支付地址%1</translation>
     </message>
     <message>
-        <source>Cannot start NestEgg: click-to-pay handler</source>
-        <translation>无法启动NestEgg:点击支付处理程序</translation>
+        <source>Cannot start sapphire: click-to-pay handler</source>
+        <translation>无法启动sapphire:点击支付处理程序</translation>
     </message>
     <message>
-        <source>URI cannot be parsed! This can be caused by an invalid NestEgg address or malformed URI parameters.</source>
-        <translation>URI不能被解析!这可能是由无效的NestEgg地址或格式错误的URI参数造成的。</translation>
+        <source>URI cannot be parsed! This can be caused by an invalid SAPP address or malformed URI parameters.</source>
+        <translation>URI不能被解析!这可能是由无效的SAPP地址或格式错误的URI参数造成的。</translation>
     </message>
     <message>
         <source>Payment request file cannot be read! This can be caused by an invalid payment request file.</source>
@@ -2116,8 +1874,8 @@ Address: %4
         <translation>金额</translation>
     </message>
     <message>
-        <source>Enter NestEgg address (e.g. %1)</source>
-        <translation>输入NestEgg a地址(e.g. %1)</translation>
+        <source>Enter SAPP address (e.g. %1)</source>
+        <translation>输入SAPP a地址(e.g. %1)</translation>
     </message>
     <message>
         <source>%1 d</source>
@@ -2160,12 +1918,12 @@ Address: %4
         <translation>%1 毫秒</translation>
     </message>
     <message>
-        <source>A fatal error occurred. NestEgg can no longer continue safely and will quit.</source>
-        <translation>发生了一个致命的错误。NestEgg不能继续安全，将退出。</translation>
+        <source>A fatal error occurred. SAPP can no longer continue safely and will quit.</source>
+        <translation>发生了一个致命的错误。SAPP不能继续安全，将退出。</translation>
     </message>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" does not exist.</source>
@@ -2184,8 +1942,8 @@ Address: %4
         <translation>读取主节点配置文件出错:%1</translation>
     </message>
     <message>
-        <source>NestEgg Core didn't yet exit safely...</source>
-        <translation>NestEgg核心尚未安全退出……</translation>
+        <source>Sapphire didn't yet exit safely...</source>
+        <translation>Sapphire心尚未安全退出……</translation>
     </message>
     <message>
         <source>Contact</source>
@@ -2194,18 +1952,6 @@ Address: %4
     <message>
         <source>Receiving</source>
         <translation>正在接收</translation>
-    </message>
-    <message>
-        <source>Delegator</source>
-        <translation>委托人</translation>
-    </message>
-    <message>
-        <source>Cold Staking</source>
-        <translation>冷堆</translation>
-    </message>
-    <message>
-        <source>Cold Staking Contact</source>
-        <translation>冷加注联系人</translation>
     </message>
     <message>
         <source>Hidden</source>
@@ -2268,20 +2014,8 @@ Address: %4
         <translation>给您自己</translation>
     </message>
     <message>
-        <source>Cold stakes</source>
-        <translation>感冒</translation>
-    </message>
-    <message>
         <source>Hot stakes</source>
         <translation>热提</translation>
-    </message>
-    <message>
-        <source>Delegated</source>
-        <translation>委托</translation>
-    </message>
-    <message>
-        <source>Delegations</source>
-        <translation>宪法</translation>
     </message>
     <message>
         <source>by Label</source>
@@ -2367,8 +2101,8 @@ Address: %4
         <translation>区块链</translation>
     </message>
     <message>
-        <source>Open the NestEgg debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>从当前数据目录打开NestEgg调试日志文件。对于大型日志文件，这可能需要几秒钟。</translation>
+        <source>Open the SAPP debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>从当前数据目录打开SAPP调试日志文件。对于大型日志文件，这可能需要几秒钟。</translation>
     </message>
     <message>
         <source>Number of Masternodes</source>
@@ -2511,8 +2245,8 @@ Address: %4
         <translation>自定义备份路径:</translation>
     </message>
     <message>
-        <source>Custom zEGG Backup Path:</source>
-        <translation>自定义zEGG备份路径:</translation>
+        <source>Custom zSAPP Backup Path:</source>
+        <translation>自定义zSAPP备份路径:</translation>
     </message>
     <message>
         <source>Custom Backups Threshold:</source>
@@ -2591,8 +2325,8 @@ Address: %4
         <translation>出：</translation>
     </message>
     <message>
-        <source>Welcome to the NestEgg RPC console.</source>
-        <translation>欢迎访问NestEgg RPC控制台</translation>
+        <source>Welcome to the SAPP RPC console.</source>
+        <translation>欢迎访问SAPP RPC控制台</translation>
     </message>
     <message>
         <source>&amp;Disconnect Node</source>
@@ -2839,8 +2573,8 @@ Address: %4
         <translation>金额</translation>
     </message>
     <message>
-        <source>EGG</source>
-        <translation>EGG</translation>
+        <source>SAPP</source>
+        <translation>SAPP</translation>
     </message>
     <message>
         <source>D7VFR83SQbiezrW72hjcWJtcfip5krte2Z </source>
@@ -2887,14 +2621,6 @@ Address: %4
         <translation>生成</translation>
     </message>
     <message>
-        <source>Creates an address to receive coin delegations and be able to stake them.</source>
-        <translation>创建一个地址以接收代币授权并可以放样。</translation>
-    </message>
-    <message>
-        <source>New Cold Staking Address</source>
-        <translation>新冷堆地址</translation>
-    </message>
-    <message>
         <source>Amount (optional)</source>
         <translation>金额（可选项）</translation>
     </message>
@@ -2918,8 +2644,8 @@ Address: %4
         <translation>自定义更改地址</translation>
     </message>
     <message>
-        <source>The remainder of the value resultant from the inputs minus the outputs value goes to the "change" NestEgg address</source>
-        <translation>输入值减去输出值所得的值的其余部分归为“更改”NestEgg地址</translation>
+        <source>The remainder of the value resultant from the inputs minus the outputs value goes to the "change" SAPP address</source>
+        <translation>输入值减去输出值所得的值的其余部分归为“更改”SAPP地址</translation>
     </message>
     <message>
         <source>SAVE</source>
@@ -2945,8 +2671,8 @@ Address: %4
         <translation>已推荐</translation>
     </message>
     <message>
-        <source>EGG/kilobyte</source>
-        <translation>EGG/k字节</translation>
+        <source>SAPP/kilobyte</source>
+        <translation>SAPP/k字节</translation>
     </message>
     <message>
         <source>0.00 KB</source>
@@ -3027,10 +2753,6 @@ Do you want to continue?</source>
         <translation>条目无效，在添加新条目之前，先前的条目必须有效</translation>
     </message>
     <message>
-        <source>Possibly spend coins delegated for cold-staking (currently available: %1</source>
-        <translation>可能花费委托用于冷加注到币（当前可用：%1</translation>
-    </message>
-    <message>
         <source>Invalid entry</source>
         <translation>条目无效</translation>
     </message>
@@ -3045,14 +2767,6 @@ Do you want to continue?</source>
     <message>
         <source>Cannot create transaction.</source>
         <translation>无法创建交易</translation>
-    </message>
-    <message>
-        <source>WARNING:
-Transaction spends a cold-stake delegation, voiding it.
-These coins will no longer be cold-staked.</source>
-        <translation>警告：
-交易花费了冷积累委派，使它无效。
-这些硬币将不再被冷积累。</translation>
     </message>
     <message>
         <source>Transaction sent</source>
@@ -3209,8 +2923,8 @@ These coins will no longer be cold-staked.</source>
         <translation>解密钥匙</translation>
     </message>
     <message>
-        <source>NestEgg address</source>
-        <translation>NestEgg地址</translation>
+        <source>SAPP address</source>
+        <translation>SAPP地址</translation>
     </message>
     <message>
         <source>Enter address</source>
@@ -3334,8 +3048,8 @@ Verify that you have installed a predetermined text editor.</source>
 确认您已经安装了预定的文本编辑器</translation>
     </message>
     <message>
-        <source>Welcome to the NestEgg RPC console.</source>
-        <translation>欢迎访问NestEgg RPC控制台</translation>
+        <source>Welcome to the SAPP RPC console.</source>
+        <translation>欢迎访问SAPP RPC控制台</translation>
     </message>
     <message>
         <source>Use up and down arrows to navigate history, and %1 to clear screen.</source>
@@ -3444,12 +3158,12 @@ Verify that you have installed a predetermined text editor.</source>
         <translation>导出地址列表</translation>
     </message>
     <message>
-        <source>NestEgg_tx_csv_export(*.csv)</source>
-        <translation>NestEgg_tx_csv_export(*.csv)</translation>
+        <source>PIVX_tx_csv_export(*.csv)</source>
+        <translation>PIVX_tx_csv_export(*.csv)</translation>
     </message>
     <message>
-        <source>NestEgg_addresses_csv_export(*.csv)</source>
-        <translation>NestEgg_addresses_csv_export(*.csv)</translation>
+        <source>PIVX_addresses_csv_export(*.csv)</source>
+        <translation>PIVX_addresses_csv_export(*.csv)</translation>
     </message>
     <message>
         <source>Please select a folder to export the csv file first.</source>
@@ -3519,46 +3233,46 @@ There was an error trying to save the address list to %1. Please try again.</sou
         <translation>来自</translation>
     </message>
     <message>
-        <source>1) What is NestEgg?</source>
-        <translation>1）什么是NestEgg?</translation>
+        <source>1) What is SAPP?</source>
+        <translation>1）什么是SAPP?</translation>
     </message>
     <message>
-        <source>2) Why are my EGG unspendable?</source>
-        <translation>2) 我的EGG为什么不能用？</translation>
+        <source>2) Why are my SAPP unspendable?</source>
+        <translation>2) 我的SAPP为什么不能用？</translation>
     </message>
     <message>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <source>What is NestEgg?</source>
-        <translation>NestEgg是什么?</translation>
+        <source>What is SAPP?</source>
+        <translation>SAPP是什么?</translation>
     </message>
     <message>
         <source>
                            &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;
-                           NestEgg is a form of digital online money using blockchain technology
+                           SAPP is a form of digital online money using blockchain technology
                            that can be easily transferred globally, instantly, and with near
-                           zero fees.  NestEgg incorporates market leading security &amp;
+                           zero fees.  SAPP incorporates market leading security &amp;
                            privacy and is also the first PoS (Proof of Stake) Cryptocurrency
-                           to implement ZeroCoin(zEGG) and Zerocoin staking.
+                           to implement ZeroCoin(zSAPP) and Zerocoin staking.
                            &lt;/p&gt;&lt;p align="justify"&gt;
-                           NestEgg utilizes a Proof of Stake (PoS) consensus system algorithm,
-                           allowing all owners of NestEgg to participate in earning block rewards
+                           SAPP utilizes a Proof of Stake (PoS) consensus system algorithm,
+                           allowing all owners of SAPP to participate in earning block rewards
                            while securing the network with full node wallets, as well as to
                            run Masternodes to create and vote on proposals.
                            &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
                          </source>
         <translation>
 &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;
-NestEgg是一种使用区块链技术的数字在线货币
+SAPP是一种使用区块链技术的数字在线货币
 全球范围内快捷交易，即时，基本为
-零的交易费用。NestEgg是市场上领先的安全和
+零的交易费用。SAPP是市场上领先的安全和
 隐私加密货币，也是第一个PoS(股权证明)加密货币
-实现零币(zEGG)和零币加注。
+实现零币(zSAPP)和零币加注。
 &lt;/p&gt;&lt;p align="justify"&gt;
-NestEgg使用了一个股权证明(PoS)一致系统算法，
-允许所有NestEgg的所有者参与赚取区块奖励
+SAPP使用了一个股权证明(PoS)一致系统算法，
+允许所有SAPP的所有者参与赚取区块奖励
 同时保护网络与完整的节点钱包，以及
 运行主节点创建和投票来进行提案。</translation>
     </message>
@@ -3567,25 +3281,25 @@ NestEgg使用了一个股权证明(PoS)一致系统算法，
         <translation>2</translation>
     </message>
     <message>
-        <source>Why are my EGG unspendable?</source>
-        <translation>我的EGG为什么不能用？</translation>
+        <source>Why are my SAPP unspendable?</source>
+        <translation>我的SAPP为什么不能用？</translation>
     </message>
     <message>
         <source>
                            &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;
-                           Newly received NestEgg requires 6 confirmations on the network
+                           Newly received SAPP requires 6 confirmations on the network
                            to become eligible for spending which can take ~6 minutes.
                            &lt;/p&gt;&lt;p align="justify"&gt;
-                           Your NestEgg wallet also needs to be completely synchronized
+                           Your SAPP wallet also needs to be completely synchronized
                            to see and spend balances on the network.
                            &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
                          </source>
         <translation>
 &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;
-接收到的NestEgg需要网络上的6个确认
+接收到的SAPP需要网络上的6个确认
 才能成为有资格的花费，可以花~6分钟。
 &lt;/p&gt;&lt;p align="justify"&gt;
-您的NestEgg钱包也需要完全同步
+您的SAPP钱包也需要完全同步
 查看网络收支余额。
 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
 </translation>
@@ -3619,20 +3333,19 @@ NestEgg使用了一个股权证明(PoS)一致系统算法，
         <translation>什么是主节点控制器？</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;A Masternode Controller wallet is where the 25,000 EGG collateral can reside during a Controller-Remote masternode setup. It is a wallet that can activate the remote masternode wallet(s) and allows you to keep your collateral coins offline while the remote masternode remains online. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;主节点控制器钱包是控制器-远程主节点建立期间25,000 EGG抵押可以驻留的地方。这是一个可以激活远程主节点钱包(s)的钱包，可以让你的抵押币离线但远程主节点保持在线。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;A Masternode Controller wallet is where the collateral amount can reside during a Controller-Remote masternode setup. It is a wallet that can activate the remote masternode wallet(s) and allows you to keep your collateral coins offline while the remote masternode remains online. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;主节点控制器钱包是控制器-远程主节点建立期间10,000 SAPP抵押可以驻留的地方。这是一个可以激活远程主节点钱包(s)的钱包，可以让你的抵押币离线但远程主节点保持在线。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>
                            &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;
-                           A masternode is a computer running a full node NestEgg core wallet with a
-                           requirement of 25,000 EGG secured collateral to provide extra services
+                           A masternode is a computer running a full node SAPP wallet with a
+                           required amount of secured collateral to provide extra services
                            to the network and in return, receive a portion of the block reward
                            regularly.  These services include:
                            &lt;/p&gt;&lt;p align="justify"&gt;
 
                            &lt;ul&gt;
-                           &lt;li&gt;Instant transactions (SwiftX)&lt;/li&gt;
                            &lt;li&gt;A decentralized governance (Proposal Voting)&lt;/li&gt;
                            &lt;li&gt;A decentralized budgeting system (Treasury)&lt;/li&gt;
                            &lt;li&gt;Validation of transactions within each block&lt;/li&gt;
@@ -3648,17 +3361,17 @@ NestEgg使用了一个股权证明(PoS)一致系统算法，
                            Masternode Perks:
                            &lt;/p&gt;&lt;p align="justify"&gt;
                            &lt;ul&gt;
-                           &lt;li&gt;Participate in NestEgg Governance&lt;/li&gt;
+                           &lt;li&gt;Participate in SAPP Governance&lt;/li&gt;
                            &lt;li&gt;Earn Masternode Rewards&lt;/li&gt;
                            &lt;li&gt;Commodity option for future sale&lt;/li&gt;
-                           &lt;li&gt;Help secure the NestEgg network&lt;/li&gt;
+                           &lt;li&gt;Help secure the SAPP network&lt;/li&gt;
                            &lt;/ul&gt;
                            &lt;/p&gt;&lt;p align="justify"&gt;
 
                            Requirements:
                            &lt;/p&gt;&lt;p align="justify"&gt;
                            &lt;ul&gt;
-                           &lt;li&gt;25,000 EGG per single Masternode instance&lt;/li&gt;
+                           &lt;li&gt;Enough collateral balance per single Masternode instance&lt;/li&gt;
                            &lt;li&gt;Must be stored in a core wallet&lt;/li&gt;
                            &lt;li&gt;Need dedicated IP address&lt;/li&gt;
                            &lt;li&gt;Masternode wallet to remain online&lt;/li&gt;
@@ -3667,15 +3380,14 @@ NestEgg使用了一个股权证明(PoS)一致系统算法，
                          </source>
         <translation>
 &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;
-主节点是运行完整节点NestEgg核心钱包的计算机
-需要200,000个EGG作抵押以提供额外服务
+主节点是运行完整节点SAPP核心钱包的计算机
+需要10,000个SAPP作抵押以提供额外服务
 到网络，会收到一部分的区块奖励作为定期
 回报
 这些服务包括:
 &lt;/p&gt;&lt;p align="justify"&gt;
 
 &lt;ul&gt;
-&lt;li&gt;即时交易(SwiftX)&lt;/li&gt;
 &lt;li&gt;去中心化治理(提案投票)&lt;/li&gt;
 &lt;li&gt;去中心化预算系统(国库)&lt;/li&gt;
 &lt;li&gt;验证每个区块交易&lt;/li&gt;
@@ -3690,17 +3402,17 @@ NestEgg使用了一个股权证明(PoS)一致系统算法，
 主节点福利：
 &lt;/p&gt;&lt;p align="justify"&gt;
 &lt;ul&gt;
-&lt;li&gt;参与NestEgg治理&lt;/li&gt;
+&lt;li&gt;参与SAPP治理&lt;/li&gt;
 &lt;li&gt;赢取主节点奖励&lt;/li&gt;
 &lt;li&gt;商品期货期权&lt;/li&gt;
-&lt;li&gt;帮助保护NestEgg网络&lt;/li&gt;
+&lt;li&gt;帮助保护SAPP网络&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/p&gt;&lt;p align="justify"&gt;
 
 要求：
 &lt;/p&gt;&lt;p align="justify"&gt;
 &lt;ul&gt;
-&lt;li&gt;每个主节点实例有25,000 EGG&lt;/li&gt;
+&lt;li&gt;每个主节点实例有10,000 SAPP&lt;/li&gt;
 &lt;li&gt;必须存储在核心钱包&lt;/li&gt;
 &lt;li&gt;需要专用IP地址&lt;/li&gt;
 主节点钱包保持在线&lt;li&gt;
@@ -3821,8 +3533,8 @@ NestEgg使用了一个股权证明(PoS)一致系统算法，
         <translation>无法打开备份文件夹</translation>
     </message>
     <message>
-        <source>Unable to open nestegg.conf with default application</source>
-        <translation>无法使用默认应用程序打开nestegg.conf</translation>
+        <source>Unable to open sapphire.conf with default application</source>
+        <translation>无法使用默认应用程序打开sapphire.conf</translation>
     </message>
     <message>
         <source>In:</source>
@@ -3872,8 +3584,8 @@ NestEgg使用了一个股权证明(PoS)一致系统算法，
         <translation>脚本&amp;验证线程数</translation>
     </message>
     <message>
-        <source>Start NestEgg on system login</source>
-        <translation>开机启动NestEgg</translation>
+        <source>Start SAPP on system login</source>
+        <translation>开机启动SAPP</translation>
     </message>
     <message>
         <source>Minimize to the tray instead of the taskbar</source>
@@ -3960,8 +3672,8 @@ Are you sure?
         <translation>查看列表</translation>
     </message>
     <message>
-        <source>MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other NestEgg addresses after it matures.</source>
-        <translation>成熟以后，多重花费允许您自动发送高达 100% 的股权或主节点奖励到其他NestEgg地址列表</translation>
+        <source>MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other SAPP addresses after it matures.</source>
+        <translation>成熟以后，多重花费允许您自动发送高达 100% 的股权或主节点奖励到其他SAPP地址列表</translation>
     </message>
     <message>
         <source>Active</source>
@@ -4079,8 +3791,8 @@ Check one or both of the check boxes to send on stake and/or masternode rewards<
         <translation>消息 </translation>
     </message>
     <message>
-        <source>NestEgg address or contact label</source>
-        <translation>NestEgg 地址或者联系人标签</translation>
+        <source>SAPP address or contact label</source>
+        <translation>SAPP 地址或者联系人标签</translation>
     </message>
     <message>
         <source>Enter address</source>
@@ -4356,8 +4068,8 @@ Check one or both of the check boxes to send on stake and/or masternode rewards<
         <translation>常见问题</translation>
     </message>
     <message>
-        <source>About NestEgg</source>
-        <translation>关于NestEgg </translation>
+        <source>About SAPP</source>
+        <translation>关于SAPP </translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4423,11 +4135,11 @@ Are you sure?
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>NestEgg Core is shutting down...</source>
-        <translation>NestEgg 核心正在关闭...</translation>
+        <source>Sapphire is shutting down...</source>
+        <translation>Sapphire 核心正在关闭...</translation>
     </message>
     <message>
-        <source>Do not shut down the computer until this window dieggears.</source>
+        <source>Do not shut down the computer until this window disappears.</source>
         <translation>在此窗口消失之前不要关闭计算机。</translation>
     </message>
 </context>
@@ -4453,8 +4165,8 @@ Are you sure?
         <translation>正在下载…</translation>
     </message>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
 </context>
 <context>
@@ -4680,10 +4392,6 @@ backup will be created.
         <translation>接收</translation>
     </message>
     <message>
-        <source>Stake delegation</source>
-        <translation>股权委托</translation>
-    </message>
-    <message>
         <source>Sent to</source>
         <translation>发送</translation>
     </message>
@@ -4694,10 +4402,6 @@ backup will be created.
     <message>
         <source>Payment to yourself</source>
         <translation>支付给您自己</translation>
-    </message>
-    <message>
-        <source>Stake delegation spent by</source>
-        <translation>加注花费委托</translation>
     </message>
     <message>
         <source>Mined</source>
@@ -4897,25 +4601,25 @@ backup will be created.
     </message>
     <message>
         <source>Welcome to
-		NestEgg Core Wallet</source>
+Sapphire Wallet</source>
         <translation>欢迎
-		NestEgg核心钱包</translation>
+Sapphire心钱包</translation>
     </message>
     <message>
-        <source>NestEgg is the world’s most innovative Proof of Stake blockchain based technology. Developed by a team of highly experienced developers and cryptographers.</source>
-        <translation>NestEgg是世界上最先进的隐私保护技术，由经验丰富的开发人员和密码专家开发。</translation>
+        <source>SAPP is the world’s most innovative Proof of Stake blockchain based technology. Developed by a team of highly experienced developers and cryptographers.</source>
+        <translation>SAPP是世界上最先进的隐私保护技术，由经验丰富的开发人员和密码专家开发。</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;As our manifesto says: Privacy is a non-negotiable basic human right; it grants users the freedom to share their data whenever and with whomever they want - NestEgg believes in self sovereignty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;正如我们的宣言所说:隐私是一项不容协商的基本人权;它赋予用户随时随地与任何人共享数据的自由——NestEgg相信自我主权&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;As our manifesto says: Privacy is a non-negotiable basic human right; it grants users the freedom to share their data whenever and with whomever they want - SAPP believes in self sovereignty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;正如我们的宣言所说:隐私是一项不容协商的基本人权;它赋予用户随时随地与任何人共享数据的自由——SAPP相信自我主权&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>The masternode network is NestEgg's second layer network on top of the blockchain that enables our DAO to provide decentralized governance and a treasury.</source>
-        <translation>主节点网络是NestEgg在区块链之上的第二层网络，它使我们的DAO能够提供去中心的治理。</translation>
+        <source>The masternode network is SAPP's second layer network on top of the blockchain that enables our DAO to provide decentralized governance and a treasury.</source>
+        <translation>主节点网络是SAPP在区块链之上的第二层网络，它使我们的DAO能够提供去中心的治理。</translation>
     </message>
     <message>
-        <source>How NestEgg respects your privacy?</source>
-        <translation>NestEgg 到底是怎么尊重你的隐私的？</translation>
+        <source>How SAPP respects your privacy?</source>
+        <translation>SAPP 到底是怎么尊重你的隐私的？</translation>
     </message>
     <message>
         <source>What is a Masternode?</source>
@@ -4949,8 +4653,8 @@ backup will be created.
         <translation>绑定到给定地址监听JSON-RPC连接。使用[主机]: IPv6的端口符号。可以多次指定此选项(默认:绑定到所有接口)</translation>
     </message>
     <message>
-        <source>Cannot obtain a lock on data directory %s. NestEgg Core is probably already running.</source>
-        <translation>无法获取数据目录%s锁。NestEgg核心可能已经在运行了。</translation>
+        <source>Cannot obtain a lock on data directory %s. Sapphire is probably already running.</source>
+        <translation>无法获取数据目录%s锁。Sapphire心可能已经在运行了。</translation>
     </message>
     <message>
         <source>Change automatic finalized budget voting behavior. mode=auto: Vote for only exact finalized budget match to my generated budget. (string, default: auto)</source>
@@ -4975,10 +4679,6 @@ backup will be created.
     <message>
         <source>Distributed under the MIT software license, see the accompanying file COPYING or &lt;http://www.opensource.org/licenses/mit-license.php&gt;.</source>
         <translation>在MIT软件许可下发布，参见附带的文件复制或&lt;http://www.opensource.org/licenses/mit-license.php&gt;。</translation>
-    </message>
-    <message>
-        <source>Enable cold staking functionality (0-1, default: %u). Disabled if staking=0</source>
-        <translation>启用冷堆叠（0-1，默认值：%u）。 如果累计= 0，则禁用</translation>
     </message>
     <message>
         <source>Enable spork administration functionality with the appropriate private key.</source>
@@ -5113,8 +4813,8 @@ backup will be created.
         <translation>网络版本字符串的总长度(%i)超过最大长度(%i)。减少任务的数量或大小。</translation>
     </message>
     <message>
-        <source>Unable to bind to %s on this computer. NestEgg Core is probably already running.</source>
-        <translation>无法绑定到此计算机上的%s。NestEgg核心可能已经在运行了。</translation>
+        <source>Unable to bind to %s on this computer. Sapphire is probably already running.</source>
+        <translation>无法绑定到此计算机上的%s。Sapphire心可能已经在运行了。</translation>
     </message>
     <message>
         <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: %s)</source>
@@ -5129,8 +4829,8 @@ backup will be created.
         <translation>警告:-支付tx费用设置的非常高!这是您发送交易时要支付的交易费。</translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong NestEgg Core will not work properly.</source>
-        <translation>注意：请检查您的电脑的日期和时间是否正确！ 如果您的时间设置不正确，NestEgg Core将无法正常工作。</translation>
+        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Sapphire will not work properly.</source>
+        <translation>注意：请检查您的电脑的日期和时间是否正确！ 如果您的时间设置不正确，Sapphire将无法正常工作。</translation>
     </message>
     <message>
         <source>Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.</source>
@@ -5205,8 +4905,8 @@ backup will be created.
         <translation>版权所有(C) 2014-%i的达世核心开发者</translation>
     </message>
     <message>
-        <source>Copyright (C) 2015-%i The NestEgg Core Developers</source>
-        <translation>版权所有(C) 2015-%i NestEgg核心开发者</translation>
+        <source>Copyright (C) 2015-%i The PIVX Core Developers</source>
+        <translation>版权所有(C) 2015-%i PIVX核心开发者</translation>
     </message>
     <message>
         <source>Corrupted block database detected</source>
@@ -5243,14 +4943,6 @@ backup will be created.
     <message>
         <source>Done loading</source>
         <translation>下载完成</translation>
-    </message>
-    <message>
-        <source>Enable publish hash transaction (locked via SwiftX) in &lt;address&gt;</source>
-        <translation>启用&lt;address&gt;发布哈希交易(通过SwiftX锁定)</translation>
-    </message>
-    <message>
-        <source>Enable publish raw transaction (locked via SwiftX) in &lt;address&gt;</source>
-        <translation>启用&lt;address&gt;发布原始交易(通过SwiftX锁定)</translation>
     </message>
     <message>
         <source>Enable the client to act as a masternode (0-1, default: %u)</source>
@@ -5345,8 +5037,8 @@ backup will be created.
         <translation>信息</translation>
     </message>
     <message>
-        <source>Initialization sanity check failed. NestEgg Core is shutting down.</source>
-        <translation>初始化完整性检查失败。NestEgg核心快要关闭了。</translation>
+        <source>Initialization sanity check failed. Sapphire is shutting down.</source>
+        <translation>初始化完整性检查失败。Sapphire心快要关闭了。</translation>
     </message>
     <message>
         <source>Insufficient funds</source>
@@ -5377,8 +5069,8 @@ backup will be created.
         <translation>白名单中指定的无效网络掩码:'%s'</translation>
     </message>
     <message>
-        <source>Recalculating EGG supply...</source>
-        <translation>重新计算EGG供应量……</translation>
+        <source>Recalculating SAPP supply...</source>
+        <translation>重新计算SAPP供应量……</translation>
     </message>
     <message>
         <source>Reindexing zerocoin database...</source>
@@ -5393,20 +5085,12 @@ backup will be created.
         <translation>所选择币价值低于支付目标金额</translation>
     </message>
     <message>
-        <source>SwiftX options:</source>
-        <translation>SwiftX 选项：</translation>
-    </message>
-    <message>
         <source>This is a pre-release test build - use at your own risk - do not use for staking or merchant applications!</source>
         <translation>这是一个预发行测试版本 - 您自己承担风险 - 不要用于商业应用！</translation>
     </message>
     <message>
-        <source>Disable all NestEgg specific functionality (Masternodes, Zerocoin, SwiftX, Budgeting) (0-1, default: %u)</source>
-        <translation>禁用所有NestEgg特定功能(主节点, 零币, SwiftX, budget)(0-1，默认值:%u)</translation>
-    </message>
-    <message>
-        <source>Enable SwiftX, show confirmations for locked transactions (bool, default: %s)</source>
-        <translation>启用SwiftX，显示锁定交易的确认(bool，默认值:%s)</translation>
+        <source>Disable all SAPP specific functionality (Masternodes, Zerocoin, Budgeting) (0-1, default: %u)</source>
+        <translation>禁用所有SAPP特定功能(主节点, 零币, budget)(0-1，默认值:%u)</translation>
     </message>
     <message>
         <source>Error: Unsupported argument -checklevel found. Checklevel must be level 4.</source>
@@ -5427,10 +5111,6 @@ backup will be created.
     <message>
         <source>Specify custom backup path to add a copy of any wallet backup. If set as dir, every backup generates a timestamped file. If set as file, will rewrite to that file every backup.</source>
         <translation>指定自定义备份路径去添加任何钱包备份的副本。如果将其设置为dir，则每个备份将生成一个时间戳文件。如果设置为文件，将重写到每次备份的该文件</translation>
-    </message>
-    <message>
-        <source>SwiftX requires inputs with at least 6 confirmations, you might need to wait a few minutes and try again.</source>
-        <translation>SwiftX要求输入至少6个确认，您可能需要等待几分钟，然后重试。</translation>
     </message>
     <message>
         <source>&lt;category&gt; can be:</source>
@@ -5645,8 +5325,8 @@ backup will be created.
         <translation>准备重新同步……</translation>
     </message>
     <message>
-        <source>Please check that your computer's date and time are correct! If your clock is wrong NestEgg Core will not work properly.</source>
-        <translation>请检查您的电脑的日期和时间是否正确!如果你的时间错误，NestEgg Core将无法正常工作。</translation>
+        <source>Please check that your computer's date and time are correct! If your clock is wrong Sapphire will not work properly.</source>
+        <translation>请检查您的电脑的日期和时间是否正确!如果你的时间错误，Sapphire将无法正常工作。</translation>
     </message>
     <message>
         <source>Specify location of debug log file: this can be an absolute path or a path relative to the data directory (default: %s)</source>
@@ -5829,8 +5509,8 @@ backup will be created.
         <translation>正在同步分叉...</translation>
     </message>
     <message>
-        <source>Syncing zEGG wallet...</source>
-        <translation>正在同步zEGG钱包……</translation>
+        <source>Syncing zSAPP wallet...</source>
+        <translation>正在同步zSAPP钱包……</translation>
     </message>
     <message>
         <source>This help message</source>
@@ -5933,8 +5613,8 @@ backup will be created.
         <translation>JSON-RPC连接的用户名</translation>
     </message>
     <message>
-        <source>Value is below the smallest available denomination (= 1) of zEGG</source>
-        <translation>值小于zEGG的最小可用面额(= 1)</translation>
+        <source>Value is below the smallest available denomination (= 1) of zSAPP</source>
+        <translation>值小于zSAPP的最小可用面额(= 1)</translation>
     </message>
     <message>
         <source>Verifying blocks...</source>
@@ -5949,8 +5629,8 @@ backup will be created.
         <translation>钱包%s驻留在数据目录%s之外</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart NestEgg Core to complete</source>
-        <translation>钱包需要重写:重新启动NestEgg核心完成</translation>
+        <source>Wallet needed to be rewritten: restart Sapphire to complete</source>
+        <translation>钱包需要重写:重新启动Sapphire心完成</translation>
     </message>
     <message>
         <source>Wallet options:</source>
@@ -6016,8 +5696,8 @@ backup will be created.
         <translation>发送</translation>
     </message>
     <message>
-        <source>NestEgg address or contact label</source>
-        <translation>NestEgg 地址或者联系人标签</translation>
+        <source>SAPP address or contact label</source>
+        <translation>SAPP 地址或者联系人标签</translation>
     </message>
     <message>
         <source>Amount</source>
@@ -6042,10 +5722,6 @@ backup will be created.
     <message>
         <source>Reset to default</source>
         <translation>重置到默认值</translation>
-    </message>
-    <message>
-        <source>Include delegated</source>
-        <translation>包含委托</translation>
     </message>
 </context>
 </TS>

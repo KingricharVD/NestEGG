@@ -5,13 +5,13 @@ The Inno Setup QuickStart Pack includes Inno Setup itself and additionally inclu
 [Inno Setup Downloads page](https://www.jrsoftware.org/isdl.php)  
 [innosetup-qsp-6.0.3.exe](https://www.jrsoftware.org/download.php/ispack.exe)
 
-After the setup you can use the Inno Setup directly of the Inno Setup Studio for an easier project edition.
+After the setup you can use the Inno Setup directly of the Inno Setup Studio for an easier project edition. 
 
 ## `Inno Setup Studio`
 
 Probably Inno Setup Studio will need to setup the compiler path, go to `Tools > Options > Compiler Settings > Compiler Directory` and setup it with this directory `"C:\Program Files (x86)\Inno Setup 6"`
 
-## Install the `Inno Download Plugin`
+## Install the `Inno Download Plugin` 
 
 Go to: [Inno Download Plugin webpage](https://mitrichsoftware.wordpress.com/inno-setup-tools/inno-download-plugin/) and install the following file: [Download version 1.5.1](https://bitbucket.org/mitrich_k/inno-download-plugin/downloads/idpsetup-1.5.1.exe)
 
@@ -20,7 +20,7 @@ Go to: [Inno Download Plugin webpage](https://mitrichsoftware.wordpress.com/inno
 Create a project folder with the following elements
 
 * package: A folder containing all the files needed for the application;
-* output: A folder where the compiler will place the setup file
+* output: A folder where the compiler will place the setup file 
 * iss project file: The Inno Setup source code;
 * `ico` file for the setup
 * needed setup files just for archive
@@ -35,13 +35,13 @@ Create a project folder with the following elements
 * Open the Inno Setup Compiler
 * Create a new project using the `wizard`
 * Fill in the following data:
-    * Application Name: `Human_Charity_Coin_Protocol Core`
+    * Application Name: `Sapphire Core`
     * Application Version: `1.2.0.0`
-    * Application Publisher: `2020 Human_Charity_Coin_Protocol Core Developers`
-    * Application Website: `https://www.humancharitycoin.com/`
+    * Application Publisher: `2020 Sapphire Core Developers`
+    * Application Website: `https://sappcoin.com/`
 * Setup the destination folder:
     * Program Files Folder
-    * Folder name: `Human_Charity_Coin_Protocol`
+    * Folder name: `Sapphire`
 * Add application files:
     * Select the file `sap-pt.exe` as main executable from the `package` folder
     * Add the folder package in the other application files

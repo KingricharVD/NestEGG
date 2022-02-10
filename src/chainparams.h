@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2015 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -17,6 +17,7 @@
 #include "uint256.h"
 
 #include <vector>
+#include <map>
 
 struct CDNSSeedData {
     std::string name, host;
@@ -31,7 +32,7 @@ struct SeedSpec6 {
 
 /**
  * CChainParams defines various tweakable parameters of a given instance of the
- * NestEgg system. There are three: the main network on which people trade goods
+ * Sapphire system. There are three: the main network on which people trade goods
  * and services, the public test network which gets reset from time to time and
  * a regression test mode which is intended for private networks only. It has
  * minimal difficulty to ensure that blocks can be found instantly.
@@ -46,18 +47,11 @@ public:
         EXT_PUBLIC_KEY, // BIP32
         EXT_SECRET_KEY, // BIP32
         EXT_COIN_TYPE,  // BIP44
-        STAKING_ADDRESS,
+
+        PUBKEY_ADDRESS_BIR,
+        SECRET_KEY_BIR,
 
         MAX_BASE58_TYPES
-    };
-
-    enum Bech32Type {
-        EGGLING_PAYMENT_ADDRESS,
-        EGGLING_FULL_VIEWING_KEY,
-        EGGLING_INCOMING_VIEWING_KEY,
-        EGGLING_EXTENDED_SPEND_KEY,
-
-        MAX_BECH32_TYPES
     };
 
     const Consensus::Params& GetConsensus() const { return consensus; }
@@ -77,14 +71,11 @@ public:
     std::string NetworkIDString() const { return strNetworkID; }
     const std::vector<CDNSSeedData>& DNSSeeds() const { return vSeeds; }
     const std::vector<unsigned char>& Base58Prefix(Base58Type type) const { return base58Prefixes[type]; }
-    const std::string& Bech32HRP(Bech32Type type) const { return bech32HRPs[type]; }
     const std::vector<SeedSpec6>& FixedSeeds() const { return vFixedSeeds; }
     virtual const Checkpoints::CCheckpointData& Checkpoints() const = 0;
 
     CBaseChainParams::Network NetworkID() const { return networkID; }
     bool IsRegTestNet() const { return NetworkID() == CBaseChainParams::REGTEST; }
-    bool IsTestNet() const { return NetworkID() == CBaseChainParams::TESTNET; }
-	bool IsMainNet() const { return NetworkID() == CBaseChainParams::MAIN; }
 
 
 protected:
@@ -98,7 +89,6 @@ protected:
     int nDefaultPort;
     std::vector<CDNSSeedData> vSeeds;
     std::vector<unsigned char> base58Prefixes[MAX_BASE58_TYPES];
-    std::string bech32HRPs[MAX_BECH32_TYPES];
     std::vector<SeedSpec6> vFixedSeeds;
 };
 

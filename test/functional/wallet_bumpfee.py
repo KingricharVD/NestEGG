@@ -120,7 +120,7 @@ def test_segwit_bumpfee_succeeds(rbf_node, dest_address):
         'vout': 0,
         "sequence": BIP125_SEQUENCE_NUMBER
     }], {dest_address: Decimal("0.0005"),
-         rbf_node.getaccountaddress(): Decimal("0.0003")})
+         rbf_node.getrawchangeaddress(): Decimal("0.0003")})
     rbfsigned = rbf_node.signrawtransaction(rbfraw)
     rbfid = rbf_node.sendrawtransaction(rbfsigned["hex"])
     assert rbfid in rbf_node.getrawmempool()
@@ -273,7 +273,7 @@ def spend_one_input(node, dest_address):
         sequence=BIP125_SEQUENCE_NUMBER, **next(u for u in node.listunspent() if u["amount"] == Decimal("0.00100000")))
     rawtx = node.createrawtransaction(
         [tx_input], {dest_address: Decimal("0.00050000"),
-                     node.getaccountaddress(): Decimal("0.00049000")})
+                     node.getrawchangeaddress(): Decimal("0.00049000")})
     signedtx = node.signrawtransaction(rawtx)
     txid = node.sendrawtransaction(signedtx["hex"])
     return txid

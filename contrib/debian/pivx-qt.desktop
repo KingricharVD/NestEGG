@@ -1,13 +1,13 @@
 [Desktop Entry]
 Version=1.0
-Name=Human_Charity_Coin_Protocol
-Comment= HCCP P2P Cryptocurrency
-Comment[fr]= HCCP, monnaie virtuelle cryptographique pair à pair
-Comment[tr]= HCCP, eşten eşe kriptografik sanal para birimi
-Exec=Human_Charity_Coin_Protocol-qt %u
+Name=Sapphire
+Comment= SAPP P2P Cryptocurrency
+Comment[fr]= SAPP, monnaie virtuelle cryptographique pair à pair
+Comment[tr]= SAPP, eşten eşe kriptografik sanal para birimi
+Exec=sapphire-qt %u
 Terminal=false
 Type=Application
 Icon=pivx128
 MimeType=x-scheme-handler/pivx;
 Categories=Office;Finance;
-StartupWMClass=Human_Charity_Coin_Protocol-qt
+StartupWMClass=Sapphire-qt

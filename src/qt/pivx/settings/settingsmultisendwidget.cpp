@@ -1,5 +1,5 @@
 // Copyright (c) 2019-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -162,7 +162,7 @@ SettingsMultisendWidget::SettingsMultisendWidget(PWidget *parent) :
     ui->labelTitle->setText("Multisend");
     setCssTitleScreen(ui->labelTitle);
 
-    ui->labelSubtitle1->setText(tr("MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other Human_Charity_Coin_Protocol addresses after it matures."));
+    ui->labelSubtitle1->setText(tr("MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other Sapphire addresses after it matures."));
     setCssSubtitleScreen(ui->labelSubtitle1);
 
     //Button Group

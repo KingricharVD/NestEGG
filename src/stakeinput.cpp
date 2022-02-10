@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -14,7 +14,7 @@
 bool CPivStake::InitFromTxIn(const CTxIn& txin)
 {
     if (txin.IsZerocoinSpend())
-        return error("%s: unable to initialize CHCCPStake from zerocoin spend", __func__);
+        return error("%s: unable to initialize CSAPPStake from zerocoin spend", __func__);
 
     // Find the previous transaction in database
     uint256 hashBlock;
@@ -78,12 +78,12 @@ bool CPivStake::CreateTxOuts(CWallet* pwallet, std::vector<CTxOut>& vout, CAmoun
     if (!Solver(scriptPubKeyKernel, whichType, vSolutions))
         return error("%s: failed to parse kernel", __func__);
 
-    if (whichType != TX_PUBKEY && whichType != TX_PUBKEYHASH && whichType != TX_COLDSTAKE)
+    if (whichType != TX_PUBKEY && whichType != TX_PUBKEYHASH)
         return error("%s: type=%d (%s) not supported for scriptPubKeyKernel", __func__, whichType, GetTxnOutputType(whichType));
 
     CScript scriptPubKey;
     CKey key;
-    if (whichType == TX_PUBKEYHASH || whichType == TX_COLDSTAKE) {
+    if (whichType == TX_PUBKEYHASH) {
         // if P2PKH check that we have the input private key
         if (!pwallet->GetKey(CKeyID(uint160(vSolutions[0])), key))
             return error("%s: Unable to get staking private key", __func__);
@@ -121,7 +121,7 @@ bool CPivStake::CreateTxOuts(CWallet* pwallet, std::vector<CTxOut>& vout, CAmoun
 
 CDataStream CPivStake::GetUniqueness() const
 {
-    //The unique identifier for a HCCP stake is the outpoint
+    //The unique identifier for a SAPP stake is the outpoint
     CDataStream ss(SER_NETWORK, 0);
     ss << nPosition << txFrom.GetHash();
     return ss;
@@ -164,7 +164,8 @@ bool CPivStake::ContextCheck(int nHeight, uint32_t nTime)
         return error("%s : min age violation - height=%d - time=%d, nHeightBlockFrom=%d, nTimeBlockFrom=%d",
                          __func__, nHeight, nTime, nHeightBlockFrom, nTimeBlockFrom);
     }
-
+    
     // All good
     return true;
 }
+

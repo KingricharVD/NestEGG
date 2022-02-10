@@ -5,7 +5,7 @@
 // Copyright (c) 2013-2014 The NovaCoin Developers
 // Copyright (c) 2014-2018 The BlackCoin Developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -104,7 +104,7 @@ void UpdateTime(CBlockHeader* pblock, const CBlockIndex* pindexPrev)
 bool CheckForDuplicatedSerials(const CTransaction& tx, const Consensus::Params& consensus,
                                std::vector<CBigNum>& vBlockSerials)
 {
-    // double check that there are no double spent zHCCP spends in this block or tx
+    // double check that there are no double spent zSAPP spends in this block or tx
     if (tx.HasZerocoinSpendInputs()) {
         int nHeightTx = 0;
         if (IsTransactionInChain(tx.GetHash(), nHeightTx)) {
@@ -139,7 +139,7 @@ bool CheckForDuplicatedSerials(const CTransaction& tx, const Consensus::Params& 
                 vBlockSerials.emplace_back(spend->getCoinSerialNumber());
             }
         }
-        //This zHCCP serial has already been included in the block, do not add this tx.
+        //This zSAPP serial has already been included in the block, do not add this tx.
         if (fDoubleSerial) {
             return false;
         }
@@ -238,10 +238,10 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
     unsigned int nBlockMaxSizeSpork = (unsigned int)sporkManager.GetSporkValue(SPORK_105_MAX_BLOCK_SIZE);
 
     nBlockMaxSize = std::max(
-        (unsigned int)1000,
-        std::min(
-            nBlockMaxSizeSpork,
-            nBlockMaxSize
+        (unsigned int)1000, 
+        std::min( 
+            nBlockMaxSizeSpork, 
+            nBlockMaxSize 
         )
     );
 
@@ -322,7 +322,7 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
 
                 int nConf = nHeight - coin.nHeight;
 
-                // zHCCP spends can have very large priority, use non-overflowing safe functions
+                // zSAPP spends can have very large priority, use non-overflowing safe functions
                 dPriority = double_safe_addition(dPriority, ((double)nValueIn * nConf));
 
             }
@@ -394,7 +394,7 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
             if (!view.HaveInputs(tx))
                 continue;
 
-            // zHCCP check to not include duplicated serials in the same block.
+            // zSAPP check to not include duplicated serials in the same block.
             if (!CheckForDuplicatedSerials(tx, consensus, vBlockSerials)) {
                 continue;
             }

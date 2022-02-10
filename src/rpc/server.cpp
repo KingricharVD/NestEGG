@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -266,11 +266,11 @@ UniValue stop(const JSONRPCRequest& jsonRequest)
     if (jsonRequest.fHelp || jsonRequest.params.size() > 1)
         throw std::runtime_error(
             "stop\n"
-            "\nStop Human_Charity_Coin_Protocol server.");
+            "\nStop Sapphire server.");
     // Event loop will exit after current HTTP requests have been handled, so
     // this reply will get back to the client.
     StartShutdown();
-    return "Human_Charity_Coin_Protocol server stopping";
+    return "Sapphire server stopping";
 }
 
 
@@ -319,6 +319,7 @@ static const CRPCCommand vRPCCommands[] =
         {"blockchain", "invalidateblock", &invalidateblock, true },
         {"blockchain", "reconsiderblock", &reconsiderblock, true },
         {"blockchain", "verifychain", &verifychain, true },
+        {"blockchain", "getburnaddresses", &getburnaddresses, true },
 
         /* Mining */
         {"mining", "getblocktemplate", &getblocktemplate, true },
@@ -360,32 +361,32 @@ static const CRPCCommand vRPCCommands[] =
         { "hidden",             "waitforblock",           &waitforblock,           true },
         { "hidden",             "waitforblockheight",     &waitforblockheight,     true },
 
-        /* HCCP features */
-        {"Human_Charity_Coin_Protocol", "listmasternodes", &listmasternodes, true },
-        {"Human_Charity_Coin_Protocol", "getmasternodecount", &getmasternodecount, true },
-        {"Human_Charity_Coin_Protocol", "createmasternodebroadcast", &createmasternodebroadcast, true },
-        {"Human_Charity_Coin_Protocol", "decodemasternodebroadcast", &decodemasternodebroadcast, true },
-        {"Human_Charity_Coin_Protocol", "relaymasternodebroadcast", &relaymasternodebroadcast, true },
-        {"Human_Charity_Coin_Protocol", "masternodecurrent", &masternodecurrent, true },
-        {"Human_Charity_Coin_Protocol", "startmasternode", &startmasternode, true },
-        {"Human_Charity_Coin_Protocol", "createmasternodekey", &createmasternodekey, true },
-        {"Human_Charity_Coin_Protocol", "getmasternodeoutputs", &getmasternodeoutputs, true },
-        {"Human_Charity_Coin_Protocol", "listmasternodeconf", &listmasternodeconf, true },
-        {"Human_Charity_Coin_Protocol", "getmasternodestatus", &getmasternodestatus, true },
-        {"Human_Charity_Coin_Protocol", "getmasternodewinners", &getmasternodewinners, true },
-        {"Human_Charity_Coin_Protocol", "getmasternodescores", &getmasternodescores, true },
-        {"Human_Charity_Coin_Protocol", "preparebudget", &preparebudget, true },
-        {"Human_Charity_Coin_Protocol", "submitbudget", &submitbudget, true },
-        {"Human_Charity_Coin_Protocol", "mnbudgetvote", &mnbudgetvote, true },
-        {"Human_Charity_Coin_Protocol", "getbudgetvotes", &getbudgetvotes, true },
-        {"Human_Charity_Coin_Protocol", "getnextsuperblock", &getnextsuperblock, true },
-        {"Human_Charity_Coin_Protocol", "getbudgetprojection", &getbudgetprojection, true },
-        {"Human_Charity_Coin_Protocol", "getbudgetinfo", &getbudgetinfo, true },
-        {"Human_Charity_Coin_Protocol", "mnbudgetrawvote", &mnbudgetrawvote, true },
-        {"Human_Charity_Coin_Protocol", "mnfinalbudget", &mnfinalbudget, true },
-        {"Human_Charity_Coin_Protocol", "checkbudgets", &checkbudgets, true },
-        {"Human_Charity_Coin_Protocol", "mnsync", &mnsync, true },
-        {"Human_Charity_Coin_Protocol", "spork", &spork, true },
+        /* SAPP features */
+        {"sapphire", "listmasternodes", &listmasternodes, true },
+        {"sapphire", "getmasternodecount", &getmasternodecount, true },
+        {"sapphire", "createmasternodebroadcast", &createmasternodebroadcast, true },
+        {"sapphire", "decodemasternodebroadcast", &decodemasternodebroadcast, true },
+        {"sapphire", "relaymasternodebroadcast", &relaymasternodebroadcast, true },
+        {"sapphire", "masternodecurrent", &masternodecurrent, true },
+        {"sapphire", "startmasternode", &startmasternode, true },
+        {"sapphire", "createmasternodekey", &createmasternodekey, true },
+        {"sapphire", "getmasternodeoutputs", &getmasternodeoutputs, true },
+        {"sapphire", "listmasternodeconf", &listmasternodeconf, true },
+        {"sapphire", "getmasternodestatus", &getmasternodestatus, true },
+        {"sapphire", "getmasternodewinners", &getmasternodewinners, true },
+        {"sapphire", "getmasternodescores", &getmasternodescores, true },
+        {"sapphire", "preparebudget", &preparebudget, true },
+        {"sapphire", "submitbudget", &submitbudget, true },
+        {"sapphire", "mnbudgetvote", &mnbudgetvote, true },
+        {"sapphire", "getbudgetvotes", &getbudgetvotes, true },
+        {"sapphire", "getnextsuperblock", &getnextsuperblock, true },
+        {"sapphire", "getbudgetprojection", &getbudgetprojection, true },
+        {"sapphire", "getbudgetinfo", &getbudgetinfo, true },
+        {"sapphire", "mnbudgetrawvote", &mnbudgetrawvote, true },
+        {"sapphire", "mnfinalbudget", &mnfinalbudget, true },
+        {"sapphire", "checkbudgets", &checkbudgets, true },
+        {"sapphire", "mnsync", &mnsync, true },
+        {"sapphire", "spork", &spork, true },
 
 #ifdef ENABLE_WALLET
         /* Wallet */
@@ -568,6 +569,12 @@ std::string JSONRPCExecBatch(const UniValue& vReq)
 
 UniValue CRPCTable::execute(const JSONRPCRequest &request) const
 {
+    // Return immediately if in warmup
+    std::string strWarmupStatus;
+    if (RPCIsInWarmup(&strWarmupStatus)) {
+        throw JSONRPCError(RPC_IN_WARMUP, "RPC in warm-up: " + strWarmupStatus);
+    }
+
     // Find method
     const CRPCCommand* pcmd = tableRPC[request.strMethod];
     if (!pcmd)
@@ -598,14 +605,14 @@ std::vector<std::string> CRPCTable::listCommands() const
 
 std::string HelpExampleCli(std::string methodname, std::string args)
 {
-    return "> Human_Charity_Coin_Protocol-cli " + methodname + " " + args + "\n";
+    return "> sapphire-cli " + methodname + " " + args + "\n";
 }
 
 std::string HelpExampleRpc(std::string methodname, std::string args)
 {
     return "> curl --user myusername --data-binary '{\"jsonrpc\": \"1.0\", \"id\":\"curltest\", "
            "\"method\": \"" +
-           methodname + "\", \"params\": [" + args + "] }' -H 'content-type: text/plain;' http://127.0.0.1:9335/\n";
+           methodname + "\", \"params\": [" + args + "] }' -H 'content-type: text/plain;' http://127.0.0.1:45329/\n";
 }
 
 void RPCSetTimerInterfaceIfUnset(RPCTimerInterface *iface)

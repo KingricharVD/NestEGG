@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -282,14 +282,6 @@ bool IsBlockPayeeValid(const CBlock& block, int nBlockHeight)
     //         if (transactionStatus == TrxValidationStatus::Valid) {
     //             return true;
     //         }
-
-    if (transactionStatus == TrxValidationStatus::InValid) {
-                  LogPrint(BCLog::MASTERNODE, "Invalid budget payment detected %s\n", txNew.ToString().c_str());
-                  if (sporkManager.IsSporkActive(SPORK_9_MASTERNODE_BUDGET_ENFORCEMENT))
-                      return false;
-
-                  LogPrint(BCLog::MASTERNODE, "Budget enforcement is disabled, accepting block\n");
-              }
 
     //         if (transactionStatus == TrxValidationStatus::InValid) {
     //             LogPrint(BCLog::MASTERNODE,"Invalid budget payment detected %s\n", txNew.ToString().c_str());

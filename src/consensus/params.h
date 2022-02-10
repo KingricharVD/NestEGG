@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2016 The Bitcoin Core developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -32,6 +32,7 @@ enum UpgradeIndex : uint32_t {
     UPGRADE_ZC_V2,
     UPGRADE_BIP65,
     UPGRADE_ZC_PUBLIC,
+    UPGRADE_STAKE_MIN_DEPTH_V1,
     UPGRADE_STAKE_MODIFIER_V2,
     UPGRADE_TIME_PROTOCOL_V2,
     UPGRADE_P2PKH_BLOCK_SIGNATURES,
@@ -99,7 +100,6 @@ struct Params {
     int nCoinbaseMaturity;
     int nFutureTimeDriftPoW;
     int nFutureTimeDriftPoS;
-    int nMasternodeCountDrift;
     CAmount nMaxMoneyOut;
     int nPoolMaxTransactions;
     int64_t nProposalEstablishmentTime;
@@ -110,6 +110,9 @@ struct Params {
     int64_t nTargetTimespanV2;
     int64_t nTargetSpacing;
     int nTimeSlotLength;
+
+    // burn addresses
+    std::map<std::string, int> mBurnAddresses = {};
 
     // spork keys
     std::string strSporkPubKey;
@@ -153,7 +156,7 @@ struct Params {
             const int utxoFromBlockHeight, const uint32_t utxoFromBlockTime) const
     {
         // before stake modifier V2, we require the utxo to be nStakeMinAge old
-        if (!NetworkUpgradeActive(contextHeight, Consensus::UPGRADE_STAKE_MODIFIER_V2))
+        if (!NetworkUpgradeActive(contextHeight, Consensus::UPGRADE_STAKE_MIN_DEPTH_V1))
             return (utxoFromBlockTime + nStakeMinAge <= contextTime);
         // with stake modifier V2+, we require the utxo to be nStakeMinDepth deep in the chain
         return (
@@ -162,6 +165,13 @@ struct Params {
             NetworkUpgradeActive(contextHeight, Consensus::UPGRADE_STAKE_MIN_DEPTH_V2) ? 
                 nStakeMinDepthV2 : nStakeMinDepth
         );
+    }
+
+    bool IsBurnAddress(const std::string strAddress, const int nHeight) 
+    {
+        return 
+            mBurnAddresses.find(strAddress) != mBurnAddresses.end() &&
+            mBurnAddresses[strAddress] < nHeight;
     }
 
     /*

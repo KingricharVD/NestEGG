@@ -114,12 +114,12 @@
         <translation>Alıcı Adres</translation>
     </message>
     <message>
-        <source>These are your NestEgg addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Bunlar ödemeleri göndermek için olan NestEgg adreslerinizdir.Coinleri göndermeden önce her zaman gönderilen miktarı ve adresi kontrol edin</translation>
+        <source>These are your SAPP addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Bunlar ödemeleri göndermek için olan SAPP adreslerinizdir.Coinleri göndermeden önce her zaman gönderilen miktarı ve adresi kontrol edin</translation>
     </message>
     <message>
-        <source>These are your NestEgg addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Bunlar ödemeleri almak için olan NestEgg adreslerinizdirHer işlem için yeni bir adres kullanmanız önerilir.</translation>
+        <source>These are your SAPP addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>Bunlar ödemeleri almak için olan SAPP adreslerinizdirHer işlem için yeni bir adres kullanmanız önerilir.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -348,8 +348,8 @@ Stake için kaldırın</translation>
         <translation>İPTAL</translation>
     </message>
     <message>
-        <source>NestEgg will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your EGGs from being stolen by malware infecting your computer.</source>
-        <translation>NestEgg şifreleme işlemini tamamlamak için şimdi kapanacaktır. Cüzdanınızı şifrelemenin, EGG'lerinizi bilgisayarınıza bulaşan kötücül yazılımlar tarafından çalınmasına tamamen engelleyemediğini unutmayın</translation>
+        <source>SAPP will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your SAPPs from being stolen by malware infecting your computer.</source>
+        <translation>SAPP şifreleme işlemini tamamlamak için şimdi kapanacaktır. Cüzdanınızı şifrelemenin, SAPP'lerinizi bilgisayarınıza bulaşan kötücül yazılımlar tarafından çalınmasına tamamen engelleyemediğini unutmayın</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -408,33 +408,6 @@ Stake için kaldırın</translation>
     </message>
 </context>
 <context>
-    <name>CSRow</name>
-    <message>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
-    <message>
-        <source>Savings</source>
-        <translation>Birikimler</translation>
-    </message>
-    <message>
-        <source>0,00 EGG</source>
-        <translation>0,00 EGG</translation>
-    </message>
-    <message>
-        <source>address</source>
-        <translation>adres</translation>
-    </message>
-    <message>
-        <source>Not Staking</source>
-        <translation>Stake yapılmıyor</translation>
-    </message>
-    <message>
-        <source>Own delegation</source>
-        <translation>Kendi delegasyonum</translation>
-    </message>
-</context>
-<context>
     <name>ClientModel</name>
     <message>
         <source>Total: %1 (IPv4: %2 / IPv6: %3 / Tor: %4 / Unknown: %5)</source>
@@ -460,8 +433,8 @@ Stake için kaldırın</translation>
         <translation>Koin Seçimi</translation>
     </message>
     <message>
-        <source>Select EGG Outputs to Spend</source>
-        <translation>Harcama için EGG Çıktılarını Seçin</translation>
+        <source>Select SAPP Outputs to Spend</source>
+        <translation>Harcama için SAPP Çıktılarını Seçin</translation>
     </message>
     <message>
         <source>Dust:</source>
@@ -488,8 +461,8 @@ Stake için kaldırın</translation>
         <translation>Miktar</translation>
     </message>
     <message>
-        <source>0.00 EGG</source>
-        <translation>0.00 EGG</translation>
+        <source>0.00 SAPP</source>
+        <translation>0.00 SAPP</translation>
     </message>
     <message>
         <source>0</source>
@@ -636,10 +609,6 @@ Stake için kaldırın</translation>
         <translation>evet</translation>
     </message>
     <message>
-        <source>delegated to %1 for cold staking</source>
-        <translation>soğuk stakin  için %1'e devredildi</translation>
-    </message>
-    <message>
         <source>Select All</source>
         <translation>Tümünü Seç</translation>
     </message>
@@ -682,193 +651,6 @@ Stake için kaldırın</translation>
     <message>
         <source>(change)</source>
         <translation>(değişiklik)</translation>
-    </message>
-</context>
-<context>
-    <name>ColdStakingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
-    <message>
-        <source>Owner address (optional, if empty a new address will be created)</source>
-        <translation>Sahibinin adresi (isteğe bağlı, boş ise yeni bir adres oluşturulur)</translation>
-    </message>
-    <message>
-        <source>Total Staking:</source>
-        <translation>Toplam Staking:</translation>
-    </message>
-    <message>
-        <source>Cold Staking</source>
-        <translation>Soğuk Stakleme</translation>
-    </message>
-    <message>
-        <source>Staker</source>
-        <translation>Stakleyen</translation>
-    </message>
-    <message>
-        <source>Delegation</source>
-        <translation>Delegasyon</translation>
-    </message>
-    <message>
-        <source>Delegate</source>
-        <translation>Delege et</translation>
-    </message>
-    <message>
-        <source>Clear All</source>
-        <translation>Hepsini temizle</translation>
-    </message>
-    <message>
-        <source>Delegated balance history</source>
-        <translation>Delege edilmiş tutar tarihçesi</translation>
-    </message>
-    <message>
-        <source>No delegations yet</source>
-        <translation>Henüz bir delegasyon bulunmuyor</translation>
-    </message>
-    <message>
-        <source>Total Staking: %1</source>
-        <translation>Toplam Stakeleme:%1</translation>
-    </message>
-    <message>
-        <source>Error loading delegations: %1</source>
-        <translation>Delegasyonların yüklenmesinde hata:%1</translation>
-    </message>
-    <message>
-        <source>You can delegate your EGGs, letting a hot node (24/7 online node)
-stake on your behalf, while you keep the keys securely offline.</source>
-        <translation>Sıcak bir düğüme izin vererek EGG'lerinizi devredebilirsiniz (7/24 çevrimiçi düğüm)
-anahtarları çevrimdışı bir şekilde güvenli tutarken, kendi adınıza stake yapın.</translation>
-    </message>
-    <message>
-        <source>Enter owner address</source>
-        <translation>Varlıkların sahibinin adresini girin</translation>
-    </message>
-    <message>
-        <source>No contacts available, you can go to the contacts screen and add some there!</source>
-        <translation>Uygun adres bulunmuyor, AL ekranına giderek adres ekleyebilirsin.</translation>
-    </message>
-    <message>
-        <source>Cold staking is networkely disabled</source>
-        <translation>Soğuk Stakeleme ağ üzerinde etkin değil</translation>
-    </message>
-    <message>
-        <source>Coin Control</source>
-        <translation>Koin kontrolü</translation>
-    </message>
-    <message>
-        <source>Invalid entry</source>
-        <translation>Geçersiz giriş</translation>
-    </message>
-    <message>
-        <source>Owner address invalid</source>
-        <translation>Sahip adresi geçersiz</translation>
-    </message>
-    <message>
-        <source>ALERT!</source>
-        <translation>DİKKAT!</translation>
-    </message>
-    <message>
-        <source>Delegating to an external owner address!
-
-The delegated coins will NOT be spendable by this wallet.
-Spending these coins will need to be done from the wallet or
-device containing the owner address.
-
-Do you wish to proceed?</source>
-        <translation>Dış bir adrese delege ediliyor!
-
-Delege edilmiş koinler bu cüzdan tarafından harcanamaz.
-Bu koinler owner adresinin olduğu cüzdan veya cihaz
-tarafından harcanabilir.
-
-Devam etmek istiyor musunuz?</translation>
-    </message>
-    <message>
-        <source>Staking address corresponds to this wallet, change it to an external node</source>
-        <translation>Stakeleme adresi bu cüzdana karşılık gelmektedir, dış bir düğüme değiştir</translation>
-    </message>
-    <message>
-        <source>Cannot create transaction.</source>
-        <translation>İşlem yaratılamıyor.</translation>
-    </message>
-    <message>
-        <source>Coins delegated</source>
-        <translation>Koinler delege edildi</translation>
-    </message>
-    <message>
-        <source>URI copied to clipboard</source>
-        <translation>URI panoya kopyalandı</translation>
-    </message>
-    <message>
-        <source>Address copied to clipboard</source>
-        <translation>Adres panoya kopyalandı</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Kopyala</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Güncelle</translation>
-    </message>
-    <message>
-        <source>Stake</source>
-        <translation>Stake</translation>
-    </message>
-    <message>
-        <source>Blacklist</source>
-        <translation>Karaliste</translation>
-    </message>
-    <message>
-        <source>Edit Label</source>
-        <translation>Etiketi Düzenle</translation>
-    </message>
-    <message>
-        <source>Copy owner
-address</source>
-        <translation>Sahip adresi
-kopyala</translation>
-    </message>
-    <message>
-        <source>Address copied</source>
-        <translation>Adres kopyalandı</translation>
-    </message>
-    <message>
-        <source>Edit Cold Address Label</source>
-        <translation>Soğuk Adresin Etiketini Düzenle</translation>
-    </message>
-    <message>
-        <source>Whitelist failed, please check the logs</source>
-        <translation>Beyazliste başarısız oldu, logları kontrol ediniz</translation>
-    </message>
-    <message>
-        <source> staking!</source>
-        <translation>Stakeleniyor!</translation>
-    </message>
-    <message>
-        <source>Blacklist failed, please check the logs</source>
-        <translation>Karaliste başarısız oldu, logları kontrol ediniz</translation>
-    </message>
-    <message>
-        <source> blacklisted from staking</source>
-        <translation>Stakeleme için karalisteye alındı</translation>
-    </message>
-    <message>
-        <source>Owner address copied</source>
-        <translation>Sahip adresi kopyalandı</translation>
-    </message>
-    <message>
-        <source>Edit Owner Address Label</source>
-        <translation>Sahip Adresinin Etiketini Düzenle</translation>
-    </message>
-    <message>
-        <source>Address label saved</source>
-        <translation>Adres etiketi kaydedildi</translation>
-    </message>
-    <message>
-        <source>Error storing address label</source>
-        <translation>Adres etiketini kaydederken hata oluştu</translation>
     </message>
 </context>
 <context>
@@ -917,8 +699,8 @@ kopyala</translation>
         <translation>Filtrele</translation>
     </message>
     <message>
-        <source>Amount of EGG and zEGG staked.</source>
-        <translation>Stake edilmiş EGG ve zEGG miktarı</translation>
+        <source>Amount of SAPP and zSAPP staked.</source>
+        <translation>Stake edilmiş SAPP ve zSAPP miktarı</translation>
     </message>
     <message>
         <source>Please wait until the wallet is fully synced to see your correct balance</source>
@@ -1013,8 +795,8 @@ Cüzdanınız senkronize olduktan ve harcanmamış bakiyeniz yeterli miktarda on
         <translation>Gönderen adresini düzenle</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid NestEgg address.</source>
-        <translation>Girilen "%1" adresi geçerli bir NestEgg adresi değil.</translation>
+        <source>The entered address "%1" is not a valid SAPP address.</source>
+        <translation>Girilen "%1" adresi geçerli bir SAPP adresi değil.</translation>
     </message>
     <message>
         <source>The entered address "%1" is already in the address book.</source>
@@ -1066,16 +848,16 @@ Cüzdanınız senkronize olduktan ve harcanmamış bakiyeniz yeterli miktarda on
         <translation>versiyon</translation>
     </message>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
     <message>
         <source>(%1-bit)</source>
         <translation>(%1-bit)</translation>
     </message>
     <message>
-        <source>About NestEgg Core</source>
-        <translation>NestEgg Core Hakkında </translation>
+        <source>About Sapphire</source>
+        <translation>Sapphire Hakkında </translation>
     </message>
     <message>
         <source>Command-line options</source>
@@ -1125,16 +907,16 @@ Cüzdanınız senkronize olduktan ve harcanmamış bakiyeniz yeterli miktarda on
         <translation>Hoşgeldiniz</translation>
     </message>
     <message>
-        <source>Welcome to NestEgg Core.</source>
-        <translation>NestEgg Core'a hoşgeldiniz.</translation>
+        <source>Welcome to Sapphire.</source>
+        <translation>Sapphire'a hoşgeldiniz.</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where NestEgg Core will store its data.</source>
-        <translation>Program ilk başlatıldığında NestEgg Core'un verilerini nerede saklayacağını seçebilirsiniz.</translation>
+        <source>As this is the first time the program is launched, you can choose where Sapphire will store its data.</source>
+        <translation>Program ilk başlatıldığında Sapphire'un verilerini nerede saklayacağını seçebilirsiniz.</translation>
     </message>
     <message>
-        <source>NestEgg Core will download and store a copy of the NestEgg block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>NestEgg Core, NestEgg blok zincirinin bir kopyasını indirecek ve depolayacaktır. Bu dizinde en az %1GB veri saklanacak ve zamanla büyüyecektir. Ayrıca cüzdanınız da bu dizinde saklanır.</translation>
+        <source>Sapphire will download and store a copy of the SAPP block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>Sapphire, SAPP blok zincirinin bir kopyasını indirecek ve depolayacaktır. Bu dizinde en az %1GB veri saklanacak ve zamanla büyüyecektir. Ayrıca cüzdanınız da bu dizinde saklanır.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1153,8 +935,8 @@ Cüzdanınız senkronize olduktan ve harcanmamış bakiyeniz yeterli miktarda on
         <translation>TAMAM</translation>
     </message>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
@@ -1253,8 +1035,8 @@ Cüzdanınız senkronize olduktan ve harcanmamış bakiyeniz yeterli miktarda on
         <translation>Bu miktarda koininizin olduğundan emin olunuz.</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A transaction of 25,000 EGG will be made&lt;/p&gt;&lt;p&gt;to a new empty address in your wallet.&lt;/p&gt;&lt;p&gt;The Address is labeled under the master node's name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;200.000 EGG'lik bir transfer &lt;/p&gt;&lt;p&gt;yeni ve boş bir adrese yapılacaktır.&lt;/p&gt;&lt;p&gt;Adres Masternode'unuz ismi ile etiketlenecektir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A transaction of collateral amount will be made&lt;/p&gt;&lt;p&gt;to a new empty address in your wallet.&lt;/p&gt;&lt;p&gt;The Address is labeled under the master node's name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;10.000 SAPP'lik bir transfer &lt;/p&gt;&lt;p&gt;yeni ve boş bir adrese yapılacaktır.&lt;/p&gt;&lt;p&gt;Adres Masternode'unuz ismi ile etiketlenecektir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Address of the node that must always be online running the actual master node.</source>
@@ -1351,7 +1133,7 @@ and vote on the treasury system receiving a periodic reward.</source>
 on a remote server to your clipboard.
 
 
-You will only have to paste the data in the nestegg.conf file
+You will only have to paste the data in the sapphire.conf file
 of your remote server and start it, then start the Masternode using
 this controller wallet (select the Masternode in the list and press "start").
 </source>
@@ -1359,7 +1141,7 @@ this controller wallet (select the Masternode in the list and press "start").
 panoya almak üzeresiniz.
 
 
-Bilgiyi uzak sunucunuzdaki nestegg.conf dosyasına yapıştırmanız ve
+Bilgiyi uzak sunucunuzdaki sapphire.conf dosyasına yapıştırmanız ve
  başlatmanız gerekecektir, ondan sonra bu kontrol cüzdanını kullanan
 Masternodu başlatın (Listeden Masternodu seçip "başlat" tuşuna basın).
 </translation>
@@ -1487,8 +1269,8 @@ Emin misiniz?</translation>
         <translation>Ayrıştırılmış bilgi çok büyük</translation>
     </message>
     <message>
-        <source>Invalid URI, not starting with "nestegg" prefix</source>
-        <translation>Geçersiz URI, "nestegg" ön adıyla başlamıyor</translation>
+        <source>Invalid URI, not starting with "sapphire" prefix</source>
+        <translation>Geçersiz URI, "sapphire" ön adıyla başlamıyor</translation>
     </message>
 </context>
 <context>
@@ -1530,11 +1312,11 @@ Emin misiniz?</translation>
     </message>
     <message>
         <source>If you disable the spending of unconfirmed change, the change from a transaction&lt;br/&gt;cannot be used until that transaction has at least one confirmation.&lt;br/&gt;This also affects how your balance is computed.</source>
-        <translation>Doğrulanmamış değişikliğin harcamasını devre dışı bırakırsanız, bir işlemdeki değişiklik&lt;br/&gt;Bu işlem en az bir onay alıncaya kadar kullanılamaz.&lt;br/&gt;Bu aynı zamanda bakiyenizin nasıl heegglandığını etkiler.</translation>
+        <translation>Doğrulanmamış değişikliğin harcamasını devre dışı bırakırsanız, bir işlemdeki değişiklik&lt;br/&gt;Bu işlem en az bir onay alıncaya kadar kullanılamaz.&lt;br/&gt;Bu aynı zamanda bakiyenizin nasıl hesaplandığını etkiler.</translation>
     </message>
     <message>
-        <source>Automatically open the NestEgg client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Yönelticideki NestEgg istemci bağlantı noktasını otomatik olarak açın. Bu, yalnızca yönlendiriciniz UPnP'yi destekliyorsa ve etkinleştirilmişse çalışır.</translation>
+        <source>Automatically open the SAPP client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Yönelticideki SAPP istemci bağlantı noktasını otomatik olarak açın. Bu, yalnızca yönlendiriciniz UPnP'yi destekliyorsa ve etkinleştirilmişse çalışır.</translation>
     </message>
     <message>
         <source>Accept connections from outside</source>
@@ -1553,12 +1335,12 @@ Emin misiniz?</translation>
         <translation>Uzman</translation>
     </message>
     <message>
-        <source>Automatically start NestEgg after logging in to the system.</source>
-        <translation>Sisteme giriş yaptıktan sonra otomatik olarak NestEgg'i başlatın.</translation>
+        <source>Automatically start SAPP after logging in to the system.</source>
+        <translation>Sisteme giriş yaptıktan sonra otomatik olarak SAPP'i başlatın.</translation>
     </message>
     <message>
-        <source>&amp;Start NestEgg on system login</source>
-        <translation>&amp; Sistem oturum açma işleminde NestEgg'i başlat</translation>
+        <source>&amp;Start SAPP on system login</source>
+        <translation>&amp; Sistem oturum açma işleminde SAPP'i başlat</translation>
     </message>
     <message>
         <source>Whether to show coin control features or not.</source>
@@ -1585,58 +1367,58 @@ Emin misiniz?</translation>
         <translation>&amp;Ağ</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting NestEgg.</source>
-        <translation>Kullanıcı arabirimi dili burada ayarlanabilir. Bu ayar, NestEgg yeniden başlatıldıktan sonra geçerli olur.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting SAPP.</source>
+        <translation>Kullanıcı arabirimi dili burada ayarlanabilir. Bu ayar, SAPP yeniden başlatıldıktan sonra geçerli olur.</translation>
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/pivx-project/pivx-project-translations</source>
+        https://discord.gg/zgcXB76</source>
         <translation>Dil eksik veya çeviri tamamlanmamış mı? Katkıda bulunan çevirilere yardımcı olun:
-https://www.transifex.com/pivx-project/pivx-project-translations</translation>
+        https://discord.gg/zgcXB76</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
         <translation>Map port using &amp;UPnP</translation>
     </message>
     <message>
-        <source>Enable automatic minting of EGG units to zEGG</source>
-        <translation>EGG birimlerinin zEGG'e otomatik basımını ektinleştir</translation>
+        <source>Enable automatic minting of SAPP units to zSAPP</source>
+        <translation>SAPP birimlerinin zSAPP'e otomatik basımını ektinleştir</translation>
     </message>
     <message>
-        <source>Enable zEGG Automint</source>
-        <translation>zEGG Otomatik basımı etkinleştir</translation>
+        <source>Enable zSAPP Automint</source>
+        <translation>zSAPP Otomatik basımı etkinleştir</translation>
     </message>
     <message>
-        <source>Enable automatic zEGG minting from specific addresses</source>
-        <translation>Belirli bir adresten otomatik zEGG minting yapılmasını etkinleştir</translation>
+        <source>Enable automatic zSAPP minting from specific addresses</source>
+        <translation>Belirli bir adresten otomatik zSAPP minting yapılmasını etkinleştir</translation>
     </message>
     <message>
         <source>Enable Automint Addresses</source>
         <translation>Automint adreslerini etkinleştir</translation>
     </message>
     <message>
-        <source>Percentage of incoming EGG which get automatically converted to zEGG via Zerocoin Protocol (min: 10%)</source>
-        <translation>Zerocoin Protokolü üzerinden otomatik olarak zEGG'ye dönüştürülen gelen EGG yüzdesi (dakika: 10%)</translation>
+        <source>Percentage of incoming SAPP which get automatically converted to zSAPP via Zerocoin Protocol (min: 10%)</source>
+        <translation>Zerocoin Protokolü üzerinden otomatik olarak zSAPP'ye dönüştürülen gelen SAPP yüzdesi (dakika: 10%)</translation>
     </message>
     <message>
-        <source>Percentage of autominted zEGG</source>
-        <translation>Otomatikleştirilmiş zEGG yüzdesi</translation>
+        <source>Percentage of autominted zSAPP</source>
+        <translation>Otomatikleştirilmiş zSAPP yüzdesi</translation>
     </message>
     <message>
-        <source>Wait with automatic conversion to Zerocoin until enough EGG for this denomination is available</source>
-        <translation>Bu bölen için yeterli EGG bulunana kadar Zerocoin'e otomatik dönüştürmede kalın</translation>
+        <source>Wait with automatic conversion to Zerocoin until enough SAPP for this denomination is available</source>
+        <translation>Bu bölen için yeterli SAPP bulunana kadar Zerocoin'e otomatik dönüştürmede kalın</translation>
     </message>
     <message>
-        <source>Preferred Automint zEGG Denomination</source>
-        <translation>Tercih edilen Automint zEGG Nominal değeri</translation>
+        <source>Preferred Automint zSAPP Denomination</source>
+        <translation>Tercih edilen Automint zSAPP Nominal değeri</translation>
     </message>
     <message>
         <source>Stake split threshold:</source>
         <translation>Stake bölme eşiği</translation>
     </message>
     <message>
-        <source>Connect to the NestEgg network through a SOCKS5 proxy.</source>
-        <translation>Bir SOCKS5 proxy vasıtasıyla NestEgg ağına bağlanın.</translation>
+        <source>Connect to the SAPP network through a SOCKS5 proxy.</source>
+        <translation>Bir SOCKS5 proxy vasıtasıyla SAPP ağına bağlanın.</translation>
     </message>
     <message>
         <source>Proxy &amp;IP:</source>
@@ -1782,8 +1564,8 @@ https://www.transifex.com/pivx-project/pivx-project-translations</translation>
 <context>
     <name>PIVXGUI</name>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -1810,8 +1592,8 @@ https://www.transifex.com/pivx-project/pivx-project-translations</translation>
         <translation>Uygulamayı sonlandır</translation>
     </message>
     <message>
-        <source>NestEgg Core client</source>
-        <translation>NestEgg Core istemci</translation>
+        <source>Sapphire client</source>
+        <translation>Sapphire istemci</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1877,12 +1659,12 @@ Adres: %4
         <translation>Geçersiz ödeme adresi %1</translation>
     </message>
     <message>
-        <source>Cannot start NestEgg: click-to-pay handler</source>
-        <translation>NestEgg başlatılamıyor: tıkla ve ödeme işleyicisi</translation>
+        <source>Cannot start sapphire: click-to-pay handler</source>
+        <translation>Sapphire başlatılamıyor: tıkla ve ödeme işleyicisi</translation>
     </message>
     <message>
-        <source>URI cannot be parsed! This can be caused by an invalid NestEgg address or malformed URI parameters.</source>
-        <translation>URI ayrıştırılamaz! Bunun nedeni, geçersiz bir NestEgg adresi veya hatalı biçimlendirilmiş URI parametrelerinden kaynaklanabilir.</translation>
+        <source>URI cannot be parsed! This can be caused by an invalid SAPP address or malformed URI parameters.</source>
+        <translation>URI ayrıştırılamaz! Bunun nedeni, geçersiz bir SAPP adresi veya hatalı biçimlendirilmiş URI parametrelerinden kaynaklanabilir.</translation>
     </message>
     <message>
         <source>Payment request file cannot be read! This can be caused by an invalid payment request file.</source>
@@ -2007,12 +1789,12 @@ Adres: %4
         <translation>%1 ms</translation>
     </message>
     <message>
-        <source>A fatal error occurred. NestEgg can no longer continue safely and will quit.</source>
-        <translation>Onarılamaz bir hata oluştu. NestEgg güvenli bir şekilde çalışamaz, kapanacaktır.</translation>
+        <source>A fatal error occurred. SAPP can no longer continue safely and will quit.</source>
+        <translation>Onarılamaz bir hata oluştu. SAPP güvenli bir şekilde çalışamaz, kapanacaktır.</translation>
     </message>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" does not exist.</source>
@@ -2031,12 +1813,8 @@ Adres: %4
         <translation>Masternode konfigürasyon dosyası okuma hatası: %1</translation>
     </message>
     <message>
-        <source>NestEgg Core didn't yet exit safely...</source>
-        <translation>NestEgg Core henüz güvenle kapanmadı..</translation>
-    </message>
-    <message>
-        <source>Cold Staking</source>
-        <translation>Soğuk Stakleme</translation>
+        <source>Sapphire didn't yet exit safely...</source>
+        <translation>Sapphire henüz güvenle kapanmadı..</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -2075,22 +1853,10 @@ Adres: %4
         <translation>Kendine</translation>
     </message>
     <message>
-        <source>Cold stakes</source>
-        <translation>Soğuk Stakeler</translation>
-    </message>
-    <message>
         <source>Hot stakes</source>
         <translation>Sıcak Stakeler</translation>
     </message>
-    <message>
-        <source>Delegated</source>
-        <translation>Delege edilmiş</translation>
-    </message>
-    <message>
-        <source>Delegations</source>
-        <translation>Delegasyonlar</translation>
-    </message>
-    </context>
+</context>
 <context>
     <name>RPCConsole</name>
     <message>
@@ -2162,8 +1928,8 @@ Adres: %4
         <translation>Block chain</translation>
     </message>
     <message>
-        <source>Open the NestEgg debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Geçerli veri dizininden NestEgg hata ayıklama günlük dosyasını açın. Bu, büyük günlük dosyaları için birkaç saniye sürebilir.</translation>
+        <source>Open the SAPP debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Geçerli veri dizininden SAPP hata ayıklama günlük dosyasını açın. Bu, büyük günlük dosyaları için birkaç saniye sürebilir.</translation>
     </message>
     <message>
         <source>Number of Masternodes</source>
@@ -2306,8 +2072,8 @@ Adres: %4
         <translation>Özel Yedekleme Yolu:</translation>
     </message>
     <message>
-        <source>Custom zEGG Backup Path:</source>
-        <translation>Özel zEGG Yedekleme Yolu:</translation>
+        <source>Custom zSAPP Backup Path:</source>
+        <translation>Özel zSAPP Yedekleme Yolu:</translation>
     </message>
     <message>
         <source>Custom Backups Threshold:</source>
@@ -2335,7 +2101,7 @@ Adres: %4
     </message>
     <message>
         <source>Recover transactions from blockchain (keep meta-data, e.g. account owner).</source>
-        <translation>Blockchainden işlemleri kurtarın ( meta veri ve heegg sahibi gibi koru)</translation>
+        <translation>Blockchainden işlemleri kurtarın ( meta veri ve hesap sahibi gibi koru)</translation>
     </message>
     <message>
         <source>Recover transactions 2</source>
@@ -2386,8 +2152,8 @@ Adres: %4
         <translation>Dışa:</translation>
     </message>
     <message>
-        <source>Welcome to the NestEgg RPC console.</source>
-        <translation>NestEgg RPC konsola hoşgeldiniz</translation>
+        <source>Welcome to the SAPP RPC console.</source>
+        <translation>SAPP RPC konsola hoşgeldiniz</translation>
     </message>
     <message>
         <source>&amp;Disconnect Node</source>
@@ -2626,8 +2392,8 @@ Adres: %4
         <translation>Miktar</translation>
     </message>
     <message>
-        <source>EGG</source>
-        <translation>EGG</translation>
+        <source>SAPP</source>
+        <translation>SAPP</translation>
     </message>
     <message>
         <source>D7VFR83SQbiezrW72hjcWJtcfip5krte2Z </source>
@@ -2662,14 +2428,6 @@ Adres: %4
         <translation>OLUŞTUR</translation>
     </message>
     <message>
-        <source>Creates an address to receive coin delegations and be able to stake them.</source>
-        <translation>Koin delegasyonlarını almak ve stake edebilmek için adres yaratır.</translation>
-    </message>
-    <message>
-        <source>New Cold Staking Address</source>
-        <translation>Yeni Stakeleme Adresi</translation>
-    </message>
-    <message>
         <source>Invalid amount</source>
         <translation>Geçersiz miktar</translation>
     </message>
@@ -2689,8 +2447,8 @@ Adres: %4
         <translation>Özel fark adresi</translation>
     </message>
     <message>
-        <source>The remainder of the value resultant from the inputs minus the outputs value goes to the "change" NestEgg address</source>
-        <translation>Giriş ve çıkış değerleri arasındaki kalan tutar "fark" NestEgg adresine gider</translation>
+        <source>The remainder of the value resultant from the inputs minus the outputs value goes to the "change" SAPP address</source>
+        <translation>Giriş ve çıkış değerleri arasındaki kalan tutar "fark" SAPP adresine gider</translation>
     </message>
     <message>
         <source>SAVE</source>
@@ -2788,14 +2546,6 @@ Adres: %4
     <message>
         <source>Cannot create transaction.</source>
         <translation>İşlem yaratılamıyor.</translation>
-    </message>
-    <message>
-        <source>WARNING:
-Transaction spends a cold-stake delegation, voiding it.
-These coins will no longer be cold-staked.</source>
-        <translation>UYARI::
-Transfer soğuk stakleme delegasyonunu harcıyor, onu boşaltıyor.
-Bu koinler artık soğuk stakelenmeyecektir.</translation>
     </message>
     <message>
         <source>Transaction sent</source>
@@ -3061,8 +2811,8 @@ Verify that you have installed a predetermined text editor.</source>
 Önceden belirlenmiş bir text editleme programınız olup olmadığını kontrol ediniz.</translation>
     </message>
     <message>
-        <source>Welcome to the NestEgg RPC console.</source>
-        <translation>NestEgg RPC konsola hoşgeldiniz</translation>
+        <source>Welcome to the SAPP RPC console.</source>
+        <translation>SAPP RPC konsola hoşgeldiniz</translation>
     </message>
     <message>
         <source>Use up and down arrows to navigate history, and %1 to clear screen.</source>
@@ -3182,46 +2932,46 @@ Verify that you have installed a predetermined text editor.</source>
         <translation>Form</translation>
     </message>
     <message>
-        <source>1) What is NestEgg?</source>
-        <translation>1)NestEgg nedir?</translation>
+        <source>1) What is SAPP?</source>
+        <translation>1)SAPP nedir?</translation>
     </message>
     <message>
-        <source>2) Why are my EGG unspendable?</source>
-        <translation>2) EGG'lerim neden harcanabilir değil?</translation>
+        <source>2) Why are my SAPP unspendable?</source>
+        <translation>2) SAPP'lerim neden harcanabilir değil?</translation>
     </message>
     <message>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <source>What is NestEgg?</source>
-        <translation>NestEgg Nedir?</translation>
+        <source>What is SAPP?</source>
+        <translation>SAPP Nedir?</translation>
     </message>
     <message>
         <source>
                            &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;
-                           NestEgg is a form of digital online money using blockchain technology
+                           SAPP is a form of digital online money using blockchain technology
                            that can be easily transferred globally, instantly, and with near
-                           zero fees.  NestEgg incorporates market leading security &amp;
+                           zero fees.  SAPP incorporates market leading security &amp;
                            privacy and is also the first PoS (Proof of Stake) Cryptocurrency
-                           to implement ZeroCoin(zEGG) and Zerocoin staking.
+                           to implement ZeroCoin(zSAPP) and Zerocoin staking.
                            &lt;/p&gt;&lt;p align="justify"&gt;
-                           NestEgg utilizes a Proof of Stake (PoS) consensus system algorithm,
-                           allowing all owners of NestEgg to participate in earning block rewards
+                           SAPP utilizes a Proof of Stake (PoS) consensus system algorithm,
+                           allowing all owners of SAPP to participate in earning block rewards
                            while securing the network with full node wallets, as well as to
                            run Masternodes to create and vote on proposals.
                            &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
                          </source>
         <translation>
                            &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;
-                           NestEgg blockchain teknolojisini kullanan bir dijital online para birimidir
+                           SAPP blockchain teknolojisini kullanan bir dijital online para birimidir
                            global olarak anında ve sıfıra yakın ücretlerle transfer edilebilir
-                           NestEgg sektördeki en ileri güvenlik ve gizliliğe sahip olmakla birlikte
-                          Zerocoin (zEGG) ve Zerocoin staking özelliklerini
+                           SAPP sektördeki en ileri güvenlik ve gizliliğe sahip olmakla birlikte
+                          Zerocoin (zSAPP) ve Zerocoin staking özelliklerini
                           uygulayan ilk PoS (Proof of Stake) Kriptoparadır.
                            &lt;/p&gt;&lt;p align="justify"&gt;
-                           NestEgg bir  Proof of Stake (PoS) konsensüs algoritma sistemi kullanmaktadır,
-bu sayede NestEgg sahipleri blok ödülü kazanımına katılabilmektedir
+                           SAPP bir  Proof of Stake (PoS) konsensüs algoritma sistemi kullanmaktadır,
+bu sayede SAPP sahipleri blok ödülü kazanımına katılabilmektedir
                            ağı diğer tam düğüm sahibi cüzdanlarla birlikte güvenli hale getirirler
                            ayrıca Masternode oluşturarak tekliflere oy verirler.
                            &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
@@ -3232,25 +2982,25 @@ bu sayede NestEgg sahipleri blok ödülü kazanımına katılabilmektedir
         <translation>2</translation>
     </message>
     <message>
-        <source>Why are my EGG unspendable?</source>
-        <translation>EGG'lerim neden harcanabilir değil?</translation>
+        <source>Why are my SAPP unspendable?</source>
+        <translation>SAPP'lerim neden harcanabilir değil?</translation>
     </message>
     <message>
         <source>
                            &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;
-                           Newly received NestEgg requires 6 confirmations on the network
+                           Newly received SAPP requires 6 confirmations on the network
                            to become eligible for spending which can take ~6 minutes.
                            &lt;/p&gt;&lt;p align="justify"&gt;
-                           Your NestEgg wallet also needs to be completely synchronized
+                           Your SAPP wallet also needs to be completely synchronized
                            to see and spend balances on the network.
                            &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
                          </source>
         <translation>
                            &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;
-                           Yeni alınmış NestEgg'lerin harcanabilr hale gelmesi için ağdan 6 onay
+                           Yeni alınmış SAPP'lerin harcanabilr hale gelmesi için ağdan 6 onay
                            alması gerekmektedir, bu işlem yaklaşık olarak 6 dakika sürer.
                            &lt;/p&gt;&lt;p align="justify"&gt;
-                           NestEgg cüzdanınızın ağdaki bakiyesini görebilmesi ve harcayabilmesi
+                           SAPP cüzdanınızın ağdaki bakiyesini görebilmesi ve harcayabilmesi
                            için tamamen senkronize olması gerekmektedir.
                            &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
                          </translation>
@@ -3278,14 +3028,13 @@ bu sayede NestEgg sahipleri blok ödülü kazanımına katılabilmektedir
     <message>
         <source>
                            &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;
-                           A masternode is a computer running a full node NestEgg core wallet with a
-                           requirement of 25,000 EGG secured collateral to provide extra services
+                           A masternode is a computer running a full node SAPP wallet with a
+                           required amount of secured collateral to provide extra services
                            to the network and in return, receive a portion of the block reward
                            regularly.  These services include:
                            &lt;/p&gt;&lt;p align="justify"&gt;
 
                            &lt;ul&gt;
-                           &lt;li&gt;Instant transactions (SwiftX)&lt;/li&gt;
                            &lt;li&gt;A decentralized governance (Proposal Voting)&lt;/li&gt;
                            &lt;li&gt;A decentralized budgeting system (Treasury)&lt;/li&gt;
                            &lt;li&gt;Validation of transactions within each block&lt;/li&gt;
@@ -3301,17 +3050,17 @@ bu sayede NestEgg sahipleri blok ödülü kazanımına katılabilmektedir
                            Masternode Perks:
                            &lt;/p&gt;&lt;p align="justify"&gt;
                            &lt;ul&gt;
-                           &lt;li&gt;Participate in NestEgg Governance&lt;/li&gt;
+                           &lt;li&gt;Participate in SAPP Governance&lt;/li&gt;
                            &lt;li&gt;Earn Masternode Rewards&lt;/li&gt;
                            &lt;li&gt;Commodity option for future sale&lt;/li&gt;
-                           &lt;li&gt;Help secure the NestEgg network&lt;/li&gt;
+                           &lt;li&gt;Help secure the SAPP network&lt;/li&gt;
                            &lt;/ul&gt;
                            &lt;/p&gt;&lt;p align="justify"&gt;
 
                            Requirements:
                            &lt;/p&gt;&lt;p align="justify"&gt;
                            &lt;ul&gt;
-                           &lt;li&gt;25,000 EGG per single Masternode instance&lt;/li&gt;
+                           &lt;li&gt;Enough collateral balance per single Masternode instance&lt;/li&gt;
                            &lt;li&gt;Must be stored in a core wallet&lt;/li&gt;
                            &lt;li&gt;Need dedicated IP address&lt;/li&gt;
                            &lt;li&gt;Masternode wallet to remain online&lt;/li&gt;
@@ -3320,14 +3069,13 @@ bu sayede NestEgg sahipleri blok ödülü kazanımına katılabilmektedir
                          </source>
         <translation>
                            &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="justify"&gt;
-                           Tam düğüm NestEgg core cüzdanını çalıştıran, gereken 25,000 EGG
+                           Tam düğüm SAPP cüzdanını çalıştıran, gereken 10,000 SAPP
                            teminat bakiyesini barındırarak ağa ekstra hizmetler sunan ve
                            karşılığında da her blok ödülünden düzenli olarak pay alan bir
                            bilgisayardır.Bu hizmetler aşağıdaki gibidir:
                            &lt;/p&gt;&lt;p align="justify"&gt;
 
                            &lt;ul&gt;
-                           &lt;li&gt;Anlık transferler (SwiftX)&lt;/li&gt;
                            &lt;li&gt;Merkeziyetsiz yönetim (Teklif Onaylama)&lt;/li&gt;
                            &lt;li&gt;Merkeziyetsiz bütçe sistemi (Hazine)&lt;/li&gt;
                            &lt;li&gt;Her blogun içinde işlem onayı&lt;/li&gt;
@@ -3343,17 +3091,17 @@ işletim maliyetleri sonrası pasif bir gelir sunar.
                            Masternode Avantajları:
                            &lt;/p&gt;&lt;p align="justify"&gt;
                            &lt;ul&gt;
-                           &lt;li&gt;NestEgg yönetimine katılın&lt;/li&gt;
+                           &lt;li&gt;SAPP yönetimine katılın&lt;/li&gt;
                            &lt;li&gt;Masternode Ödülleri kazanın&lt;/li&gt;
                            &lt;li&gt;İlerde satabileceğiniz bir varlık opsiyonu&lt;/li&gt;
-                           &lt;li&gt;NestEgg ağını güvenliğine destek olun&lt;/li&gt;
+                           &lt;li&gt;SAPP ağını güvenliğine destek olun&lt;/li&gt;
                            &lt;/ul&gt;
                            &lt;/p&gt;&lt;p align="justify"&gt;
 
                            Gereksinimler:
                            &lt;/p&gt;&lt;p align="justify"&gt;
                            &lt;ul&gt;
-                           &lt;li&gt;Her Masternod için ayrı 25,000 EGG
+                           &lt;li&gt;Her Masternod için ayrı 10,000 SAPP
                            &lt;li&gt;Core cüzdan içinde saklanmalıdır.&lt;/li&gt;
                            &lt;li&gt;Atanmış IP adresi gerekmektedir. &lt;/li&gt;
                            &lt;li&gt;Masternode cüzdanının online olması&lt;/li&gt;
@@ -3433,8 +3181,8 @@ işletim maliyetleri sonrası pasif bir gelir sunar.
         <translation>Yedek klasörü açılamadı</translation>
     </message>
     <message>
-        <source>Unable to open nestegg.conf with default application</source>
-        <translation>nestegg.conf dosyası uygulama tarafından açılamadı</translation>
+        <source>Unable to open sapphire.conf with default application</source>
+        <translation>sapphire.conf dosyası uygulama tarafından açılamadı</translation>
     </message>
     <message>
         <source>In:</source>
@@ -3484,8 +3232,8 @@ işletim maliyetleri sonrası pasif bir gelir sunar.
         <translation>Komut onay parça sayısı</translation>
     </message>
     <message>
-        <source>Start NestEgg on system login</source>
-        <translation>Sistem açılışında NestEgg'i başlat</translation>
+        <source>Start SAPP on system login</source>
+        <translation>Sistem açılışında SAPP'i başlat</translation>
     </message>
     <message>
         <source>Minimize to the tray instead of the taskbar</source>
@@ -3564,8 +3312,8 @@ Emin misiniz?
         <translation>CheckBox</translation>
     </message>
     <message>
-        <source>MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other NestEgg addresses after it matures.</source>
-        <translation>ÇokluGönder olgunlaşmış masternode ve staking ödüllerinizin 100% 'üne kadarını diğer NestEgg adreslerine otomatik olarak göndermenizi sağlar. </translation>
+        <source>MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other SAPP addresses after it matures.</source>
+        <translation>ÇokluGönder olgunlaşmış masternode ve staking ödüllerinizin 100% 'üne kadarını diğer SAPP adreslerine otomatik olarak göndermenizi sağlar. </translation>
     </message>
     <message>
         <source>Active</source>
@@ -3944,8 +3692,8 @@ Check one or both of the check boxes to send on stake and/or masternode rewards<
         <translation>SSS</translation>
     </message>
     <message>
-        <source>About NestEgg</source>
-        <translation>NestEgg Hakkında</translation>
+        <source>About SAPP</source>
+        <translation>SAPP Hakkında</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4011,11 +3759,11 @@ Emin misiniz?
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>NestEgg Core is shutting down...</source>
-        <translation>NestEgg Core kapanıyor ...</translation>
+        <source>Sapphire is shutting down...</source>
+        <translation>Sapphire kapanıyor ...</translation>
     </message>
     <message>
-        <source>Do not shut down the computer until this window dieggears.</source>
+        <source>Do not shut down the computer until this window disappears.</source>
         <translation>Bu pencere kaybolmadan Bilgisayarı kapatmayın.</translation>
     </message>
 </context>
@@ -4041,8 +3789,8 @@ Emin misiniz?
         <translation>Yükleniyor...</translation>
     </message>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
 </context>
 <context>
@@ -4198,10 +3946,6 @@ Emin misiniz?
     <message>
         <source>Received from</source>
         <translation>Tarafından alındı</translation>
-    </message>
-    <message>
-        <source>Stake delegation</source>
-        <translation>Stake delegasyonu</translation>
     </message>
     <message>
         <source>Sent to</source>
@@ -4393,25 +4137,25 @@ Emin misiniz?
     </message>
     <message>
         <source>Welcome to
-		NestEgg Core Wallet</source>
-        <translation>NestEgg Core Cüzdanı'na
+Sapphire Wallet</source>
+        <translation>Sapphire Cüzdanı'na
 Hoşgeldiniz</translation>
     </message>
     <message>
-        <source>NestEgg is the world’s most innovative Proof of Stake blockchain based technology. Developed by a team of highly experienced developers and cryptographers.</source>
-        <translation>NestEgg Proof of Stake tabanlı dünyadaki en yenilikçi blockchain teknolojisidir. Yüksek tecrübeye sahip yazılımcılar ve kriptograflardan oluşan bir ekip tarafından geliştirilmiştir.</translation>
+        <source>SAPP is the world’s most innovative Proof of Stake blockchain based technology. Developed by a team of highly experienced developers and cryptographers.</source>
+        <translation>SAPP Proof of Stake tabanlı dünyadaki en yenilikçi blockchain teknolojisidir. Yüksek tecrübeye sahip yazılımcılar ve kriptograflardan oluşan bir ekip tarafından geliştirilmiştir.</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;As our manifesto says: Privacy is a non-negotiable basic human right; it grants users the freedom to share their data whenever and with whomever they want - NestEgg believes in self sovereignty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Manifestomuzda yazdığı gibi: Gizlilik, pazarlık yapılamayacak temel bir insan hakkıdır; kullanıcılarına istedikleri zaman ve istedikleri kişiyle verilerini paylaşma özgürlüğü verir - NestEgg özerkliğe inanır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;As our manifesto says: Privacy is a non-negotiable basic human right; it grants users the freedom to share their data whenever and with whomever they want - SAPP believes in self sovereignty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Manifestomuzda yazdığı gibi: Gizlilik, pazarlık yapılamayacak temel bir insan hakkıdır; kullanıcılarına istedikleri zaman ve istedikleri kişiyle verilerini paylaşma özgürlüğü verir - SAPP özerkliğe inanır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>The masternode network is NestEgg's second layer network on top of the blockchain that enables our DAO to provide decentralized governance and a treasury.</source>
-        <translation>Masternode ağı dağıtık yönetim ve hazine yönetimini sağlayan NestEgg blockchaini üzerindeki ikinci katmandır.</translation>
+        <source>The masternode network is SAPP's second layer network on top of the blockchain that enables our DAO to provide decentralized governance and a treasury.</source>
+        <translation>Masternode ağı dağıtık yönetim ve hazine yönetimini sağlayan SAPP blockchaini üzerindeki ikinci katmandır.</translation>
     </message>
     <message>
-        <source>How NestEgg respects your privacy?</source>
-        <translation>NestEgg gizliliğinize nasıl saygı duyar?</translation>
+        <source>How SAPP respects your privacy?</source>
+        <translation>SAPP gizliliğinize nasıl saygı duyar?</translation>
     </message>
     <message>
         <source>What is a Masternode?</source>
@@ -4426,7 +4170,7 @@ Hoşgeldiniz</translation>
     <name>pivx-core</name>
     <message>
         <source>(1 = keep tx meta data e.g. account owner and payment request information, 2 = drop tx meta data)</source>
-        <translation>(1 = tx meta verileri, örneğin heegg sahibi ve ödeme talebi bilgileri, 2 = tx meta verileri bırak)</translation>
+        <translation>(1 = tx meta verileri, örneğin hesap sahibi ve ödeme talebi bilgileri, 2 = tx meta verileri bırak)</translation>
     </message>
     <message>
         <source>Allow JSON-RPC connections from specified source. Valid for &lt;ip&gt; are a single IP (e.g. 1.2.3.4), a network/netmask (e.g. 1.2.3.4/255.255.255.0) or a network/CIDR (e.g. 1.2.3.4/24). This option can be specified multiple times</source>
@@ -4445,8 +4189,8 @@ Hoşgeldiniz</translation>
         <translation>JSON-RPC bağlantılarını dinlemek için verilen adrese bağlanın. IPv6 için [host]: port gösterimini kullanın. Bu seçenek birden çok kez belirtilebilir (varsayılan: tüm arabirimlere bağlanır)</translation>
     </message>
     <message>
-        <source>Cannot obtain a lock on data directory %s. NestEgg Core is probably already running.</source>
-        <translation>Veri dizini %s üzerinde bir kilit elde edemiyor. NestEgg Core muhtemelen zaten çalışıyor.</translation>
+        <source>Cannot obtain a lock on data directory %s. Sapphire is probably already running.</source>
+        <translation>Veri dizini %s üzerinde bir kilit elde edemiyor. Sapphire muhtemelen zaten çalışıyor.</translation>
     </message>
     <message>
         <source>Change automatic finalized budget voting behavior. mode=auto: Vote for only exact finalized budget match to my generated budget. (string, default: auto)</source>
@@ -4471,10 +4215,6 @@ Hoşgeldiniz</translation>
     <message>
         <source>Distributed under the MIT software license, see the accompanying file COPYING or &lt;http://www.opensource.org/licenses/mit-license.php&gt;.</source>
         <translation>MIT yazılım lisansı altında dağıtılmıştır, eşlik eden KOPYALAMA dosyasına bakın veya &lt;http://www.opensource.org/licenses/mit-license.php&gt;.</translation>
-    </message>
-    <message>
-        <source>Enable cold staking functionality (0-1, default: %u). Disabled if staking=0</source>
-        <translation>Soğuk stakeleme fonksiyonunu etkinleştirin (0-1, varsayılan: %u). Staking=0 ise etkin değildir</translation>
     </message>
     <message>
         <source>Enable spork administration functionality with the appropriate private key.</source>
@@ -4605,8 +4345,8 @@ Hoşgeldiniz</translation>
         <translation>Ağ versiyon dizisi toplam uzunluğu(%i) maksimum uzunluğu aşıyor(%i). Yorumların büyüklüğünü veya sayısını azaltın.</translation>
     </message>
     <message>
-        <source>Unable to bind to %s on this computer. NestEgg Core is probably already running.</source>
-        <translation>Bu bilgisayarda %s 'e bağlanılamıyor. NestEgg Core muhtemelen zaten çalışıyor.</translation>
+        <source>Unable to bind to %s on this computer. Sapphire is probably already running.</source>
+        <translation>Bu bilgisayarda %s 'e bağlanılamıyor. Sapphire muhtemelen zaten çalışıyor.</translation>
     </message>
     <message>
         <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: %s)</source>
@@ -4621,8 +4361,8 @@ Hoşgeldiniz</translation>
         <translation>Uyarı: paytxfee değeri çok yüksek ayarlanmış! Bu para gönderirken ödeyeceğiniz transfer ücretidir.</translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong NestEgg Core will not work properly.</source>
-        <translation>Uyarı: Bilgisayarınızın tarih ve saat ayarlarının doğruluğunu kontrol edin! Saatiniz yanlış ise NestEgg Core düzgün çalışmayacaktır. </translation>
+        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Sapphire will not work properly.</source>
+        <translation>Uyarı: Bilgisayarınızın tarih ve saat ayarlarının doğruluğunu kontrol edin! Saatiniz yanlış ise Sapphire düzgün çalışmayacaktır. </translation>
     </message>
     <message>
         <source>Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.</source>
@@ -4701,10 +4441,6 @@ Hoşgeldiniz</translation>
         <translation>Copyright (C) 2015-%i The PIVX Core Developers</translation>
     </message>
     <message>
-        <source>Copyright (C) 2020-%i NestEgg Core Developers</source>
-        <translation>Copyright (C) 2020-%i NestEgg Core Developers</translation>
-    </message>
-    <message>
         <source>Corrupted block database detected</source>
         <translation>Bozuk blok veritabanı tespit edildi</translation>
     </message>
@@ -4739,14 +4475,6 @@ Hoşgeldiniz</translation>
     <message>
         <source>Done loading</source>
         <translation>Yükleme tamamlandı</translation>
-    </message>
-    <message>
-        <source>Enable publish hash transaction (locked via SwiftX) in &lt;address&gt;</source>
-        <translation>&lt;address&gt;içindeki hash transfer yayınlamayı etkinleştir (SwiftX ile kilitlenmiş)</translation>
-    </message>
-    <message>
-        <source>Enable publish raw transaction (locked via SwiftX) in &lt;address&gt;</source>
-        <translation>&lt;address&gt; içindeki ham işlem yayınlamayı etkinleştir (SwiftX ile kilitlenmiş)</translation>
     </message>
     <message>
         <source>Enable the client to act as a masternode (0-1, default: %u)</source>
@@ -4841,8 +4569,8 @@ Hoşgeldiniz</translation>
         <translation>Bilgi</translation>
     </message>
     <message>
-        <source>Initialization sanity check failed. NestEgg Core is shutting down.</source>
-        <translation>Sağlama kontrolü başlatımı başarısız. NestEgg Core kapatılıyor.</translation>
+        <source>Initialization sanity check failed. Sapphire is shutting down.</source>
+        <translation>Sağlama kontrolü başlatımı başarısız. Sapphire kapatılıyor.</translation>
     </message>
     <message>
         <source>Insufficient funds</source>
@@ -4873,8 +4601,8 @@ Hoşgeldiniz</translation>
         <translation>Whitelist içinde belirtilen geçersiz netmask: '%s'</translation>
     </message>
     <message>
-        <source>Recalculating EGG supply...</source>
-        <translation>EGG tedariği tekrar heegglanıyor...</translation>
+        <source>Recalculating SAPP supply...</source>
+        <translation>SAPP tedariği tekrar hesaplanıyor...</translation>
     </message>
     <message>
         <source>Reindexing zerocoin database...</source>
@@ -4889,20 +4617,12 @@ Hoşgeldiniz</translation>
         <translation>Seçili koinlerin değeri hedeflenen ödeme tutarından düşük</translation>
     </message>
     <message>
-        <source>SwiftX options:</source>
-        <translation>SwiftX seçenekleri:</translation>
-    </message>
-    <message>
         <source>This is a pre-release test build - use at your own risk - do not use for staking or merchant applications!</source>
         <translation>Bu ön-sürümdeki bir test programıdır - riski kabullenerek kullanınız - staking ve ticaret uygulamalarında kullanmayın.</translation>
     </message>
     <message>
-        <source>Disable all NestEgg specific functionality (Masternodes, Zerocoin, SwiftX, Budgeting) (0-1, default: %u)</source>
-        <translation>NestEgg spesifik tüm fonksiyonaliteyi devre dışı bırak (Masternodes, Zerocoin, SwiftX, Budgeting) (0-1, varsayılan: %u)</translation>
-    </message>
-    <message>
-        <source>Enable SwiftX, show confirmations for locked transactions (bool, default: %s)</source>
-        <translation>SwiftX'i etkinleştir, kilitli işlemler için doğrulamaları göster (bool, varsayılan: %s)</translation>
+        <source>Disable all SAPP specific functionality (Masternodes, Zerocoin, Budgeting) (0-1, default: %u)</source>
+        <translation>SAPP spesifik tüm fonksiyonaliteyi devre dışı bırak (Masternodes, Zerocoin, Budgeting) (0-1, varsayılan: %u)</translation>
     </message>
     <message>
         <source>Error: Unsupported argument -checklevel found. Checklevel must be level 4.</source>
@@ -4925,10 +4645,6 @@ Hoşgeldiniz</translation>
         <translation>Herhangi bir yedek kopyası eklemek için bir yedekleme özel yolu belirleyin. Eğer dizin olarak belirlerseniz her yedek zaman damgası adı ile dosyalanır. Dosya olarak belirlerseniz, her yedeklemede üstüne yazar.</translation>
     </message>
     <message>
-        <source>SwiftX requires inputs with at least 6 confirmations, you might need to wait a few minutes and try again.</source>
-        <translation>SwiftX en az 6 onaya sahip girdilere ihtiyaç duyar, birkaç dakika bekledikten sonra tekrar deneyin.</translation>
-    </message>
-    <message>
         <source>&lt;category&gt; can be:</source>
         <translation>&lt;category&gt; olabilir:</translation>
     </message>
@@ -4942,7 +4658,7 @@ Hoşgeldiniz</translation>
     </message>
     <message>
         <source>Display the stake modifier calculations in the debug.log file.</source>
-        <translation>Stake değiştirme heegglamalarını debug.log dosyası içinde göster.</translation>
+        <translation>Stake değiştirme hesaplamalarını debug.log dosyası içinde göster.</translation>
     </message>
     <message>
         <source>Display verbose coin stake messages in the debug.log file.</source>
@@ -5293,8 +5009,8 @@ Hoşgeldiniz</translation>
         <translation>Sporklar eşzamanlanıyor..</translation>
     </message>
     <message>
-        <source>Syncing zEGG wallet...</source>
-        <translation>zEGG cüzdanı eşzamanlanıyor..</translation>
+        <source>Syncing zSAPP wallet...</source>
+        <translation>zSAPP cüzdanı eşzamanlanıyor..</translation>
     </message>
     <message>
         <source>This help message</source>
@@ -5389,8 +5105,8 @@ Hoşgeldiniz</translation>
         <translation>JSON-RPC bağlantısı için kullanıcı adı</translation>
     </message>
     <message>
-        <source>Value is below the smallest available denomination (= 1) of zEGG</source>
-        <translation>Aşağıdaki değer zEGG'in mümkün olan en küçük bölüm değeridir (=1)</translation>
+        <source>Value is below the smallest available denomination (= 1) of zSAPP</source>
+        <translation>Aşağıdaki değer zSAPP'in mümkün olan en küçük bölüm değeridir (=1)</translation>
     </message>
     <message>
         <source>Verifying blocks...</source>
@@ -5405,8 +5121,8 @@ Hoşgeldiniz</translation>
         <translation>Cüzdan %s bilgi dizini %s dışında bulunuyor</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart NestEgg Core to complete</source>
-        <translation>Cüzdanın tekrar yazılması gerekiyor: tamamlamak için NestEgg Core uygulamasını tekrar başlatın.</translation>
+        <source>Wallet needed to be rewritten: restart Sapphire to complete</source>
+        <translation>Cüzdanın tekrar yazılması gerekiyor: tamamlamak için Sapphire uygulamasını tekrar başlatın.</translation>
     </message>
     <message>
         <source>Wallet options:</source>

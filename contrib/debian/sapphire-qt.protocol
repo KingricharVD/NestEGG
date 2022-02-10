@@ -1,6 +1,6 @@
 [Protocol]
-exec=Human_Charity_Coin_Protocol-qt '%u'
-protocol=Human_Charity_Coin_Protocol
+exec=sapphire-qt '%u'
+protocol=sapphire
 input=none
 output=none
 helper=true

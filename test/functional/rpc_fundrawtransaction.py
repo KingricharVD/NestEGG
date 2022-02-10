@@ -195,7 +195,7 @@ class RawTransactionsTest(PivxTestFramework):
         self.log.info("test with an invalid change address")
         outputs = {self.nodes[0].getnewaddress(): 1.0}
         rawtx = self.nodes[2].createrawtransaction([], outputs)
-        assert_raises_rpc_error(-8, "changeAddress must be a valid Human_Charity_Coin_Protocol address",
+        assert_raises_rpc_error(-8, "changeAddress must be a valid Sapphire address",
                                 self.nodes[2].fundrawtransaction, rawtx, {'changeAddress': 'foobar'})
 
     def test_valid_change_address(self):
@@ -345,7 +345,7 @@ class RawTransactionsTest(PivxTestFramework):
         addrs = [self.nodes[2].getnewaddress() for _ in range(2)]
         mSigAddr = self.nodes[2].addmultisigaddress(2, addrs)
 
-        # Send 50.1 HCCP to mSigAddr.
+        # Send 50.1 SAPP to mSigAddr.
         self.nodes[0].sendtoaddress(mSigAddr, 50.1)
         self.nodes[0].generate(1)
         self.sync_all()
@@ -372,7 +372,7 @@ class RawTransactionsTest(PivxTestFramework):
 
         # Drain the keypool.
         self.nodes[1].getnewaddress()
-        self.nodes[1].getaccountaddress()
+        self.nodes[1].getrawchangeaddress()
         utx = get_unspent(self.nodes[1].listunspent(), DecimalAmt(250.0))
         inputs = [{'txid': utx['txid'], 'vout': utx['vout']}]
         outputs = {self.nodes[0].getnewaddress(): round(250.0 - float(self.test_no_change_fee) - float(self.fee_tolerance), 8)}

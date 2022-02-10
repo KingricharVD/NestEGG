@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2015 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2016-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -221,15 +221,6 @@ extern const char* REJECT;
  * @see https://bitcoin.org/en/developer-reference#sendheaders
  */
 extern const char* SENDHEADERS;
- /**
- * The ix message transmits a single SwiftX transaction
- */
-extern const char* IX;
-/**
- * The ixlockvote message is used to reach consensus for SwiftX
- * transaction locks
- */
-extern const char* IXLOCKVOTE;
 /**
  * The spork message is used to send spork values to connected
  * peers
@@ -388,8 +379,8 @@ enum {
     // Nodes may always request a MSG_FILTERED_BLOCK in a getdata, however,
     // MSG_FILTERED_BLOCK should not appear in any invs except as a part of getdata.
     MSG_FILTERED_BLOCK              = 3,
-    // DB_LOCK_OLDEST              = 4,
-    // MSG_BUDGET_VOTE                 = 5,
+    // MSG_TXLOCK_REQUEST              = 4,
+    // MSG_TXLOCK_VOTE                 = 5,
     MSG_SPORK                       = 6,
     MSG_MASTERNODE_WINNER           = 7,
     MSG_MASTERNODE_SCANNING_ERROR   = 8,

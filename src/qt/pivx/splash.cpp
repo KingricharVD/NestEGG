@@ -1,5 +1,5 @@
 // Copyright (c) 2019 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -28,7 +28,7 @@ Splash::Splash(Qt::WindowFlags f, const NetworkStyle* networkStyle) :
     QWidget(0, f | Qt::SplashScreen), ui(new Ui::Splash)
 {
     ui->setupUi(this);
-    QString titleText = tr("Human_Charity_Coin_Protocol");
+    QString titleText = tr("Sapphire");
     QString titleAddText = networkStyle->getTitleAddText();
     setWindowTitle(titleText + " " + titleAddText);
 

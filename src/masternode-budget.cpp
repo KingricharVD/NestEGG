@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -52,8 +52,8 @@ bool IsBudgetCollateralValid(const uint256& nTxCollateralHash, const uint256& nE
         }
         if (fBudgetFinalization) {
             // Collateral for budget finalization
-            // Note: there are still old valid budgets out there, but the check for the new 5 HCCP finalization collateral
-            //       will also cover the old 50 HCCP finalization collateral.
+            // Note: there are still old valid budgets out there, but the check for the new 5 SAPP finalization collateral
+            //       will also cover the old 50 SAPP finalization collateral.
             LogPrint(BCLog::MNBUDGET, "Final Budget: o.scriptPubKey(%s) == findScript(%s) ?\n", HexStr(o.scriptPubKey), HexStr(findScript));
             if (o.scriptPubKey == findScript) {
                 LogPrint(BCLog::MNBUDGET, "Final Budget: o.nValue(%ld) >= BUDGET_FEE_TX(%ld) ?\n", o.nValue, BUDGET_FEE_TX);

@@ -1,6 +1,6 @@
 // Copyright (c) 2011-2013 The Bitcoin developers
 // Copyright (c) 2017-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -66,12 +66,9 @@ bool TransactionFilterProxy::filterAcceptsRow(int sourceRow, const QModelIndex& 
     if (fOnlyZc && !isZcTx(type)){
         return false;
     }
-    if (fOnlyStakes && !isStakeTx(type))
-      return false;
+    if (fOnlyStakesandMN && !isStakeTx(type) && !isMasternodeRewardTx(type))
+        return false;
 
-  if (fOnlyColdStaking && !isColdStake(type))
-      return false;
-      
     return true;
 }
 
@@ -141,7 +138,7 @@ int TransactionFilterProxy::rowCount(const QModelIndex& parent) const
 {
     static int entryCount = 0;
 
-    int rowCount =
+    int rowCount = 
         entryCount++ < SKIP_ROWCOUNT_N_TIMES ?
         sourceModel()->rowCount() :
         QSortFilterProxyModel::rowCount(parent);

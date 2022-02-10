@@ -1,6 +1,6 @@
 // Copyright (c) 2017 The Zcash developers
 // Copyright (c) 2017-2019 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -107,9 +107,9 @@ BOOST_AUTO_TEST_CASE(util_ParseTorReplyMapping)
 
     // Other valid inputs
     CheckParseTorReplyMapping(
-        "Foo=Bar=Baz Spam=HCCPs", {
+        "Foo=Bar=Baz Spam=Eggs", {
             {"Foo", "Bar=Baz"},
-            {"Spam", "HCCPs"},
+            {"Spam", "Eggs"},
         });
     CheckParseTorReplyMapping(
         "Foo=\"Bar=Baz\"", {
@@ -134,9 +134,9 @@ BOOST_AUTO_TEST_CASE(util_ParseTorReplyMapping)
             {"Foo", "Bar@Baz"},
         });
     CheckParseTorReplyMapping(
-        "Foo=\"Bar\\\"Baz\" Spam=\"\\\"HCCPs\\\"\"", {
+        "Foo=\"Bar\\\"Baz\" Spam=\"\\\"Eggs\\\"\"", {
             {"Foo", "Bar\"Baz"},
-            {"Spam", "\"HCCPs\""},
+            {"Spam", "\"Eggs\""},
         });
     CheckParseTorReplyMapping(
         "Foo=\"Bar\\\\Baz\"", {
@@ -145,9 +145,9 @@ BOOST_AUTO_TEST_CASE(util_ParseTorReplyMapping)
 
     // C escapes
     CheckParseTorReplyMapping(
-        "Foo=\"Bar\\nBaz\\t\" Spam=\"\\rHCCPs\" Octals=\"\\1a\\11\\17\\18\\81\\377\\378\\400\\2222\" Final=Check", {
+        "Foo=\"Bar\\nBaz\\t\" Spam=\"\\rEggs\" Octals=\"\\1a\\11\\17\\18\\81\\377\\378\\400\\2222\" Final=Check", {
             {"Foo", "Bar\nBaz\t"},
-            {"Spam", "\rHCCPs"},
+            {"Spam", "\rEggs"},
             {"Octals", "\1a\11\17\1" "881\377\37" "8\40" "0\222" "2"},
             {"Final", "Check"},
         });

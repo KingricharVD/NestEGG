@@ -1,7 +1,7 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2019 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -197,7 +197,7 @@ bool Intro::pickDataDirectory()
                 TryCreateDirectory(GUIUtil::qstringToBoostPath(dataDir));
                 break;
             } catch (const fs::filesystem_error& e) {
-                QMessageBox::critical(0, tr("Human_Charity_Coin_Protocol"),
+                QMessageBox::critical(0, tr("Sapphire"),
                     tr("Error: Specified data directory \"%1\" cannot be created.").arg(dataDir));
                 // fall through, back to choosing screen
             }
@@ -207,8 +207,8 @@ bool Intro::pickDataDirectory()
     }
 
     /* Only override -datadir if different from the default, to make it possible to
-     * override -datadir in the Human_Charity_Coin_Protocol.conf file in the default data directory
-     * (to be consistent with Human_Charity_Coin_Protocold behavior)
+     * override -datadir in the sapphire.conf file in the default data directory
+     * (to be consistent with sapphired behavior)
      */
 
     if (dataDir != getDefaultDataDirectory())

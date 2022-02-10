@@ -1,18 +1,15 @@
 // Copyright (c) 2016 The Bitcoin Core developers
 // Copyright (c) 2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "wallet/test/wallet_test_fixture.h"
 
 #include "rpc/server.h"
-#include "sapling/util.h"
 #include "wallet/db.h"
 #include "wallet/wallet.h"
 #include "wallet/rpcwallet.h"
-
-#include <librustzcash.h>
 
 void clean()
 {

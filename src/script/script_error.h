@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2018-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -25,11 +25,10 @@ typedef enum ScriptError_t
 
     /* Failed verify operations */
     SCRIPT_ERR_VERIFY,
-      SCRIPT_ERR_EQUALVERIFY,
-      SCRIPT_ERR_CHECKCOLDSTAKEVERIFY,
-      SCRIPT_ERR_CHECKMULTISIGVERIFY,
-      SCRIPT_ERR_CHECKSIGVERIFY,
-      SCRIPT_ERR_NUMEQUALVERIFY,
+    SCRIPT_ERR_EQUALVERIFY,
+    SCRIPT_ERR_CHECKMULTISIGVERIFY,
+    SCRIPT_ERR_CHECKSIGVERIFY,
+    SCRIPT_ERR_NUMEQUALVERIFY,
 
     /* Logical/Format/Canonical errors */
     SCRIPT_ERR_BAD_OPCODE,

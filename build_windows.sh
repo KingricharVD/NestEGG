@@ -11,28 +11,25 @@ fi
 	sudo apt install git zip unzip build-essential libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 curl g++-mingw-w64-x86-64 libqt5svg5-dev -y
 	echo "1" | sudo update-alternatives --config x86_64-w64-mingw32-g++
 
-# Clone EGG code from EGG official Github repository
-	git clone https://github.com/KingricharVD/NestEGG
+# Clone code from official Github repository
+	rm -rf SAPP
+	git clone https://github.com/sappcoin-com/SAPP.git
 
-# Entering EGG directory
-	cd NestEGG
+# Entering directory
+	cd SAPP
 
 # Compile dependencies
 	cd depends
-	chmod +x config.sub
-	chmod +x config.guess
-	make -j$(echo $CPU_CORES) HOST=x86_64-w64-mingw32
+	make -j$(echo $CPU_CORES) HOST=x86_64-w64-mingw32 
 	cd ..
 
-# Compile EGG
-	chmod +x share/genbuild.sh
-	chmod +x autogen.sh
+# Compile
 	./autogen.sh
-	./configure --prefix=$(pwd)/depends/x86_64-w64-mingw32 --disable-debug --disable-tests --disable-bench --enable-hardening --disable-online-rust CFLAGS="-O3" CXXFLAGS="-O3"
+	./configure --prefix=$(pwd)/depends/x86_64-w64-mingw32 --disable-debug --disable-tests --disable-bench --disable-online-rust CFLAGS="-O3" CXXFLAGS="-O3"
 	make -j$(echo $CPU_CORES) HOST=x86_64-w64-mingw32
 	cd ..
 
 # Create zip file of binaries
-	cp NestEGG/src/nesteggd.exe NestEGG/src/nestegg-cli.exe NestEGG/src/nestegg-tx.exe NestEGG/src/qt/nestegg-qt.exe .
-	zip NestEGG-Windows.zip nesteggd.exe nestegg-cli.exe nestegg-tx.exe nestegg-qt.exe
-	rm -f nesteggd.exe nestegg-cli.exe nestegg-tx.exe nestegg-qt.exe
+	cp SAPP/src/sapphired.exe SAPP/src/sapphire-cli.exe SAPP/src/sapphire-tx.exe SAPP/src/qt/sapphire-qt.exe .
+	zip SAPP-Windows.zip sapphired.exe sapphire-cli.exe sapphire-tx.exe sapphire-qt.exe
+	rm -f sapphired.exe sapphire-cli.exe sapphire-tx.exe sapphire-qt.exe

@@ -3,9 +3,9 @@ pipeline {
     agent any
 
     environment {
-        NAME = 'Human_Charity_Coin_Protocol'
-        BASE_NAME = 'Human_Charity_Coin_Protocol'
-        ZIP_NAME = 'HCCP'
+        NAME = 'Sapphire'
+        BASE_NAME = 'sapphire'
+        ZIP_NAME = 'SAPP'
     }
 
     stages {

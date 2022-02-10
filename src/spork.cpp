@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2016 The Dash developers
 // Copyright (c) 2016-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -15,18 +15,8 @@
 #define MAKE_SPORK_DEF(name, defaultValue) CSporkDef(name, defaultValue, #name)
 
 std::vector<CSporkDef> sporkDefs = {
-    MAKE_SPORK_DEF(SPORK_2_SWIFTTX,                         0), // OFF
-    MAKE_SPORK_DEF(SPORK_3_SWIFTTX_BLOCK_FILTERING,         0), // OFF
-    MAKE_SPORK_DEF(SPORK_5_MAX_VALUE,                       1000),          // 1000 PIV
     MAKE_SPORK_DEF(SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT,  4070908800ULL), // OFF
-    MAKE_SPORK_DEF(SPORK_9_MASTERNODE_BUDGET_ENFORCEMENT,   1597825847), // OFF
-    MAKE_SPORK_DEF(SPORK_13_ENABLE_SUPERBLOCKS,             1597825847), // OFF
     MAKE_SPORK_DEF(SPORK_14_MIN_PROTOCOL_ACCEPTED,          4070908800ULL), // OFF
-    MAKE_SPORK_DEF(SPORK_15_NEW_PROTOCOL_ENFORCEMENT_2,     1630512000), // OFF
-    MAKE_SPORK_DEF(SPORK_16_ZEROCOIN_MAINTENANCE_MODE,      4070908800ULL), // OFF
-    MAKE_SPORK_DEF(SPORK_17_COLDSTAKING_ENFORCEMENT,        1597825847), // OFF
-    MAKE_SPORK_DEF(SPORK_18_ZEROCOIN_PUBLICSPEND_V4,        4070908800ULL), // OFF
-    MAKE_SPORK_DEF(SPORK_20_UPGRADE_CYCLE_FACTOR,           1629216000), // OFF
     MAKE_SPORK_DEF(SPORK_101_SERVICES_ENFORCEMENT,          4070908800ULL), // OFF
     MAKE_SPORK_DEF(SPORK_102_FORCE_ENABLED_MASTERNODE ,     4070908800ULL), // OFF
     MAKE_SPORK_DEF(SPORK_103_PING_MESSAGE_SALT,             0),             // OFF
@@ -34,13 +24,21 @@ std::vector<CSporkDef> sporkDefs = {
     MAKE_SPORK_DEF(SPORK_105_MAX_BLOCK_SIZE,                4070908800ULL), // OFF
     MAKE_SPORK_DEF(SPORK_106_STAKING_SKIP_MN_SYNC,          4070908800ULL), // OFF
 
-    // Unused dummy sporks.
-	//TODO: Needed to be removed in the future when the old nodes cut from the network.
+    MAKE_SPORK_DEF(SPORK_2_NOOP,                            4070908800ULL), // OFF
+    MAKE_SPORK_DEF(SPORK_3_NOOP,                            4070908800ULL), // OFF
+    MAKE_SPORK_DEF(SPORK_5_NOOP,                            4070908800ULL), // OFF
     MAKE_SPORK_DEF(SPORK_7_NOOP,                            4070908800ULL), // OFF
+    MAKE_SPORK_DEF(SPORK_9_NOOP,                            4070908800ULL), // OFF
     MAKE_SPORK_DEF(SPORK_10_NOOP,                           4070908800ULL), // OFF
     MAKE_SPORK_DEF(SPORK_11_NOOP,                           4070908800ULL), // OFF
     MAKE_SPORK_DEF(SPORK_12_NOOP,                           4070908800ULL), // OFF
+    MAKE_SPORK_DEF(SPORK_13_NOOP,                           4070908800ULL), // OFF
+    MAKE_SPORK_DEF(SPORK_15_NOOP,                           4070908800ULL), // OFF
+    MAKE_SPORK_DEF(SPORK_16_NOOP,                           4070908800ULL), // OFF
     MAKE_SPORK_DEF(SPORK_17_NOOP,                           4070908800ULL), // OFF
+    MAKE_SPORK_DEF(SPORK_18_NOOP,                           4070908800ULL), // OFF
+    MAKE_SPORK_DEF(SPORK_19_NOOP,                           4070908800ULL), // OFF
+    MAKE_SPORK_DEF(SPORK_20_NOOP,                           4070908800ULL), // OFF
     MAKE_SPORK_DEF(SPORK_21_NOOP,                           4070908800ULL), // OFF
     MAKE_SPORK_DEF(SPORK_22_NOOP,                           4070908800ULL), // OFF
     MAKE_SPORK_DEF(SPORK_24_NOOP,                           4070908800ULL), // OFF
@@ -63,7 +61,7 @@ void CSporkManager::Clear()
     mapSporksActive.clear();
 }
 
-// Human_Charity_Coin_Protocol: on startup load spork values from previous session if they exist in the sporkDB
+// Sapphire: on startup load spork values from previous session if they exist in the sporkDB
 void CSporkManager::LoadSporksFromDB()
 {
     for (const auto& sporkDef : sporkDefs) {
@@ -168,7 +166,7 @@ void CSporkManager::ProcessSpork(CNode* pfrom, std::string& strCommand, CDataStr
         }
         spork.Relay();
 
-        // Human_Charity_Coin_Protocol: add to spork database.
+        // Sapphire: add to spork database.
         pSporkDB->WriteSpork(spork.nSporkID, spork);
     }
     if (strCommand == NetMsgType::GETSPORKS) {
@@ -307,3 +305,4 @@ void CSporkMessage::Relay()
     CInv inv(MSG_SPORK, GetHash());
     g_connman->RelayInv(inv);
 }
+

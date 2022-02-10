@@ -1,5 +1,5 @@
 // Copyright (c) 2019-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -130,31 +130,27 @@ QPixmap encodeToQr(QString str, QString& errorStr, QColor qrColor)
     return QPixmap();
 }
 
-void setFilterAddressBook(QComboBox* filter, SortEdit* lineEdit)
+void setFilterAddressBook(QComboBox* filter)
 {
-    initComboBox(filter, lineEdit);
+    initComboBox(filter);
     filter->addItem(QObject::tr("All"), "");
     filter->addItem(QObject::tr("Receiving"), AddressTableModel::Receive);
     filter->addItem(QObject::tr("Contacts"), AddressTableModel::Send);
-    filter->addItem(QObject::tr("Cold Staking"), AddressTableModel::ColdStaking);
-    filter->addItem(QObject::tr("Delegator"), AddressTableModel::Delegator);
-    filter->addItem(QObject::tr("Delegable"), AddressTableModel::Delegable);
-    filter->addItem(QObject::tr("Staking Contacts"), AddressTableModel::ColdStakingSend);
 }
 
-void setSortTx(QComboBox* filter, SortEdit* lineEdit)
+void setSortTx(QComboBox* filter)
 {
     // Sort Transactions
-    initComboBox(filter, lineEdit);
+    initComboBox(filter);
     filter->addItem(QObject::tr("Date desc"), SortTx::DATE_DESC);
     filter->addItem(QObject::tr("Date asc"), SortTx::DATE_ASC);
     filter->addItem(QObject::tr("Amount desc"), SortTx::AMOUNT_ASC);
     filter->addItem(QObject::tr("Amount asc"), SortTx::AMOUNT_DESC);
 }
 
-void setSortTxTypeFilter(QComboBox* filter, SortEdit* lineEditType)
+void setSortTxTypeFilter(QComboBox* filter)
 {
-    initComboBox(filter, lineEditType);
+    initComboBox(filter);
     filter->addItem(QObject::tr("All"), TransactionFilterProxy::ALL_TYPES);
     filter->addItem(QObject::tr("Received"), TransactionFilterProxy::TYPE(TransactionRecord::RecvWithAddress) | TransactionFilterProxy::TYPE(TransactionRecord::RecvFromOther));
     filter->addItem(QObject::tr("Sent"), TransactionFilterProxy::TYPE(TransactionRecord::SendToAddress) | TransactionFilterProxy::TYPE(TransactionRecord::SendToOther));
@@ -162,16 +158,12 @@ void setSortTxTypeFilter(QComboBox* filter, SortEdit* lineEditType)
     filter->addItem(QObject::tr("Minted"), TransactionFilterProxy::TYPE(TransactionRecord::StakeMint));
     filter->addItem(QObject::tr("MN reward"), TransactionFilterProxy::TYPE(TransactionRecord::MNReward));
     filter->addItem(QObject::tr("To yourself"), TransactionFilterProxy::TYPE(TransactionRecord::SendToSelf));
-    filter->addItem(QObject::tr("Cold stakes"), TransactionFilterProxy::TYPE(TransactionRecord::StakeDelegated));
-    filter->addItem(QObject::tr("Hot stakes"), TransactionFilterProxy::TYPE(TransactionRecord::StakeHot));
-    filter->addItem(QObject::tr("Delegated"), TransactionFilterProxy::TYPE(TransactionRecord::P2CSDelegationSent) | TransactionFilterProxy::TYPE(TransactionRecord::P2CSDelegationSentOwner));
-    filter->addItem(QObject::tr("Delegations"), TransactionFilterProxy::TYPE(TransactionRecord::P2CSDelegation));
 }
 
 void setupSettings(QSettings* settings)
 {
     if (!settings->contains("lightTheme")) {
-        settings->setValue("lightTheme", true);
+        setTheme(false);
     }
 }
 
@@ -215,46 +207,39 @@ QColor getRowColor(bool isLightTheme, bool isHovered, bool isSelected)
 {
     if (isLightTheme) {
         if (isSelected) {
-            return QColor("#25b088ff");
+            return QColor("#eeeeee");
         } else if (isHovered) {
-            return QColor("#25bababa");
+            return QColor("#eeeeee");
         } else {
             return QColor("#ffffff");
         }
     } else {
         if (isSelected) {
-            return QColor("#25b088ff");
+            return QColor("#1C1A1A");
         } else if (isHovered) {
-            return QColor("#25bababa");
+            return QColor("#1C1A1A");
         } else {
-            return QColor("#0f0b16");
+            return QColor("#211f1f");
         }
     }
 }
 
-void initComboBox(QComboBox* combo, QLineEdit* lineEdit, QString cssClass)
+void initComboBox(QComboBox* combo, QString cssClass)
 {
     setCssProperty(combo, cssClass);
-    combo->setEditable(true);
-    if (lineEdit) {
-        lineEdit->setReadOnly(true);
-        lineEdit->setAlignment(Qt::AlignRight);
-        combo->setLineEdit(lineEdit);
-    }
-    combo->setStyleSheet("selection-background-color:transparent; selection-color:transparent;");
     combo->setView(new QListView());
 }
 
-void fillAddressSortControls(SortEdit* seType, SortEdit* seOrder, QComboBox* boxType, QComboBox* boxOrder)
+void fillAddressSortControls(QComboBox* boxType, QComboBox* boxOrder)
 {
     // Sort Type
-    initComboBox(boxType, seType, "btn-combo-small");
+    initComboBox(boxType, "btn-combo-small");
     boxType->addItem(QObject::tr("by Label"), AddressTableModel::Label);
     boxType->addItem(QObject::tr("by Address"), AddressTableModel::Address);
     boxType->addItem(QObject::tr("by Date"), AddressTableModel::Date);
     boxType->setCurrentIndex(0);
     // Sort Order
-    initComboBox(boxOrder, seOrder, "btn-combo-small");
+    initComboBox(boxOrder, "btn-combo-small");
     boxOrder->addItem("asc", Qt::AscendingOrder);
     boxOrder->addItem("desc", Qt::DescendingOrder);
     boxOrder->setCurrentIndex(0);

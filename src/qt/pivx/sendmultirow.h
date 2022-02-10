@@ -1,5 +1,5 @@
 // Copyright (c) 2019 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -42,7 +42,6 @@ public:
 
     /** Return whether the entry is still empty and unedited */
     bool isClear();
-    void setOnlyStakingAddressAccepted(bool onlyStakingAddress);
     CAmount getAmountValue(QString str);
 
     void setAddress(const QString& address);
@@ -87,7 +86,6 @@ private:
     int displayUnit;
     int number = 0;
     bool isExpanded = false;
-    bool onlyStakingAddressAccepted = false;
 
     SendCoinsRecipient recipient;
 

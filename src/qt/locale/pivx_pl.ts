@@ -114,12 +114,12 @@
         <translation>Adres odbiorczy</translation>
     </message>
     <message>
-        <source>These are your NestEgg addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>To są twoje adresy NestEgg do wysyłania płatności. Zawsze sprawdzaj kwotę i adres odbiorcy przed wysłaniem monet.</translation>
+        <source>These are your SAPP addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>To są twoje adresy SAPP do wysyłania płatności. Zawsze sprawdzaj kwotę i adres odbiorcy przed wysłaniem monet.</translation>
     </message>
     <message>
-        <source>These are your NestEgg addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>To są twoje adresy NestEgg do otrzymywania płatności. Zaleca się użycie nowego adresu odbiorczego dla każdej transakcji.</translation>
+        <source>These are your SAPP addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>To są twoje adresy SAPP do otrzymywania płatności. Zaleca się użycie nowego adresu odbiorczego dla każdej transakcji.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -349,8 +349,8 @@ do stakingu</translation>
         <translation>ANULUJ</translation>
     </message>
     <message>
-        <source>NestEgg will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your EGGs from being stolen by malware infecting your computer.</source>
-        <translation>NestEgg zamknie się teraz, aby zakończyć proces szyfrowania. Pamiętaj, że zaszyfrowanie portfela nie chroni w pełni Twoich EGG przed kradzieżą przez złośliwe oprogramowanie infekujące Twój komputer.</translation>
+        <source>SAPP will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your SAPPs from being stolen by malware infecting your computer.</source>
+        <translation>SAPP zamknie się teraz, aby zakończyć proces szyfrowania. Pamiętaj, że zaszyfrowanie portfela nie chroni w pełni Twoich SAPP przed kradzieżą przez złośliwe oprogramowanie infekujące Twój komputer.</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -409,33 +409,6 @@ do stakingu</translation>
     </message>
 </context>
 <context>
-    <name>CSRow</name>
-    <message>
-        <source>Form</source>
-        <translation>Formularz</translation>
-    </message>
-    <message>
-        <source>Savings</source>
-        <translation>Oszczędności</translation>
-    </message>
-    <message>
-        <source>0,00 EGG</source>
-        <translation>0,00 EGG</translation>
-    </message>
-    <message>
-        <source>address</source>
-        <translation>adres</translation>
-    </message>
-    <message>
-        <source>Not Staking</source>
-        <translation>brak Stakingu</translation>
-    </message>
-    <message>
-        <source>Own delegation</source>
-        <translation>Delegacja własna</translation>
-    </message>
-</context>
-<context>
     <name>ClientModel</name>
     <message>
         <source>Total: %1 (IPv4: %2 / IPv6: %3 / Tor: %4 / Unknown: %5)</source>
@@ -461,8 +434,8 @@ do stakingu</translation>
         <translation>Wybór monet</translation>
     </message>
     <message>
-        <source>Select EGG Outputs to Spend</source>
-        <translation>Wybierz adres wyjściowy EGG do wydania</translation>
+        <source>Select SAPP Outputs to Spend</source>
+        <translation>Wybierz adres wyjściowy SAPP do wydania</translation>
     </message>
     <message>
         <source>Dust:</source>
@@ -489,8 +462,8 @@ do stakingu</translation>
         <translation>Ilość</translation>
     </message>
     <message>
-        <source>0.00 EGG</source>
-        <translation>0.00 EGG</translation>
+        <source>0.00 SAPP</source>
+        <translation>0.00 SAPP</translation>
     </message>
     <message>
         <source>0</source>
@@ -641,10 +614,6 @@ do stakingu</translation>
         <translation>tak</translation>
     </message>
     <message>
-        <source>delegated to %1 for cold staking</source>
-        <translation>przekazane do %1 dla cold staking</translation>
-    </message>
-    <message>
         <source>Select All</source>
         <translation>Zaznacz wszystko</translation>
     </message>
@@ -687,217 +656,6 @@ do stakingu</translation>
     <message>
         <source>(change)</source>
         <translation>(reszta)</translation>
-    </message>
-</context>
-<context>
-    <name>ColdStakingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation>Formularz</translation>
-    </message>
-    <message>
-        <source>Owner address (optional, if empty a new address will be created)</source>
-        <translation>Adres właściciela (opcjonalnie, jeśli pusty, zostanie utworzony nowy adres)</translation>
-    </message>
-    <message>
-        <source>Total Staking:</source>
-        <translation>Razem Staking:</translation>
-    </message>
-    <message>
-        <source>Cold Staking</source>
-        <translation>Cold Staking</translation>
-    </message>
-    <message>
-        <source>Staker</source>
-        <translation>Staker</translation>
-    </message>
-    <message>
-        <source>Delegation</source>
-        <translation>Delegacja</translation>
-    </message>
-    <message>
-        <source>Delegate</source>
-        <translation>Deleguj</translation>
-    </message>
-    <message>
-        <source>Clear All</source>
-        <translation>Wyczyść wszystko</translation>
-    </message>
-    <message>
-        <source>Delegated balance history</source>
-        <translation>Historia sald delegowanych</translation>
-    </message>
-    <message>
-        <source>No delegations yet</source>
-        <translation>Brak delegacji</translation>
-    </message>
-    <message>
-        <source>Total Staking: %1</source>
-        <translation>Total Staking: %1</translation>
-    </message>
-    <message>
-        <source>Error loading delegations: %1</source>
-        <translation>Błąd ładowania delegacji: %1</translation>
-    </message>
-    <message>
-        <source>You can delegate your EGGs, letting a hot node (24/7 online node)
-stake on your behalf, while you keep the keys securely offline.</source>
-        <translation>Możesz delegować swoje EGG, używając gorącego węzła (węzeł online 24/7)
-stake w Twoim imieniu, podczas gdy klucze są bezpiecznie offline.</translation>
-    </message>
-    <message>
-        <source>Enter owner address</source>
-        <translation>Wpisz adres właściciela</translation>
-    </message>
-    <message>
-        <source>Accept EGG delegation / Delegate EGG</source>
-        <translation>Zaakceptuj delegację EGG / Deleguj EGG</translation>
-    </message>
-    <message>
-        <source>Cold Staking address</source>
-        <translation>Cold Staking adres</translation>
-    </message>
-    <message>
-        <source>No receive addresses available, you can go to the receive screen and create some there!</source>
-        <translation>Brak dostępnych adresów odbioru, możesz przejść do ekranu odbioru i tam utworzyć!</translation>
-    </message>
-    <message>
-        <source>No contacts available, you can go to the contacts screen and add some there!</source>
-        <translation>Brak dostępnych kontaktów, możesz przejść do ekranu kontaktów i tam dodać!</translation>
-    </message>
-    <message>
-        <source>Cannot send delegation, wallet locked</source>
-        <translation>Nie można przekazać delegacji, portfel zablokowany</translation>
-    </message>
-    <message>
-        <source>Cold staking is networkely disabled</source>
-        <translation>Cold staking jest wyłączony przez sieć</translation>
-    </message>
-    <message>
-        <source>Coin Control</source>
-        <translation>Kontrola monet</translation>
-    </message>
-    <message>
-        <source>Invalid entry</source>
-        <translation>Niewłaściwy wpis</translation>
-    </message>
-    <message>
-        <source>Invalid entry, minimum delegable amount is </source>
-        <translation>Nieprawidłowy wpis, minimalna kwota do przekazania wynosi</translation>
-    </message>
-    <message>
-        <source>Owner address invalid</source>
-        <translation>Niepoprawny adres właściciela</translation>
-    </message>
-    <message>
-        <source>ALERT!</source>
-        <translation>ALARM!</translation>
-    </message>
-    <message>
-        <source>Delegating to an external owner address!
-
-The delegated coins will NOT be spendable by this wallet.
-Spending these coins will need to be done from the wallet or
-device containing the owner address.
-
-Do you wish to proceed?</source>
-        <translation>Delegowanie na zewnętrzny adres właściciela!
-
-Przekazywane monety NIE będą wydawane przez ten portfel.
-Wydawanie tych monet będzie musiało być wykonane z portfela lub
-urządzenie zawierające adres właściciela
-
-Czy chcesz kontynuować?</translation>
-    </message>
-    <message>
-        <source>Staking address corresponds to this wallet, change it to an external node</source>
-        <translation>Staking adres odpowiada temu portfelowi, zmień go na zewnętrzny węzeł</translation>
-    </message>
-    <message>
-        <source>Cannot create transaction.</source>
-        <translation>Nie można utworzyć transakcji.</translation>
-    </message>
-    <message>
-        <source>Coins delegated</source>
-        <translation>Monety przekazane</translation>
-    </message>
-    <message>
-        <source>Cannot perform operation, wallet locked</source>
-        <translation>Nie można wykonać operacji, portfel zablokowany</translation>
-    </message>
-    <message>
-        <source>URI copied to clipboard</source>
-        <translation>URI skopiowany do schowka</translation>
-    </message>
-    <message>
-        <source>Address copied to clipboard</source>
-        <translation>Adres skopiowany do schowka</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>kopiuj</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Edytuj</translation>
-    </message>
-    <message>
-        <source>Stake</source>
-        <translation>Stake</translation>
-    </message>
-    <message>
-        <source>Blacklist</source>
-        <translation>Czarna lista</translation>
-    </message>
-    <message>
-        <source>Edit Label</source>
-        <translation>Edytuj etykietę</translation>
-    </message>
-    <message>
-        <source>Copy owner
-address</source>
-        <translation>Kopiuj właściciela
-adres</translation>
-    </message>
-    <message>
-        <source>Address copied</source>
-        <translation>Adres skopiowany</translation>
-    </message>
-    <message>
-        <source>Edit Cold Address Label</source>
-        <translation>Edytuj etykietę adresu zimnego</translation>
-    </message>
-    <message>
-        <source>Whitelist failed, please check the logs</source>
-        <translation>Niepowodzenie białej listy, sprawdź dzienniki</translation>
-    </message>
-    <message>
-        <source> staking!</source>
-        <translation>staking!</translation>
-    </message>
-    <message>
-        <source>Blacklist failed, please check the logs</source>
-        <translation>Czarna lista nie powiodła się, sprawdź dzienniki</translation>
-    </message>
-    <message>
-        <source> blacklisted from staking</source>
-        <translation>na czarnej liście staking</translation>
-    </message>
-    <message>
-        <source>Owner address copied</source>
-        <translation>Adres właściciela został skopiowany</translation>
-    </message>
-    <message>
-        <source>Edit Owner Address Label</source>
-        <translation>Edytuj etykietę adresu właściciela</translation>
-    </message>
-    <message>
-        <source>Address label saved</source>
-        <translation>Etykieta adresu została zapisana</translation>
-    </message>
-    <message>
-        <source>Error storing address label</source>
-        <translation>Błąd podczas zapisywania etykiety adresu</translation>
     </message>
 </context>
 <context>
@@ -946,8 +704,8 @@ adres</translation>
         <translation>Filtruj według</translation>
     </message>
     <message>
-        <source>Amount of EGG and zEGG staked.</source>
-        <translation>Ilość EGG i zEGG staked.</translation>
+        <source>Amount of SAPP and zSAPP staked.</source>
+        <translation>Ilość SAPP i zSAPP staked.</translation>
     </message>
     <message>
         <source>Please wait until the wallet is fully synced to see your correct balance</source>
@@ -1043,8 +801,8 @@ Rozpocznie się automatycznie, gdy portfel będzie miał wystarczającą liczbę
         <translation>Edytuj adres wysyłania</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid NestEgg address.</source>
-        <translation>Wprowadzony adres "%1" nie jest prawidłowym adresem NestEgg.</translation>
+        <source>The entered address "%1" is not a valid SAPP address.</source>
+        <translation>Wprowadzony adres "%1" nie jest prawidłowym adresem SAPP.</translation>
     </message>
     <message>
         <source>The entered address "%1" is already in the address book.</source>
@@ -1096,16 +854,16 @@ Rozpocznie się automatycznie, gdy portfel będzie miał wystarczającą liczbę
         <translation>Wersja</translation>
     </message>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
     <message>
         <source>(%1-bit)</source>
         <translation>(%1-bit)</translation>
     </message>
     <message>
-        <source>About NestEgg Core</source>
-        <translation>O NestEgg Core</translation>
+        <source>About Sapphire</source>
+        <translation>O Sapphire</translation>
     </message>
     <message>
         <source>Command-line options</source>
@@ -1159,16 +917,16 @@ Rozpocznie się automatycznie, gdy portfel będzie miał wystarczającą liczbę
         <translation>Zapraszamy</translation>
     </message>
     <message>
-        <source>Welcome to NestEgg Core.</source>
-        <translation>Zapraszamy do NestEgg Core</translation>
+        <source>Welcome to Sapphire.</source>
+        <translation>Zapraszamy do Sapphire</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where NestEgg Core will store its data.</source>
-        <translation>Ponieważ program jest uruchamiany po raz pierwszy, możesz wybrać miejsce, w którym NestEgg Core będzie przechowywać swoje dane.</translation>
+        <source>As this is the first time the program is launched, you can choose where Sapphire will store its data.</source>
+        <translation>Ponieważ program jest uruchamiany po raz pierwszy, możesz wybrać miejsce, w którym Sapphire będzie przechowywać swoje dane.</translation>
     </message>
     <message>
-        <source>NestEgg Core will download and store a copy of the NestEgg block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>NestEgg Core pobierze i zapisze kopię łańcucha bloków NestEgg. Przynajmniej %1 GB danych zostanie zapisanych w tym katalogu, a jego liczba będzie rosnąć z czasem. Portfel zostanie również zapisany w tym katalogu.</translation>
+        <source>Sapphire will download and store a copy of the SAPP block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>Sapphire pobierze i zapisze kopię łańcucha bloków SAPP. Przynajmniej %1 GB danych zostanie zapisanych w tym katalogu, a jego liczba będzie rosnąć z czasem. Portfel zostanie również zapisany w tym katalogu.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1187,8 +945,8 @@ Rozpocznie się automatycznie, gdy portfel będzie miał wystarczającą liczbę
         <translation>OK</translation>
     </message>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
@@ -1287,8 +1045,8 @@ Rozpocznie się automatycznie, gdy portfel będzie miał wystarczającą liczbę
         <translation>Utwórz nowy kontroler Masternode</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To create a NestEgg Masternode you must dedicate 25,000 EGG (the unit of NestEgg) to the network (however, these coins are still yours and will never leave your possession). &lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;You can deactivate the node and unlock the coins at any time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aby utworzyć Masternode NestEgg, musisz przeznaczyć 200.000 EGG (jednostkę NestEgg) na sieć (jednak monety te są nadal twoje i nigdy nie zmienią swojego właściciela).&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Możesz dezaktywować węzeł i odblokować monety w dowolnym momencie.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To create a SAPP Masternode you must dedicate a collateral amount of SAPP (the unit of SAPP) to the network (however, these coins are still yours and will never leave your possession). &lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;You can deactivate the node and unlock the coins at any time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aby utworzyć Masternode SAPP, musisz przeznaczyć 10.000 SAPP (jednostkę SAPP) na sieć (jednak monety te są nadal twoje i nigdy nie zmienią swojego właściciela).&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Możesz dezaktywować węzeł i odblokować monety w dowolnym momencie.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Set Masternode Name</source>
@@ -1307,8 +1065,8 @@ Rozpocznie się automatycznie, gdy portfel będzie miał wystarczającą liczbę
         <translation>Upewnij się, że masz taką liczbę monet.</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A transaction of 25,000 EGG will be made&lt;/p&gt;&lt;p&gt;to a new empty address in your wallet.&lt;/p&gt;&lt;p&gt;The Address is labeled under the master node's name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dokonana zostanie transakcja 200 000 EGG&lt;/p&gt;&lt;p&gt;na nowy pusty adres w portfelu.&lt;/p&gt;&lt;p&gt;Adres jest oznaczony pod nazwą węzła głównego.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A transaction of collateral amount will be made&lt;/p&gt;&lt;p&gt;to a new empty address in your wallet.&lt;/p&gt;&lt;p&gt;The Address is labeled under the master node's name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dokonana zostanie transakcja 10 000 SAPP&lt;/p&gt;&lt;p&gt;na nowy pusty adres w portfelu.&lt;/p&gt;&lt;p&gt;Adres jest oznaczony pod nazwą węzła głównego.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Address of the node that must always be online running the actual master node.</source>
@@ -1484,7 +1242,7 @@ i głosuj na system skarbu otrzymujący okresową nagrodę.</translation>
 on a remote server to your clipboard.
 
 
-You will only have to paste the data in the nestegg.conf file
+You will only have to paste the data in the sapphire.conf file
 of your remote server and start it, then start the Masternode using
 this controller wallet (select the Masternode in the list and press "start").
 </source>
@@ -1492,7 +1250,7 @@ this controller wallet (select the Masternode in the list and press "start").
 na zdalnym serwerze do twojego schowka.
 
 
-Wystarczy wkleić dane do pliku nestegg.conf
+Wystarczy wkleić dane do pliku sapphire.conf
 zdalnego serwera i uruchom go, a następnie uruchom Masternode przy użyciu
 portfela kontrolujacego (wybierz Masternode z listy i naciśnij „start”).
 </translation>
@@ -1632,8 +1390,8 @@ Jesteś pewny?</translation>
         <translation>Przetwarzane dane są za duże</translation>
     </message>
     <message>
-        <source>Invalid URI, not starting with "nestegg" prefix</source>
-        <translation>Nieprawidłowy identyfikator URI, nie zaczynający się od prefiksu „nestegg”</translation>
+        <source>Invalid URI, not starting with "sapphire" prefix</source>
+        <translation>Nieprawidłowy identyfikator URI, nie zaczynający się od prefiksu „sapphire”</translation>
     </message>
 </context>
 <context>
@@ -1678,8 +1436,8 @@ Jesteś pewny?</translation>
         <translation>Jeśli wyłączysz wydawanie niepotwierdzonych reszt, reszta z transakcji nie może być użyta, dopóki transakcja nie uzyska co najmniej jednego potwierdzenia. Ma to również wpływ na sposób obliczania salda.</translation>
     </message>
     <message>
-        <source>Automatically open the NestEgg client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Automatycznie otwórz port klienta NestEgg na routerze. Działa to tylko wtedy, gdy twój router obsługuje UPnP i jest włączony.</translation>
+        <source>Automatically open the SAPP client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Automatycznie otwórz port klienta SAPP na routerze. Działa to tylko wtedy, gdy twój router obsługuje UPnP i jest włączony.</translation>
     </message>
     <message>
         <source>Accept connections from outside</source>
@@ -1698,12 +1456,12 @@ Jesteś pewny?</translation>
         <translation>Ekspert</translation>
     </message>
     <message>
-        <source>Automatically start NestEgg after logging in to the system.</source>
-        <translation>Automatycznie uruchom NestEgg po zalogowaniu do systemu</translation>
+        <source>Automatically start SAPP after logging in to the system.</source>
+        <translation>Automatycznie uruchom SAPP po zalogowaniu do systemu</translation>
     </message>
     <message>
-        <source>&amp;Start NestEgg on system login</source>
-        <translation>&amp;Uruchom NestEgg podczas logowania do systemu</translation>
+        <source>&amp;Start SAPP on system login</source>
+        <translation>&amp;Uruchom SAPP podczas logowania do systemu</translation>
     </message>
     <message>
         <source>Whether to show coin control features or not.</source>
@@ -1730,58 +1488,58 @@ Jesteś pewny?</translation>
         <translation>&amp;Sieć</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting NestEgg.</source>
-        <translation>Język interfejsu użytkownika może być wybrany tutaj. Ustawienia ulegną zmianie po restarcie NestEgg</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting SAPP.</source>
+        <translation>Język interfejsu użytkownika może być wybrany tutaj. Ustawienia ulegną zmianie po restarcie SAPP</translation>
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/pivx-project/pivx-project-translations</source>
+        https://discord.gg/zgcXB76</source>
         <translation>Brakuje języka bądź nieukończona pełnego tłumaczenia? Pomóż w tłumaczeniu tutaj:
-https://www.transifex.com/pivx-project/pivx-project-translations </translation>
+        https://discord.gg/zgcXB76</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
         <translation>Mapuj port za pomocą &amp;UPnP</translation>
     </message>
     <message>
-        <source>Enable automatic minting of EGG units to zEGG</source>
-        <translation>Włącz automatyczny minting EGG do zEGG</translation>
+        <source>Enable automatic minting of SAPP units to zSAPP</source>
+        <translation>Włącz automatyczny minting SAPP do zSAPP</translation>
     </message>
     <message>
-        <source>Enable zEGG Automint</source>
-        <translation>Włącz zEGG Automint</translation>
+        <source>Enable zSAPP Automint</source>
+        <translation>Włącz zSAPP Automint</translation>
     </message>
     <message>
-        <source>Enable automatic zEGG minting from specific addresses</source>
-        <translation>Włącz automatyczne wybijanie zEGG-ów z określonych adresów</translation>
+        <source>Enable automatic zSAPP minting from specific addresses</source>
+        <translation>Włącz automatyczne wybijanie zSAPP-ów z określonych adresów</translation>
     </message>
     <message>
         <source>Enable Automint Addresses</source>
         <translation>Włącz adresy Automint</translation>
     </message>
     <message>
-        <source>Percentage of incoming EGG which get automatically converted to zEGG via Zerocoin Protocol (min: 10%)</source>
-        <translation>Procent EGG, które są automatycznie konwertowane na zEGG za pomocą protokołu Zerocoin (min: 10%)</translation>
+        <source>Percentage of incoming SAPP which get automatically converted to zSAPP via Zerocoin Protocol (min: 10%)</source>
+        <translation>Procent SAPP, które są automatycznie konwertowane na zSAPP za pomocą protokołu Zerocoin (min: 10%)</translation>
     </message>
     <message>
-        <source>Percentage of autominted zEGG</source>
-        <translation>Procent automint zEGG</translation>
+        <source>Percentage of autominted zSAPP</source>
+        <translation>Procent automint zSAPP</translation>
     </message>
     <message>
-        <source>Wait with automatic conversion to Zerocoin until enough EGG for this denomination is available</source>
-        <translation>Zaczekaj z automatyczną konwersją na Zerocoin, aż będzie dostępna wystarczająca wartość EGG dla tego nominału</translation>
+        <source>Wait with automatic conversion to Zerocoin until enough SAPP for this denomination is available</source>
+        <translation>Zaczekaj z automatyczną konwersją na Zerocoin, aż będzie dostępna wystarczająca wartość SAPP dla tego nominału</translation>
     </message>
     <message>
-        <source>Preferred Automint zEGG Denomination</source>
-        <translation>Preferowane nominały Automint zEGG</translation>
+        <source>Preferred Automint zSAPP Denomination</source>
+        <translation>Preferowane nominały Automint zSAPP</translation>
     </message>
     <message>
         <source>Stake split threshold:</source>
         <translation>Próg podziału stawki 'stake' :</translation>
     </message>
     <message>
-        <source>Connect to the NestEgg network through a SOCKS5 proxy.</source>
-        <translation>Połącz z siecią NestEgg poprzez SOCKS5 proxy.</translation>
+        <source>Connect to the SAPP network through a SOCKS5 proxy.</source>
+        <translation>Połącz z siecią SAPP poprzez SOCKS5 proxy.</translation>
     </message>
     <message>
         <source>Proxy &amp;IP:</source>
@@ -1927,8 +1685,8 @@ https://www.transifex.com/pivx-project/pivx-project-translations </translation>
 <context>
     <name>PIVXGUI</name>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -1955,8 +1713,8 @@ https://www.transifex.com/pivx-project/pivx-project-translations </translation>
         <translation>Wyjdź z aplikacji</translation>
     </message>
     <message>
-        <source>NestEgg Core client</source>
-        <translation>NestEgg Core klient</translation>
+        <source>Sapphire client</source>
+        <translation>Sapphire klient</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2022,12 +1780,12 @@ Adres: %4
         <translation>Nieprawidłowy adres płatności %1</translation>
     </message>
     <message>
-        <source>Cannot start NestEgg: click-to-pay handler</source>
-        <translation>Nie można uruchomić NestEgg: click-to-pay handler</translation>
+        <source>Cannot start sapphire: click-to-pay handler</source>
+        <translation>Nie można uruchomić sapphire: click-to-pay handler</translation>
     </message>
     <message>
-        <source>URI cannot be parsed! This can be caused by an invalid NestEgg address or malformed URI parameters.</source>
-        <translation>Nie można przeanalizować identyfikatora URI! Może to być spowodowane nieprawidłowym adresem NestEgg lub nieprawidłowymi parametrami URI.</translation>
+        <source>URI cannot be parsed! This can be caused by an invalid SAPP address or malformed URI parameters.</source>
+        <translation>Nie można przeanalizować identyfikatora URI! Może to być spowodowane nieprawidłowym adresem SAPP lub nieprawidłowymi parametrami URI.</translation>
     </message>
     <message>
         <source>Payment request file cannot be read! This can be caused by an invalid payment request file.</source>
@@ -2112,8 +1870,8 @@ Adres: %4
         <translation>Ilość</translation>
     </message>
     <message>
-        <source>Enter NestEgg address (e.g. %1)</source>
-        <translation>Wpisz adres NestEgg (np. %1)</translation>
+        <source>Enter SAPP address (e.g. %1)</source>
+        <translation>Wpisz adres SAPP (np. %1)</translation>
     </message>
     <message>
         <source>%1 d</source>
@@ -2156,12 +1914,12 @@ Adres: %4
         <translation>%1 ms</translation>
     </message>
     <message>
-        <source>A fatal error occurred. NestEgg can no longer continue safely and will quit.</source>
-        <translation>Wystąpił błąd krytyczny. NestEgg nie może już działać bezpiecznie i zakończy działanie.</translation>
+        <source>A fatal error occurred. SAPP can no longer continue safely and will quit.</source>
+        <translation>Wystąpił błąd krytyczny. SAPP nie może już działać bezpiecznie i zakończy działanie.</translation>
     </message>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" does not exist.</source>
@@ -2180,8 +1938,8 @@ Adres: %4
         <translation>Błąd odczytu pliku konfiguracyjnego masternode: %1</translation>
     </message>
     <message>
-        <source>NestEgg Core didn't yet exit safely...</source>
-        <translation>NestEgg Core nie zamkną się jeszcze bezpiecznie ...</translation>
+        <source>Sapphire didn't yet exit safely...</source>
+        <translation>Sapphire nie zamkną się jeszcze bezpiecznie ...</translation>
     </message>
     <message>
         <source>Contact</source>
@@ -2190,18 +1948,6 @@ Adres: %4
     <message>
         <source>Receiving</source>
         <translation>Odbieranie</translation>
-    </message>
-    <message>
-        <source>Delegator</source>
-        <translation>Delegator</translation>
-    </message>
-    <message>
-        <source>Cold Staking</source>
-        <translation>Cold Staking</translation>
-    </message>
-    <message>
-        <source>Cold Staking Contact</source>
-        <translation>Cold Staking Kontakt</translation>
     </message>
     <message>
         <source>Hidden</source>
@@ -2264,20 +2010,8 @@ Adres: %4
         <translation>Dla siebie</translation>
     </message>
     <message>
-        <source>Cold stakes</source>
-        <translation>Cold stakes</translation>
-    </message>
-    <message>
         <source>Hot stakes</source>
         <translation>Hot stakes</translation>
-    </message>
-    <message>
-        <source>Delegated</source>
-        <translation>Delegowany</translation>
-    </message>
-    <message>
-        <source>Delegations</source>
-        <translation>Delegacje</translation>
     </message>
     <message>
         <source>by Label</source>
@@ -2363,8 +2097,8 @@ Adres: %4
         <translation>Łańcuch bloków</translation>
     </message>
     <message>
-        <source>Open the NestEgg debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Otwórz plik dziennika debugowania NestEgg z bieżącego katalogu danych. Może to potrwać kilka sekund w przypadku dużych plików dziennika.</translation>
+        <source>Open the SAPP debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Otwórz plik dziennika debugowania SAPP z bieżącego katalogu danych. Może to potrwać kilka sekund w przypadku dużych plików dziennika.</translation>
     </message>
     <message>
         <source>Number of Masternodes</source>
@@ -2507,8 +2241,8 @@ Adres: %4
         <translation>Standardowa ścieżka kopii zapasowej:</translation>
     </message>
     <message>
-        <source>Custom zEGG Backup Path:</source>
-        <translation>standardowa ścieżka kopii zapasowej zEGG:</translation>
+        <source>Custom zSAPP Backup Path:</source>
+        <translation>standardowa ścieżka kopii zapasowej zSAPP:</translation>
     </message>
     <message>
         <source>Custom Backups Threshold:</source>
@@ -2587,8 +2321,8 @@ Adres: %4
         <translation>Z</translation>
     </message>
     <message>
-        <source>Welcome to the NestEgg RPC console.</source>
-        <translation>Witamy w konsoli NestEgg RPC.</translation>
+        <source>Welcome to the SAPP RPC console.</source>
+        <translation>Witamy w konsoli SAPP RPC.</translation>
     </message>
     <message>
         <source>&amp;Disconnect Node</source>
@@ -2835,8 +2569,8 @@ Adres: %4
         <translation>Ilość</translation>
     </message>
     <message>
-        <source>EGG</source>
-        <translation>EGG</translation>
+        <source>SAPP</source>
+        <translation>SAPP</translation>
     </message>
     <message>
         <source>D7VFR83SQbiezrW72hjcWJtcfip5krte2Z </source>
@@ -2883,14 +2617,6 @@ Adres: %4
         <translation>WYGENERUJ</translation>
     </message>
     <message>
-        <source>Creates an address to receive coin delegations and be able to stake them.</source>
-        <translation>Tworzy adres, na który mają być wysyłane delegowane monety do stake.</translation>
-    </message>
-    <message>
-        <source>New Cold Staking Address</source>
-        <translation>Nowy adres do Cold Staking</translation>
-    </message>
-    <message>
         <source>Amount (optional)</source>
         <translation>Kwota (opcjonalnie)</translation>
     </message>
@@ -2914,7 +2640,7 @@ Adres: %4
         <translation>Niestandardowa adresu reszty</translation>
     </message>
     <message>
-        <source>The remainder of the value resultant from the inputs minus the outputs value goes to the "change" NestEgg address</source>
+        <source>The remainder of the value resultant from the inputs minus the outputs value goes to the "change" SAPP address</source>
         <translation>Pozostała wartość wynikająca z wpłat i wypłat trafia na adresu „reszty”</translation>
     </message>
     <message>
@@ -2941,8 +2667,8 @@ Adres: %4
         <translation>Zalecane</translation>
     </message>
     <message>
-        <source>EGG/kilobyte</source>
-        <translation>EGG/kilobyte</translation>
+        <source>SAPP/kilobyte</source>
+        <translation>SAPP/kilobyte</translation>
     </message>
     <message>
         <source>0.00 KB</source>
@@ -3031,10 +2757,6 @@ Czy chcesz kontynuować?</translation>
         <translation>Nieprawidłowy wpis, poprzednie wpisy muszą być ważne przed dodaniem nowego</translation>
     </message>
     <message>
-        <source>Possibly spend coins delegated for cold-staking (currently available: %1</source>
-        <translation>Maksymalna kwota delegowania do cold-staking (obecnie dostępne: %1</translation>
-    </message>
-    <message>
         <source>Invalid entry</source>
         <translation>Niewłaściwy wpis</translation>
     </message>
@@ -3049,14 +2771,6 @@ Czy chcesz kontynuować?</translation>
     <message>
         <source>Cannot create transaction.</source>
         <translation>Nie można utworzyć transakcji.</translation>
-    </message>
-    <message>
-        <source>WARNING:
-Transaction spends a cold-stake delegation, voiding it.
-These coins will no longer be cold-staked.</source>
-        <translation>OSTRZEŻENIE:
-Transakcja wydaje cold-stake, unieważniając ją.
-Monety te nie będą już cold-staked.</translation>
     </message>
     <message>
         <source>Transaction sent</source>
@@ -3213,8 +2927,8 @@ Monety te nie będą już cold-staked.</translation>
         <translation>KLUCZ DESZYFRUJĄCY</translation>
     </message>
     <message>
-        <source>NestEgg address</source>
-        <translation>Adres NestEgg</translation>
+        <source>SAPP address</source>
+        <translation>Adres SAPP</translation>
     </message>
     <message>
         <source>Enter address</source>
@@ -3338,8 +3052,8 @@ Verify that you have installed a predetermined text editor.</source>
 Sprawdź, czy zainstalowałeś określony edytor tekstu.</translation>
     </message>
     <message>
-        <source>Welcome to the NestEgg RPC console.</source>
-        <translation>Witamy w konsoli NestEgg RPC.</translation>
+        <source>Welcome to the SAPP RPC console.</source>
+        <translation>Witamy w konsoli SAPP RPC.</translation>
     </message>
     <message>
         <source>Use up and down arrows to navigate history, and %1 to clear screen.</source>
@@ -3448,12 +3162,12 @@ Sprawdź, czy zainstalowałeś określony edytor tekstu.</translation>
         <translation>Eksportuj listę adresów</translation>
     </message>
     <message>
-        <source>NestEgg_tx_csv_export(*.csv)</source>
-        <translation>NestEgg_tx_csv_export(*.csv)</translation>
+        <source>PIVX_tx_csv_export(*.csv)</source>
+        <translation>PIVX_tx_csv_export(*.csv)</translation>
     </message>
     <message>
-        <source>NestEgg_addresses_csv_export(*.csv)</source>
-        <translation>NestEgg_addresses_csv_export(*.csv)</translation>
+        <source>PIVX_addresses_csv_export(*.csv)</source>
+        <translation>PIVX_addresses_csv_export(*.csv)</translation>
     </message>
     <message>
         <source>Please select a folder to export the csv file first.</source>
@@ -3523,28 +3237,28 @@ Wystąpił błąd podczas próby zapisania listy adresów w %1. Proszę spróbuj
         <translation>Formularz</translation>
     </message>
     <message>
-        <source>1) What is NestEgg?</source>
-        <translation>1) Co to jest NestEgg?</translation>
+        <source>1) What is SAPP?</source>
+        <translation>1) Co to jest SAPP?</translation>
     </message>
     <message>
-        <source>2) Why are my EGG unspendable?</source>
-        <translation>2) Dlaczego mojego EGG nie można wydać?</translation>
+        <source>2) Why are my SAPP unspendable?</source>
+        <translation>2) Dlaczego mojego SAPP nie można wydać?</translation>
     </message>
     <message>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <source>What is NestEgg?</source>
-        <translation>Co to jest NestEgg?</translation>
+        <source>What is SAPP?</source>
+        <translation>Co to jest SAPP?</translation>
     </message>
     <message>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <source>Why are my EGG unspendable?</source>
-        <translation>Dlaczego mojego EGG nie można wydać?</translation>
+        <source>Why are my SAPP unspendable?</source>
+        <translation>Dlaczego mojego SAPP nie można wydać?</translation>
     </message>
     <message>
         <source>3</source>
@@ -3686,8 +3400,8 @@ Wystąpił błąd podczas próby zapisania listy adresów w %1. Proszę spróbuj
         <translation>Nie można otworzyć folderu kopii zapasowych</translation>
     </message>
     <message>
-        <source>Unable to open nestegg.conf with default application</source>
-        <translation>Nie można otworzyć pliku nestegg.conf w domyślnej aplikacji</translation>
+        <source>Unable to open sapphire.conf with default application</source>
+        <translation>Nie można otworzyć pliku sapphire.conf w domyślnej aplikacji</translation>
     </message>
     <message>
         <source>In:</source>
@@ -3737,8 +3451,8 @@ Wystąpił błąd podczas próby zapisania listy adresów w %1. Proszę spróbuj
         <translation>Liczba wątków weryfikujących skrypt</translation>
     </message>
     <message>
-        <source>Start NestEgg on system login</source>
-        <translation>Uruchom NestEgg przy logowaniu do systemu</translation>
+        <source>Start SAPP on system login</source>
+        <translation>Uruchom SAPP przy logowaniu do systemu</translation>
     </message>
     <message>
         <source>Minimize to the tray instead of the taskbar</source>
@@ -3825,8 +3539,8 @@ Jesteś pewny?
         <translation>CheckBox</translation>
     </message>
     <message>
-        <source>MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other NestEgg addresses after it matures.</source>
-        <translation>MultiSend pozwala automatycznie wysyłać do 100% stake lub nagrody masternode na listę innych adresów NestEgg po ich dojrzaniu.</translation>
+        <source>MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other SAPP addresses after it matures.</source>
+        <translation>MultiSend pozwala automatycznie wysyłać do 100% stake lub nagrody masternode na listę innych adresów SAPP po ich dojrzaniu.</translation>
     </message>
     <message>
         <source>Active</source>
@@ -3948,8 +3662,8 @@ Zaznacz jedno lub oba pola wyboru, aby wysłać stake i / lub nagrode masternode
         <translation>Wiadomość</translation>
     </message>
     <message>
-        <source>NestEgg address or contact label</source>
-        <translation>Adres NestEgg lub etykieta kontaktowa</translation>
+        <source>SAPP address or contact label</source>
+        <translation>Adres SAPP lub etykieta kontaktowa</translation>
     </message>
     <message>
         <source>Enter address</source>
@@ -4225,8 +3939,8 @@ Zaznacz jedno lub oba pola wyboru, aby wysłać stake i / lub nagrode masternode
         <translation>FAQ</translation>
     </message>
     <message>
-        <source>About NestEgg</source>
-        <translation>o NestEgg</translation>
+        <source>About SAPP</source>
+        <translation>o SAPP</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4292,11 +4006,11 @@ Jesteś pewny?
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>NestEgg Core is shutting down...</source>
-        <translation>NestEgg Core się wyłącza ...</translation>
+        <source>Sapphire is shutting down...</source>
+        <translation>Sapphire się wyłącza ...</translation>
     </message>
     <message>
-        <source>Do not shut down the computer until this window dieggears.</source>
+        <source>Do not shut down the computer until this window disappears.</source>
         <translation>Nie wyłączaj komputera, dopóki to okno nie zniknie.</translation>
     </message>
 </context>
@@ -4322,8 +4036,8 @@ Jesteś pewny?
         <translation>Ładowanie…</translation>
     </message>
     <message>
-        <source>NestEgg Core</source>
-        <translation>NestEgg Core</translation>
+        <source>Sapphire</source>
+        <translation>Sapphire</translation>
     </message>
 </context>
 <context>
@@ -4549,10 +4263,6 @@ kopia zapasowa zostanie utworzona.
         <translation>Otrzymane od</translation>
     </message>
     <message>
-        <source>Stake delegation</source>
-        <translation>Delegacja Stake</translation>
-    </message>
-    <message>
         <source>Sent to</source>
         <translation>Wyślij do</translation>
     </message>
@@ -4563,10 +4273,6 @@ kopia zapasowa zostanie utworzona.
     <message>
         <source>Payment to yourself</source>
         <translation>Zapłata dla siebie</translation>
-    </message>
-    <message>
-        <source>Stake delegation spent by</source>
-        <translation>Delegacja Stake wydana przez</translation>
     </message>
     <message>
         <source>Mined</source>
@@ -4766,21 +4472,21 @@ kopia zapasowa zostanie utworzona.
     </message>
     <message>
         <source>Welcome to
-		NestEgg Core Wallet</source>
+Sapphire Wallet</source>
         <translation>Witamy
-Portfel NestEgg Core</translation>
+Portfel Sapphire</translation>
     </message>
     <message>
-        <source>NestEgg is the world’s most innovative Proof of Stake blockchain based technology. Developed by a team of highly experienced developers and cryptographers.</source>
-        <translation>NestEgg to najbardziej innowacyjna na świecie technologia oparta na blockchain Proof of Stake. Opracowany przez zespół wysoce doświadczonych programistów i kryptografów.</translation>
+        <source>SAPP is the world’s most innovative Proof of Stake blockchain based technology. Developed by a team of highly experienced developers and cryptographers.</source>
+        <translation>SAPP to najbardziej innowacyjna na świecie technologia oparta na blockchain Proof of Stake. Opracowany przez zespół wysoce doświadczonych programistów i kryptografów.</translation>
     </message>
     <message>
-        <source>The masternode network is NestEgg's second layer network on top of the blockchain that enables our DAO to provide decentralized governance and a treasury.</source>
-        <translation>Sieć masternode jest siecią drugiej warstwy NestEgg na szczycie blockchain, która umożliwia naszemu DAO zapewnienie zdecentralizowanego zarządzania i skarbca.</translation>
+        <source>The masternode network is SAPP's second layer network on top of the blockchain that enables our DAO to provide decentralized governance and a treasury.</source>
+        <translation>Sieć masternode jest siecią drugiej warstwy SAPP na szczycie blockchain, która umożliwia naszemu DAO zapewnienie zdecentralizowanego zarządzania i skarbca.</translation>
     </message>
     <message>
-        <source>How NestEgg respects your privacy?</source>
-        <translation>Jak NestEgg szanuje twoją prywatność?</translation>
+        <source>How SAPP respects your privacy?</source>
+        <translation>Jak SAPP szanuje twoją prywatność?</translation>
     </message>
     <message>
         <source>What is a Masternode?</source>
@@ -4814,8 +4520,8 @@ Portfel NestEgg Core</translation>
         <translation>Powiąż z podanym adresem, aby odsłuchać połączenia JSON-RPC. Użyj [host]:port dla IPv6. Ta opcja może być określona wiele razy (domyślnie: powiązanie ze wszystkimi interfejsami)</translation>
     </message>
     <message>
-        <source>Cannot obtain a lock on data directory %s. NestEgg Core is probably already running.</source>
-        <translation>Nie można uzyskać dostępu do katalogu danych %s. NestEgg Core prawdopodobnie już działa.</translation>
+        <source>Cannot obtain a lock on data directory %s. Sapphire is probably already running.</source>
+        <translation>Nie można uzyskać dostępu do katalogu danych %s. Sapphire prawdopodobnie już działa.</translation>
     </message>
     <message>
         <source>Change automatic finalized budget voting behavior. mode=auto: Vote for only exact finalized budget match to my generated budget. (string, default: auto)</source>
@@ -4840,10 +4546,6 @@ Portfel NestEgg Core</translation>
     <message>
         <source>Distributed under the MIT software license, see the accompanying file COPYING or &lt;http://www.opensource.org/licenses/mit-license.php&gt;.</source>
         <translation>Dystrybuowane w ramach licencji oprogramowania MIT, patrz plik towarzyszący COPYING lub &lt;http://www.opensource.org/licenses/mit-license.php&gt;.</translation>
-    </message>
-    <message>
-        <source>Enable cold staking functionality (0-1, default: %u). Disabled if staking=0</source>
-        <translation>Włącz funkcję cold staking (0-1, domyślnie: %u). Wyłączone jeśli staking=0</translation>
     </message>
     <message>
         <source>Enable spork administration functionality with the appropriate private key.</source>
@@ -4978,8 +4680,8 @@ Portfel NestEgg Core</translation>
         <translation>Całkowita długość string wersji sieciowej (%i) przekracza maksymalną długość (%i). Zmniejsz liczbę lub rozmiar uacomments.</translation>
     </message>
     <message>
-        <source>Unable to bind to %s on this computer. NestEgg Core is probably already running.</source>
-        <translation>Nie można podłączyć %s na tym komputerze. NestEgg Core prawdopodobnie już działa.</translation>
+        <source>Unable to bind to %s on this computer. Sapphire is probably already running.</source>
+        <translation>Nie można podłączyć %s na tym komputerze. Sapphire prawdopodobnie już działa.</translation>
     </message>
     <message>
         <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: %s)</source>
@@ -4994,8 +4696,8 @@ Portfel NestEgg Core</translation>
         <translation>Ostrzeżenie: -paytxfee jest ustawione bardzo wysoko! Jest to opłata transakcyjna, którą zapłacisz, jeśli wyślesz transakcję.</translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong NestEgg Core will not work properly.</source>
-        <translation>Ostrzeżenie: sprawdź, czy data i godzina komputera są poprawne! Jeśli zegar jest nieprawidłowy, NestEgg Core nie będzie działać poprawnie.</translation>
+        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Sapphire will not work properly.</source>
+        <translation>Ostrzeżenie: sprawdź, czy data i godzina komputera są poprawne! Jeśli zegar jest nieprawidłowy, Sapphire nie będzie działać poprawnie.</translation>
     </message>
     <message>
         <source>Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.</source>
@@ -5074,10 +4776,6 @@ Portfel NestEgg Core</translation>
         <translation>Copyright (C) 2015-%i The PIVX Core Developers</translation>
     </message>
     <message>
-        <source>Copyright (C) 2020-%i NestEgg Core Developers</source>
-        <translation>Copyright (C) 2020-%i NestEgg Core Developers</translation>
-    </message>
-    <message>
         <source>Corrupted block database detected</source>
         <translation>Wykryto uszkodzoną bazę danych bloków</translation>
     </message>
@@ -5112,14 +4810,6 @@ Portfel NestEgg Core</translation>
     <message>
         <source>Done loading</source>
         <translation>Ładowanie ukończone</translation>
-    </message>
-    <message>
-        <source>Enable publish hash transaction (locked via SwiftX) in &lt;address&gt;</source>
-        <translation>Włącz transakcję mieszania (zablokowaną przez SwiftX) w &lt;address&gt;</translation>
-    </message>
-    <message>
-        <source>Enable publish raw transaction (locked via SwiftX) in &lt;address&gt;</source>
-        <translation>Włącz publikowanie surowej transakcji (zablokowanej przez SwiftX) w &lt;address&gt;</translation>
     </message>
     <message>
         <source>Enable the client to act as a masternode (0-1, default: %u)</source>
@@ -5214,8 +4904,8 @@ Portfel NestEgg Core</translation>
         <translation>Informacje</translation>
     </message>
     <message>
-        <source>Initialization sanity check failed. NestEgg Core is shutting down.</source>
-        <translation>Sprawdzenie poprawności inicjalizacji nie powiodło się. NestEgg Core zamyka się.</translation>
+        <source>Initialization sanity check failed. Sapphire is shutting down.</source>
+        <translation>Sprawdzenie poprawności inicjalizacji nie powiodło się. Sapphire zamyka się.</translation>
     </message>
     <message>
         <source>Insufficient funds</source>
@@ -5246,8 +4936,8 @@ Portfel NestEgg Core</translation>
         <translation>Nieprawidłowa netmask podana w -whitelist: '%s'</translation>
     </message>
     <message>
-        <source>Recalculating EGG supply...</source>
-        <translation>Przeliczanie podaży EGG ...</translation>
+        <source>Recalculating SAPP supply...</source>
+        <translation>Przeliczanie podaży SAPP ...</translation>
     </message>
     <message>
         <source>Reindexing zerocoin database...</source>
@@ -5262,20 +4952,12 @@ Portfel NestEgg Core</translation>
         <translation>Wybrana wartość monet jest mniejsza niż docelowa</translation>
     </message>
     <message>
-        <source>SwiftX options:</source>
-        <translation>Opcje SwiftX:</translation>
-    </message>
-    <message>
         <source>This is a pre-release test build - use at your own risk - do not use for staking or merchant applications!</source>
         <translation>Jest to wersja testowa pre-release - korzystaj z niej na własne ryzyko - nie używaj do staking lub prawdziwych transakcji!</translation>
     </message>
     <message>
-        <source>Disable all NestEgg specific functionality (Masternodes, Zerocoin, SwiftX, Budgeting) (0-1, default: %u)</source>
-        <translation>Wyłącz wszystkie funkcje specyficzne dla NestEgg (Masternodes, Zerocoin, SwiftX, Budgeting) (0-1, domyślnie: %u)</translation>
-    </message>
-    <message>
-        <source>Enable SwiftX, show confirmations for locked transactions (bool, default: %s)</source>
-        <translation>Włącz SwiftX, pokaż potwierdzenia zablokowanych transakcji (bool, domyślnie: %s)</translation>
+        <source>Disable all SAPP specific functionality (Masternodes, Zerocoin, Budgeting) (0-1, default: %u)</source>
+        <translation>Wyłącz wszystkie funkcje specyficzne dla SAPP (Masternodes, Zerocoin, Budgeting) (0-1, domyślnie: %u)</translation>
     </message>
     <message>
         <source>Error: Unsupported argument -checklevel found. Checklevel must be level 4.</source>
@@ -5296,10 +4978,6 @@ Portfel NestEgg Core</translation>
     <message>
         <source>Specify custom backup path to add a copy of any wallet backup. If set as dir, every backup generates a timestamped file. If set as file, will rewrite to that file every backup.</source>
         <translation>Określ ścieżkę kopii zapasowej, aby dodać kopię zapasową portfela. Jeśli ustawione jako katalog, każda kopia zapasowa generuje plik ze znacznikiem czasu. Jeśli jest ustawiony jako plik, przepisuje do tego pliku każdą kopię zapasową.</translation>
-    </message>
-    <message>
-        <source>SwiftX requires inputs with at least 6 confirmations, you might need to wait a few minutes and try again.</source>
-        <translation>SwiftX wymaga danych wejściowych z co najmniej 6 potwierdzeniami, być może trzeba będzie poczekać kilka minut i spróbować ponownie.</translation>
     </message>
     <message>
         <source>&lt;category&gt; can be:</source>
@@ -5514,8 +5192,8 @@ Portfel NestEgg Core</translation>
         <translation>Przygotowanie do ponownej synchronizacji ...</translation>
     </message>
     <message>
-        <source>Please check that your computer's date and time are correct! If your clock is wrong NestEgg Core will not work properly.</source>
-        <translation>Sprawdź, czy data i godzina komputera są poprawne! Jeśli zegar jest nieprawidłowy, NestEgg Core nie będzie działać poprawnie.</translation>
+        <source>Please check that your computer's date and time are correct! If your clock is wrong Sapphire will not work properly.</source>
+        <translation>Sprawdź, czy data i godzina komputera są poprawne! Jeśli zegar jest nieprawidłowy, Sapphire nie będzie działać poprawnie.</translation>
     </message>
     <message>
         <source>Specify location of debug log file: this can be an absolute path or a path relative to the data directory (default: %s)</source>
@@ -5698,8 +5376,8 @@ Portfel NestEgg Core</translation>
         <translation>Synchronizowanie sporks...</translation>
     </message>
     <message>
-        <source>Syncing zEGG wallet...</source>
-        <translation>Synchronizuję portfel zEGG ...</translation>
+        <source>Syncing zSAPP wallet...</source>
+        <translation>Synchronizuję portfel zSAPP ...</translation>
     </message>
     <message>
         <source>This help message</source>
@@ -5802,8 +5480,8 @@ Portfel NestEgg Core</translation>
         <translation>Nazwa użytkownika dla połączeń JSON-RPC</translation>
     </message>
     <message>
-        <source>Value is below the smallest available denomination (= 1) of zEGG</source>
-        <translation>Wartość jest mniejsza od najmniejszej dostępnej (= 1) zEGG</translation>
+        <source>Value is below the smallest available denomination (= 1) of zSAPP</source>
+        <translation>Wartość jest mniejsza od najmniejszej dostępnej (= 1) zSAPP</translation>
     </message>
     <message>
         <source>Verifying blocks...</source>
@@ -5818,8 +5496,8 @@ Portfel NestEgg Core</translation>
         <translation>Portfel %s znajduje się poza katalogiem danych %s</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart NestEgg Core to complete</source>
-        <translation>Portfel musiał zostać przepisany: zrestartuj NestEgg Core, aby zakończyć</translation>
+        <source>Wallet needed to be rewritten: restart Sapphire to complete</source>
+        <translation>Portfel musiał zostać przepisany: zrestartuj Sapphire, aby zakończyć</translation>
     </message>
     <message>
         <source>Wallet options:</source>
@@ -5885,8 +5563,8 @@ Portfel NestEgg Core</translation>
         <translation>Wyślij</translation>
     </message>
     <message>
-        <source>NestEgg address or contact label</source>
-        <translation>Adres NestEgg lub etykieta kontaktowa</translation>
+        <source>SAPP address or contact label</source>
+        <translation>Adres SAPP lub etykieta kontaktowa</translation>
     </message>
     <message>
         <source>Amount</source>
@@ -5911,10 +5589,6 @@ Portfel NestEgg Core</translation>
     <message>
         <source>Reset to default</source>
         <translation>Przywróć ustawienia domyślne</translation>
-    </message>
-    <message>
-        <source>Include delegated</source>
-        <translation>Uwzględnij delegowane</translation>
     </message>
 </context>
 </TS>

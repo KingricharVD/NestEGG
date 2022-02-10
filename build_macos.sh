@@ -3,23 +3,34 @@ echo -e "\033[0;32mHow many CPU cores do you want to be used in compiling proces
 read -e CPU_CORES
 if [ -z "$CPU_CORES" ]
 then
-	CPU_CORES=1
+    CPU_CORES=1
 fi
 
+# Clone code from official Github repository
+    rm -rf SAPP
+    git clone https://github.com/sappcoin-com/SAPP.git
+
+# Entering directory
+    cd SAPP
 
 # Compile dependencies
-	cd depends
-	make -j$(echo $CPU_CORES) HOST=x86_64-apple-darwin17
-	cd ..
+    cd depends
+    mkdir SDKs
+    cd SDKs
+    wget https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX10.11.sdk.tar.xz
+    tar -xf MacOSX10.11.sdk.tar.xz
+    cd ..
+    make -j$(echo $CPU_CORES) HOST=x86_64-apple-darwin14
+    cd ..
 
-# Compile EGG
-	./autogen.sh
-	./configure --prefix=$(pwd)/depends/x86_64-apple-darwin17 --enable-cxx --enable-static --disable-shared --enable-hardening --disable-debug --disable-tests --disable-bench
-	make -j$(echo $CPU_CORES) HOST=x86_64-apple-darwin17
-	make deploy
-	cd ..
+# Compile
+    ./autogen.sh
+    ./configure --prefix=$(pwd)/depends/x86_64-apple-darwin14 --enable-cxx --enable-static --disable-shared --disable-debug --disable-tests --disable-bench --disable-online-rust
+    make -j$(echo $CPU_CORES) HOST=x86_64-apple-darwin14
+    make deploy
+    cd ..
 
 # Create zip file of binaries
-	cp NestEGG/src/nesteggd NestEGG/src/nestegg-cli NestEGG/src/nestegg-tx NestEGG/src/qt/nestegg-qt NestEGG/EGG.dmg .
-	zip NestEGG-MacOS.zip nesteggd nestegg-cli nestegg-tx nestegg-qt EGG.dmg
-	rm -f nesteggd nestegg-cli nestegg-tx nestegg-qt EGG.dmg
+    cp SAPP/src/sapphired SAPP/src/sapphire-cli SAPP/src/sapphire-tx SAPP/src/qt/sapphire-qt SAPP/Sapphire-Core.dmg .
+    zip SAPP-MacOS.zip sapphired sapphire-cli sapphire-tx sapphire-qt Sapphire-Core.dmg
+    rm -f sapphired sapphire-cli sapphire-tx sapphire-qt Sapphire-Core.dmg

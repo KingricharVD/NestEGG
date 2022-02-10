@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2017-2019 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -17,16 +17,12 @@ class CScript;
 
 /** IsMine() return codes */
 enum isminetype {
-  ISMINE_NO = 0,
-  ISMINE_WATCH_ONLY = 1 << 0,
-  ISMINE_SPENDABLE  = 1 << 1,
-  //! Indicates that we have the staking key of a P2CS
-  ISMINE_COLD = 1 << 2,
-  //! Indicates that we have the spending key of a P2CS
-  ISMINE_SPENDABLE_DELEGATED = 1 << 3,
-  ISMINE_SPENDABLE_ALL = ISMINE_SPENDABLE_DELEGATED | ISMINE_SPENDABLE,
-  ISMINE_ALL = ISMINE_WATCH_ONLY | ISMINE_SPENDABLE | ISMINE_COLD | ISMINE_SPENDABLE_DELEGATED,
-  ISMINE_ENUM_ELEMENTS
+    ISMINE_NO = 0,
+    ISMINE_WATCH_ONLY = 1 << 0,
+    ISMINE_SPENDABLE  = 1 << 1,
+    ISMINE_SPENDABLE_ALL = ISMINE_SPENDABLE,
+    ISMINE_ALL = ISMINE_WATCH_ONLY | ISMINE_SPENDABLE,
+    ISMINE_ENUM_ELEMENTS
 };
 /** used for bitflags of isminetype */
 typedef uint8_t isminefilter;

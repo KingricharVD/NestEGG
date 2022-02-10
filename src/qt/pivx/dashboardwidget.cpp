@@ -1,5 +1,5 @@
 // Copyright (c) 2019-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -54,7 +54,7 @@ DashboardWidget::DashboardWidget(PIVXGUI* parent) :
     setCssSubtitleScreen(ui->labelSubtitle);
 
     // Staking Information
-    ui->labelMessage->setText(tr("Amount of HCCP earned via Staking & Masternodes"));
+    ui->labelMessage->setText(tr("Amount of SAPP earned via Staking & Masternodes"));
     setCssSubtitleScreen(ui->labelMessage);
     setCssProperty(ui->labelSquarePiv, "square-chart-piv");
     setCssProperty(ui->labelPiv, "text-chart-piv");
@@ -69,7 +69,7 @@ DashboardWidget::DashboardWidget(PIVXGUI* parent) :
 
     setCssProperty(ui->labelChart, "legend-chart");
     setCssProperty(ui->labelAmountPiv, "text-stake-piv-disable");
-	ui->labelAmountMNRewards->setText("0 HCCP");
+	ui->labelAmountMNRewards->setText("0 SAPP");
 	setCssProperty(ui->labelAmountMNRewards, "text-stake-mnrewards-disable");
 
 
@@ -190,14 +190,14 @@ void DashboardWidget::loadWalletModel()
 
         // Read filter settings
         QSettings settings;
-        int filterByType = settings.value("transactionType", TransactionFilterProxy::ALL_TYPES).toInt();
+        int filterByType = TransactionFilterProxy::ALL_TYPES;
 
         filter->setTypeFilter(filterByType); // Set filter
         int filterIndex = ui->comboBoxSortType->findData(filterByType); // Find index
         ui->comboBoxSortType->setCurrentIndex(filterIndex); // Set item in ComboBox
 
         // Read sort settings
-        changeSort(settings.value("transactionSort", SortTx::DATE_DESC).toInt());
+        changeSort(SortTx::DATE_DESC);
 
         txHolder->setFilter(filter);
         ui->listTransactions->setModel(filter);
@@ -228,7 +228,7 @@ void DashboardWidget::loadWalletModel()
         connect(walletModel->getOptionsModel(), &OptionsModel::hideChartsChanged, this, &DashboardWidget::onHideChartsChanged);
 #endif
     }
-    // update the display unit, to not use the default ("HCCP")
+    // update the display unit, to not use the default ("SAPP")
     updateDisplayUnit();
 }
 
@@ -313,10 +313,6 @@ void DashboardWidget::changeSort(int nSortIndex)
     ui->comboBoxSort->setCurrentIndex(nSortIndex);
     filter->sort(nColumnIndex, order);
     ui->listTransactions->update();
-
-    // Store settings
-    QSettings settings;
-    settings.setValue("transactionSort", nSortIndex);
 }
 
 void DashboardWidget::onSortTypeChanged(const QString& value)
@@ -334,10 +330,6 @@ void DashboardWidget::onSortTypeChanged(const QString& value)
     } else {
         showList();
     }
-
-    // Store settings
-    QSettings settings;
-    settings.setValue("transactionType", filterByType);
 }
 
 void DashboardWidget::walletSynced(bool sync)
@@ -526,7 +518,7 @@ void DashboardWidget::updateStakeFilter()
     }
 }
 
-// pair HCCP, zHCCP
+// pair SAPP, zSAPP
 const QMap<int, QMap<QString, qint64>> DashboardWidget::getAmountBy()
 {
     updateStakeFilter();
@@ -587,7 +579,7 @@ bool DashboardWidget::loadChartData(bool withMonthNames)
     }
 
     chartData = new ChartData();
-    chartData->amountsByCache = getAmountBy(); // pair HCCP, zHCCP
+    chartData->amountsByCache = getAmountBy(); // pair SAPP, zSAPP
 
     std::pair<int,int> range = getChartRange(chartData->amountsByCache);
     if (range.first == 0 && range.second == 0) {

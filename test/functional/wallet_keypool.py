@@ -36,15 +36,15 @@ class KeyPoolTest(PivxTestFramework):
         assert_equal(wi['keypoolsize'], 6)
 
         # drain the internal keys
-        nodes[0].getaccountaddress()
-        nodes[0].getaccountaddress()
-        nodes[0].getaccountaddress()
-        nodes[0].getaccountaddress()
-        nodes[0].getaccountaddress()
-        nodes[0].getaccountaddress()
+        nodes[0].getrawchangeaddress()
+        nodes[0].getrawchangeaddress()
+        nodes[0].getrawchangeaddress()
+        nodes[0].getrawchangeaddress()
+        nodes[0].getrawchangeaddress()
+        nodes[0].getrawchangeaddress()
         addr = set()
         # the next one should fail
-        assert_raises_rpc_error(-12, "Keypool ran out", nodes[0].getaccountaddress)
+        assert_raises_rpc_error(-12, "Keypool ran out", nodes[0].getrawchangeaddress)
 
         # drain the external keys
         addr.add(nodes[0].getnewaddress())

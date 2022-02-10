@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2018-2020 The PIVX developers
-// Copyright (c) 2021 The Human_Charity_Coin_Protocol Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,17 +11,15 @@ const char* ScriptErrorString(const ScriptError serror)
 {
     switch (serror)
     {
-      case SCRIPT_ERR_OK:
-          return "No error";
-      case SCRIPT_ERR_EVAL_FALSE:
-          return "Script evaluated without error but finished with a false/empty top stack element";
-      case SCRIPT_ERR_VERIFY:
-          return "Script failed an OP_VERIFY operation";
-      case SCRIPT_ERR_EQUALVERIFY:
-          return "Script failed an OP_EQUALVERIFY operation";
-      case SCRIPT_ERR_CHECKCOLDSTAKEVERIFY:
-          return "Script failed an OP_CHECKCOLDSTAKEVERIFY operation";
-      case SCRIPT_ERR_CHECKMULTISIGVERIFY:
+        case SCRIPT_ERR_OK:
+            return "No error";
+        case SCRIPT_ERR_EVAL_FALSE:
+            return "Script evaluated without error but finished with a false/empty top stack element";
+        case SCRIPT_ERR_VERIFY:
+            return "Script failed an OP_VERIFY operation";
+        case SCRIPT_ERR_EQUALVERIFY:
+            return "Script failed an OP_EQUALVERIFY operation";
+        case SCRIPT_ERR_CHECKMULTISIGVERIFY:
             return "Script failed an OP_CHECKMULTISIGVERIFY operation";
         case SCRIPT_ERR_CHECKSIGVERIFY:
             return "Script failed an OP_CHECKSIGVERIFY operation";

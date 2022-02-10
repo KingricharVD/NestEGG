@@ -1,5 +1,5 @@
 // Copyright (c) 2019-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -56,7 +56,6 @@ public Q_SLOTS:
 Q_SIGNALS:
     void themeChanged(bool isLight);
     void walletSynced(bool isSync);
-    void onShowHideColdStakingChanged(bool show);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -67,8 +66,10 @@ private Q_SLOTS:
     void lockDropdownMouseLeave();
     void lockDropdownClicked(const StateClicked&);
     void refreshStatus();
+    void refreshMasternodeStatus();
     void openLockUnlock();
-    void onColdStakingClicked();
+    void onBtnConfClicked();
+    void onBtnMasternodesClicked();
     void refreshProgressBarSize();
     void expandSync();
 private:

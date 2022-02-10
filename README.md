@@ -1,24 +1,28 @@
-HCCP wallet repository
+Sapphire wallet repository
 =====================================
 
 ### Coin Specs
 
 • PoW Algorithm: Quark   
-• Premine: 1,000,000 HCCP  
-• PoW Blocks: 1    
-• PoS Blocks: Starting from 2  
-• Block Time:  3 Minutes    
-• Maturity: 4 Confirmations   
-• Prefix: HCCP addresses start with the capital letter "S"   
-• Ports: 6949 (p2p) / 9335 (rpc)   
-
+• Premine: 300,000 SAPP   
+• PoW Blocks: 1 - 500   
+• PoS Blocks: Starting from 501   
+• Block Time: 60 Seconds    
+• Maturity: 100 Confirmations   
+• Prefix: SAPP addresses start with the capital letter "S"   
+• Ports: 45328 (p2p) / 45329 (rpc)   
+• Explorer https://explorer.decenomy.net/SAPP/blocks   
+• Website https://sappcoin.com/
 
 ### Rewards Breakdown
 ---
 | Block     | Collateral | Block Reward | MN Reward % | Staking Reward % | MN Reward | Staker Reward |
 | --------- | ---------- | ------------ | ----------- | ---------------- | --------- | ------------- |
-| 1         | N/A        | 300,000.00   | \-          | \-               | \-        | \-            |
-| 2         | 10000      | 5.00         | 95          | 5                | \-        | \-            |
+| 1         | \-         | 300,000.00   | \-          | \-               | \-        | \-            |
+| 2         | \-         | 1.00         | \-          | \-               | \-        | \-            |
+| 501       | 10         | 1.00         | 95          | 5                | 0.95      | 0.05          |
+| 2,001     | 50         | 2.00         | 95          | 5                | 1.90      | 0.10          |
+| 20,001    | 500        | 10.00        | 95          | 5                | 9.50      | 0.50          |
 | 30,001    | 750        | 15.00        | 95          | 5                | 14.25     | 0.75          |
 | 40,001    | 1,000      | 20.00        | 95          | 5                | 19.00     | 1.00          |
 | 50,001    | 1,250      | 25.00        | 95          | 5                | 23.75     | 1.25          |
@@ -43,5 +47,5 @@ HCCP wallet repository
 | 900,001   | 200,000    | 500.00       | 95          | 5                | 475.00    | 25.00         |
 | 950,001   | 200,000    | 450.00       | 95          | 5                | 427.50    | 22.50         |
 | 1,000,001 | 200,000    | 400.00       | 95          | 5                | 380.00    | 20.00         |
-| 1,200,001 | 200,000    | 800.00       | 80          | 20               | 520.00    | 280.00        |
+| 1,200,001 | 200,000    | 800.00       | 65          | 35               | 520.00    | 280.00        |
 ---

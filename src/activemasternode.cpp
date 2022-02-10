@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2016 The Dash developers
 // Copyright (c) 2015-2020 The PIVX developers
-// Copyright (c) 2020-2021 The NestEgg Core Developers
+// Copyright (c) 2021-2022 The DECENOMY Core Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -16,7 +16,7 @@
 #include "protocol.h"
 
 //
-// Bootup the Masternode, look for a 25000 EGG input and register on the network
+// Bootup the Masternode, look for the collateral in README.md and register on the network.
 //
 void CActiveMasternode::ManageStatus()
 {
@@ -174,14 +174,14 @@ bool CActiveMasternode::SendMasternodePing(std::string& errorMessage)
 }
 
 // when starting a Masternode, this can enable to run as a hot wallet with no funds
-bool CActiveMasternode::EnableHotColdMasterNode(CTxIn& GetVin, CService& newService)
+bool CActiveMasternode::EnableHotColdMasterNode(CTxIn& newVin, CService& newService)
 {
     if (!fMasterNode) return false;
 
     status = ACTIVE_MASTERNODE_STARTED;
 
     //The values below are needed for signing mnping messages going forward
-    vin = GetVin;
+    vin = newVin;
     service = newService;
 
     LogPrintf("CActiveMasternode::EnableHotColdMasterNode() - Enabled! You may shut down the cold daemon.\n");
