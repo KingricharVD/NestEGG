@@ -257,10 +257,10 @@ void ReceiveWidget::onCopyClicked()
 
 void ReceiveWidget::onRequestClicked()
 {
-    showAddressGenerationDialog();
+    showAddressGenerationDialog(true);
 }
 
-void ReceiveWidget::showAddressGenerationDialog()
+void ReceiveWidget::showAddressGenerationDialog(bool isPaymentRequest)
 {
     if (walletModel && !isShowingDialog) {
         WalletModel::UnlockContext ctx(walletModel->requestUnlock());

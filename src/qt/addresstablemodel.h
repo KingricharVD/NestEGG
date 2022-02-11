@@ -34,7 +34,7 @@ public:
     };
 
     enum RoleIndex {
-        TypeRole = Qt::UserRole /**< Type of address (#Send, #Receive) */
+        TypeRole = Qt::UserRole /**< Type of address (#Send, #Receive, #ColdStaking, #ColdStakingSend, #Delegator, #Delegable) */
     };
 
     /** Return status of edit/insert operation */
@@ -50,13 +50,18 @@ public:
     static const QString Send;    /**< Specifies send address */
     static const QString Receive; /**< Specifies receive address */
     static const QString Zerocoin; /**< Specifies stealth address */
-    
+    static const QString Delegator; /**< Specifies cold staking addresses which delegated tokens to this wallet and ARE being staked */
+   static const QString Delegable; /**< Specifies cold staking addresses which delegated tokens to this wallet*/
+   static const QString ColdStaking; /**< Specifies cold staking own addresses */
+   static const QString ColdStakingSend; /**< Specifies send cold staking addresses (simil 'contacts')*/
     /** @name Methods overridden from QAbstractTableModel
         @{*/
     int rowCount(const QModelIndex& parent) const;
     int columnCount(const QModelIndex& parent) const;
     int sizeSend() const;
     int sizeRecv() const;
+    int sizeDell() const;
+    int sizeColdSend() const;
     void notifyChange(const QModelIndex &index);
     QVariant data(const QModelIndex& index, int role) const;
     bool setData(const QModelIndex& index, const QVariant& value, int role);
@@ -85,6 +90,10 @@ public:
      */
     std::string purposeForAddress(const std::string& address) const;
 
+    /**
+        * Checks if the address is whitelisted
+        */
+       bool isWhitelisted(const std::string& address) const;
     /**
      * Return last unused address
      */

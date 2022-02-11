@@ -86,7 +86,7 @@ bool SendMultiRow::addressChanged(const QString& str, bool fOnlyValidate)
 {
     if (!str.isEmpty()) {
         QString trimmedStr = str.trimmed();
-        const bool valid = walletModel->validateAddress(trimmedStr);
+        const bool valid = walletModel->validateAddress(trimmedStr, this->onlyStakingAddressAccepted);
         if (!valid) {
             // check URI
             SendCoinsRecipient rcp;
@@ -265,6 +265,10 @@ bool SendMultiRow::isClear()
 void SendMultiRow::setFocus()
 {
     ui->lineEditAddress->setFocus();
+}
+void SendMultiRow::setOnlyStakingAddressAccepted(bool onlyStakingAddress)
+{
+    this->onlyStakingAddressAccepted = onlyStakingAddress;
 }
 
 void SendMultiRow::setNumber(int _number)

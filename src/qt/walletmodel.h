@@ -55,7 +55,9 @@ public:
     QString address;
     QString label;
     AvailableCoinsType inputType;
-    
+
+    // Cold staking.
+    bool isP2CS = false;
     QString ownerAddress;
 
     // Amount
@@ -142,6 +144,9 @@ public:
 
     bool isTestNetwork() const;
     bool isRegTestNetwork() const;
+    /** Whether cold staking is enabled or disabled in the network **/
+  bool isColdStakingNetworkelyEnabled() const;
+  CAmount getMinColdStakingAmount() const;
     /* current staking status from the miner thread **/
     bool isStakingStatusActive() const;
 
@@ -150,11 +155,14 @@ public:
 
     interfaces::WalletBalances GetWalletBalances() { return m_cached_balances; };
 
-    CAmount getBalance(const CCoinControl* coinControl = nullptr, bool fUnlockedOnly = false) const;
-    CAmount getUnlockedBalance(const CCoinControl* coinControl = nullptr) const;
+    CAmount getBalance(const CCoinControl* coinControl = nullptr, bool fIncludeDelegated = true, bool fUnlockedOnly = false) const;
+    CAmount getUnlockedBalance(const CCoinControl* coinControl = nullptr, bool fIncludeDelegated = true) const;
     CAmount getLockedBalance() const;
     bool haveWatchOnly() const;
-    
+    CAmount getDelegatedBalance() const;
+
+   bool isColdStaking() const;
+
     EncryptionStatus getEncryptionStatus() const;
     bool isWalletUnlocked() const;
     bool isWalletLocked(bool fFullUnlocked = true) const;
@@ -162,6 +170,8 @@ public:
 
     // Check address for validity
     bool validateAddress(const QString& address);
+    // Check address for validity and type (whether cold staking address or not)
+   bool validateAddress(const QString& address, bool fStaking);
 
     // Return status record for SendCoins, contains error id + information
     struct SendCoinsReturn {
@@ -182,8 +192,7 @@ public:
     const CWalletTx* getTx(uint256 id);
 
     // prepare transaction for getting txfee before sending coins
-    SendCoinsReturn prepareTransaction(WalletModelTransaction& transaction, const CCoinControl* coinControl = NULL);
-
+    SendCoinsReturn prepareTransaction(WalletModelTransaction& transaction, const CCoinControl* coinControl = NULL, bool fIncludeDelegations = true);
     // Send coins to a list of recipients
     SendCoinsReturn sendCoins(WalletModelTransaction& transaction);
 
@@ -234,7 +243,14 @@ public:
     int64_t getKeyCreationTime(const CPubKey& key);
     int64_t getKeyCreationTime(const CTxDestination& address);
     PairResult getNewAddress(Destination& ret, std::string label = "") const;
-    
+    /**
+    * Return a new address used to receive for delegated cold stake purpose.
+    */
+   PairResult getNewStakingAddress(Destination& ret, std::string label = "") const;
+
+   bool whitelistAddressFromColdStaking(const QString &addressStr);
+   bool blacklistAddressFromColdStaking(const QString &address);
+
     bool updateAddressBookPurpose(const QString &addressStr, const std::string& purpose);
     std::string getLabelForAddress(const CTxDestination& address);
     bool getKeyId(const CTxDestination& address, CKeyID& keyID);

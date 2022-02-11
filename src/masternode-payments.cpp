@@ -283,13 +283,13 @@ bool IsBlockPayeeValid(const CBlock& block, int nBlockHeight)
     //             return true;
     //         }
 
-    //         if (transactionStatus == TrxValidationStatus::InValid) {
-    //             LogPrint(BCLog::MASTERNODE,"Invalid budget payment detected %s\n", txNew.ToString().c_str());
-    //             if (sporkManager.IsSporkActive(SPORK_9_MASTERNODE_BUDGET_ENFORCEMENT))
-    //                 return false;
+             if (transactionStatus == TrxValidationStatus::InValid) {
+                 LogPrint(BCLog::MASTERNODE,"Invalid budget payment detected %s\n", txNew.ToString().c_str());
+               if (sporkManager.IsSporkActive(SPORK_9_MASTERNODE_BUDGET_ENFORCEMENT))
+                   return false;
 
-    //             LogPrint(BCLog::MASTERNODE,"Budget enforcement is disabled, accepting block\n");
-    //         }
+               LogPrint(BCLog::MASTERNODE,"Budget enforcement is disabled, accepting block\n");
+             }
     //     }
     // }
 

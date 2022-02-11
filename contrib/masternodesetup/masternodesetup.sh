@@ -9,7 +9,7 @@ COIN_PATH='/usr/local/bin/'
 COIN_TGZ=`curl -s https://api.github.com/repos/sappcoin-com/SAPP/releases/latest | grep "browser_download_url.*Linux\\.zip" | cut -d : -f 2,3 | tr -d \" | xargs`
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='sapphire'
-COIN_PORT=45328
+COIN_PORT=20434
 RPC_PORT=45329
 
 BLUE="\033[0;34m"

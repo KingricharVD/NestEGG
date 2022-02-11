@@ -12,11 +12,8 @@
 #include "wallet/walletdb.h"
 
 //! Default for -keypool
-static const uint32_t DEFAULT_KEYPOOL_SIZE      = 100;
-static const uint32_t BIP32_HARDENED_KEY_LIMIT  = 0x80000000;
-// https://github.com/satoshilabs/slips/blob/master/slip-0044.md
-static const uint32_t BIP32_HDCHAIN             = 0x340; 
-
+static const unsigned int DEFAULT_KEYPOOL_SIZE = 100;
+static const uint32_t BIP32_HARDENED_KEY_LIMIT = 0x80000000;
 /*
  * A class implementing ScriptPubKeyMan manages some (or all) scriptPubKeys used in a wallet.
  * It contains the scripts and keys related to the scriptPubKeys it manages.

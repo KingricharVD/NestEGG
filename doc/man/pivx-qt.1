@@ -205,7 +205,7 @@ Support filtering of blocks and transaction with bloom filters (default:
 .HP
 \fB\-port=\fR<port>
 .IP
-Listen for connections on <port> (default: 45328 or testnet: 51474)
+Listen for connections on <port> (default: 20434 or testnet: 46328)
 .HP
 \fB\-proxy=\fR<ip:port>
 .IP
@@ -333,6 +333,11 @@ account owner and payment request information, 2 = drop tx meta data)
 .PP
 Mining/Staking options:
 .HP
+\fB\-coldstaking=\fR<n>
+.IP
+Enable cold staking functionality (0\-1, default: 1). Disabled if
+staking=0
+.HP
 \fB\-gen\fR
 .IP
 Generate coins (default: 0)
@@ -458,7 +463,7 @@ Set the masternode private key
 \fB\-masternodeaddr=\fR<n>
 .IP
 Set external address:port to get to this masternode (example:
-128.127.106.235:45328)
+128.127.106.235:20434)
 .HP
 \fB\-budgetvotemode=\fR<mode>
 .IP

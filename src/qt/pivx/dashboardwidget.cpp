@@ -14,7 +14,7 @@
 #include "optionsmodel.h"
 #include "utiltime.h"
 #include <vector>
-#include <QPainter>	
+#include <QPainter>
 #include <QPainter>
 #include <QModelIndex>
 #include <QList>
@@ -232,7 +232,7 @@ void DashboardWidget::loadWalletModel()
     updateDisplayUnit();
 }
 
-void DashboardWidget::onTxArrived(const QString& hash, const bool& isCoinStake)
+void DashboardWidget::onTxArrived(const QString& hash, const bool& isCoinStake, const bool& isCSAnyType)
 {
     showList();
 #ifdef USE_QTCHARTS
@@ -604,8 +604,8 @@ bool DashboardWidget::loadChartData(bool withMonthNames)
 
         chartData->xLabels << ((withMonthNames) ? monthsNames[num - 1] : QString::number(num));
 
-        chartData->valuesPiv.append(piv);    
-        chartData->valuesMNRewards.append(mnrewards);    
+        chartData->valuesPiv.append(piv);
+        chartData->valuesMNRewards.append(mnrewards);
 
         int max = std::max(piv, mnrewards);
         if (max > chartData->maxValue) {

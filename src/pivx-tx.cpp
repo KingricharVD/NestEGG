@@ -453,8 +453,8 @@ static void MutateTxSign(CMutableTransaction& tx, const std::string& flagStr)
         if (!fHashSingle || (i < mergedTx.vout.size()))
             ProduceSignature(
                     MutableTransactionSignatureCreator(&keystore, &mergedTx, i, amount, nHashType),
-                    prevPubKey,
-                    sigdata
+                    sigdata,
+                    false // no cold stake
             );
 
         // ... and merge in other signatures:

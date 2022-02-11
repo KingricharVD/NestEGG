@@ -23,12 +23,20 @@
 const QString AddressTableModel::Send = "S";
 const QString AddressTableModel::Receive = "R";
 const QString AddressTableModel::Zerocoin = "X";
+const QString AddressTableModel::Delegator = "D";
+const QString AddressTableModel::Delegable = "E";
+const QString AddressTableModel::ColdStaking = "C";
+const QString AddressTableModel::ColdStakingSend = "T";
 
 struct AddressTableEntry {
     enum Type {
         Sending,
         Receiving,
         Zerocoin,
+        Delegator,
+        Delegable,
+        ColdStaking,
+        ColdStakingSend,
         Hidden /* QSortFilterProxyModel will filter these out */
     };
 
@@ -67,6 +75,14 @@ static AddressTableEntry::Type translateTransactionType(const QString& strPurpos
         addressType = AddressTableEntry::Sending;
     else if (strPurpose ==  QString::fromStdString(AddressBook::AddressBookPurpose::RECEIVE))
         addressType = AddressTableEntry::Receiving;
+        else if (strPurpose == QString::fromStdString(AddressBook::AddressBookPurpose::DELEGATOR))
+       addressType = AddressTableEntry::Delegator;
+   else if (strPurpose == QString::fromStdString(AddressBook::AddressBookPurpose::DELEGABLE))
+       addressType = AddressTableEntry::Delegable;
+   else if (strPurpose == QString::fromStdString(AddressBook::AddressBookPurpose::COLD_STAKING))
+       addressType = AddressTableEntry::ColdStaking;
+   else if (strPurpose == QString::fromStdString(AddressBook::AddressBookPurpose::COLD_STAKING_SEND))
+       addressType = AddressTableEntry::ColdStakingSend;
     else if (strPurpose == "unknown" || strPurpose == "") // if purpose not set, guess
         addressType = (isMine ? AddressTableEntry::Receiving : AddressTableEntry::Sending);
     return addressType;
@@ -79,6 +95,14 @@ static QString translateTypeToString(AddressTableEntry::Type type)
             return QObject::tr("Contact");
         case AddressTableEntry::Receiving:
             return QObject::tr("Receiving");
+            case AddressTableEntry::Delegator:
+            return QObject::tr("Delegator");
+        case AddressTableEntry::Delegable:
+            return QObject::tr("Delegable");
+        case AddressTableEntry::ColdStaking:
+            return QObject::tr("Cold Staking");
+        case AddressTableEntry::ColdStakingSend:
+            return QObject::tr("Cold Staking Contact");
         case AddressTableEntry::Hidden:
             return QObject::tr("Hidden");
         default:
@@ -94,6 +118,8 @@ public:
     QList<AddressTableEntry> cachedAddressTable;
     int sendNum = 0;
     int recvNum = 0;
+    int dellNum = 0;
+    int coldSendNum = 0;
     AddressTableModel* parent;
 
     AddressTablePriv(CWallet* wallet, AddressTableModel* parent) : wallet(wallet), parent(parent) {}
@@ -105,7 +131,9 @@ public:
             LOCK(wallet->cs_wallet);
             for (const PAIRTYPE(CTxDestination, AddressBook::CAddressBookData) & item : wallet->mapAddressBook) {
 
-                const CChainParams::Base58Type addrType = CChainParams::PUBKEY_ADDRESS;
+              const CChainParams::Base58Type addrType =
+                     AddressBook::IsColdStakingPurpose(item.second.purpose) ?
+                     CChainParams::STAKING_ADDRESS : CChainParams::PUBKEY_ADDRESS;
                 const CTxDestination& address = item.first;
 
                 bool fMine = IsMine(*wallet, address);
@@ -140,6 +168,10 @@ public:
             var = &recvNum;
         } else if (purpose == AddressBook::AddressBookPurpose::SEND) {
             var = &sendNum;
+          } else if (purpose == AddressBook::AddressBookPurpose::COLD_STAKING_SEND) {
+          var = &coldSendNum;
+      } else if (purpose == AddressBook::AddressBookPurpose::DELEGABLE || purpose == AddressBook::AddressBookPurpose::DELEGATOR) {
+          var = &dellNum;
         } else {
             return;
         }
@@ -239,6 +271,8 @@ public:
     int size() { return cachedAddressTable.size(); }
     int sizeSend() { return sendNum; }
     int sizeRecv() { return recvNum; }
+    int sizeDell() { return dellNum; }
+    int SizeColdSend() { return coldSendNum; }
 
     AddressTableEntry* index(int idx)
     {
@@ -276,6 +310,8 @@ int AddressTableModel::columnCount(const QModelIndex& parent) const
 
 int AddressTableModel::sizeSend() const { return priv->sizeSend(); }
 int AddressTableModel::sizeRecv() const { return priv->sizeRecv(); }
+int AddressTableModel::sizeDell() const { return priv->sizeDell(); }
+int AddressTableModel::sizeColdSend() const { return priv->SizeColdSend(); }
 
 QVariant AddressTableModel::data(const QModelIndex& index, int role) const
 {
@@ -311,6 +347,14 @@ QVariant AddressTableModel::data(const QModelIndex& index, int role) const
                 return Send;
             case AddressTableEntry::Receiving:
                 return Receive;
+                case AddressTableEntry::Delegator:
+                return Delegator;
+            case AddressTableEntry::Delegable:
+                return Delegable;
+            case AddressTableEntry::ColdStaking:
+                return ColdStaking;
+            case AddressTableEntry::ColdStakingSend:
+                return ColdStakingSend;
             default:
                 break;
         }
@@ -478,12 +522,12 @@ bool AddressTableModel::removeRows(int row, int count, const QModelIndex& parent
 {
     Q_UNUSED(parent);
     AddressTableEntry* rec = priv->index(row);
-    if (count != 1 || !rec || rec->type == AddressTableEntry::Receiving) {
+  if (count != 1 || !rec || rec->type == AddressTableEntry::Receiving || rec->type == AddressTableEntry::ColdStaking) {
         // Can only remove one row at a time, and cannot remove rows not in model.
         // Also refuse to remove receiving addresses.
         return false;
     }
-    const CChainParams::Base58Type addrType = CChainParams::PUBKEY_ADDRESS;
+    const CChainParams::Base58Type addrType = (rec->type == AddressTableEntry::ColdStakingSend) ? CChainParams::STAKING_ADDRESS : CChainParams::PUBKEY_ADDRESS;
     {
         LOCK(wallet->cs_wallet);
         return wallet->DelAddressBook(DecodeDestination(rec->address.toStdString()), addrType);
@@ -524,6 +568,10 @@ int AddressTableModel::lookupAddress(const QString& address) const
     } else {
         return lst.at(0).row();
     }
+}
+bool AddressTableModel::isWhitelisted(const std::string& address) const
+{
+    return purposeForAddress(address).compare(AddressBook::AddressBookPurpose::DELEGATOR) == 0;
 }
 
 /**

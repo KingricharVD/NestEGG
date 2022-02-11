@@ -771,12 +771,17 @@ UniValue signrawtransaction(const JSONRPCRequest& request)
         const CAmount& amount = (Params().IsRegTestNet() && mapPrevOut.count(txin.prevout) != 0 ? mapPrevOut[txin.prevout].second : coin.out.nValue);
 
         txin.scriptSig.clear();
+        // if this is a P2CS script, select which key to use
+               bool fColdStake = false;
+               if (prevPubKey.IsPayToColdStaking()) {
+                   // if we have both keys, sign with the spender key
+                   fColdStake = !bool(IsMine(keystore, prevPubKey) & ISMINE_SPENDABLE_DELEGATED);
+               }
 
         SignatureData sigdata;
         // Only sign SIGHASH_SINGLE if there's a corresponding output:
         if (!fHashSingle || (i < mergedTx.vout.size()))
-            ProduceSignature(MutableTransactionSignatureCreator(&keystore, &mergedTx, i, amount, nHashType), prevPubKey, sigdata);
-
+          ProduceSignature(MutableTransactionSignatureCreator(&keystore, &mergedTx, i, amount, nHashType), prevPubKey, sigdata, fColdStake);
         // ... and merge in other signatures:
         for (const CMutableTransaction& txv : txVariants) {
             sigdata = CombineSignatures(prevPubKey, TransactionSignatureChecker(&txConst, i, amount), sigdata, DataFromTransaction(txv, i));
@@ -977,4 +982,3 @@ UniValue createrawzerocoinspend(const JSONRPCRequest& request)
     return EncodeHexTx(rawTx);
 }
 #endif
-

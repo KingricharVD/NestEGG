@@ -19,7 +19,9 @@ namespace interfaces {
             result.watch_only_balance = m_wallet.GetWatchOnlyBalance();
             result.unconfirmed_watch_only_balance = m_wallet.GetUnconfirmedWatchOnlyBalance();
             result.immature_watch_only_balance = m_wallet.GetImmatureWatchOnlyBalance();
-        }
+            }
+        result.delegate_balance = m_wallet.GetDelegatedBalance();
+        result.coldstaked_balance = m_wallet.GetColdStakingBalance();
         return result;
     }
 

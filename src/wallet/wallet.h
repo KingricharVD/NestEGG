@@ -76,6 +76,8 @@ static const bool DEFAULT_SPEND_ZEROCONF_CHANGE = true;
 static const bool DEFAULT_SEND_FREE_TRANSACTIONS = false;
 //! Default for -staking
 static const bool DEFAULT_STAKING = true;
+//! Default for -coldstaking
+static const bool DEFAULT_COLDSTAKING = true;
 //! Defaults for -gen and -genproclimit
 static const bool DEFAULT_GENERATE = false;
 static const unsigned int DEFAULT_GENERATE_PROCLIMIT = 1;
@@ -157,8 +159,8 @@ public:
 
     bool IsInternal() const { return type == HDChain::ChangeType::INTERNAL; }
     bool IsExternal() const { return type == HDChain::ChangeType::EXTERNAL; }
-    bool IsStaking() const { return type == HDChain::ChangeType::STAKING; } // obsolete 
-    bool IsECommerce() const { return type == HDChain::ChangeType::ECOMMERCE; }
+    bool IsStaking() const { return type == HDChain::ChangeType::STAKING; }
+
 
     ADD_SERIALIZE_METHODS;
 
@@ -377,14 +379,19 @@ public:
     //! >> Available coins (generic)
     bool AvailableCoins(std::vector<COutput>* pCoins,   // --> populates when != nullptr
                         const CCoinControl* coinControl = nullptr,
+                        bool fIncludeDelegated          = true,
+                        bool fIncludeColdStaking        = false,
                         AvailableCoinsType nCoinType    = ALL_COINS,
                         bool fOnlyConfirmed             = true
+                        bool fUseIX                     = false
                         ) const;
     //! >> Available coins (spending)
     bool SelectCoinsToSpend(const std::vector<COutput>& vAvailableCoins, const CAmount& nTargetValue, std::set<std::pair<const CWalletTx*, unsigned int> >& setCoinsRet, CAmount& nValueRet, const CCoinControl* coinControl = nullptr) const;
     bool SelectCoinsMinConf(const CAmount& nTargetValue, int nConfMine, int nConfTheirs, std::vector<COutput> vCoins, std::set<std::pair<const CWalletTx*, unsigned int> >& setCoinsRet, CAmount& nValueRet) const;
     //! >> Available coins (staking)
     bool StakeableCoins(std::vector<COutput>* pCoins = nullptr);
+    //! >> Available coins (P2CS)
+    void GetAvailableP2CSCoins(std::vector<COutput>& vCoins) const;
 
     std::map<CTxDestination, std::vector<COutput> > AvailableCoinsByAddress(bool fConfirmed = true, CAmount maxCoinValue = 0);
 
@@ -475,7 +482,11 @@ public:
     CAmount loopTxsBalance(std::function<void(const uint256&, const CWalletTx&, CAmount&)>method) const;
     CAmount GetAvailableBalance() const;
     CAmount GetAvailableBalance(isminefilter& filter, bool useCache = false, int minDepth = 1) const;
-    CAmount GetStakingBalance() const;
+    CAmount GetColdStakingBalance() const;  // delegated coins for which we have the staking key
+    CAmount GetImmatureColdStakingBalance() const;
+    CAmount GetStakingBalance(const bool fIncludeColdStaking = true) const;
+    CAmount GetDelegatedBalance() const;    // delegated coins for which we have the spending key
+    CAmount GetImmatureDelegatedBalance() const;
     CAmount GetLockedCoins() const;
     CAmount GetUnconfirmedBalance() const;
     CAmount GetImmatureBalance() const;
@@ -498,7 +509,9 @@ public:
         const CCoinControl* coinControl = NULL,
         AvailableCoinsType coin_type = ALL_COINS,
         bool sign = true,
-        CAmount nFeePay = 0);
+         bool useIX = false,
+         CAmount nFeePay = 0,
+         bool fIncludeDelegated = false);
     bool CreateTransaction(CScript scriptPubKey, const CAmount& nValue, CWalletTx& wtxNew, CReserveKey& reservekey, CAmount& nFeeRet, std::string& strFailReason, const CCoinControl* coinControl = NULL, AvailableCoinsType coin_type = ALL_COINS, CAmount nFeePay = 0);
 
     // enumeration for CommitResult (return status of CommitTransaction)
@@ -579,6 +592,7 @@ public:
     bool SetAddressBook(const CTxDestination& address, const std::string& strName, const std::string& purpose);
     bool DelAddressBook(const CTxDestination& address, const CChainParams::Base58Type addrType = CChainParams::PUBKEY_ADDRESS);
     bool HasAddressBook(const CTxDestination& address) const;
+    bool HasDelegator(const CTxOut& out) const;
 
     std::string purposeForAddress(const CTxDestination& address) const;
     const std::string& GetAccountName(const CScript& scriptPubKey) const;
@@ -843,6 +857,7 @@ public:
     bool IsAmountCached(AmountType type, const isminefilter& filter) const; // Only used in unit tests
     mutable CachableAmount m_amounts[AMOUNTTYPE_ENUM_ELEMENTS];
     mutable bool fChangeCached;
+    mutable bool fStakeDelegationVoided;
     mutable CAmount nChangeCached;
 
     CWalletTx();
@@ -898,7 +913,8 @@ public:
     void MarkDirty();
 
     void BindWallet(CWallet* pwalletIn);
-    
+    //! checks whether a tx has P2CS inputs or not
+    bool HasP2CSInputs() const;
     int GetDepthAndMempool(bool& fConflicted, bool enableIX = true) const;
 
     //! filter decides which addresses will count towards the debit
@@ -912,15 +928,22 @@ public:
     CAmount GetAvailableWatchOnlyCredit(const bool& fUseCache = true) const;
     CAmount GetChange() const;
 
-    void GetAmounts(std::list<COutputEntry>& listReceived,
-        std::list<COutputEntry>& listSent,
-        CAmount& nFee,
-        std::string& strSentAccount,
-        const isminefilter& filter) const;
+    // Cold staking contracts credit/debit
+      CAmount GetColdStakingCredit(bool fUseCache = true) const;
+      CAmount GetColdStakingDebit(bool fUseCache = true) const;
+      CAmount GetStakeDelegationCredit(bool fUseCache = true) const;
+      CAmount GetStakeDelegationDebit(bool fUseCache = true) const;
 
-    bool IsFromMe(const isminefilter& filter) const;
+      void GetAmounts(std::list<COutputEntry>& listReceived,
+          std::list<COutputEntry>& listSent,
+          CAmount& nFee,
+          std::string& strSentAccount,
+          const isminefilter& filter) const;
 
-    bool InMempool() const;
+      bool IsFromMe(const isminefilter& filter) const;
+
+      bool InMempool() const;
+
 
     // True if only scriptSigs are different
     bool IsEquivalentTo(const CWalletTx& tx) const;

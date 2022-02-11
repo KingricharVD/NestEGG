@@ -135,7 +135,7 @@ PairResult CWallet::getNewAddress(CTxDestination& ret, const std::string address
         throw std::runtime_error("CWallet::getNewAddress() : SetAddressBook failed");
 
     ret = CTxDestination(keyID);
-    
+
     mapKeyMetadata[keyID].nCreateTime = GetTime();
     CWalletDB(strWalletFile).WriteKeyMetadata(newKey, mapKeyMetadata[keyID]);
 
@@ -1672,9 +1672,9 @@ CAmount CWallet::GetStakingBalance() const
 {
     return std::max(CAmount(0), loopTxsBalance(
             [](const uint256& id, const CWalletTx& pcoin, CAmount& nTotal) {
-        if (pcoin.IsTrusted() && 
-            pcoin.GetDepthInMainChain() 
-                >= 
+        if (pcoin.IsTrusted() &&
+            pcoin.GetDepthInMainChain()
+                >=
             (Params().GetConsensus().NetworkUpgradeActive(chainActive.Height(), Consensus::UPGRADE_STAKE_MIN_DEPTH_V2) ?
                     Params().GetConsensus().nStakeMinDepthV2 : Params().GetConsensus().nStakeMinDepth)
         ) {
@@ -1883,7 +1883,7 @@ bool CWallet::AvailableCoins(std::vector<COutput>* pCoins,      // --> populates
 {
     if (pCoins) pCoins->clear();
     const bool fCoinsSelected = (coinControl != nullptr) && coinControl->HasSelected();
-    
+
     {
         LOCK2(cs_main, cs_wallet);
         for (std::map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); ++it) {
@@ -1896,9 +1896,9 @@ bool CWallet::AvailableCoins(std::vector<COutput>* pCoins,      // --> populates
                 continue;
 
             // Check min depth requirement for stake inputs
-            if (nCoinType == STAKEABLE_COINS && 
-                nDepth 
-                    < 
+            if (nCoinType == STAKEABLE_COINS &&
+                nDepth
+                    <
                 (Params().GetConsensus().NetworkUpgradeActive(chainActive.Height(), Consensus::UPGRADE_STAKE_MIN_DEPTH_V2) ?
                     Params().GetConsensus().nStakeMinDepthV2 : Params().GetConsensus().nStakeMinDepth)) continue;
 
@@ -2010,8 +2010,12 @@ static void ApproximateBestSubset(std::vector<std::pair<CAmount, std::pair<const
 
 bool CWallet::StakeableCoins(std::vector<COutput>* pCoins)
 {
+  const bool fIncludeCold = (sporkManager.IsSporkActive(SPORK_18_COLDSTAKING_ENFORCEMENT) &&
+                             GetBoolArg("-coldstaking", DEFAULT_COLDSTAKING));
     return AvailableCoins(pCoins,
             nullptr,            // coin control
+            false,              // fIncludeDelegated
+            fIncludeCold,       // fIncludeColdStaking
             STAKEABLE_COINS);  // coin type
 }
 
