@@ -11,15 +11,15 @@ fi
 	sudo apt install git zip unzip build-essential libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libqt5svg5-dev -y
 
 # Clone code from official Github repository
-	rm -rf SAPP
-	git clone https://github.com/sappcoin-com/SAPP.git
+#	rm -rf SAPP
+#	git clone https://github.com/sappcoin-com/SAPP.git
 
 # Entering directory
-	cd SAPP
+#	cd SAPP
 
 # Compile dependencies
 	cd depends
-	make -j$(echo $CPU_CORES) HOST=x86_64-pc-linux-gnu 
+	make -j$(echo $CPU_CORES) HOST=x86_64-pc-linux-gnu
 	cd ..
 
 # Compile
