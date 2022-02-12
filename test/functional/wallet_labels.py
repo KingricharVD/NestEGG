@@ -96,8 +96,8 @@ class WalletlabelsTest(PivxTestFramework):
             label.add_receive_address(address)
             label.verify(node)
 
-        # Check all labels are returned by listlabels.
-        assert_equal(node.listlabels(), [label.name for label in labels])
+        # Check all labels are returned by listdelegators.
+        assert_equal(node.listdelegators(), [label.name for label in labels])
 
         # Send a transaction to each label, and make sure this forces
         # getaccountaddress to generate a new receiving address.
@@ -113,7 +113,7 @@ class WalletlabelsTest(PivxTestFramework):
         node.generate(1)
         for label in labels:
             assert_equal(
-                node.getreceivedbyaddress(label.addresses[0]), amount_to_send)
+                node.getnewshieldedaddreds(label.addresses[0]), amount_to_send)
             assert_equal(node.getreceivedbylabel(label.name), amount_to_send)
 
         # Check that sendfrom label reduces listaccounts balances.

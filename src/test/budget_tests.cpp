@@ -23,11 +23,11 @@ void CheckBudgetValue(int nHeight, std::string strNetwork, CAmount nExpectedValu
 BOOST_AUTO_TEST_CASE(budget_value)
 {
     SelectParams(CBaseChainParams::TESTNET);
-    int nHeightTest = Params().GetConsensus().vUpgrades[Consensus::UPGRADE_ZC_V2].nActivationHeight + 1;
+    int nHeightTest = Params().GetConsensus().vUpgrades[Consensus::UPGRADE_V4_0].nActivationHeight + 1;
     CheckBudgetValue(nHeightTest, "testnet", 7300*COIN);
 
     SelectParams(CBaseChainParams::MAIN);
-    nHeightTest = Params().GetConsensus().vUpgrades[Consensus::UPGRADE_ZC_V2].nActivationHeight + 1;
+    nHeightTest = Params().GetConsensus().vUpgrades[Consensus::UPGRADE_V4_0].nActivationHeight + 1;
     CheckBudgetValue(nHeightTest, "mainnet", 43200*COIN);
 }
 

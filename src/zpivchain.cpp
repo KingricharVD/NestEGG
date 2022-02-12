@@ -315,7 +315,7 @@ std::string ReindexZerocoinDB()
                                 continue;
 
                             CValidationState state;
-                            const bool v1params = !consensus.NetworkUpgradeActive(pindex->nHeight, Consensus::UPGRADE_ZC_V2);
+                            const bool v1params = !consensus.NetworkUpgradeActive(pindex->nHeight, Consensus::UPGRADE_V4_0);
                             libzerocoin::PublicCoin coin(consensus.Zerocoin_Params(v1params));
                             TxOutToPublicCoin(out, coin, state);
                             vMintInfo.push_back(std::make_pair(coin, txid));

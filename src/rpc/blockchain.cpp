@@ -832,11 +832,11 @@ UniValue gettxout(const JSONRPCRequest& request)
     return ret;
 }
 
-UniValue getburnaddresses(const JSONRPCRequest& request)
+UniValue liststakingaddresses(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() > 1)
         throw std::runtime_error(
-            "getburnaddresses ( withvalues )\n"
+            "liststakingaddresses ( withvalues )\n"
             "\nReturns burn addresses. When an address is a burn address, it is also rejected from mempool and block inclusion, however a transaction to them is possible.\n"
 
             "\nArguments:\n"
@@ -851,7 +851,7 @@ UniValue getburnaddresses(const JSONRPCRequest& request)
             "]\n"
 
             "\nExamples:\n" +
-            HelpExampleCli("getburnaddresses", "") + HelpExampleCli("getburnaddresses", "true") + HelpExampleRpc("getburnaddresses", ""));
+            HelpExampleCli("liststakingaddresses", "") + HelpExampleCli("liststakingaddresses", "true") + HelpExampleRpc("liststakingaddresses", ""));
 
     bool fWithValues = false;
     if (request.params.size() > 0)

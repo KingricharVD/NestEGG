@@ -137,14 +137,14 @@ elif cmd == "getreceivedbyaccount":
     except:
         print "\n---An error occurred---\n"
 
-elif cmd == "getreceivedbyaddress":
+elif cmd == "getnewshieldedaddreds":
     try:
         addr = raw_input("Enter a Bitcoin address (optional): ")
         mc = raw_input("Minimum confirmations (optional): ")
         try:
-            print access.getreceivedbyaddress(addr, mc)
+            print access.getnewshieldedaddreds(addr, mc)
         except:
-            print access.getreceivedbyaddress()
+            print access.getnewshieldedaddreds()
     except:
         print "\n---An error occurred---\n"
 
@@ -196,14 +196,14 @@ elif cmd == "listreceivedbyaccount":
     except:
         print "\n---An error occurred---\n"
 
-elif cmd == "listreceivedbyaddress":
+elif cmd == "listshieldedaddreds":
     try:
         mc = raw_input("Minimum confirmations (optional): ")
         incemp = raw_input("Include empty? (true/false, optional): ")
         try:
-            print access.listreceivedbyaddress(mc, incemp)
+            print access.listshieldedaddreds(mc, incemp)
         except:
-            print access.listreceivedbyaddress()
+            print access.listshieldedaddreds()
     except:
         print "\n---An error occurred---\n"
 

@@ -143,8 +143,8 @@ The `getwalletinfo` command now includes two additional response fields:
 
 The following new commands have been added to the RPC interface:
 - `getnewstakingaddress`
-- `delegatestake`
-- `rawdelegatestake`
+- `delegatorremove`
+- `rawdelegatorremove`
 - `getcoldstakingbalance`
 - `delegatoradd`
 - `delegatorremove`
@@ -167,9 +167,9 @@ Result:
 "pivxaddress"    (string) The new pivx address
 ```
 
-`delegatestake` sends a cold staking delegation transaction:
+`delegatorremove` sends a cold staking delegation transaction:
 ```
-delegatestake "stakingaddress" amount ( "owneraddress" fExternalOwner fUseDelegated fForceNotEnabled )
+delegatorremove "stakingaddress" amount ( "owneraddress" fExternalOwner fUseDelegated fForceNotEnabled )
 
 Delegate an amount to a given address for cold staking. The amount is a real and is rounded to the nearest 0.00000001
 
@@ -192,9 +192,9 @@ Result:
 }
 ```
 
-`rawdelegatestake` creates a raw cold staking delegation transaction without broadcasting it to the network:
+`rawdelegatorremove` creates a raw cold staking delegation transaction without broadcasting it to the network:
 ```
-rawdelegatestake "stakingaddress" amount ( "owneraddress" fExternalOwner fUseDelegated )
+rawdelegatorremove "stakingaddress" amount ( "owneraddress" fExternalOwner fUseDelegated )
 
 Delegate an amount to a given address for cold staking. The amount is a real and is rounded to the nearest 0.00000001
 

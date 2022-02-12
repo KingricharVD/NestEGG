@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2017 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the listreceivedbyaddress RPC."""
+"""Test the listshieldedaddreds RPC."""
 from decimal import Decimal
 
 from test_framework.test_framework import PivxTestFramework
@@ -23,47 +23,47 @@ class ReceivedByTest(PivxTestFramework):
         self.nodes[0].generate(1)
         sync_blocks(self.nodes)
 
-        self.log.info("listreceivedbyaddress Test")
+        self.log.info("listshieldedaddreds Test")
 
         # Send from node 0 to 1
         addr = self.nodes[1].getnewaddress()
         txid = self.nodes[0].sendtoaddress(addr, 0.1)
         self.sync_all()
 
-        # Check not listed in listreceivedbyaddress because has 0 confirmations
-        assert_array_result(self.nodes[1].listreceivedbyaddress(),
+        # Check not listed in listshieldedaddreds because has 0 confirmations
+        assert_array_result(self.nodes[1].listshieldedaddreds(),
                             {"address": addr},
                             {},
                             True)
-        # Bury Tx under 10 block so it will be returned by listreceivedbyaddress
+        # Bury Tx under 10 block so it will be returned by listshieldedaddreds
         self.nodes[1].generate(10)
         self.sync_all()
-        assert_array_result(self.nodes[1].listreceivedbyaddress(),
+        assert_array_result(self.nodes[1].listshieldedaddreds(),
                             {"address": addr},
                             {"address": addr, "label": "", "amount": Decimal("0.1"), "confirmations": 10, "txids": [txid, ]})
         # With min confidence < 10
-        assert_array_result(self.nodes[1].listreceivedbyaddress(5),
+        assert_array_result(self.nodes[1].listshieldedaddreds(5),
                             {"address": addr},
                             {"address": addr, "label": "", "amount": Decimal("0.1"), "confirmations": 10, "txids": [txid, ]})
         # With min confidence > 10, should not find Tx
-        assert_array_result(self.nodes[1].listreceivedbyaddress(11), {"address": addr}, {}, True)
+        assert_array_result(self.nodes[1].listshieldedaddreds(11), {"address": addr}, {}, True)
 
         # Empty Tx
         empty_addr = self.nodes[1].getnewaddress()
-        assert_array_result(self.nodes[1].listreceivedbyaddress(0, True),
+        assert_array_result(self.nodes[1].listshieldedaddreds(0, True),
                             {"address": empty_addr},
                             {"address": empty_addr, "label": "", "amount": 0, "confirmations": 0, "txids": []})
 
         # Test Address filtering
         # Only on addr
         expected = {"address": addr, "label": "", "amount": Decimal("0.1"), "confirmations": 10, "txids": [txid, ]}
-        res = self.nodes[1].listreceivedbyaddress(0, True, True, addr)
+        res = self.nodes[1].listshieldedaddreds(0, True, True, addr)
         assert_array_result(res, {"address": addr}, expected)
         assert_equal(len(res), 1)
         # Error on invalid address
-        assert_raises_rpc_error(-4, "address_filter parameter was invalid", self.nodes[1].listreceivedbyaddress, 0, True, True, "bamboozling")
+        assert_raises_rpc_error(-4, "address_filter parameter was invalid", self.nodes[1].listshieldedaddreds, 0, True, True, "bamboozling")
         # Another address receive money
-        res = self.nodes[1].listreceivedbyaddress(0, True, True)
+        res = self.nodes[1].listshieldedaddreds(0, True, True)
         assert_equal(len(res), 2)  # Right now 2 entries
         other_addr = self.nodes[1].getnewaddress()
         txid2 = self.nodes[0].sendtoaddress(other_addr, 0.1)
@@ -71,29 +71,29 @@ class ReceivedByTest(PivxTestFramework):
         self.sync_all()
         # Same test as above should still pass
         expected = {"address": addr, "label": "", "amount": Decimal("0.1"), "confirmations": 11, "txids": [txid, ]}
-        res = self.nodes[1].listreceivedbyaddress(0, True, True, addr)
+        res = self.nodes[1].listshieldedaddreds(0, True, True, addr)
         assert_array_result(res, {"address": addr}, expected)
         assert_equal(len(res), 1)
         # Same test as above but with other_addr should still pass
         expected = {"address": other_addr, "label": "", "amount": Decimal("0.1"), "confirmations": 1, "txids": [txid2, ]}
-        res = self.nodes[1].listreceivedbyaddress(0, True, True, other_addr)
+        res = self.nodes[1].listshieldedaddreds(0, True, True, other_addr)
         assert_array_result(res, {"address": other_addr}, expected)
         assert_equal(len(res), 1)
         # Should be two entries though without filter
-        res = self.nodes[1].listreceivedbyaddress(0, True, True)
+        res = self.nodes[1].listshieldedaddreds(0, True, True)
         assert_equal(len(res), 3)  # Became 3 entries
 
         # Not on random addr
         other_addr = self.nodes[0].getnewaddress()  # note on node[0]! just a random addr
-        res = self.nodes[1].listreceivedbyaddress(0, True, True, other_addr)
+        res = self.nodes[1].listshieldedaddreds(0, True, True, other_addr)
         assert_equal(len(res), 0)
 
         #Not on random addr
         other_addr = self.nodes[0].getnewaddress() # note on node[0]! just a random addr
-        res = self.nodes[1].listreceivedbyaddress(0, True, True, other_addr)
+        res = self.nodes[1].listshieldedaddreds(0, True, True, other_addr)
         assert_equal(len(res), 0)
 
-        self.log.info("getreceivedbyaddress Test")
+        self.log.info("getnewshieldedaddreds Test")
 
         # Send from node 0 to 1
         addr = self.nodes[1].getnewaddress()
@@ -101,21 +101,21 @@ class ReceivedByTest(PivxTestFramework):
         self.sync_all()
 
         # Check balance is 0 because of 0 confirmations
-        balance = self.nodes[1].getreceivedbyaddress(addr)
+        balance = self.nodes[1].getnewshieldedaddreds(addr)
         assert_equal(balance, Decimal("0.0"))
 
         # Check balance is 0.1
-        balance = self.nodes[1].getreceivedbyaddress(addr, 0)
+        balance = self.nodes[1].getnewshieldedaddreds(addr, 0)
         assert_equal(balance, Decimal("0.1"))
 
-        # Bury Tx under 10 block so it will be returned by the default getreceivedbyaddress
+        # Bury Tx under 10 block so it will be returned by the default getnewshieldedaddreds
         self.nodes[1].generate(10)
         self.sync_all()
-        balance = self.nodes[1].getreceivedbyaddress(addr)
+        balance = self.nodes[1].getnewshieldedaddreds(addr)
         assert_equal(balance, Decimal("0.1"))
 
         # Trying to getreceivedby for an address the wallet doesn't own should return an error
-        assert_raises_rpc_error(-4, "Address not found in wallet", self.nodes[0].getreceivedbyaddress, addr)
+        assert_raises_rpc_error(-4, "Address not found in wallet", self.nodes[0].getnewshieldedaddreds, addr)
 
         self.log.info("listreceivedbylabel + getreceivedbylabel Test")
 
@@ -134,7 +134,7 @@ class ReceivedByTest(PivxTestFramework):
                             {"label": label},
                             received_by_label_json)
 
-        # getreceivedbyaddress should return same balance because of 0 confirmations
+        # getnewshieldedaddreds should return same balance because of 0 confirmations
         balance = self.nodes[1].getreceivedbylabel(label)
         assert_equal(balance, balance_by_label)
 

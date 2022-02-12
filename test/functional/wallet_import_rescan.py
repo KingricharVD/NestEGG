@@ -67,9 +67,9 @@ class Variant(collections.namedtuple("Variant", "call data rescan prune")):
             assert_equal(response, [{"success": True}])
 
     def check(self, txid=None, amount=None, confirmations=None):
-        """Verify that listreceivedbyaddress returns return expected values."""
+        """Verify that listshieldedaddreds returns return expected values."""
 
-        addresses = self.node.listreceivedbyaddress(0, True, self.address['address'])
+        addresses = self.node.listshieldedaddreds(0, True, self.address['address'])
         if self.expected_txs:
             assert_equal(len(addresses[0]["txids"]), self.expected_txs)
 

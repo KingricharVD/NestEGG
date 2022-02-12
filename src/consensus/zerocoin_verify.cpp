@@ -154,7 +154,7 @@ bool ContextualCheckZerocoinSpendNoSerialCheck(const CTransaction& tx, const lib
 {
     const Consensus::Params& consensus = Params().GetConsensus();
     //Check to see if the zSAPP is properly signed
-    if (consensus.NetworkUpgradeActive(nHeight, Consensus::UPGRADE_ZC_V2)) {
+    if (consensus.NetworkUpgradeActive(nHeight, Consensus::UPGRADE_V4_0)) {
         try {
             if (!spend->HasValidSignature())
                 return error("%s: V2 zSAPP spend does not have a valid signature\n", __func__);

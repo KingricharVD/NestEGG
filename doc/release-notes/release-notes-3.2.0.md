@@ -146,9 +146,9 @@ The `securitylevel` argument has been removed from the `spendzerocoin` RPC comma
 
 Introduce the `spendzerocoinmints` RPC call to enable spending specific zerocoins, provided as an array of hex strings (serial hashes).
 
-### Getreceivedbyaddress Update
+### getnewshieldedaddreds Update
 
-When calling `getreceivedbyaddress` with a non-wallet address, return a proper error code/message instead of just `0`
+When calling `getnewshieldedaddreds` with a non-wallet address, return a proper error code/message instead of just `0`
 
 ### Validateaddress More Verbosity
 
@@ -259,7 +259,7 @@ Detailed release notes follow. This overview includes changes that affect behavi
  - #727 `08f6e1774b` [RPC] Add 'spendzerocoinmints' RPC call (random-zebra)
  - #726 `8f28b7ad23` [RPC] include mints metadata in 'listmintedzerocoins' output (random-zebra)
  - #724 `ee0717c2af` [RPC] Ensure that a numeric is being passed to AmmountFromValue (Fuzzbawls)
- - #723 `0774f5fc0d` [RPC] Error when calling getreceivedbyaddress with non-wallet address (Fuzzbawls)
+ - #723 `0774f5fc0d` [RPC] Error when calling getnewshieldedaddreds with non-wallet address (Fuzzbawls)
  - #722 `3ce4fd7226` [RPC] Add more verbosity to validateaddress (Fuzzbawls)
  - #721 `cecda14082` [RPC] Fix movecmd's help description to include amount (Fuzzbawls)
  - #720 `056b4d5cb1` [RPC] Sanitize walletpassphrase timeout argument (Fuzzbawls)

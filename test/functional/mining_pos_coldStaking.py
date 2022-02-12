@@ -130,7 +130,7 @@ class PIVX_ColdStakingTest(PivxTestFramework):
         assert (not self.isColdStakingEnforced())
         self.log.info("Creating a stake-delegation tx before cold staking enforcement...")
         assert_raises_rpc_error(-4, "Failed to accept tx in the memory pool (reason: cold-stake-inactive (code 16))\nTransaction canceled.",
-                                self.nodes[0].delegatestake, staker_address, INPUT_VALUE, owner_address, False, False, True)
+                                self.nodes[0].delegatorremove, staker_address, INPUT_VALUE, owner_address, False, False, True)
         self.log.info("Good. Cold Staking NOT ACTIVE yet.")
 
         # Enable SPORK
@@ -143,27 +143,27 @@ class PIVX_ColdStakingTest(PivxTestFramework):
         print("*** 5 ***")
         self.log.info("First check warning when using external addresses...")
         assert_raises_rpc_error(-5, "Only the owner of the key to owneraddress will be allowed to spend these coins",
-                                self.nodes[0].delegatestake, staker_address, INPUT_VALUE, "yCgCXC8N5VThhfiaVuKaNLkNnrWduzVnoT")
+                                self.nodes[0].delegatorremove, staker_address, INPUT_VALUE, "yCgCXC8N5VThhfiaVuKaNLkNnrWduzVnoT")
         self.log.info("Good. Warning triggered.")
 
         self.log.info("Now force the use of external address creating (but not sending) the delegation...")
-        res = self.nodes[0].rawdelegatestake(staker_address, INPUT_VALUE, "yCgCXC8N5VThhfiaVuKaNLkNnrWduzVnoT", True)
+        res = self.nodes[0].rawdelegatorremove(staker_address, INPUT_VALUE, "yCgCXC8N5VThhfiaVuKaNLkNnrWduzVnoT", True)
         assert(res is not None and res != "")
         self.log.info("Good. Warning NOT triggered.")
 
         self.log.info("Now delegate with internal owner address..")
         self.log.info("Try first with a value (0.99) below the threshold")
         assert_raises_rpc_error(-8, "Invalid amount",
-                                self.nodes[0].delegatestake, staker_address, 0.99, owner_address)
+                                self.nodes[0].delegatorremove, staker_address, 0.99, owner_address)
         self.log.info("Nice. it was not possible.")
         self.log.info("Then try (creating but not sending) with the threshold value (1.00)")
-        res = self.nodes[0].rawdelegatestake(staker_address, 1.00, owner_address)
+        res = self.nodes[0].rawdelegatorremove(staker_address, 1.00, owner_address)
         assert(res is not None and res != "")
         self.log.info("Good. Warning NOT triggered.")
 
         self.log.info("Now creating %d real stake-delegation txes..." % NUM_OF_INPUTS)
         for i in range(NUM_OF_INPUTS):
-            res = self.nodes[0].delegatestake(staker_address, INPUT_VALUE, owner_address)
+            res = self.nodes[0].delegatorremove(staker_address, INPUT_VALUE, owner_address)
             assert(res != None and res["txid"] != None and res["txid"] != "")
             assert_equal(res["owner_address"], owner_address)
             assert_equal(res["staker_address"], staker_address)

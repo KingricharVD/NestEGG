@@ -35,7 +35,7 @@ class DeprecatedRpcTest(PivxTestFramework):
         # -deprecatedrpc=accounts switch enabled.
         # - getaddressesbylabel
         # - getreceivedbylabel
-        # - listlabels
+        # - listdelegators
         # - listreceivedbylabel
         # - setlabel
         #
@@ -78,9 +78,9 @@ class DeprecatedRpcTest(PivxTestFramework):
         assert_raises_rpc_error(-32, "listaccounts is deprecated", self.nodes[0].listaccounts)
         self.nodes[1].listaccounts()
 
-        self.log.info("- listlabels")
-        self.nodes[0].listlabels()
-        self.nodes[1].listlabels()
+        self.log.info("- listdelegators")
+        self.nodes[0].listdelegators()
+        self.nodes[1].listdelegators()
 
         self.log.info("- listreceivedbyaccount")
         assert_raises_rpc_error(-32, "listreceivedbyaccount is deprecated", self.nodes[0].listreceivedbyaccount)

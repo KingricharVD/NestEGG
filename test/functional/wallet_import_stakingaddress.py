@@ -44,7 +44,7 @@ class ImportStakingTest(PivxTestFramework):
         delegations = []
         for i, sa in enumerate(staking_addresses):
             # delegate 10 PIV
-            delegations.append(self.nodes[0].delegatestake(sa, 10)['txid'])
+            delegations.append(self.nodes[0].delegatorremove(sa, 10)['txid'])
             # mine a block and check staking balance
             self.nodes[0].generate(1)
             assert_equal(self.nodes[0].getdelegatedbalance(), DecimalAmt(10 * (i+1)))

@@ -69,7 +69,7 @@ bool ScriptPubKeyMan::CanGetAddresses(const uint8_t& type)
     const bool isHDEnabled = IsHDEnabled();
     bool keypool_has_keys = false;
     if (isHDEnabled && type == HDChain::ChangeType::INTERNAL) {
-        keypool_has_keys = setInternalKeyPool.size() > 0;
+        keypool_has_keys = setStakingKeyPool.size() > 0;
       } else if (isHDEnabled && type == HDChain::ChangeType::STAKING) {
      keypool_has_keys = setStakingKeyPool.size() > 0;
     } else if (isHDEnabled && type == HDChain::ChangeType::STAKING) {
@@ -107,7 +107,7 @@ int64_t ScriptPubKeyMan::GetOldestKeyPoolTime()
     // load oldest key from keypool, get time and return
     int64_t oldestKey = GetOldestKeyTimeInPool(setExternalKeyPool, batch);
     if (IsHDEnabled()) {
-        oldestKey = std::max(GetOldestKeyTimeInPool(setInternalKeyPool, batch), oldestKey);
+        oldestKey = std::max(GetOldestKeyTimeInPool(setStakingKeyPool, batch), oldestKey);
         oldestKey = std::max(GetOldestKeyTimeInPool(setECommerceKeyPool, batch), oldestKey);
         if (!set_pre_split_keypool.empty()) {
             oldestKey = std::max(GetOldestKeyTimeInPool(set_pre_split_keypool, batch), oldestKey);
@@ -126,7 +126,7 @@ size_t ScriptPubKeyMan::KeypoolCountExternalKeys()
 unsigned int ScriptPubKeyMan::GetKeyPoolSize() const
 {
     AssertLockHeld(wallet->cs_wallet);
-    return setInternalKeyPool.size() + setExternalKeyPool.size() + set_pre_split_keypool.size();
+    return setStakingKeyPool.size() + setExternalKeyPool.size() + set_pre_split_keypool.size();
 }
 
 unsigned int ScriptPubKeyMan::GetECommerceKeyPoolSize() const
@@ -184,7 +184,7 @@ bool ScriptPubKeyMan::ReserveKeyFromKeyPool(int64_t& nIndex, CKeyPool& keypool, 
         bool fReturningStaking = type == HDChain::ChangeType::STAKING && isHDEnabled;
         bool use_split_keypool = set_pre_split_keypool.empty();
         std::set<int64_t>& setKeyPool = use_split_keypool ?
-              ( fReturningInternal ? setInternalKeyPool : (fReturningStaking ? setStakingKeyPool : setExternalKeyPool) ) : set_pre_split_keypool;
+              ( fReturningInternal ? setStakingKeyPool : (fReturningStaking ? setStakingKeyPool : setExternalKeyPool) ) : set_pre_split_keypool;
         // Get the oldest key
         if (setKeyPool.empty()) {
             return false;
@@ -245,7 +245,7 @@ void ScriptPubKeyMan::ReturnDestination(int64_t nIndex, const uint8_t& type, con
         LOCK(wallet->cs_wallet);
         const bool isHDEnabled = IsHDEnabled();
         if (isHDEnabled && type == HDChain::ChangeType::INTERNAL) {
-            setInternalKeyPool.insert(nIndex);
+            setStakingKeyPool.insert(nIndex);
           } else if (isHDEnabled && type == HDChain::ChangeType::STAKING) {
           setStakingKeyPool.insert(nIndex);
         } else if (isHDEnabled && !set_pre_split_keypool.empty()) {
@@ -263,10 +263,10 @@ void ScriptPubKeyMan::ReturnDestination(int64_t nIndex, const uint8_t& type, con
 void ScriptPubKeyMan::MarkReserveKeysAsUsed(int64_t keypool_id)
 {
     AssertLockHeld(wallet->cs_wallet);
-    bool internal = setInternalKeyPool.count(keypool_id);
+    bool internal = setStakingKeyPool.count(keypool_id);
     bool ecommerce = setECommerceKeyPool.count(keypool_id);
     //if (!internal) assert(setExternalKeyPool.count(keypool_id) || set_pre_split_keypool.count(keypool_id) || ecommerce);
-    std::set<int64_t> *setKeyPool = internal ? &setInternalKeyPool : (set_pre_split_keypool.empty() ?
+    std::set<int64_t> *setKeyPool = internal ? &setStakingKeyPool : (set_pre_split_keypool.empty() ?
             (ecommerce ? &setECommerceKeyPool : &setExternalKeyPool) : &set_pre_split_keypool);
     auto it = setKeyPool->begin();
 
@@ -331,10 +331,10 @@ bool ScriptPubKeyMan::NewKeyPool()
 
         CWalletDB walletdb(wallet->strWalletFile);
         // Internal
-        for (const int64_t nIndex : setInternalKeyPool) {
+        for (const int64_t nIndex : setStakingKeyPool) {
             walletdb.ErasePool(nIndex);
         }
-        setInternalKeyPool.clear();
+        setStakingKeyPool.clear();
 
         // External
         for (const int64_t nIndex : setExternalKeyPool) {
@@ -381,7 +381,7 @@ bool ScriptPubKeyMan::TopUp(unsigned int kpSize)
         // Count amount of available keys (internal, external)
         // make sure the keypool of external and internal keys fits the user selected target (-keypool)
         int64_t missingExternal = std::max(std::max((int64_t) nTargetSize, (int64_t) 1) - (int64_t)setExternalKeyPool.size(), (int64_t) 0);
-        int64_t missingInternal = std::max(std::max((int64_t) nTargetSize, (int64_t) 1) - (int64_t)setInternalKeyPool.size(), (int64_t) 0);
+        int64_t missingInternal = std::max(std::max((int64_t) nTargetSize, (int64_t) 1) - (int64_t)setStakingKeyPool.size(), (int64_t) 0);
         int64_t missingECommerce = std::max(std::max((int64_t) nTargetSize, (int64_t) 1) - (int64_t)setECommerceKeyPool.size(), (int64_t) 0);
 
         if (!IsHDEnabled()) {
@@ -396,7 +396,7 @@ bool ScriptPubKeyMan::TopUp(unsigned int kpSize)
         GeneratePool(batch, missingStaking, HDChain::ChangeType::STAKING);
 
         if (missingInternal + missingExternal > 0) {
-            LogPrintf("keypool added %d keys (%d internal), size=%u (%u internal), \n", missingInternal + missingExternal, missingInternal, setInternalKeyPool.size() + setExternalKeyPool.size() + set_pre_split_keypool.size(), setInternalKeyPool.size());
+            LogPrintf("keypool added %d keys (%d internal), size=%u (%u internal), \n", missingInternal + missingExternal, missingInternal, setStakingKeyPool.size() + setExternalKeyPool.size() + set_pre_split_keypool.size(), setStakingKeyPool.size());
         }
         if (missingECommerce > 0) {
             LogPrintf("keypool added %d ecommerce keys\n", setECommerceKeyPool.size());
@@ -424,7 +424,7 @@ void ScriptPubKeyMan::AddKeypoolPubkeyWithDB(const CPubKey& pubkey, const uint8_
 
     const bool isHDEnabled = IsHDEnabled();
     if (isHDEnabled && type == HDChain::ChangeType::INTERNAL) {
-        setInternalKeyPool.insert(index);
+        setStakingKeyPool.insert(index);
       } else if (isHDEnabled && type == HDChain::ChangeType::STAKING) {
            setStakingKeyPool.insert(index);
     } else {
@@ -536,7 +536,7 @@ void ScriptPubKeyMan::LoadKeyPool(int64_t nIndex, const CKeyPool &keypool)
     if (keypool.m_pre_split) {
         set_pre_split_keypool.insert(nIndex);
     } else if (keypool.IsInternal()) {
-        setInternalKeyPool.insert(nIndex);
+        setStakingKeyPool.insert(nIndex);
     } else if (keypool.IsExternal()){
         setExternalKeyPool.insert(nIndex);
       } else if (keypool.IsStaking()){

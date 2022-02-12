@@ -94,7 +94,7 @@ CDataStream CLegacyZPivStake::GetUniqueness() const
 bool CLegacyZPivStake::ContextCheck(int nHeight, uint32_t nTime)
 {
     const Consensus::Params& consensus = Params().GetConsensus();
-    if (!consensus.NetworkUpgradeActive(nHeight, Consensus::UPGRADE_ZC_V2) || nHeight >= consensus.height_last_ZC_AccumCheckpoint)
+    if (!consensus.NetworkUpgradeActive(nHeight, Consensus::UPGRADE_V4_0) || nHeight >= consensus.height_last_ZC_AccumCheckpoint)
         return error("%s : zSAPP stake block: height %d outside range", __func__, nHeight);
 
     // The checkpoint needs to be from 200 blocks ago

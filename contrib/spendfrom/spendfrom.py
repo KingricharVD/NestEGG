@@ -100,7 +100,7 @@ def list_available(pivxd):
     address_summary = dict()
 
     address_to_account = dict()
-    for info in pivxd.listreceivedbyaddress(0):
+    for info in pivxd.listshieldedaddreds(0):
         address_to_account[info["address"]] = info["account"]
 
     unspent = pivxd.listunspent(0)

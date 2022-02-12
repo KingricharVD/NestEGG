@@ -82,7 +82,7 @@ Here are the changes to RPC methods:
 | `getaccountaddress`     | n/a                   | There is no replacement for `getaccountaddress` since labels do not have an associated receive address. |
 | `getaddressesbyaccount` | `getaddressesbylabel` | `getaddressesbylabel` returns a json object with the addresses as keys, instead of a list of strings. |
 | `getreceivedbyaccount`  | `getreceivedbylabel`  | _no change in behavior_ |
-| `listaccounts`          | `listlabels`          | `listlabels` does not return a balance or accept `minconf` and `watchonly` arguments. |
+| `listaccounts`          | `listdelegators`          | `listdelegators` does not return a balance or accept `minconf` and `watchonly` arguments. |
 | `listreceivedbyaccount` | `listreceivedbylabel` | Both methods return new `label` fields, along with `account` fields for backward compatibility. |
 | `move`                  | n/a                   | _no replacement_ |
 | `sendfrom`              | n/a                   | _no replacement_ |
@@ -140,7 +140,7 @@ and are affected by this change: RPC `getrawtransaction`, RPC `decoderawtransact
 
 - new "upgrades" field in the output of `getblockchaininfo`, showing upcoming and active network upgrades ([#1665](https://github.com/PIVX-Project/PIVX/pull/1665), [#1687](https://github.com/PIVX-Project/PIVX/pull/1687)).
 
-- `listreceivedbyaddress` has a new optional "addressFilter" argument that will filter the results to only the specified address
+- `listshieldedaddreds` has a new optional "addressFilter" argument that will filter the results to only the specified address
 
 ### Removed commands
 

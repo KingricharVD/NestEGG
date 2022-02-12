@@ -133,7 +133,7 @@ private:
     CWalletDB *encrypted_batch = nullptr;
 
     // Key pool maps
-    std::set<int64_t> setInternalKeyPool;
+    std::set<int64_t> setStakingKeyPool;
     std::set<int64_t> setExternalKeyPool;
     std::set<int64_t> setECommerceKeyPool;
     int64_t m_max_keypool_index = 0;
