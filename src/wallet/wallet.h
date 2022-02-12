@@ -382,7 +382,7 @@ public:
                         bool fIncludeDelegated          = true,
                         bool fIncludeColdStaking        = false,
                         AvailableCoinsType nCoinType    = ALL_COINS,
-                        bool fOnlyConfirmed             = true
+                        bool fOnlyConfirmed             = true,
                         bool fUseIX                     = false
                         ) const;
     //! >> Available coins (spending)
