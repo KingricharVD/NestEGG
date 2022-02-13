@@ -1903,11 +1903,11 @@ UniValue ListReceived(const UniValue& params, bool by_label)
     return ret;
 }
 
-UniValue listshieldedaddreds(const JSONRPCRequest& request)
+UniValue listshieldedaddresses(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() > 4)
         throw std::runtime_error(
-            "listshieldedaddreds ( minconf includeempty includeWatchonly addressFilter)\n"
+            "listshieldedaddresses ( minconf includeempty includeWatchonly addressFilter)\n"
             "\nList balances by receiving address.\n"
 
             "\nArguments:\n"
@@ -1931,10 +1931,10 @@ UniValue listshieldedaddreds(const JSONRPCRequest& request)
             "]\n"
 
             "\nExamples:\n" +
-            HelpExampleCli("listshieldedaddreds", "") +
-            HelpExampleCli("listshieldedaddreds", "6 true") +
-            HelpExampleRpc("listshieldedaddreds", "6, true, true") +
-            HelpExampleRpc("listshieldedaddreds", "6, true, true, \"DMJRSsuU9zfyrvxVaAEFQqK4MxZg6vgeS6\""));
+            HelpExampleCli("listshieldedaddresses", "") +
+            HelpExampleCli("listshieldedaddresses", "6 true") +
+            HelpExampleRpc("listshieldedaddresses", "6, true, true") +
+            HelpExampleRpc("listshieldedaddresses", "6, true, true, \"DMJRSsuU9zfyrvxVaAEFQqK4MxZg6vgeS6\""));
 
     LOCK2(cs_main, pwalletMain->cs_wallet);
 
@@ -4779,7 +4779,7 @@ const CRPCCommand vWalletRPCCommands[] =
         { "wallet",             "liststakingaddresses",     &liststakingaddresses,     false },
         { "wallet",             "listcoldutxos",            &listcoldutxos,            false },
         { "wallet",             "listlockunspent",          &listlockunspent,          false },
-        { "wallet",             "listshieldedaddreds",    &listshieldedaddreds,    false },
+        { "wallet",             "listshieldedaddresses",    &listshieldedaddresses,    false },
         { "wallet",             "listsinceblock",           &listsinceblock,           false },
         { "wallet",             "listtransactions",         &listtransactions,         false },
         { "wallet",             "listunspent",              &listunspent,              false },

@@ -210,7 +210,7 @@ bool ScriptPubKeyMan::ReserveKeyFromKeyPool(int64_t& nIndex, CKeyPool& keypool, 
        }
 
 
-        if (use_split_keypool && keypool.IsECommerce() != fReturningECommerce) {
+        if (use_split_keypool && keypool.IsECommerce() != fReturningInternal) {
             throw std::runtime_error(std::string(__func__) + ": keypool ecommerce entry misclassified");
         }
 

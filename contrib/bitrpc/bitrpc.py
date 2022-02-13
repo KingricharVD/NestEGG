@@ -196,14 +196,14 @@ elif cmd == "listreceivedbyaccount":
     except:
         print "\n---An error occurred---\n"
 
-elif cmd == "listshieldedaddreds":
+elif cmd == "listshieldedaddresses":
     try:
         mc = raw_input("Minimum confirmations (optional): ")
         incemp = raw_input("Include empty? (true/false, optional): ")
         try:
-            print access.listshieldedaddreds(mc, incemp)
+            print access.listshieldedaddresses(mc, incemp)
         except:
-            print access.listshieldedaddreds()
+            print access.listshieldedaddresses()
     except:
         print "\n---An error occurred---\n"
 
