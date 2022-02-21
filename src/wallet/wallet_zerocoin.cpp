@@ -352,19 +352,17 @@ bool CWallet::CreateZerocoinMintTransaction(const CAmount nValue,
         signSuccess = ProduceSignature(
                 TransactionSignatureCreator(this, &txNewConst, nIn, coin.first->vout[coin.second].nValue, SIGHASH_ALL),
                 scriptPubKey,
-                sigdata
+                sigdata,
+                false // fColdStake = false
         );
-
         if (!signSuccess) {
             strFailReason = _("Signing transaction failed");
             return false;
         } else {
             UpdateTransaction(txNew, nIn, sigdata);
         }
-
         nIn++;
     }
-
     return true;
 }
 
@@ -952,5 +950,3 @@ bool CWallet::UpdateMint(const CBigNum& bnValue, const int& nHeight, const uint2
 
     return false;
 }
-
-

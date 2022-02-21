@@ -1,8 +1,9 @@
 // Copyright (c) 2019 The Bitcoin Core developers
 // Copyright (c) 2020 The PIVX developers
-// Copyright (c) 2021 The DECENOMY Core Developers
+// Copyright (c) 2020 The Jackpot 777 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "wallet/scriptpubkeyman.h"
 #include "crypter.h"
 #include "script/standard.h"
@@ -154,14 +155,12 @@ bool ScriptPubKeyMan::ReserveKeyFromKeyPool(int64_t& nIndex, CKeyPool& keypool, 
     keypool.vchPubKey = CPubKey();
     {
         LOCK(wallet->cs_wallet);
-
         bool isHDEnabled = IsHDEnabled();
         bool fReturningInternal = type == HDChain::ChangeType::INTERNAL && isHDEnabled;
         bool fReturningStaking = type == HDChain::ChangeType::STAKING && isHDEnabled;
         bool use_split_keypool = set_pre_split_keypool.empty();
         std::set<int64_t>& setKeyPool = use_split_keypool ?
                 ( fReturningInternal ? setInternalKeyPool : (fReturningStaking ? setStakingKeyPool : setExternalKeyPool) ) : set_pre_split_keypool;
-
         // Get the oldest key
         if (setKeyPool.empty()) {
             return false;
@@ -181,11 +180,9 @@ bool ScriptPubKeyMan::ReserveKeyFromKeyPool(int64_t& nIndex, CKeyPool& keypool, 
         if (use_split_keypool && keypool.IsInternal() != fReturningInternal) {
             throw std::runtime_error(std::string(__func__) + ": keypool internal entry misclassified");
         }
-
         if (use_split_keypool && keypool.IsStaking() != fReturningStaking) {
             throw std::runtime_error(std::string(__func__) + ": keypool staking entry misclassified");
         }
-
         if (!keypool.vchPubKey.IsValid()) {
             throw std::runtime_error(std::string(__func__) + ": keypool entry invalid");
         }
@@ -348,7 +345,6 @@ bool ScriptPubKeyMan::TopUp(unsigned int kpSize)
         GeneratePool(batch, missingExternal, HDChain::ChangeType::EXTERNAL);
         GeneratePool(batch, missingInternal, HDChain::ChangeType::INTERNAL);
         GeneratePool(batch, missingStaking, HDChain::ChangeType::STAKING);
-
         if (missingInternal + missingExternal > 0) {
             LogPrintf("keypool added %d keys (%d internal), size=%u (%u internal), \n", missingInternal + missingExternal, missingInternal, setInternalKeyPool.size() + setExternalKeyPool.size() + set_pre_split_keypool.size(), setInternalKeyPool.size());
         }
@@ -426,7 +422,6 @@ void ScriptPubKeyMan::DeriveNewChildKey(CWalletDB &batch, CKeyMetadata& metadata
     CExtKey accountKey;            //key at m/purpose'/coin_type'/account' ---> key at m/44'/119'/account_num'
     CExtKey changeKey;             //key at m/purpose'/coin_type'/account'/change ---> key at m/44'/119'/account_num'/change', external = 0' or internal = 1'.
     CExtKey childKey;              //key at m/purpose'/coin_type'/account'/change/address_index ---> key at m/44'/119'/account_num'/change'/<n>'
-
     // For now only one account.
     int nAccountNumber = 0;
     // try to get the seed
@@ -447,7 +442,6 @@ void ScriptPubKeyMan::DeriveNewChildKey(CWalletDB &batch, CKeyMetadata& metadata
         // always derive hardened keys
         // childIndex | BIP32_HARDENED_KEY_LIMIT = derive childIndex in hardened child-index-range
         // example: 1 | BIP32_HARDENED_KEY_LIMIT == 0x80000001 == 2147483649
-
         // m/44'/119'/account_num/change'/<n>'
         metadata.key_origin.path.push_back(44 | BIP32_HARDENED_KEY_LIMIT);
         metadata.key_origin.path.push_back(119 | BIP32_HARDENED_KEY_LIMIT);

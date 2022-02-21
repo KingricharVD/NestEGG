@@ -759,7 +759,7 @@ void SendMoney(const CTxDestination& address, CAmount nValue, CWalletTx& wtxNew,
         LogPrintf("SendMoney() : %s\n", strError);
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
     }
-    const CWallet::CommitResult&& res = pwalletMain->CommitTransaction(wtxNew, reservekey, g_connman.get(), (!fUseIX ? NetMsgType::TX : NetMsgType::IX));
+    const CWallet::CommitResult&& res = pwalletMain->CommitTransaction(wtxNew, reservekey, g_connman.get(), (!fUseIX ? NetMsgType::TX : NetMsgType::TX));
     if (res.status != CWallet::CommitStatus::OK)
         throw JSONRPCError(RPC_WALLET_ERROR, res.ToString());
 }
