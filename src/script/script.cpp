@@ -1,15 +1,13 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2017-2020 The PIVX developers
-// Copyright (c) 2021-2022 The DECENOMY Core Developers
+// Copyright (c) 2020 The Jackpot 777 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "script.h"
 #include "tinyformat.h"
 #include "utilstrencodings.h"
-
-
 const char* GetOpName(opcodetype opcode)
 {
     switch (opcode)
@@ -37,7 +35,6 @@ const char* GetOpName(opcodetype opcode)
     case OP_14                     : return "14";
     case OP_15                     : return "15";
     case OP_16                     : return "16";
-
     // control
     case OP_NOP                    : return "OP_NOP";
     case OP_VER                    : return "OP_VER";
@@ -49,7 +46,6 @@ const char* GetOpName(opcodetype opcode)
     case OP_ENDIF                  : return "OP_ENDIF";
     case OP_VERIFY                 : return "OP_VERIFY";
     case OP_RETURN                 : return "OP_RETURN";
-
     // stack ops
     case OP_TOALTSTACK             : return "OP_TOALTSTACK";
     case OP_FROMALTSTACK           : return "OP_FROMALTSTACK";
@@ -70,14 +66,12 @@ const char* GetOpName(opcodetype opcode)
     case OP_ROT                    : return "OP_ROT";
     case OP_SWAP                   : return "OP_SWAP";
     case OP_TUCK                   : return "OP_TUCK";
-
     // splice ops
     case OP_CAT                    : return "OP_CAT";
     case OP_SUBSTR                 : return "OP_SUBSTR";
     case OP_LEFT                   : return "OP_LEFT";
     case OP_RIGHT                  : return "OP_RIGHT";
     case OP_SIZE                   : return "OP_SIZE";
-
     // bit logic
     case OP_INVERT                 : return "OP_INVERT";
     case OP_AND                    : return "OP_AND";
@@ -87,7 +81,6 @@ const char* GetOpName(opcodetype opcode)
     case OP_EQUALVERIFY            : return "OP_EQUALVERIFY";
     case OP_RESERVED1              : return "OP_RESERVED1";
     case OP_RESERVED2              : return "OP_RESERVED2";
-
     // numeric
     case OP_1ADD                   : return "OP_1ADD";
     case OP_1SUB                   : return "OP_1SUB";
@@ -116,7 +109,6 @@ const char* GetOpName(opcodetype opcode)
     case OP_MIN                    : return "OP_MIN";
     case OP_MAX                    : return "OP_MAX";
     case OP_WITHIN                 : return "OP_WITHIN";
-
     // crypto
     case OP_RIPEMD160              : return "OP_RIPEMD160";
     case OP_SHA1                   : return "OP_SHA1";
@@ -128,7 +120,6 @@ const char* GetOpName(opcodetype opcode)
     case OP_CHECKSIGVERIFY         : return "OP_CHECKSIGVERIFY";
     case OP_CHECKMULTISIG          : return "OP_CHECKMULTISIG";
     case OP_CHECKMULTISIGVERIFY    : return "OP_CHECKMULTISIGVERIFY";
-
     // expansion
     case OP_NOP1                   : return "OP_NOP1";                  // OP_NOP1
     case OP_CHECKLOCKTIMEVERIFY    : return "OP_CHECKLOCKTIMEVERIFY";   // OP_NOP2
@@ -140,21 +131,17 @@ const char* GetOpName(opcodetype opcode)
     case OP_NOP8                   : return "OP_NOP8";                  // OP_NOP8
     case OP_NOP9                   : return "OP_NOP9";                  // OP_NOP9
     case OP_NOP10                  : return "OP_NOP10";                 // OP_NOP10
-
     // zerocoin
     case OP_ZEROCOINMINT           : return "OP_ZEROCOINMINT";
     case OP_ZEROCOINSPEND          : return "OP_ZEROCOINSPEND";
     case OP_ZEROCOINPUBLICSPEND    : return "OP_ZEROCOINPUBLICSPEND";
     // cold staking
-    case OP_CHECKCOLDSTAKEVERIFY   : return "OP_CHECKCOLDSTAKEVER
-
+    case OP_CHECKCOLDSTAKEVERIFY   : return "OP_CHECKCOLDSTAKEVERIFY";
     case OP_INVALIDOPCODE          : return "OP_INVALIDOPCODE";
-
     default:
         return "OP_UNKNOWN";
     }
 }
-
 unsigned int CScript::GetSigOpCount(bool fAccurate) const
 {
     unsigned int n = 0;
@@ -178,12 +165,10 @@ unsigned int CScript::GetSigOpCount(bool fAccurate) const
     }
     return n;
 }
-
 unsigned int CScript::GetSigOpCount(const CScript& scriptSig) const
 {
     if (!IsPayToScriptHash())
         return GetSigOpCount(true);
-
     // This is a pay-to-script-hash scriptPubKey;
     // get the last item that the scriptSig
     // pushes onto the stack:
@@ -197,16 +182,13 @@ unsigned int CScript::GetSigOpCount(const CScript& scriptSig) const
         if (opcode > OP_16)
             return 0;
     }
-
     /// ... and return its opcount:
     CScript subscript(data.begin(), data.end());
     return subscript.GetSigOpCount(true);
 }
-
 bool CScript::IsNormalPaymentScript() const
 {
     if(this->size() != 25) return false;
-
     std::string str;
     opcodetype opcode;
     const_iterator pc = begin();
@@ -214,19 +196,15 @@ bool CScript::IsNormalPaymentScript() const
     while (pc < end())
     {
         GetOp(pc, opcode);
-
         if(     i == 0 && opcode != OP_DUP) return false;
         else if(i == 1 && opcode != OP_HASH160) return false;
         else if(i == 3 && opcode != OP_EQUALVERIFY) return false;
         else if(i == 4 && opcode != OP_CHECKSIG) return false;
         else if(i == 5) return false;
-
         i++;
     }
-
     return true;
 }
-
 bool CScript::IsPayToScriptHash() const
 {
     // Extra-fast test for pay-to-script-hash CScripts:
@@ -250,22 +228,18 @@ bool CScript::StartsWithOpcode(const opcodetype opcode) const
 {
     return (!this->empty() && (*this)[0] == opcode);
 }
-
 bool CScript::IsZerocoinMint() const
 {
     return StartsWithOpcode(OP_ZEROCOINMINT);
 }
-
 bool CScript::IsZerocoinSpend() const
 {
     return StartsWithOpcode(OP_ZEROCOINSPEND);
 }
-
 bool CScript::IsZerocoinPublicSpend() const
 {
     return StartsWithOpcode(OP_ZEROCOINPUBLICSPEND);
 }
-
 bool CScript::IsPushOnly(const_iterator pc) const
 {
     while (pc < end())
@@ -282,12 +256,10 @@ bool CScript::IsPushOnly(const_iterator pc) const
     }
     return true;
 }
-
 bool CScript::IsPushOnly() const
 {
     return this->IsPushOnly(begin());
 }
-
 size_t CScript::DynamicMemoryUsage() const
 {
     return memusage::DynamicUsage(*static_cast<const CScriptBase*>(this));
