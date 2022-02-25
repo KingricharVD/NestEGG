@@ -8,6 +8,7 @@
 
 #ifndef BITCOIN_WALLET_H
 #define BITCOIN_WALLET_H
+
 #include "addressbook.h"
 #include "amount.h"
 #include "base58.h"
@@ -20,7 +21,6 @@
 #include "pairresult.h"
 #include "primitives/block.h"
 #include "primitives/transaction.h"
-#include "sapling/address.hpp"
 #include "zpiv/zerocoin.h"
 #include "guiinterface.h"
 #include "util.h"
@@ -28,11 +28,11 @@
 #include "validationinterface.h"
 #include "script/ismine.h"
 #include "wallet/scriptpubkeyman.h"
-#include "sapling/saplingscriptpubkeyman.h"
 #include "wallet/walletdb.h"
 #include "zpiv/zpivmodule.h"
 #include "zpiv/zpivwallet.h"
 #include "zpiv/zpivtracker.h"
+
 #include <algorithm>
 #include <atomic>
 #include <map>
@@ -42,7 +42,9 @@
 #include <string>
 #include <utility>
 #include <vector>
+
 extern CWallet* pwalletMain;
+
 /**
  * Settings
  */
