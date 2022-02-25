@@ -95,7 +95,7 @@ void DataBaseAccChecksum(CBlockIndex* pindex, bool fWrite)
 {
     const Consensus::Params& consensus = Params().GetConsensus();
     if (!pindex ||
-        !consensus.NetworkUpgradeActive(pindex->nHeight, Consensus::UPGRADE_ZC_V2) ||
+        !consensus.NetworkUpgradeActive(pindex->nHeight, Consensus::UPGRADE_ZC) ||
         pindex->nHeight > consensus.height_last_ZC_AccumCheckpoint ||
         pindex->nAccumulatorCheckpoint == pindex->pprev->nAccumulatorCheckpoint)
         return;
