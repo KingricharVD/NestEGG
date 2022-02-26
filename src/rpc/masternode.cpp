@@ -883,4 +883,4 @@ UniValue relaymasternodebroadcast(const JSONRPCRequest& request)
     mnodeman.UpdateMasternodeList(mnb);
     mnb.Relay();
 
-    return strprintf("Masternode broadcast sent (service %s, vin %s)", mnb.addr.ToString(), mnb.vin.ToString());
+    return strprintf("Masternode broadcast sent (service %s, vin %s)", mnb.addr.ToString(), mnb.vin.ToString());}
