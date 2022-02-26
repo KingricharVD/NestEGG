@@ -662,7 +662,7 @@ UniValue getstakingstatus(const JSONRPCRequest& request)
         std::vector<COutput> vCoins;
         pwalletMain->StakeableCoins(&vCoins);
         obj.push_back(Pair("stakeablecoins", (int)vCoins.size()));
-        obj.push_back(Pair("stakingbalance", ValueFromAmount(pwalletMain->GetStakingBalance(fColdStaking))));
+        obj.push_back(Pair("stakingbalance", ValueFromAmount(pwalletMain->GetColddStakingBalance(fColdStaking))));
         obj.push_back(Pair("stakesplitthreshold", ValueFromAmount(pwalletMain->nStakeSplitThreshold)));
         CStakerStatus* ss = pwalletMain->pStakerStatus;
         if (ss) {

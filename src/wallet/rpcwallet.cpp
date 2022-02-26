@@ -1279,7 +1279,7 @@ UniValue getbalance(const JSONRPCRequest& request)
        if (!(request.params.size() > 3) || request.params[3].get_bool())
            filter = filter | ISMINE_SPENDABLE_DELEGATED;
 
-       return ValueFromAmount(pwalletMain->GetLegacyBalance(filter, nMinDepth, account));
+       return ValueFromAmount(pwalletMain->GetDelegatedBalance(filter, nMinDepth, account));
    }
 
    const int paramsSize = request.params.size();
@@ -1321,7 +1321,7 @@ UniValue getcoldstakingbalance(const JSONRPCRequest& request)
            return ValueFromAmount(pwalletMain->GetColdStakingBalance());
 
        const std::string* strAccount = request.params[0].get_str() != "*" ? &request.params[0].get_str() : nullptr;
-       return ValueFromAmount(pwalletMain->GetLegacyBalance(ISMINE_COLD, 1, strAccount));
+       return ValueFromAmount(pwalletMain->GetDelegatedBalance(ISMINE_COLD, 1, strAccount));
    }
 
    return ValueFromAmount(pwalletMain->GetColdStakingBalance());
@@ -1359,7 +1359,7 @@ UniValue getdelegatedbalance(const JSONRPCRequest& request)
            return ValueFromAmount(pwalletMain->GetDelegatedBalance());
 
        const std::string* strAccount = request.params[0].get_str() != "*" ? &request.params[0].get_str() : nullptr;
-       return ValueFromAmount(pwalletMain->GetLegacyBalance(ISMINE_SPENDABLE_DELEGATED, 1, strAccount));
+       return ValueFromAmount(pwalletMain->GetDelegatedBalance(ISMINE_SPENDABLE_DELEGATED, 1, strAccount));
    }
 
    return ValueFromAmount(pwalletMain->GetDelegatedBalance());
@@ -1499,7 +1499,7 @@ UniValue sendfrom(const JSONRPCRequest& request)
    EnsureWalletIsUnlocked();
 
    // Check funds
-   CAmount nBalance = pwalletMain->GetLegacyBalance(filter, nMinDepth, &strAccount);
+   CAmount nBalance = pwalletMain->GetDelegatedBalance(filter, nMinDepth, &strAccount);
    if (nAmount > nBalance)
        throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, "Account has insufficient funds");
    SendMoney(address, nAmount, wtx);
@@ -1605,9 +1605,9 @@ UniValue sendmany(const JSONRPCRequest& request)
    EnsureWalletIsUnlocked();
 
    // Check funds
-   if (IsDeprecatedRPCEnabled("accounts") && totalAmount > pwalletMain->GetLegacyBalance(ISMINE_SPENDABLE, nMinDepth, &strAccount)) {
+   if (IsDeprecatedRPCEnabled("accounts") && totalAmount > pwalletMain->GetDelegatedBalance(ISMINE_SPENDABLE, nMinDepth, &strAccount)) {
        throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, "Account has insufficient funds");
-   } else if (!IsDeprecatedRPCEnabled("accounts") && totalAmount > pwalletMain->GetLegacyBalance(ISMINE_SPENDABLE, nMinDepth, nullptr)) {
+   } else if (!IsDeprecatedRPCEnabled("accounts") && totalAmount > pwalletMain->GetDelegatedBalance(ISMINE_SPENDABLE, nMinDepth, nullptr)) {
        throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, "Wallet has insufficient funds");
    }
    // Send
