@@ -1502,7 +1502,7 @@ CAmount CWallet::GetColdStakingBalance() const
     });
 }
 
-CAmount CWallet::GetColddStakingBalance(const bool fIncludeColdStaking) const
+CAmount CWallet::GetColdStakingBalance(const bool fIncludeColdStaking) const
 {
     return std::max(CAmount(0), loopTxsBalance(
             [fIncludeColdStaking](const uint256& id, const CWalletTx& pcoin, CAmount& nTotal) {
