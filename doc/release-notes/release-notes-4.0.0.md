@@ -145,7 +145,7 @@ The following new commands have been added to the RPC interface:
 - `getnewstakingaddress`
 - `delegatorremove`
 - `rawdelegatorremove`
-- `getcoldstakingbalance`
+- `GetColddStakingBalance`
 - `delegatoradd`
 - `delegatorremove`
 - `listcoldutxos`
@@ -249,9 +249,9 @@ Result:
 }
 ```
 
-`getcoldstakingbalance` returns the cold balance of the wallet:
+`GetColddStakingBalance` returns the cold balance of the wallet:
 ```
-getcoldstakingbalance ( "account" )
+GetColddStakingBalance ( "account" )
 
 If account is not specified, returns the server's total available cold balance.
 If account is specified, returns the cold balance in the account.

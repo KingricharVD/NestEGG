@@ -1494,7 +1494,7 @@ CAmount CWallet::GetAvailableBalance(isminefilter& filter, bool useCache, int mi
     });
 }
 
-CAmount CWallet::GetColdStakingBalance() const
+CAmount CWallet::GetColddStakingBalance() const
 {
     return loopTxsBalance([](const uint256& id, const CWalletTx& pcoin, CAmount& nTotal) {
         if (pcoin.HasP2CSOutputs() && pcoin.IsTrusted())
@@ -1502,7 +1502,7 @@ CAmount CWallet::GetColdStakingBalance() const
     });
 }
 
-CAmount CWallet::GetColdStakingBalance(const bool fIncludeColdStaking) const
+CAmount CWallet::GetColddStakingBalance(const bool fIncludeColdStaking) const
 {
     return std::max(CAmount(0), loopTxsBalance(
             [fIncludeColdStaking](const uint256& id, const CWalletTx& pcoin, CAmount& nTotal) {
