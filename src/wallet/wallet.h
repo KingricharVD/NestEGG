@@ -494,20 +494,21 @@ public:
    CAmount GetLegacyBalance(const isminefilter& filter, int minDepth, const std::string* account) const;
    bool FundTransaction(CMutableTransaction& tx, CAmount &nFeeRet, bool overrideEstimatedFeeRate, const CFeeRate& specificFeeRate, int& nChangePosInOut, std::string& strFailReason, bool includeWatching, bool lockUnspents, const CTxDestination& destChange = CNoDestination());
 
-    bool CreateTransaction(const std::vector<CRecipient>& vecSend,
-        CWalletTx& wtxNew,
-        CReserveKey& reservekey,
-        CAmount& nFeeRet,
-        int& nChangePosInOut,
-        std::string& strFailReason,
-        const CCoinControl* coinControl = NULL,
-        AvailableCoinsType coin_type = ALL_COINS,
-        bool sign = true,
-        bool useIX = false,
-        CAmount nFeePay = 0),
-        bool fIncludeDelegated = false);
-        bool CreateTransaction(CScript scriptPubKey, const CAmount& nValue, CWalletTx& wtxNew, CReserveKey& reservekey, CAmount& nFeeRet, std::string& strFailReason, const CCoinControl* coinControl = NULL, AvailableCoinsType coin_type = ALL_COINS, bool useIX = false, CAmount nFeePay = 0, bool fIncludeDelegated = false);
-    // enumeration for CommitResult (return status of CommitTransaction)
+   bool CreateTransaction(const std::vector<CRecipient>& vecSend,
+         CWalletTx& wtxNew,
+         CReserveKey& reservekey,
+         CAmount& nFeeRet,
+         int& nChangePosInOut,
+         std::string& strFailReason,
+         const CCoinControl* coinControl = NULL,
+         AvailableCoinsType coin_type = ALL_COINS,
+         bool sign = true,
+         bool useIX = false,
+         CAmount nFeePay = 0,
+         bool fIncludeDelegated = false);
+     bool CreateTransaction(CScript scriptPubKey, const CAmount& nValue, CWalletTx& wtxNew, CReserveKey& reservekey, CAmount& nFeeRet, std::string& strFailReason, const CCoinControl* coinControl = NULL, AvailableCoinsType coin_type = ALL_COINS, bool useIX = false, CAmount nFeePay = 0, bool fIncludeDelegated = false);
+
+       // enumeration for CommitResult (return status of CommitTransaction)
     enum CommitStatus
     {
         OK,
