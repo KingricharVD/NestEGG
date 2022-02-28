@@ -105,7 +105,7 @@ size_t ScriptPubKeyMan::KeypoolCountExternalKeys()
     AssertLockHeld(wallet->cs_wallet);
     return setExternalKeyPool.size() + set_pre_split_keypool.size();
 }
-unsigned int ScriptPubKeyMan::GetKeyPoolSize() const
+unsigned int ScriptPubKeyMan::GetStakingKeyPoolSize() const
 {
     AssertLockHeld(wallet->cs_wallet);
     return setInternalKeyPool.size() + setExternalKeyPool.size() + set_pre_split_keypool.size();

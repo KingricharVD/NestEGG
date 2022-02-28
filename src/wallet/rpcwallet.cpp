@@ -2473,7 +2473,7 @@ if (request.params.size() > 1)
          }
          EnsureWalletIsUnlocked();
          pwalletMain->TopUpKeyPool(kpSize);
-         if (pwalletMain->GetKeyPoolSize() < kpSize)
+         if (pwalletMain->GetStakingKeyPoolSize() < kpSize)
              throw JSONRPCError(RPC_WALLET_ERROR, "Error refreshing keypool.");
          return NullUniValue;
      }
@@ -2971,7 +2971,7 @@ if (request.params.size() > 1)
              }
          }
          if (pwalletMain->IsHDEnabled()) {
-             obj.pushKV("keypoolsize_hd_internal",   (int64_t)(pwalletMain->GetKeyPoolSize() - kpExternalSize));
+             obj.pushKV("keypoolsize_hd_internal",   (int64_t)(pwalletMain->GetStakingKeyPoolSize() - kpExternalSize));
              obj.pushKV("keypoolsize_hd_staking",   (int64_t)(pwalletMain->GetStakingKeyPoolSize()));
          }
          if (pwalletMain->IsCrypted())

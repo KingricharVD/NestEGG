@@ -3614,9 +3614,9 @@ CAmount CWallet::GetChange(const CTransaction& tx) const
    }
    return nChange;
 }
-unsigned int CWallet::GetKeyPoolSize()
+unsigned int CWallet::GetStakingKeyPoolSize()
 {
-   return m_spk_man->GetKeyPoolSize();
+   return m_spk_man->GetStakingKeyPoolSize();
 }
 unsigned int CWallet::GetStakingKeyPoolSize()
 {

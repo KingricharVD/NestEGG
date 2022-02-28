@@ -53,7 +53,7 @@ public:
     size_t KeypoolCountExternalKeys();
 
     /* Key pool size */
-    unsigned int GetKeyPoolSize() const;
+    unsigned int GetStakingKeyPoolSize() const;
 
     /* Staking key pool size */
     unsigned int GetECommerceKeyPoolSize() const;
