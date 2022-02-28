@@ -800,7 +800,15 @@ UniValue sendtoaddress(const JSONRPCRequest& request)
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid __DSW__ address");
 
     // Amount
-	@@ -943,217 +787,6 @@ UniValue sendtoaddress(const JSONRPCRequest& request)
+    CAmount nAmount = AmountFromValue(request.params[1]);
+      // Wallet comments
+      CWalletTx wtx;
+      if (request.params.size() > 2 && !request.params[2].isNull() && !request.params[2].get_str().empty())
+          wtx.mapValue["comment"] = request.params[2].get_str();
+      if (request.params.size() > 3 && !request.params[3].isNull() && !request.params[3].get_str().empty())
+          wtx.mapValue["to"] = request.params[3].get_str();
+      EnsureWalletIsUnlocked();
+      SendMoney(address, nAmount, wtx);
     return wtx.GetHash().GetHex();
 }
 
