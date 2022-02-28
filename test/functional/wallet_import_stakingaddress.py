@@ -55,14 +55,14 @@ class ImportStakingTest(PivxTestFramework):
         priv_keys = [self.nodes[0].dumpprivkey(x) for x in staking_addresses]
 
         # Import keys of addresses 0-(NUM_OF_DELEGATIONS-1) (and rescan)
-        assert_equal(self.nodes[1].GetColdStakingBalance(), DecimalAmt(0))
+        assert_equal(self.nodes[1].GetColddStakingBalance(), DecimalAmt(0))
         for i, pk in enumerate(priv_keys[:NUM_OF_DELEGATIONS]):
             self.nodes[1].importprivkey(pk, "label %d" % i, True, True)
             val = self.nodes[1].validateaddress(staking_addresses[i])
             assert_equal(val['ismine'], True)
             assert_equal(val['isstaking'], True)
             assert_equal(val['iswatchonly'], False)
-            assert_equal(self.nodes[1].GetColdStakingBalance(), DecimalAmt(10 * (i + 1)))
+            assert_equal(self.nodes[1].GetColddStakingBalance(), DecimalAmt(10 * (i + 1)))
         self.log.info("Balance of node 1 checks out")
         coldutxos = [x['txid'] for x in self.nodes[1].listcoldutxos()]
         assert_equal(len(coldutxos), NUM_OF_DELEGATIONS)
@@ -80,7 +80,7 @@ class ImportStakingTest(PivxTestFramework):
             assert_equal(val['ismine'], False)
             assert_equal(val['isstaking'], True)
             assert_equal(val['iswatchonly'], True)
-            assert_equal(self.nodes[1].GetColdStakingBalance(), DecimalAmt(10 * NUM_OF_DELEGATIONS))
+            assert_equal(self.nodes[1].GetColddStakingBalance(), DecimalAmt(10 * NUM_OF_DELEGATIONS))
         self.log.info("Balance of node 1 checks out")
 
 

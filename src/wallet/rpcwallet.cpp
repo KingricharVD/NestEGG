@@ -1297,11 +1297,11 @@ UniValue sendtoaddressix(const JSONRPCRequest& request)
      return ValueFromAmount(pwalletMain->GetAvailableBalance(filter, true, nMinDepth));
  }
 
- UniValue getcoldstakingbalance(const JSONRPCRequest& request)
+ UniValue GetColddStakingBalance(const JSONRPCRequest& request)
  {
      if (request.fHelp || (request.params.size() > 1 && IsDeprecatedRPCEnabled("accounts")) || (request.params.size() != 0 && !IsDeprecatedRPCEnabled("accounts")))
          throw std::runtime_error(
-             "getcoldstakingbalance ( \"account\" )\n"
+             "GetColddStakingBalance ( \"account\" )\n"
              "\nIf account is not specified, returns the server's total available cold balance.\n"
              "If account is specified (DEPRECATED), returns the cold balance in the account.\n"
              "Note that the account \"\" is not the same as leaving the parameter out.\n"
@@ -1317,21 +1317,21 @@ UniValue sendtoaddressix(const JSONRPCRequest& request)
 
              "\nExamples:\n"
              "\nThe total amount in the wallet\n" +
-             HelpExampleCli("getcoldstakingbalance", "") +
+             HelpExampleCli("GetColddStakingBalance", "") +
              "\nAs a json rpc call\n" +
-             HelpExampleRpc("getcoldstakingbalance", "\"*\""));
+             HelpExampleRpc("GetColddStakingBalance", "\"*\""));
 
      LOCK2(cs_main, pwalletMain->cs_wallet);
 
      if (IsDeprecatedRPCEnabled("accounts")) {
          if (request.params.size() == 0)
-             return ValueFromAmount(pwalletMain->GetColdStakingBalance());
+             return ValueFromAmount(pwalletMain->GetColddStakingBalance());
 
          const std::string* strAccount = request.params[0].get_str() != "*" ? &request.params[0].get_str() : nullptr;
          return ValueFromAmount(pwalletMain->GetLegacyBalance(ISMINE_COLD, 1, strAccount));
      }
 
-     return ValueFromAmount(pwalletMain->GetColdStakingBalance());
+     return ValueFromAmount(pwalletMain->GetColddStakingBalance());
  }
 
  UniValue getdelegatedbalance(const JSONRPCRequest& request)
@@ -2953,7 +2953,7 @@ if (request.params.size() > 1)
          obj.push_back(Pair("walletversion", pwalletMain->GetVersion()));
          obj.push_back(Pair("balance", ValueFromAmount(pwalletMain->GetAvailableBalance())));
          obj.push_back(Pair("delegated_balance", ValueFromAmount(pwalletMain->GetDelegatedBalance())));
-         obj.push_back(Pair("cold_staking_balance", ValueFromAmount(pwalletMain->GetColdStakingBalance())));
+         obj.push_back(Pair("cold_staking_balance", ValueFromAmount(pwalletMain->GetColddStakingBalance())));
          obj.push_back(Pair("unconfirmed_balance", ValueFromAmount(pwalletMain->GetUnconfirmedBalance())));
          obj.push_back(Pair("immature_balance",    ValueFromAmount(pwalletMain->GetImmatureBalance())));
          obj.push_back(Pair("immature_delegated_balance",    ValueFromAmount(pwalletMain->GetImmatureDelegatedBalance())));
@@ -4256,7 +4256,7 @@ const CRPCCommand vWalletRPCCommands[] =
         { "wallet",             "dumpwallet",               &dumpwallet,               true  },
         { "wallet",             "encryptwallet",            &encryptwallet,            true  },
         { "wallet",             "getbalance",               &getbalance,               false },
-        { "wallet",             "getcoldstakingbalance",    &getcoldstakingbalance,    false },
+        { "wallet",             "GetColddStakingBalance",    &GetColddStakingBalance,    false },
         { "wallet",             "getdelegatedbalance",      &getdelegatedbalance,      false },
         { "wallet",             "upgradewallet",            &upgradewallet,            true  },
         { "wallet",             "sethdseed",                &sethdseed,                true  },

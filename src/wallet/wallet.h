@@ -480,7 +480,7 @@ public:
    CAmount loopTxsBalance(std::function<void(const uint256&, const CWalletTx&, CAmount&)>method) const;
    CAmount GetAvailableBalance(bool fIncludeDelegated = true) const;
    CAmount GetAvailableBalance(isminefilter& filter, bool useCache = false, int minDepth = 1) const;
-   CAmount GetColdStakingBalance() const;  // delegated coins for which we have the staking key
+   CAmount GetColddStakingBalance() const;  // delegated coins for which we have the staking key
    CAmount GetImmatureColdStakingBalance() const;
    CAmount GetStakingBalance(const bool fIncludeColdStaking = true) const;
    CAmount GetDelegatedBalance() const;    // delegated coins for which we have the spending key
