@@ -385,7 +385,7 @@ bool CWallet::SetMinVersion(enum WalletFeature nVersion, CWalletDB* pwalletdbIn,
     // when doing an explicit upgrade, if we pass the max version permitted, upgrade all the way
     if (fExplicit && nVersion > nWalletMaxVersion) {
         // For now, Sapling features are locked to regtest.
-        WalletFeature features = Params().IsRegTestNet() ? FEATURE_SAPLING : FEATURE_PRE_SPLIT_KEYPOOL;
+        WalletFeature features = Params().IsRegTestNet() ? FEATURE_LATEST : FEATURE_PRE_SPLIT_KEYPOOL;
         nVersion = features;
     }
     nWalletVersion = nVersion;
@@ -1247,7 +1247,7 @@ bool CWallet::Upgrade(std::string& error, const int& prevVersion)
 {
     LOCK2(cs_wallet, cs_KeyStore);
     // Do not upgrade versions if we are already in the last one
-    if (prevVersion >= FEATURE_SAPLING) {
+    if (prevVersion >= FEATURE_LATEST) {
         error = strprintf(_("Cannot upgrade to Sapling wallet (already running Sapling support). Version: %d"), prevVersion);
         return false;
     }
@@ -1258,7 +1258,7 @@ bool CWallet::Upgrade(std::string& error, const int& prevVersion)
         }
     }
     // Now upgrade to Sapling manager
-    if (prevVersion < FEATURE_SAPLING) {
+    if (prevVersion < FEATURE_LATEST) {
         if (!ActivateSaplingWallet()) {
             return false;
         }
@@ -3246,7 +3246,7 @@ CWallet* CWallet::CreateWalletFromFile(const std::string walletFile)
        if (nMaxVersion == 0) // the -upgradewallet without argument case
        {
            // For now, Sapling features are locked to regtest.
-           WalletFeature features = Params().IsRegTestNet() ? FEATURE_SAPLING : FEATURE_PRE_SPLIT_KEYPOOL;
+           WalletFeature features = Params().IsRegTestNet() ? FEATURE_LATEST : FEATURE_PRE_SPLIT_KEYPOOL;
            LogPrintf("Performing wallet upgrade to %i\n", features);
            nMaxVersion = features;
            walletInstance->SetMinVersion(features); // permanently upgrade the wallet immediately
@@ -3271,7 +3271,7 @@ CWallet* CWallet::CreateWalletFromFile(const std::string walletFile)
            // Create new HD Wallet
            LogPrintf("Creating HD Wallet\n");
            // For now, Sapling features are locked to regtest.
-           WalletFeature features = Params().IsRegTestNet() ? FEATURE_SAPLING : FEATURE_PRE_SPLIT_KEYPOOL;
+           WalletFeature features = Params().IsRegTestNet() ? FEATURE_LATEST : FEATURE_PRE_SPLIT_KEYPOOL;
            // Ensure this wallet can only be opened by clients supporting HD.
            walletInstance->SetMinVersion(features);
            walletInstance->SetupSPKM();
