@@ -418,26 +418,6 @@ UniValue getnewstakingaddress(const JSONRPCRequest& request)
             HelpExampleCli("getnewstakingaddress", "") + HelpExampleRpc("getnewstakingaddress", ""));
     return EncodeDestination(GetNewAddressFromLabel("coldstaking", request.params, CChainParams::STAKING_ADDRESS), CChainParams::STAKING_ADDRESS);
 }
-UniValue getnewstakingaddress(const JSONRPCRequest& request)
-{
-
-    if (request.fHelp || request.params.size() > 1)
-        throw std::runtime_error(
-            "getnewstakingaddress ( \"label\" )\n"
-            "\nReturns a new __DSW__ cold staking address for receiving delegated cold stakes.\n"
-
-            "\nArguments:\n"
-            "1. \"label\"        (string, optional) The label name for the address to be linked to. if not provided, the default label \"\" is used. It can also be set to the empty string \"\" to represent the default label. The label does not need to exist, it will be created if there is no label by the given name.\n"
-
-
-            "\nResult:\n"
-            "\"__DSW__address\"    (string) The new __DSW__ address\n"
-
-            "\nExamples:\n" +
-            HelpExampleCli("getnewstakingaddress", "") + HelpExampleRpc("getnewstakingaddress", ""));
-
-    return EncodeDestination(GetNewAddressFromLabel("coldstaking", request.params, CChainParams::STAKING_ADDRESS), CChainParams::STAKING_ADDRESS);
-}
 
 UniValue delegatoradd(const JSONRPCRequest& request)
 {
